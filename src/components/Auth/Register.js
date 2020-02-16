@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Form,
@@ -8,72 +8,142 @@ import {
   Message,
   Icon
 } from "semantic-ui-react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { signup } from "../../api";
+import "./App.css";
 
-import './App.css';
+const Register = () => {
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+    name: "",
+    businessName: "",
+    error: "",
+    success: false
+  });
 
-const initialState = {};
+  const { email, password, name, businessName, error, success } = values;
 
-class Register extends Component {
-  handleChange = () => {};
+  const onChange = name => e => {
+    setValues({
+      ...values,
+      error: false,
+      [name]: e.target.value
+    });
+  };
 
-  render() {
-    return (
-      <Grid textAlign="center" verticalAlign="middle" className="register">
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" icon color="orange" textAlign="center">
-            <Icon name="puzzle piece" color="orange"></Icon>
-            Register for Devchat
-          </Header>
-          <Form size="large">
-            <Segment stacked>
-              <Form.Input
-                fluid
-                name="username"
-                icon="user"
-                iconPosition="left"
-                placeholder="Username"
-                type="text"
-                onChange={this.handleChange}
-              />
-              <Form.Input
-                fluid
-                name="email"
-                icon="mail"
-                iconPosition="left"
-                placeholder="Email Address"
-                type="email"
-                onChange={this.handleChange}
-              />
-              <Form.Input
-                fluid
-                name="password"
-                icon="lock"
-                iconPosition="left"
-                placeholder="Password"
-                type="password"
-                onChange={this.handleChange}
-              />
-              <Form.Input
-                fluid
-                name="passwordConfirmation"
-                icon="repeat"
-                iconPosition="left"
-                placeholder="Password Confirmation"
-                type="password"
-                onChange={this.handleChange}
-              />
+  const onSubmit = e => {
+    e.preventDefault();
+    setValues({
+      ...values,
+      error: false
+    });
+    signup({ email, password, name, businessName }).then(data => {
+      if (data.error) {
+        console.log("data", data);
+        setValues({
+          ...values,
+          error: data.error,
+          success: false
+        });
+      } else {
+        setValues({
+          ...values,
+          email: "",
+          password: "",
+          name: "",
+          businessName: "",
+          error: "",
+          success: true
+        });
+      }
+    });
+  };
 
-              <Button color="orange" fluid size="large">
-                Submit
-              </Button>
-              <Message>Already an user? <Link to="/login">Login</Link></Message>
-            </Segment>
-          </Form>
-        </Grid.Column>
-      </Grid>
-    );
-  }
-}
+  const showError = () => (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
+
+  const showSuccess = () => (
+    <div
+      className="alert alert-info"
+      style={{ display: success ? "" : "none" }}
+    >
+      New account is created. Please <Link to="/signin">Signin</Link>
+    </div>
+  );
+
+  const signUpForm = () => (
+    <Grid textAlign="center" verticalAlign="middle" className="register">
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as="h2" icon color="blue" textAlign="center">
+          <Icon name="id badge" color="blue"></Icon>
+          Registrarse
+        </Header>
+        <Form size="large">
+          <Segment stacked>
+            <Form.Input
+              fluid
+              name="name"
+              icon="user"
+              iconPosition="left"
+              placeholder="Introduzca un nombre de usuario"
+              type="text"
+              value={name}
+              onChange={onChange("name")}
+            />
+            <Form.Input
+              fluid
+              name="email"
+              icon="mail"
+              iconPosition="left"
+              placeholder="Introduzca un correo Electrónico"
+              type="email"
+              value={email}
+              onChange={onChange("email")}
+            />
+            <Form.Input
+              fluid
+              name="password"
+              icon="lock"
+              iconPosition="left"
+              placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
+              type="password"
+              value={password}
+              onChange={onChange("password")}
+            />
+            {/* <Form.Input
+              fluid
+              name="passwordConfirmation"
+              icon="repeat"
+              iconPosition="left"
+              placeholder="Password Confirmation"
+              type="password"
+              onChange={this.handleChange}
+            /> */}
+
+            <Button onClick={onSubmit} color="blue" fluid size="large">
+              Enviar
+            </Button>
+            <Message>
+              ¿Ya eres un usuario? <Link to="/login">Inicia Sesión</Link>
+            </Message>
+          </Segment>
+        </Form>
+        {error.length > 0 ? showError() : showSuccess()}
+      </Grid.Column>
+    </Grid>
+  );
+  return (
+    <div>
+      {signUpForm()}
+    </div>
+  );
+};
 
 export default Register;
