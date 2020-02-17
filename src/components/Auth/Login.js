@@ -1,105 +1,118 @@
-import React, { Component } from "react";
-import {
-  Grid,
-  Form,
-  Segment,
-  Button,
-  Header,
-  Message,
-  Icon
-} from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { Grid, Form, Segment, Button, Header, Icon } from "semantic-ui-react";
+import { signin } from "../../api";
 
-import "./App.css";
+const Login = () => {
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+    error: "",
+    loading: false,
+    redirectToReferrer: false
+  });
 
-const initialState = {
-  email: "",
-  password: "",
-  errors: [],
-  loading: false
-};
+  const { email, password, loading, error, redirectToReferrer } = values;
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = initialState;
-  }
-
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
+  const onChange = name => event => {
+    setValues({
+      ...values,
+      error: false,
+      [name]: event.target.value
     });
   };
 
-  displayErrors = errors =>
-    errors.map((error, index) => <p key={index}>{error.message}</p>);
-
-  isFormValid = ({ email, password }) => email && password;
-
-  handleInputError = (errors, inputName) => {
-    return errors.some(error => error.message.toLowerCase().includes(inputName))
-      ? "error"
-      : "";
+  const onSubmit = event => {
+    event.preventDefault();
+    setValues({
+      ...values,
+      error: false,
+      loading: true
+    });
+    signin({ email, password }).then(data => {
+      if (data.error) {
+        console.log("data", data);
+        setValues({
+          ...values,
+          error: data.error,
+          loading: false
+        });
+      } else {
+        setValues({
+          ...values,
+          redirectToReferrer: true
+        });
+      }
+    });
   };
 
-  render() {
-    const { email, password, errors, loading } = this.state;
-    return (
-      <Grid textAlign="center" verticalAlign="middle" className="register">
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h1" icon color="violet" textAlign="center">
-            <Icon name="code branch" color="violet"></Icon>
-            Login for Devchat
-          </Header>
-          <Form onSubmit={this.handleSubmit} size="large">
-            <Segment stacked>
-              <Form.Input
-                fluid
-                name="email"
-                icon="mail"
-                iconPosition="left"
-                placeholder="Email Address"
-                type="email"
-                onChange={this.handleChange}
-                className={this.handleInputError(errors, "email")}
-                value={email}
-              />
-              <Form.Input
-                fluid
-                name="password"
-                icon="lock"
-                iconPosition="left"
-                placeholder="Password"
-                type="password"
-                onChange={this.handleChange}
-                className={this.handleInputError(errors, "password")}
-                value={password}
-              />
+  const showError = () => (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
 
-              <Button
-                disabled={loading}
-                className={loading ? "loading" : ""}
-                color="violet"
-                fluid
-                size="large"
-              >
-                Submit
-              </Button>
-            </Segment>
-          </Form>
-          {errors.length > 0 && (
-            <Message error>
-              <h3>Error</h3>
-              {this.displayErrors(errors)}
-            </Message>
-          )}
-          <Message>
-            Don't have an account? <Link to="/register">Register</Link>
-          </Message>
-        </Grid.Column>
-      </Grid>
+  const showLoading = () =>
+    loading && (
+      <div className="alert alert-info">
+        <h2>Loading...</h2>
+      </div>
     );
-  }
-}
+
+  const redirectUser = () => {
+    if (redirectToReferrer) {
+      return <Redirect to="/" />;
+    }
+  };
+
+  const signInForm = () => (
+    <Grid textAlign="center" verticalAlign="middle" className="register">
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as="h2" icon color="violet" textAlign="center">
+          <Icon name="id badge" color="violet"></Icon>
+          Iniciar Sesión
+        </Header>
+        <Form size="large">
+          <Segment stacked>
+            <Form.Input
+              fluid
+              name="email"
+              icon="mail"
+              iconPosition="left"
+              placeholder="Introduzca un correo Electrónico"
+              type="email"
+              value={email}
+              onChange={onChange("email")}
+            />
+            <Form.Input
+              fluid
+              name="password"
+              icon="lock"
+              iconPosition="left"
+              placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
+              type="password"
+              value={password}
+              onChange={onChange("password")}
+            />
+            <Button onClick={onSubmit} color="violet" fluid size="large">
+              Enviar
+            </Button>
+          </Segment>
+        </Form>
+        {error.length > 0 ? showError() : redirectUser()}
+      </Grid.Column>
+    </Grid>
+  );
+
+  return (
+    <div>
+      {/* {showLoading()} */}
+      {signInForm()}
+    </div>
+  );
+};
 
 export default Login;
