@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Grid, Form, Segment, Button, Header, Icon } from "semantic-ui-react";
-import { signin, authenticate } from "../../api";
+import { signin } from "../../api";
+import { authenticate } from '../../helpers/authenticate'
 
 const Login = () => {
   const [values, setValues] = useState({
