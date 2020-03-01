@@ -1,0 +1,4 @@
+.auctionNavbar {
+    flex-direction: row-reverse;
+    width: min-content;
+}

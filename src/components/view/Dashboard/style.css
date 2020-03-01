@@ -1,0 +1,9 @@
+.generalContainer {
+    position: relative;
+    width: 100%;
+}
+
+.content-components {
+    width: calc(100% - 250px);
+    background: red;
+}
