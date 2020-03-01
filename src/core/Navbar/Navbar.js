@@ -1,10 +1,16 @@
 import React from "react";
-import { Menu, Icon, Dropdown } from "semantic-ui-react";
-
+import { Menu, Dropdown } from "semantic-ui-react";
 import { signout } from "../../api";
 
+import { Link, withRouter } from "react-router-dom";
+
 import "./style.css";
-import { withRouter } from "react-router-dom";
+
+const sendToSettings = (redirect) => {
+  const { history } = this.props;
+
+  history.push(`/${redirect}`);
+};
 
 const Navbar = ({ history }) => {
   return (
@@ -21,7 +27,11 @@ const Navbar = ({ history }) => {
             >
               Cerrar Sesión
             </Dropdown.Item>
-            <Dropdown.Item>Configuración</Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                history.push("/user/settings")
+              }}
+            >Configuración</Dropdown.Item>            
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Menu>
