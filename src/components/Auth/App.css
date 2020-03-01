@@ -1,5 +1,6 @@
 html,
 body,
 .register {
+    height: 100vh;
     background: #eee;
 }
