@@ -8,7 +8,9 @@ import { withRouter } from "react-router-dom";
 
 const Navbar = ({ history }) => {
   return (
-    <Menu size="mini" icon="labeled" className="auctionNavbar" fixed="top">
+
+    <div className="content-navbar">
+
 
       <Menu.Menu position="right">
         <Dropdown item text="Perfil">
@@ -26,7 +28,7 @@ const Navbar = ({ history }) => {
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Menu>
-    </Menu>
+    </div>
   );
 };
 
