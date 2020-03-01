@@ -1,22 +1,28 @@
 import React, { Fragment } from "react";
 
-import { Menu, Grid } from "semantic-ui-react";
+import { Menu, Grid, Header, Icon, Image } from "semantic-ui-react";
 import Navbar from "../Navbar/Navbar";
+import AuctionIcon from '../../assets/auction.svg'
 
 import "../../App.css";
-import './style.css'
+import "./style.css";
 
 const Sidebar = () => {
   return (
     <Fragment>
       <div className="sidebar-menu">
-        {/* <Menu
-          size="small"
-          inverted
-          fixed="left"
-          vertical
-          style={{ background: "#0e1c4c", fontSize: "1.2rem" }}
-        /> */}
+        <Grid>
+          <Grid.Column>
+            <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
+              <div className="sidebar-header">
+                <Header inverted>
+                <Image src={AuctionIcon} size="small" />
+                  <Header.Content>Auction</Header.Content>
+                </Header>
+              </div>
+            </Grid.Row>
+          </Grid.Column>
+        </Grid>
       </div>
     </Fragment>
   );

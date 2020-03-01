@@ -2,5 +2,11 @@
     position: fixed;
     min-height: 100%;
     width: 200px;
-    background-color: chartreuse;
+    background-color: #0f4c81;
+}
+
+.sidebar-header{
+    color: white;
+    text-align: center;
+    margin-left: 1em;
 }
