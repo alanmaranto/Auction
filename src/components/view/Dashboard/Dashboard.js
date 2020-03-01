@@ -9,12 +9,15 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="app">
-        <div>
+        <div className="content-navbar">
           <Navbar />
         </div>
         <div className="generalContainer">
           <Sidebar />
-          <Buyer />
+          <div className="content-components">
+
+          <Buyer  />
+          </div>
         </div>
       </div>
     );

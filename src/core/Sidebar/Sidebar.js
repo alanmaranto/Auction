@@ -10,13 +10,13 @@ const Sidebar = () => {
   return (
     <Fragment>
       <div className="sidebar-menu">
-        <Menu
+        {/* <Menu
           size="small"
           inverted
           fixed="left"
           vertical
           style={{ background: "#0e1c4c", fontSize: "1.2rem" }}
-        />
+        /> */}
       </div>
     </Fragment>
   );
