@@ -3,7 +3,6 @@ import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import Buyer from "./BuyerDashboard";
 import "../../../App.css";
-import "./style.css";
 
 class Dashboard extends Component {
   render() {

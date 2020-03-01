@@ -2,8 +2,6 @@ import React from "react";
 import { Button, Dimmer, Header, Segment, Icon, Card, Image } from 'semantic-ui-react';
 import Navbar from "../../../core/Navbar/Navbar";
 
-
-import './style.css';
 const test = () => {
 
     return (
