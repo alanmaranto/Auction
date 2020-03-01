@@ -1,10 +1,13 @@
 import React from "react";
-import { Button, Dimmer, Header, Segment, Icon, Card, Image } from 'semantic-ui-react'
+import { Button, Dimmer, Header, Segment, Icon, Card, Image } from 'semantic-ui-react';
+import Navbar from "../../../core/Navbar/Navbar";
+
 
 import './style.css';
 const test = () => {
 
     return (
+      
       <div>
         <Dimmer.Dimmable as={Segment}>
           <Header as='h3'>Overlayable Section</Header>
