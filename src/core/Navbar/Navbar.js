@@ -8,10 +8,7 @@ import { withRouter } from "react-router-dom";
 
 const Navbar = ({ history }) => {
   return (
-
     <div className="content-navbar">
-
-
       <Menu.Menu position="right">
         <Dropdown item text="Perfil">
           <Dropdown.Menu>

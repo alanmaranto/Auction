@@ -3,7 +3,7 @@ import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import Buyer from "./BuyerDashboard";
 import "../../../App.css";
-import './style.css';
+import "./style.css";
 
 class Dashboard extends Component {
   render() {
@@ -12,10 +12,10 @@ class Dashboard extends Component {
         <div className="generalContainer">
           <Sidebar />
           <div className="content-components">
-          <Navbar />
-          <div className="content-dynamic">
-            <Buyer  />
-          </div>
+            <Navbar />
+            <div className="content-dynamic">
+              <Buyer />
+            </div>
           </div>
         </div>
       </div>

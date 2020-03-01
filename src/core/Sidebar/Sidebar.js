@@ -1,8 +1,7 @@
 import React, { Fragment } from "react";
 
 import { Menu, Grid, Header, Icon, Image } from "semantic-ui-react";
-import Navbar from "../Navbar/Navbar";
-import AuctionIcon from '../../assets/auction.svg'
+import AuctionIcon from "../../assets/auction.svg";
 
 import "../../App.css";
 import "./style.css";
@@ -16,7 +15,7 @@ const Sidebar = () => {
             <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
               <div className="sidebar-header">
                 <Header inverted>
-                <Image src={AuctionIcon} size="small" />
+                  <Image src={AuctionIcon} size="small" />
                   <Header.Content>Auction</Header.Content>
                 </Header>
               </div>
