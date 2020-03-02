@@ -6,12 +6,6 @@ import { Link, withRouter } from "react-router-dom";
 
 import "./style.css";
 
-const sendToSettings = (redirect) => {
-  const { history } = this.props;
-
-  history.push(`/${redirect}`);
-};
-
 const Navbar = ({ history }) => {
   return (
     <div className="content-navbar">
