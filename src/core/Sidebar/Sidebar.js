@@ -1,7 +1,11 @@
 import React, { Fragment } from "react";
+import { Link, withRouter } from "react-router-dom";
 
 import { Menu, Grid, Header, Icon, Image } from "semantic-ui-react";
 import AuctionIcon from "../../assets/auction.svg";
+import Dashboard from "../../assets/dashboard.svg";
+import A1 from '../../assets/auctionicon.svg'
+import A2 from '../../assets/auctionicon2.svg'
 
 import "../../App.css";
 import "./style.css";
@@ -20,6 +24,26 @@ const Sidebar = () => {
                 </Header>
               </div>
             </Grid.Row>
+            <Grid.Row style={{ margin: 0 }}>
+              <Link to="/">
+                <div className="sidebar-options">
+                  <span>
+                    <Image src={Dashboard} />
+                  </span>
+                  <spam className="option-title">Dashboard</spam>
+                </div>
+              </Link>
+            </Grid.Row>
+            <Grid.Row>
+              <Link to="/create/auction">
+                <div className="sidebar-options">
+                  <span>
+                    <Image src={A1} />
+                  </span>
+                  <spam className="option-title">Crear Subasta</spam>
+                </div>
+              </Link>
+            </Grid.Row>
           </Grid.Column>
         </Grid>
       </div>
@@ -27,4 +51,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default withRouter(Sidebar);

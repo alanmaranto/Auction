@@ -2,11 +2,31 @@
     position: fixed;
     min-height: 100%;
     width: 200px;
-    background-color: #0f4c81;
+    background: linear-gradient(to bottom, #142850, #010038)
+
 }
 
 .sidebar-header{
     color: white;
     text-align: center;
     margin-left: 1em;
+}
+
+.sidebar-options{
+    cursor: pointer;
+    align-items: center;
+    margin-top: 2em;
+    padding: 1em 2em 1em 0em;
+    margin-left: 2em;
+    display: flex;
+    color: white;
+}
+
+.sidebar-options:hover{
+    background: linear-gradient(to right, #142850, #010038);
+    border-radius: 1em;
+}
+
+.option-title {
+    padding-left: 1em;
 }
