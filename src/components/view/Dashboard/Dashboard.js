@@ -1,25 +1,40 @@
-import React, { Component } from "react";
-import Sidebar from "../../../core/Sidebar/Sidebar";
-import Navbar from "../../../core/Navbar/Navbar";
-import Buyer from "./BuyerDashboard";
-import "../../../App.css";
+import React, { Fragment } from "react";
+import { Card } from "semantic-ui-react";
 
-class Dashboard extends Component {
-  render() {
-    return (
-      <div className="app">
-        <div className="generalContainer">
-          <Sidebar />
-          <div className="content-components">
-            <Navbar />
-            <div className="content-dynamic">
-              <Buyer />
-            </div>
-          </div>
+import "./style.css";
+
+const description = "Aqui van los reportes y graficos";
+
+const description1 = " Aqui van las subastas activas";
+
+  const description2 = "Aqui van las subastas finalizadas";
+
+const Dashboard = () => {
+  return (
+    <Fragment>
+      <div className="dashboard-view">
+        <div className="card-graphics">
+          <Card>
+            <Card.Content header="Reporte de Subastas" />
+            <Card.Content description={description} />
+            <Card.Content extra></Card.Content>
+          </Card>
+        </div>
+        <div className="card-auctions">
+          <Card>
+            <Card.Content header="Subastas Activas" />
+            <Card.Content description={description1} />
+            <Card.Content extra></Card.Content>
+          </Card>
+          <Card>
+            <Card.Content header="Subastas Finalizadas" />
+            <Card.Content description={description2} />
+            <Card.Content extra></Card.Content>
+          </Card>
         </div>
       </div>
-    );
-  }
-}
+    </Fragment>
+  );
+};
 
 export default Dashboard;

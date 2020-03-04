@@ -1,0 +1,13 @@
+.dashboard-view {
+    display: grid;
+}
+
+.card-graphics {
+    display: grid;
+    grid-template: 1fr;
+}
+
+.card-auctions {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr;
+}
