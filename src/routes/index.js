@@ -7,6 +7,7 @@ import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
 import Settings from '../components/user/Settings';
 import NewAuction from '../components/view/NewAuction/NewAuction'
+import AuctionView from '../components/view/NewAuction/Auction'
 
 import "semantic-ui-css/semantic.min.css";
 
@@ -18,6 +19,7 @@ const Routes = () => (
         <Route path="/register" component={Register} />
         <Route path="/user/settings" component={Settings} />
         <Route path="/create/auction" component={NewAuction} />
+        <Route path="/auctionid" component={AuctionView} />
         <Route component={NotFound} />
       </Switch>
   </Router>
