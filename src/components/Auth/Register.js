@@ -74,7 +74,7 @@ const Register = () => {
       className="alert alert-info"
       style={{ display: success ? "" : "none" }}
     >
-      New account is created. Please <Link to="/login">Signin</Link>
+      Su cuenta ha sido creada, por favor inicie sesión <Link to="/login">Iniciar Sesión</Link>
     </div>
   );
 

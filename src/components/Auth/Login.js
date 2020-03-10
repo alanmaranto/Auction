@@ -4,6 +4,8 @@ import { Grid, Form, Segment, Button, Header, Icon } from "semantic-ui-react";
 import { signin } from "../../api";
 import { authenticate } from '../../helpers/authenticate'
 
+import './App.css'
+
 const Login = () => {
   const [values, setValues] = useState({
     email: "",
