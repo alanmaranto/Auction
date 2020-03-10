@@ -49,3 +49,24 @@ export const signout = next => {
       .catch(err => console.log(err));
   }
 };
+
+// auction
+
+export const createAuction = (userId, token, auction) => {
+  return fetch(`${host}/auctionInformation/create/${userId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(auction)
+  })
+    .then(response => {
+      console.log('response', response)
+      return response.json();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
