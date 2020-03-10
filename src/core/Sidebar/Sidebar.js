@@ -30,7 +30,7 @@ const Sidebar = () => {
                   <span>
                     <Image src={Dashboard} />
                   </span>
-                  <spam className="option-title">Dashboard</spam>
+                  <span className="option-title">Dashboard</span>
                 </div>
               </Link>
             </Grid.Row>
@@ -40,7 +40,7 @@ const Sidebar = () => {
                   <span>
                     <Image src={A1} />
                   </span>
-                  <spam className="option-title">Crear Subasta</spam>
+                  <span className="option-title">Crear Subasta</span>
                 </div>
               </Link>
             </Grid.Row>
