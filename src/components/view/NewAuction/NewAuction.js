@@ -11,7 +11,7 @@ import {
   GridRow
 } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
-import moment from 'moment'
+import moment from "moment";
 import { Link } from "react-router-dom";
 
 import Sidebar from "../../../core/Sidebar/Sidebar";
@@ -28,6 +28,7 @@ const NewAuction = () => {
   const [endingAuction, setEndingAuction] = useState("");
   const [values, setValues] = useState({
     title: "",
+    description: "",
     finalized: false,
     error: "",
     loading: false,
@@ -37,6 +38,7 @@ const NewAuction = () => {
 
   const {
     title,
+    description,
     finalized,
     redirectToAuction,
     createdAuction,
@@ -47,7 +49,7 @@ const NewAuction = () => {
   const auction = {
     ...values,
     openingAuction,
-    endingAuction,
+    endingAuction
   };
 
   console.log("jola", auction);
@@ -56,7 +58,7 @@ const NewAuction = () => {
   console.log("user", user);
   console.log("token", token);
 
-/*   useEffect(() => {
+  /*   useEffect(() => {
     setValues({ ...values });
   }, []); */
 
@@ -83,6 +85,7 @@ const NewAuction = () => {
         setValues({
           ...values,
           title: "",
+          description: "",
           openingAuction: "",
           endingAuction: "",
           finalized: false,
@@ -102,9 +105,9 @@ const NewAuction = () => {
             <div className="content-dynamic">
               <Grid verticalAlign="top" container centered columns={1}>
                 <Grid.Column>
-                  <Header textAlign="center" as="h1">
+                  <Header textAlign="center" style={{ color: '#142850', fontSize: '4em' }}>
                     Crear Nueva Subasta
-                    <Header.Subheader>
+                    <Header.Subheader style={{ fontSize: '0.5em', marginBottom: '30px'}} >
                       Configura la información de la nueva subasta
                     </Header.Subheader>
                   </Header>
@@ -117,6 +120,14 @@ const NewAuction = () => {
                         value={title}
                         name="title"
                         onChange={onChange("title")}
+                      />
+                      <Form.Field label="Descripción de la subasta (Opcional)" />
+                      <Form.TextArea
+                        placeholder="Descripción (Opcional)"
+                        type="textarea"
+                        value={description}
+                        name="title"
+                        onChange={onChange("description")}
                       />
                       <Form.Field label="Fecha de comienzo de la subasta" />
                       <DatePicker
@@ -167,16 +178,16 @@ const NewAuction = () => {
                             </Button>
                           </GridColumn>
                           <Link to="/auctionid">
-                              <Button
-                                fluid
-                                compact
-                                className="button-cancel-new-auction"
-                                fluid
-                                size="medium"
-                              >
-                                Ir a vista AuctionId
-                              </Button>
-                            </Link>
+                            <Button
+                              fluid
+                              compact
+                              className="button-cancel-new-auction"
+                              fluid
+                              size="medium"
+                            >
+                              Ir a vista AuctionId
+                            </Button>
+                          </Link>
                         </GridRow>
                       </Grid>
                     </Segment>
