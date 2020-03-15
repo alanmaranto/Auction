@@ -6,7 +6,8 @@ import {
   Button,
   Header,
   Message,
-  Icon
+  Icon,
+  Card
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { signup } from "../../api";
@@ -74,50 +75,52 @@ const Register = () => {
       className="alert alert-info"
       style={{ display: success ? "" : "none" }}
     >
-      Su cuenta ha sido creada, por favor inicie sesión <Link to="/login">Iniciar Sesión</Link>
+      Su cuenta ha sido creada, por favor inicie sesión{" "}
+      <Link to="/login">Iniciar Sesión</Link>
     </div>
   );
 
   const signUpForm = () => (
     <Grid textAlign="center" verticalAlign="middle" className="register">
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as="h2" icon color="blue" textAlign="center">
-          <Icon name="id badge" color="blue"></Icon>
-          Registrarse
-        </Header>
-        <Form size="large">
-          <Segment stacked>
-            <Form.Input
-              fluid
-              name="name"
-              icon="user"
-              iconPosition="left"
-              placeholder="Introduzca un nombre de usuario"
-              type="text"
-              value={name}
-              onChange={onChange("name")}
-            />
-            <Form.Input
-              fluid
-              name="email"
-              icon="mail"
-              iconPosition="left"
-              placeholder="Introduzca un correo Electrónico"
-              type="email"
-              value={email}
-              onChange={onChange("email")}
-            />
-            <Form.Input
-              fluid
-              name="password"
-              icon="lock"
-              iconPosition="left"
-              placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
-              type="password"
-              value={password}
-              onChange={onChange("password")}
-            />
-            {/* <Form.Input
+        <Segment stacked>
+          <Header as="h2" icon color="blue" textAlign="center">
+            <Icon name="id badge" color="blue"></Icon>
+            Registrarse
+          </Header>
+          <Form size="large">
+            <Segment stacked>
+              <Form.Input
+                fluid
+                name="name"
+                icon="user"
+                iconPosition="left"
+                placeholder="Introduzca un nombre de usuario"
+                type="text"
+                value={name}
+                onChange={onChange("name")}
+              />
+              <Form.Input
+                fluid
+                name="email"
+                icon="mail"
+                iconPosition="left"
+                placeholder="Introduzca un correo Electrónico"
+                type="email"
+                value={email}
+                onChange={onChange("email")}
+              />
+              <Form.Input
+                fluid
+                name="password"
+                icon="lock"
+                iconPosition="left"
+                placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
+                type="password"
+                value={password}
+                onChange={onChange("password")}
+              />
+              {/* <Form.Input
               fluid
               name="passwordConfirmation"
               icon="repeat"
@@ -127,23 +130,20 @@ const Register = () => {
               onChange={this.handleChange}
             /> */}
 
-            <Button onClick={onSubmit} color="blue" fluid size="large">
-              Enviar
-            </Button>
-            <Message>
-              ¿Ya eres un usuario? <Link to="/login">Inicia Sesión</Link>
-            </Message>
-          </Segment>
-        </Form>
-        {error.length > 0 ? showError() : showSuccess()}
+              <Button onClick={onSubmit} color="blue" fluid size="large">
+                Enviar
+              </Button>
+              <Message>
+                ¿Ya eres un usuario? <Link to="/login">Inicia Sesión</Link>
+              </Message>
+            </Segment>
+          </Form>
+          {error.length > 0 ? showError() : showSuccess()}
+        </Segment>
       </Grid.Column>
     </Grid>
   );
-  return (
-    <div>
-      {signUpForm()}
-    </div>
-  );
+  return <div>{signUpForm()}</div>;
 };
 
 export default Register;

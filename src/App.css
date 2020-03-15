@@ -1,8 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 
-html,
+html {
+  background: #142850;
+}
+
+body {
+  background: #dfe7f5 !important;
+}
 body .app {
-  background: #eee;
+  background: #dfe7f5 !important;
   font-family: "Open Sans";
 }
 
@@ -15,7 +21,7 @@ body .app {
 
 .content-components {
   width: calc(100% - 200px);
-  background: #f4f4f4;
+  background: #dfe7f5;
   margin-left: 200px;
 
 }
@@ -33,5 +39,6 @@ body .app {
 
 .content-dynamic {
   margin-top: 45px;
+  margin-left: 20px;
   padding: 20px;
 }

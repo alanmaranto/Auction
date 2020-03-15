@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import { Grid, Form, Segment, Button, Header, Icon } from "semantic-ui-react";
+import {
+  Grid,
+  Form,
+  Segment,
+  Button,
+  Header,
+  Icon,
+  Card
+} from "semantic-ui-react";
 import { signin } from "../../api";
-import { authenticate } from '../../helpers/authenticate'
+import { authenticate } from "../../helpers/authenticate";
 
-import './App.css'
+import "./App.css";
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -76,38 +84,40 @@ const Login = () => {
   const signInForm = () => (
     <Grid textAlign="center" verticalAlign="middle" className="register">
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as="h2" icon color="violet" textAlign="center">
-          <Icon name="id badge" color="violet"></Icon>
-          Iniciar Sesión
-        </Header>
-        <Form size="large">
-          <Segment stacked>
-            <Form.Input
-              fluid
-              name="email"
-              icon="mail"
-              iconPosition="left"
-              placeholder="Introduzca un correo Electrónico"
-              type="email"
-              value={email}
-              onChange={onChange("email")}
-            />
-            <Form.Input
-              fluid
-              name="password"
-              icon="lock"
-              iconPosition="left"
-              placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
-              type="password"
-              value={password}
-              onChange={onChange("password")}
-            />
-            <Button onClick={onSubmit} color="violet" fluid size="large">
-              Enviar
-            </Button>
-          </Segment>
-        </Form>
-        {error.length > 0 ? showError() : redirectUser()}
+        <Segment>
+          <Header as="h2" icon color="violet" textAlign="center">
+            <Icon name="id badge" color="violet"></Icon>
+            Iniciar Sesión
+          </Header>
+          <Form size="large">
+            <Segment stacked>
+              <Form.Input
+                fluid
+                name="email"
+                icon="mail"
+                iconPosition="left"
+                placeholder="Introduzca un correo Electrónico"
+                type="email"
+                value={email}
+                onChange={onChange("email")}
+              />
+              <Form.Input
+                fluid
+                name="password"
+                icon="lock"
+                iconPosition="left"
+                placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
+                type="password"
+                value={password}
+                onChange={onChange("password")}
+              />
+              <Button onClick={onSubmit} color="violet" fluid size="large">
+                Enviar
+              </Button>
+            </Segment>
+          </Form>
+          {error.length > 0 ? showError() : redirectUser()}
+        </Segment>
       </Grid.Column>
     </Grid>
   );
