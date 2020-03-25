@@ -1,7 +1,8 @@
+import axios from 'axios';
 const host = process.env.REACT_APP_API_URL || "localhost:3000";
-
+//
 // Auth
-
+//
 export const signup = user => {
   return fetch(`${host}/signup`, {
     method: "POST",
@@ -49,24 +50,57 @@ export const signout = next => {
       .catch(err => console.log(err));
   }
 };
+//
+//Auction
+//
+export const createAuction = async (userId, token, auction ) => {
+  try {
+    const response = await axios({
+      url: `${host}/auctionInformation/create/${userId}`,
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      },
+      data: auction
+    })
+  } catch (error) {
+    console.log(error)
+  }
+};
 
-// auction
+export const getAuctions = async () => {
+  try {
+    const response = await axios({
+      url: `${host}/auctionInformation`,
+      method: 'GET'
+    })
 
-export const createAuction = (userId, token, auction) => {
-  return fetch(`${host}/auctionInformation/create/${userId}`, {
-    method: "POST",
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAuctionById = async id => {
+  try {
+    const response = await axios({
+      url: `${host}/auctionInformation/${id}`,
+      method: 'GET'
+    })
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateAuction = (auctionId, userId, token, auction) => {
+  return fetch(`${host}/auctionInformation/${auctionId}/${userId}`, {
+    method: "PUT",
     headers: {
       Accept: "application/json",
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify(auction)
-  })
-    .then(response => {
-      console.log('response', response)
-      return response.json();
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    body: auction
+  });
 };
