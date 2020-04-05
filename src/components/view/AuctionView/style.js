@@ -1,5 +1,5 @@
 export const timerStyle = {
-    height: 200,
+    height: 300,
     width: 200
 }
 

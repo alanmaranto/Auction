@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import {
   Card,
   Header,
@@ -10,32 +10,36 @@ import {
   CardContent
 } from "semantic-ui-react";
 import Timer from "react-compound-timer";
-import RealTimeAuction from "../RealTimeAuction/RealTimeAuctionView";
+import Countdown from 'react-countdown';
+import moment from "moment";
 
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
-import { timerStyle } from './style';
+import FileCardView from './FileCardView';
+import { timerStyle } from "./style";
+import "./style.css";
 
-const sendToRealTimeAuction = () => {
-  console.log("Enviando a la subasta en tiempo real");
-};
+const Auction = ({ auction }) => {
+  const sendToRealTimeAuction = () => {
+    console.log("Enviando a la subasta en tiempo real");
+  };
 
-const timeToAuction = [
-  {
-    time: 0,
-    callback: () => sendToRealTimeAuction()
-  }
-];
+  const timeToAuction = [
+    {
+      time: 0,
+      callback: () => sendToRealTimeAuction()
+    }
+  ];
 
-const items = [
-  {
-    header: "showinfo",
-    description: "Inofauction",
-    meta: "Info"
-  }
-];
+  const auctionDate = moment(auction.openingAuction);
+  const nowDate = moment();
+  const difference = moment.duration(auctionDate.diff(nowDate));
+  const asd = moment(difference).format("MMMM Do YYYY, h:mm:ss a")
+  const time = Number(difference);
+  console.log("difference", difference);
+  console.log("num", Number(difference));
+  console.log("time", time);
 
-const AuctionView = () => {
   return (
     <Fragment>
       <div className="app">
@@ -47,15 +51,17 @@ const AuctionView = () => {
               <Grid>
                 <Grid.Row>
                   <Grid.Column>
-                    <Header textAlign="left" style={{ color: '#142850', fontSize: '4em' }}>
-                      AQUI SE MUESTRA EL TITULO DE LA SUBASTA
-                    </Header>
+                    <Header
+                      textAlign="left"
+                      style={{ color: "#142850", fontSize: "4em" }}
+                    ></Header>
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row columns={2}>
                   <Grid.Column>
-                    <Card style={{ height:'400px', width: '500px'}}>
-                      <p>Aqui se mostrará la información de la subasta</p>
+                    <Card style={{ height: "400px", width: "500px" }}>
+                      <p>{auction.title}</p>
+                      <p>{auction.description}</p>
                     </Card>
                   </Grid.Column>
                   <Grid.Column>
@@ -63,24 +69,24 @@ const AuctionView = () => {
                       <div style={{ textAlign: "center" }}>
                         <h2>Tiempo para iniciar la subasta</h2>
                       </div>
-{/*                       <Timer
-                        initialTime={5555}
+{/*                       <Countdown date={Date.now() + 5555}>
+                        <sendToRealTimeAuction />
+                      </Countdown> */}
+                       <Timer
+                        initialTime={5555555555}
                         direction="backward"
                         lastUnit="d"
                         checkpoints={timeToAuction}
                       >
                         {() => (
                           <Fragment>
-                            <div>
-                            <Timer.Days /> 
-                            <span>Días</span>
-                            </div>
+                            <Timer.Days /> Días
                             <Timer.Hours /> Horas
                             <Timer.Minutes /> Minutos
                             <Timer.Seconds /> Segundos
                           </Fragment>
                         )}
-                      </Timer> */}
+                      </Timer>
                     </Card>
                     <Segment>
                       <Header icon>
@@ -100,4 +106,4 @@ const AuctionView = () => {
   );
 };
 
-export default AuctionView;
+export default Auction;

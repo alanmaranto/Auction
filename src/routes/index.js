@@ -7,7 +7,7 @@ import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
 import Settings from "../components/user/Settings";
 import NewAuction from "../components/view/NewAuction/NewAuction";
-import AuctionView from "../components/view/AuctionView/Auction";
+import AuctionView from "../components/view/AuctionView/AuctionContainer";
 
 import "semantic-ui-css/semantic.min.css";
 

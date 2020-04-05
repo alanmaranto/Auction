@@ -1,0 +1,20 @@
+li {
+    display: inline-block;
+    font-size: 1em;
+    list-style-type: none;
+    padding: 1em;
+    text-transform: uppercase;
+  }
+  
+  li span {
+    display: block;
+    font-size: 1rem;
+  }
+
+.time-container {
+    color: #333;
+    margin: 0 auto;
+    padding: 0.5rem;
+    text-align: center;
+}
+  
