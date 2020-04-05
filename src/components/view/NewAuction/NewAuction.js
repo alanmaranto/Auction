@@ -13,6 +13,7 @@ import {
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import history from '../../../modules/history/history';
 
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
@@ -46,21 +47,14 @@ const NewAuction = () => {
     loading
   } = values;
 
+  const { user, token } = isAuthenticated();
+
   const auction = {
     ...values,
     openingAuction,
-    endingAuction
+    endingAuction,
+    user: user._id
   };
-
-  console.log("jola", auction);
-
-  const { user, token } = isAuthenticated();
-  console.log("user", user);
-  console.log("token", token);
-
-  /*   useEffect(() => {
-    setValues({ ...values });
-  }, []); */
 
   const onChange = name => e => {
     setValues({
@@ -70,25 +64,30 @@ const NewAuction = () => {
     });
   };
 
+  const showError = () => (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
+
   const onSubmit = e => {
     e.preventDefault();
     setValues({ ...values, error: "", loading: true });
-    console.log("ss", setValues({ ...values, error: "", loading: true }));
 
     createAuction(user._id, token, auction).then(data => {
-      console.log("data", data);
+      console.log('data', data)
       if (data.error) {
-        console.log("dataerror", data.error);
         setValues({ ...values, error: data.error });
       } else {
-        console.log("herepass");
         setValues({
           ...values,
           title: "",
           description: "",
-          openingAuction: "",
-          endingAuction: "",
           finalized: false,
+          redirectToAuction: true,
           createdAuction: data.title
         });
       }
@@ -105,9 +104,14 @@ const NewAuction = () => {
             <div className="content-dynamic">
               <Grid verticalAlign="top" container centered columns={1}>
                 <Grid.Column>
-                  <Header textAlign="center" style={{ color: '#142850', fontSize: '4em' }}>
+                  <Header
+                    textAlign="center"
+                    style={{ color: "#142850", fontSize: "4em" }}
+                  >
                     Crear Nueva Subasta
-                    <Header.Subheader style={{ fontSize: '0.5em', marginBottom: '30px'}} >
+                    <Header.Subheader
+                      style={{ fontSize: "0.5em", marginBottom: "30px" }}
+                    >
                       Configura la información de la nueva subasta
                     </Header.Subheader>
                   </Header>
@@ -192,6 +196,7 @@ const NewAuction = () => {
                       </Grid>
                     </Segment>
                   </Form>
+                  {/* { error.length > 0 ? showError() : redirectAuction()} */}
                 </Grid.Column>
               </Grid>
             </div>
