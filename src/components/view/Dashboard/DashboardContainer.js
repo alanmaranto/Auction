@@ -3,6 +3,7 @@ import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import Dashboard from "./Dashboard";
 import history from "../../../modules/history/history";
+import { isAuthenticated } from "../../../helpers/authenticate";
 
 import { getAuctions } from "../../../api";
 import { showAuctions } from "./helpers";
@@ -12,6 +13,8 @@ import "../../../App.css";
 const DashboardContainer = () => {
   const [error, setError] = useState(false);
   const [auctions, setAuctions] = useState([]);
+
+  const { user } = isAuthenticated();
 
   const fetchProducts = async () => {
     const response = await getAuctions();
@@ -26,8 +29,6 @@ const DashboardContainer = () => {
   }, []);
 
   const sendToAuctionView = (redirect) => {
-    console.log("his", history);
-
     history.push(`${redirect}`);
   };
 
@@ -41,6 +42,7 @@ const DashboardContainer = () => {
     "finalizedAuction",
     sendToAuctionView
   );
+
   return (
     <div className="app">
       <div className="generalContainer">
@@ -51,6 +53,7 @@ const DashboardContainer = () => {
             <Dashboard
               activeAuctions={activeAuctions}
               finalizedAuctions={finalizedAuctions}
+              user={user}
             />
           </div>
         </div>

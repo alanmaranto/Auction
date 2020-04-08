@@ -37,21 +37,22 @@ export const displayAuction = ({ onClickElement, title, openingAuction }) => {
     <Grid.Column>
       <div
         onClick={onClickElement}
+        className="display-auction"
       >
         <Item.Group>
-          <Item>
+          <Item className="item-card">
             <Icon
-              style={{ marginRight: "10px" }}
               name="info circle"
               size="big"
+              className="item-icon"
             />
             <Item.Content
-              style={{ marginBottom: "10px" }}
               verticalAlign="middle"
+              className="item-content"
             >
-              <Item.Header style={{ fontSize: "1.2em" }}>{title}</Item.Header>
+              <Item.Header className="item-header">{title}</Item.Header>
               <Item.Description
-                style={{ fontSize: "1.1em" }}
+              className="item-description"
               >{`Inicio de subasta: ${moment(openingAuction).format("MMMM Do YYYY, h:mm:ss a")}`}</Item.Description>
             </Item.Content>
           </Item>
