@@ -2,44 +2,14 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Card, Grid, Segment, List, Divider } from "semantic-ui-react";
 import { getAuction, getAuctions } from "../../../api";
 import { showAuctions, displayAuction } from "./helpers";
-import history from "../../../modules/history/history";
 import Clock from "../../../core/Clock/Clock";
 
 import "./style.css";
 
-const Dashboard = () => {
-  const [error, setError] = useState(false);
-  const [auctions, setAuctions] = useState([]);
-
-  const fetchProducts = async () => {
-    const response = await getAuctions();
-
-    if (response.status === 200) {
-      setAuctions(response.data.body);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const sendToAuctionView = redirect => {
-    console.log("his", history);
-
-    history.push(`${redirect}`);
-  };
-
-  const activeAuctions = showAuctions(
-    auctions,
-    "activeAuction",
-    sendToAuctionView
-  );
-  const finalizedAuctions = showAuctions(
-    auctions,
-    "finalizedAuction",
-    sendToAuctionView
-  );
-
+const Dashboard = ({
+  activeAuctions,
+  finalizedAuctions
+}) => {
   return (
     <Fragment>
       <div className="dashboard-view">
