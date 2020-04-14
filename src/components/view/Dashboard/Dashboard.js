@@ -2,7 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Card, Grid, Segment, List, Divider, Header } from "semantic-ui-react";
 import { getAuction, getAuctions } from "../../../api";
 import { showAuctions, displayAuction } from "./helpers";
-import NativeClock from '../../../core/Clock/NativeClock';
+import TotalAuctions from "../Reports/TotalAuctions";
+import NativeClock from "../../../core/Clock/NativeClock";
 
 import "./style.css";
 
@@ -23,7 +24,7 @@ const Dashboard = ({ activeAuctions, finalizedAuctions, user }) => {
             <Grid.Row>
               <Grid.Column width={13}>
                 <Segment>
-                  1<div>Reporte de Subatas</div>
+                  <TotalAuctions />
                 </Segment>
               </Grid.Column>
               <Grid.Column width={3}>
@@ -35,7 +36,11 @@ const Dashboard = ({ activeAuctions, finalizedAuctions, user }) => {
             <div className="dashboard-container">
               <Grid.Row>
                 <Grid.Column width={8}>
-                  <Segment className="active-auction-card" textAlign="left" size="tiny">
+                  <Segment
+                    className="active-auction-card"
+                    textAlign="left"
+                    size="tiny"
+                  >
                     <div>
                       <h3>Subastas Activas</h3>
                       <Divider />
