@@ -104,3 +104,21 @@ export const updateAuction = (auctionId, userId, token, auction) => {
     body: auction
   });
 };
+
+// Files
+export const postFile = async (token, body) => {
+  try {
+    const response = await axios({
+      url: `${host}/document/upload/`,
+      method: 'POST',
+      headers: {
+        "Content-Type": "multipart/form-data",
+        'Authorization': `Bearer ${token}`
+      },
+      data: body
+    })
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
+}

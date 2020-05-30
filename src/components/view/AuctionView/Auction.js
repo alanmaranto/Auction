@@ -6,20 +6,26 @@ import {
   Segment,
   Icon,
   Button,
+  Divider,
   Container,
-  CardContent
+  CardContent,
 } from "semantic-ui-react";
 import Timer from "react-compound-timer";
-import Countdown from 'react-countdown';
+import Countdown from "react-countdown";
 import moment from "moment";
 
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
-import FileCardView from './FileCardView';
+import FileCardView from "./FileCardView";
 import { timerStyle } from "./style";
 import "./style.css";
 
 const Auction = ({ auction }) => {
+  const [show, setShow] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+
+  const { title, description, _id } = auction;
+
   const sendToRealTimeAuction = () => {
     console.log("Enviando a la subasta en tiempo real");
   };
@@ -27,18 +33,26 @@ const Auction = ({ auction }) => {
   const timeToAuction = [
     {
       time: 0,
-      callback: () => sendToRealTimeAuction()
-    }
+      callback: () => sendToRealTimeAuction(),
+    },
   ];
 
   const auctionDate = moment(auction.openingAuction);
   const nowDate = moment();
   const difference = moment.duration(auctionDate.diff(nowDate));
-  const asd = moment(difference).format("MMMM Do YYYY, h:mm:ss a")
+  const asd = moment(difference).format("MMMM Do YYYY, h:mm:ss a");
   const time = Number(difference);
   console.log("difference", difference);
   console.log("num", Number(difference));
   console.log("time", time);
+
+  const onClose = () => {
+    setOpenModal(false);
+  };
+
+  const onOpenModal = () => {
+    setOpenModal(true);
+  };
 
   return (
     <Fragment>
@@ -51,50 +65,83 @@ const Auction = ({ auction }) => {
               <Grid>
                 <Grid.Row>
                   <Grid.Column>
-                    <Header
-                      textAlign="left"
-                      style={{ color: "#142850", fontSize: "4em" }}
-                    ></Header>
+                    <div className="auction-title">
+                      <div className="auction-h">
+                        <Header
+                          as="h1"
+                          className="auction-header"
+                          content={title}
+                          icon="gavel"
+                        />
+                      </div>
+                      <div className="background-container">
+                        <Button onClick={() => setShow(!show)}>
+                          {show ? (
+                            <div style={{ color: "w" }}>
+                              Ver descripción completa
+                            </div>
+                          ) : (
+                            <div>
+                              <p className="auction-description">
+                                {description}
+                              </p>
+                            </div>
+                          )}
+                        </Button>
+                      </div>
+                    </div>
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row columns={2}>
                   <Grid.Column>
-                    <Card style={{ height: "400px", width: "500px" }}>
-                      <p>{auction.title}</p>
-                      <p>{auction.description}</p>
+                    <Card className="auction-card">
+                      Time, Countdown and messages
+                      <Card style={timerStyle}>
+                        <div style={{ textAlign: "center" }}>
+                          <h2>Tiempo para iniciar la subasta</h2>
+                        </div>
+                        {/*                       <Countdown date={Date.now() + 5555}>
+                        <sendToRealTimeAuction />
+                      </Countdown> */}
+                        <Timer
+                          initialTime={5555555555}
+                          direction="backward"
+                          lastUnit="d"
+                          checkpoints={timeToAuction}
+                        >
+                          {() => (
+                            <Fragment>
+                              <Timer.Days /> Días
+                              <Timer.Hours /> Horas
+                              <Timer.Minutes /> Minutos
+                              <Timer.Seconds /> Segundos
+                            </Fragment>
+                          )}
+                        </Timer>
+                      </Card>
                     </Card>
                   </Grid.Column>
                   <Grid.Column>
-                    <Card style={timerStyle}>
-                      <div style={{ textAlign: "center" }}>
-                        <h2>Tiempo para iniciar la subasta</h2>
-                      </div>
-{/*                       <Countdown date={Date.now() + 5555}>
-                        <sendToRealTimeAuction />
-                      </Countdown> */}
-                       <Timer
-                        initialTime={5555555555}
-                        direction="backward"
-                        lastUnit="d"
-                        checkpoints={timeToAuction}
-                      >
-                        {() => (
-                          <Fragment>
-                            <Timer.Days /> Días
-                            <Timer.Hours /> Horas
-                            <Timer.Minutes /> Minutos
-                            <Timer.Seconds /> Segundos
-                          </Fragment>
-                        )}
-                      </Timer>
+                    <Card>
+                      <Card.Content>
+                        <div>
+                          Archivos
+                          <Button
+                            circular
+                            floated="right"
+                            icon="add circle"
+                            onClick={onOpenModal}
+                          />
+                          <FileCardView
+                            openModal={openModal}
+                            setOpenModal={setOpenModal}
+                            onClose={onClose}
+                            auctionId={_id}
+                          />
+                        </div>
+                        <Card>Aqui van los archivos</Card>
+                      </Card.Content>
                     </Card>
-                    <Segment>
-                      <Header icon>
-                        <Icon name="pdf file outline" />
-                        No se han agregado documentos aún
-                      </Header>
-                      <Button primary>Agregar Documento</Button>
-                    </Segment>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
