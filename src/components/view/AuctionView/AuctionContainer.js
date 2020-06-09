@@ -16,7 +16,7 @@ const AuctionContainer = ({match}) => {
     const { id } = match.params
     const response = await getAuctionById(id);
 
-    if (response.status === 200) {
+    if (response && response.status && response.status === 200) {
       setAuction(response.data.body)
     }
   }

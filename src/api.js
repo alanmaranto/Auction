@@ -1,5 +1,8 @@
 import axios from 'axios';
 const host = process.env.REACT_APP_API_URL || "localhost:3000";
+const api = {
+  host,
+};
 //
 // Auth
 //
@@ -85,8 +88,9 @@ export const getAuctions = async () => {
 export const getAuctionById = async id => {
   try {
     const response = await axios({
-      url: `${host}/auctionInformation/${id}`,
-      method: 'GET'
+      url: `${host}/auction/${id}`,
+      method: 'GET',
+      body: JSON.stringify({auctionId: id}),
     })
     return response
   } catch (error) {
@@ -122,3 +126,5 @@ export const postFile = async (token, body) => {
     console.log(error)
   }
 }
+
+export default api;

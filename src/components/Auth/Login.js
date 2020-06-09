@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import { signin } from "../../api";
 import { authenticate } from "../../helpers/authenticate";
-
+import { registerUserIOToken } from '../../socket';
 import "./App.css";
 
 const Login = () => {
@@ -33,7 +33,7 @@ const Login = () => {
     });
   };
 
-  const onSubmit = event => {
+  const onSubmit = async event => {
     event.preventDefault();
     setValues({
       ...values,
@@ -49,6 +49,7 @@ const Login = () => {
           loading: false
         });
       } else {
+        registerUserIOToken(data.token);
         authenticate(data, () => {
           setValues({
             ...values,

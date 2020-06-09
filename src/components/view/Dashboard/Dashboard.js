@@ -8,7 +8,8 @@ import NativeClock from "../../../core/Clock/NativeClock";
 import "./style.css";
 
 const Dashboard = ({ activeAuctions, finalizedAuctions, user }) => {
-  const { name } = user;
+
+  const { name } = user || {};
   return (
     <Fragment>
       <div className="dashboard-view">
@@ -17,7 +18,7 @@ const Dashboard = ({ activeAuctions, finalizedAuctions, user }) => {
             <Grid.Row className="dashboard-header">
               <Grid.Column width={13}>
                 <Header className="dashboard-name" as="h1">
-                  Hola {name.toUpperCase()}, Bienvenido
+                  Hola {(name || '').toUpperCase()}, Bienvenido
                 </Header>
               </Grid.Column>
             </Grid.Row>

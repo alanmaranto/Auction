@@ -38,7 +38,7 @@ const FileCardView = ({ openModal, onClose, setOpenModal, auctionId }) => {
 
     console.log("res", response);
 
-    if (response.status === 200) {
+    if (response && response.status === 200) {
       setFileNames([]);
     }
   };
