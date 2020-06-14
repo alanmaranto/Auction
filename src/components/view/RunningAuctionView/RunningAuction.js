@@ -7,7 +7,7 @@ const Input = Form.Input;
 const Row = Grid.Row;
 const Column = Grid.Column;
 
-const RunningAuction = ({ title, messages, onSubmit, onChange, message }) => (
+const RunningAuction = ({ title, messages, onSubmit, onChange, message}) => (
   <Fragment>
     <div className="app">
       <div className="generalContainer">
@@ -29,6 +29,12 @@ const RunningAuction = ({ title, messages, onSubmit, onChange, message }) => (
                     </div>
                     <div className="background-container">
                       Messages: {(messages && messages.length) || 0} total
+                      <div style={{height:'50px'}} >
+                      </div>
+                      { messages && messages.map( (message,index)=>{
+                        return <div key={`message-${index}`}>{message.bid}</div>
+                        })
+                      }
                       <div style={{ padding: "50px" }}>
                         <Form size="large" onSubmit={onSubmit}>
                           <Segment>

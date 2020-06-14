@@ -3,12 +3,8 @@ import api from './api';
 
 export const socket = openSocket(api.host);
 
-export const registerUserIOToken = (token) => {
-  socket.emit('registerUserIOToken', { token, id: socket.id });
-};
-
-export const sendUserMessage = (request) => {
-  socket.emit('GetNewMessages', request);
+export const registerUserIOToken = (userId) => {
+  socket.emit('registerUserIOToken', { userId, id: socket.id });
 };
 
 export default socket;
