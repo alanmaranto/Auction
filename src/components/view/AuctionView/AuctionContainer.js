@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import RealTimeAuction from "../RealTimeAuction/RealTimeAuctionView";
 import Auction from './Auction';
 
 import { getAuctionById } from "../../../api";
