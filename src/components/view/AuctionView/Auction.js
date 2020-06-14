@@ -41,11 +41,11 @@ const Auction = ({ auction }) => {
   let end = moment("2020-06-14T00:05:00"); // auction date as string
   let duration = moment.duration(end.diff(now));
   let seconds = duration.asSeconds();
-  const milliseconds =seconds* 1000;
-  console.log("as secondss .... ",seconds)
-  console.log("as milliseconds .... ",milliseconds)
+  const milliseconds = seconds * 1000;
+  console.log("as secondss .... ", seconds);
+  console.log("as milliseconds .... ", milliseconds);
 
-/*
+  /*
   const auctionDate = moment("");
   const nowDate = moment();
   const difference = 3000000; // 300000sg //moment.duration(auctionDate.diff(nowDate));
