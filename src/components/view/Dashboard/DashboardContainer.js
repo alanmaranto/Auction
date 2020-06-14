@@ -19,7 +19,7 @@ const DashboardContainer = () => {
   const fetchProducts = async () => {
     const response = await getAuctions();
 
-    if (response.status === 200) {
+    if (response && response.status === 200) {
       setAuctions(response.data.body);
     }
   };

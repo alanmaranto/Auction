@@ -1,5 +1,8 @@
 import axios from 'axios';
 const host = process.env.REACT_APP_API_URL || "localhost:3000";
+const api = {
+  host,
+};
 //
 // Auth
 //
@@ -105,6 +108,22 @@ export const updateAuction = (auctionId, userId, token, auction) => {
   });
 };
 
+export const posMessage = async (token, body) => {
+  try {
+    const response = await axios({
+      url: `${host}/runningAuction/message/`,
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      },
+      data: body
+    })
+  } catch (error) {
+    console.log(error)
+  }
+};
+
 // Files
 export const postFile = async (token, body) => {
   try {
@@ -122,3 +141,22 @@ export const postFile = async (token, body) => {
     console.log(error)
   }
 }
+
+export const getRunningAuctionById = async (token, id) => {
+  try {
+    const response = await axios({
+      url: `${host}/runningAuction/${id}`,
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({auctionId: id}),
+    })
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export default api;
