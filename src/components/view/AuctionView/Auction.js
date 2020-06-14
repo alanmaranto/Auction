@@ -37,15 +37,24 @@ const Auction = ({ auction }) => {
     },
   ];
 
-  const auctionDate = moment(auction.openingAuction);
+  let now = moment(new Date()); //todays date
+  let end = moment("2020-06-14T00:05:00"); // auction date as string
+  let duration = moment.duration(end.diff(now));
+  let seconds = duration.asSeconds();
+  const milliseconds =seconds* 1000;
+  console.log("as secondss .... ",seconds)
+  console.log("as milliseconds .... ",milliseconds)
+
+/*
+  const auctionDate = moment("");
   const nowDate = moment();
-  const difference = moment.duration(auctionDate.diff(nowDate));
-  const asd = moment(difference).format("MMMM Do YYYY, h:mm:ss a");
+  const difference = 3000000; // 300000sg //moment.duration(auctionDate.diff(nowDate));
+  // const asd = moment(difference).format("MMMM Do YYYY, h:mm:ss a");
   const time = Number(difference);
   console.log("difference", difference);
   console.log("num", Number(difference));
   console.log("time", time);
-
+*/
   const onClose = () => {
     setOpenModal(false);
   };
@@ -104,7 +113,7 @@ const Auction = ({ auction }) => {
                         <sendToRealTimeAuction />
                       </Countdown> */}
                         <Timer
-                          initialTime={5555555555}
+                          initialTime={milliseconds} // formato miliseconds
                           direction="backward"
                           lastUnit="d"
                           checkpoints={timeToAuction}
