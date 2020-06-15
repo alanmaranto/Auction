@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
-
+import { isAuthenticated } from "../../helpers/authenticate";
 import { Menu, Grid, Header, Icon, Image } from "semantic-ui-react";
 import AuctionIcon from "../../assets/auction.svg";
 import Dashboard from "../../assets/dashboard.svg";
-import A1 from '../../assets/auctionicon.svg'
-import A2 from '../../assets/auctionicon2.svg'
+import A1 from "../../assets/auctionicon.svg";
+import A2 from "../../assets/auctionicon2.svg";
 
 import "../../App.css";
 import "./style.css";
@@ -44,6 +44,18 @@ const Sidebar = () => {
                 </div>
               </Link>
             </Grid.Row>
+            {isAuthenticated() && isAuthenticated().user.role === 1 && (
+              <Grid.Row>
+                <Link to="">
+                  <div className="sidebar-options">
+                    <span>
+                      <Image src={A1} />
+                    </span>
+                    <span className="option-title">Mis Subastas</span>
+                  </div>
+                </Link>
+              </Grid.Row>
+            )}
           </Grid.Column>
         </Grid>
       </div>

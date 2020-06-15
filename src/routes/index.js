@@ -1,6 +1,5 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-
 import Dashboard from "../components/view/Dashboard/DashboardContainer";
 import NotFound from "../core/404/404NotFound";
 import Login from "../components/auth/Login";
@@ -9,6 +8,9 @@ import Settings from "../components/user/Settings";
 import NewAuction from "../components/view/NewAuction/NewAuction";
 import AuctionView from "../components/view/AuctionView/AuctionContainer";
 import RunningAuctionView from "../components/view/RunningAuctionView";
+import AdminRoutes from "./AdminRoutes";
+import BuyersRoutes from "./BuyersRoutes";
+import ProvidersRoutes from "./ProvidersRoutes";
 
 import "semantic-ui-css/semantic.min.css";
 
