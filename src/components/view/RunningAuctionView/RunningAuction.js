@@ -2,12 +2,23 @@ import React, { Fragment, useState } from "react";
 import { Button, Form, Grid, Segment, Header } from "semantic-ui-react";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
+import Timer from "react-compound-timer";
+import moment from "moment";
 
 const Input = Form.Input;
 const Row = Grid.Row;
 const Column = Grid.Column;
 
-const RunningAuction = ({ title, messages, onSubmit, onChange, message}) => (
+const RunningAuction = ({ title, messages, onSubmit, onChange, message}) =>{ 
+
+  let now = moment(new Date()); //todays date
+  let end = moment("2020-07-16T23:30:00.000Z"); // auction date as string
+  let duration = moment.duration(end.diff(now));
+  let seconds = duration.asSeconds();
+  const milliseconds = seconds * 1000;
+  console.log("as milliseconds .... ", milliseconds);
+
+return (
   <Fragment>
     <div className="app">
       <div className="generalContainer">
@@ -27,6 +38,19 @@ const RunningAuction = ({ title, messages, onSubmit, onChange, message}) => (
                         icon="gavel"
                       />
                     </div>
+                    <Timer
+                          initialTime={milliseconds} // formato miliseconds
+                          direction="backward"
+                        >
+                          {() => (
+                            <Fragment>
+                              <Timer.Days /> Días
+                              <Timer.Hours /> Horas
+                              <Timer.Minutes /> Minutos
+                              <Timer.Seconds /> Segundos
+                            </Fragment>
+                          )}
+                      </Timer>
                     <div className="background-container">
                       Messages: {(messages && messages.length) || 0} total
                       <div style={{height:'50px'}} >
@@ -67,6 +91,7 @@ const RunningAuction = ({ title, messages, onSubmit, onChange, message}) => (
     </div>
   </Fragment>
 );
+                            }
 
 RunningAuction.propTypes = {};
 
