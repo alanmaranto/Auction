@@ -13,7 +13,7 @@ class RunningAuctionView extends Component {
       messages: [],
       auction: {},
       token: undefined,
-      lastMessage: "",
+      lastMessage: {},
     };
   }
 
@@ -49,16 +49,11 @@ class RunningAuctionView extends Component {
   };
 
   listenMessages = () => {
-    
     socket.on("wellcome", (data) => {
-      console.log("Welcome running auction", data); 
+      console.log("Welcome running auction", data);
     });
-    socket.on("newMessage", (data) => { 
-      const { auction } = this.state;
-      const newMessages = auction.messages || [];
-      newMessages.push(data);
-      const newAuction = {...auction, messages : newMessages}
-      this.setState({ auction:newAuction });    
+    socket.on("newMessage", (data) => {
+      this.setState({ lastMessage: data });
     });
   };
 
@@ -69,18 +64,18 @@ class RunningAuctionView extends Component {
   onSubmit = async () => {
     const { message, auction } = this.state;
     const { token } = isAuthenticated();
-    const result = await posMessage(token, { auction, message }); 
+    const result = await posMessage(token, { auction, message });
   };
 
   render() {
-    const { auction, message } = this.state;
+    const { auction, message, lastMessage } = this.state;
     return (
       <RunningAuction
         title={auction.title}
         onChange={this.onChange}
         message={message}
         onSubmit={this.onSubmit}
-        messages={auction.messages || []}
+        lastMessage={lastMessage}
       />
     );
   }

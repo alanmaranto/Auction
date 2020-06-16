@@ -9,7 +9,7 @@ const Input = Form.Input;
 const Row = Grid.Row;
 const Column = Grid.Column;
 
-const RunningAuction = ({ title, messages, onSubmit, onChange, message}) =>{ 
+const RunningAuction = ({ title, onSubmit, onChange, message, lastMessage}) =>{ 
 
   let now = moment(new Date()); //todays date
   let end = moment("2020-07-16T23:30:00.000Z"); // auction date as string
@@ -52,13 +52,8 @@ return (
                           )}
                       </Timer>
                     <div className="background-container">
-                      Messages: {(messages && messages.length) || 0} total
-                      <div style={{height:'50px'}} >
-                      </div>
-                      { messages && messages.map( (message,index)=>{
-                        return <div key={`message-${index}`}>{message.bid}</div>
-                        })
-                      }
+
+                      lastMessage :{lastMessage.bid}
                       <div style={{ padding: "50px" }}>
                         <Form size="large" onSubmit={onSubmit}>
                           <Segment>
