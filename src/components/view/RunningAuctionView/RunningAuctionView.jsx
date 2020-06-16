@@ -63,8 +63,8 @@ class RunningAuctionView extends Component {
 
   onSubmit = async () => {
     const { message, auction } = this.state;
-    const { token } = isAuthenticated();
-    const result = await posMessage(token, { auction, message });
+    const { token, user } = isAuthenticated();
+    const result = await posMessage(token, { auction, message, user});
   };
 
   render() {
