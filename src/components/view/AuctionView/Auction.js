@@ -38,11 +38,11 @@ const Auction = ({ auction }) => {
   ];
 
   let now = moment(new Date()); //todays date
-  let end = moment("2020-06-14T00:05:00"); // auction date as string
+  let end = moment(auction.openingAuction); // auction date as string
   let duration = moment.duration(end.diff(now));
   let seconds = duration.asSeconds();
   const milliseconds = seconds * 1000;
-  console.log("as secondss .... ", seconds);
+  console.log("as secondss mary .... ", auction.openingAuction);
   console.log("as milliseconds .... ", milliseconds);
 
   /*
@@ -111,12 +111,12 @@ const Auction = ({ auction }) => {
                         </div>
                         {/*                       <Countdown date={Date.now() + 5555}>
                         <sendToRealTimeAuction />
-                      </Countdown> */}
+                      </Countdown> */} 
+                      mary :  
+                      {milliseconds}
                         <Timer
-                          initialTime={milliseconds} // formato miliseconds
+                          initialTime={2678697384} // formato miliseconds
                           direction="backward"
-                          lastUnit="d"
-                          checkpoints={timeToAuction}
                         >
                           {() => (
                             <Fragment>
