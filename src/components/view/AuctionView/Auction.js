@@ -11,9 +11,8 @@ import {
   CardContent,
 } from "semantic-ui-react";
 import Timer from "react-compound-timer";
-import Countdown from "react-countdown";
 import moment from "moment";
-
+import history from "../../../modules/history/history";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import FileCardView from "./FileCardView";
@@ -26,14 +25,17 @@ const Auction = ({ auction }) => {
 
   const { title, description, _id } = auction;
 
-  const sendToRealTimeAuction = () => {
+  console.log('auc', auction)
+
+  const sendToRealTimeAuction = (id) => {
     console.log("Enviando a la subasta en tiempo real");
+    history.push(`/runningAuction/${id}`)
   };
 
   const timeToAuction = [
     {
       time: 0,
-      callback: () => sendToRealTimeAuction(),
+      callback: () => sendToRealTimeAuction(_id),
     },
   ];
 
@@ -44,6 +46,7 @@ const Auction = ({ auction }) => {
   const milliseconds = seconds * 1000;
   console.log("as secondss mary .... ", auction.openingAuction);
   console.log("as milliseconds .... ", milliseconds);
+
 
   /*
   const auctionDate = moment("");
@@ -109,14 +112,11 @@ const Auction = ({ auction }) => {
                         <div style={{ textAlign: "center" }}>
                           <h2>Tiempo para iniciar la subasta</h2>
                         </div>
-                        {/*                       <Countdown date={Date.now() + 5555}>
-                        <sendToRealTimeAuction />
-                      </Countdown> */} 
-                      mary :  
-                      {milliseconds}
                         <Timer
-                          initialTime={2678697384} // formato miliseconds
+                          initialTime={10000} // formato miliseconds
                           direction="backward"
+                          lastUnit="d"
+                          checkpoints={timeToAuction}
                         >
                           {() => (
                             <Fragment>

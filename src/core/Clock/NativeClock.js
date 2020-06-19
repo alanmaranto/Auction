@@ -1,61 +1,36 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 
-const Clock = (props) => {
-  const [date, setDate] = useState(new Date());
+class ClockFunction extends React.Component {
+  constructor() {
+    super();
+    this.state = { time: new Date() }; // initialise the state
+  }
 
-  useEffect(() => {
-    var timerID = setInterval(() => tick(), 1000);
-    return cleanup(timerID);
-  });
+  componentDidMount() {
+    // create the interval once component is mounted
+    this.update = setInterval(() => {
+      this.setState({ time: new Date() });
+    }, 1 * 1000); // every 1 seconds
+  }
 
-  const tick = () => {
-    setDate(new Date());
-  };
+  componentWillUnmount() {
+    // delete the interval just before component is removed
+    clearInterval(this.update);
+  }
 
-  const cleanup = () => {
-    clearInterval();
-  };
+  render() {
+    const { time } = this.state; // retrieve the time from state
 
-  return (
-    <div className="native-clock">
-      <div className="local-time">
-        <h3>Hora Local</h3>
+    return (
+      <div>
+        <h2>
+          {/* print the string prettily */}
+          {time.toLocaleTimeString()}
+        </h2>
       </div>
-      <div className="clock-time">
-        <h2>{date.toLocaleTimeString()}</h2>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-export default Clock;
-
-/* class ReactThing extends React.Component {
-    constructor(props){
-      super(props);
-      
-      this.state = {
-        time: new Date()
-      };
-    }
-    
-    componentDidMount() {
-      this.timerID = setInterval(
-        () => this.tick(),
-        1000
-      );
-    }
-    
-    tick() {
-      this.setState({
-        time: new Date()
-      });
-    }
-    
-    render() {
-     return (
-      <p className="react-clock">{this.state.time.toLocaleTimeString()}</p>
-     );
-   } 
-  } */
+export default ClockFunction;
