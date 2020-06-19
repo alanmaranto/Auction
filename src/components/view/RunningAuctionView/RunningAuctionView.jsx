@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import RunningAuction from "./RunningAuction";
 
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { getRunningAuctionById, posMessage } from "../../../api";
+import { getRunningAuctionById, posMessage, updateAuction } from "../../../api";
 import { socket, registerUserIOToken } from "../../../socket";
 
 class RunningAuctionView extends Component {
@@ -14,6 +14,7 @@ class RunningAuctionView extends Component {
       auction: {},
       token: undefined,
       lastMessage: {},
+      finalized: false,
     };
   }
 
@@ -68,6 +69,17 @@ class RunningAuctionView extends Component {
     const result = await posMessage(token, { auction, message, user});
   };
 
+  onFinalizedAuction = () => {
+    const { id: currentAuction } = this.props.match.params;
+    const { finalized } = this.state;
+    const { token } = isAuthenticated()
+    const data = {
+      finalized: !finalized
+    }
+    const result = updateAuction(currentAuction, token, data);
+    console.log(result)
+  }
+
   render() {
     const { auction, message, lastMessage } = this.state;
     return (
@@ -78,6 +90,7 @@ class RunningAuctionView extends Component {
         onSubmit={this.onSubmit}
         lastMessage={lastMessage}
         endingAuction={auction.endingAuction}
+        onFinalizedAuction={this.onFinalizedAuction}
       />
     );
   }
