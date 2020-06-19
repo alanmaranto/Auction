@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
-
-import Auction from './Auction';
-
+import React, { Component, useEffect, useState } from "react";
+import Auction from "./Auction";
 import { getAuctionById } from "../../../api";
+import "moment/locale/es";
 
-import 'moment/locale/es';
+class AuctionContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      auction: {},
+    };
+  }
 
+  componentDidMount() {
+    this.fetchAuction();
+  }
 
-const AuctionContainer = ({match}) => {
-  const [error, setError] = useState(false);
-  const [auction, setAuction] = useState([]);
-
-  const fetchAuction = async () => {
-    const { id } = match.params
+  fetchAuction = async () => {
+    const { id } = this.props.match.params;
     const response = await getAuctionById(id);
 
     if (response && response.status && response.status === 200) {
-      setAuction(response.data.body)
+      this.setState({ auction: response.data.body });
     }
+  };
+
+  render() {
+    const { auction } = this.state;
+    return <Auction auction={auction} />;
   }
-
-  useEffect(() => {
-    fetchAuction()
-  }, [])
-
-  console.log('a', auction)
-
-  return (
-    <Auction auction={auction} />
-  );
-};
+}
 
 export default AuctionContainer;
+
