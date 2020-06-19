@@ -17,6 +17,7 @@ const RunningAuction = ({
   message,
   lastMessage,
   endingAuction,
+  onFinalizedAuction,
 }) => {
   let now = moment(new Date()); //todays date
   // let end = moment("2020-07-16T23:30:00.000Z"); // auction date as string
@@ -29,7 +30,8 @@ const RunningAuction = ({
   const sendToDashboard = () => {
     console.log("Enviando al dashboard");
     // aqui va una funcion que edite el estado de la auction a finalized
-    history.push(`/`)
+    onFinalizedAuction();
+    history.push(`/`);
   };
 
   const timeToAuction = [
@@ -60,7 +62,7 @@ const RunningAuction = ({
                         />
                       </div>
                       <Timer
-                        initialTime={5000} // formato miliseconds
+                        initialTime={15000} // formato miliseconds
                         direction="backward"
                         lastUnit="d"
                         checkpoints={timeToAuction}
@@ -95,6 +97,9 @@ const RunningAuction = ({
                                 </Button>
                               </Grid>
                             </Segment>
+                            <Button fluid compact fluid size="medium" onClick={onFinalizedAuction()}>
+                                  Send message
+                                </Button>
                           </Form>
                         </div>
                       </div>
