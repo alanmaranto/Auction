@@ -11,6 +11,7 @@ import RunningAuctionView from "../components/view/RunningAuctionView";
 import AdminRoutes from "./AdminRoutes";
 import BuyersRoutes from "./BuyersRoutes";
 import ProvidersRoutes from "./ProvidersRoutes";
+import FinalizedAuction from '../components/view/FinalizedAuctions/FinalizedAuction';
 
 import "semantic-ui-css/semantic.min.css";
 
@@ -23,6 +24,7 @@ const Routes = () => (
     <Route path="/create/auction" component={NewAuction} />
     <Route path="/auction/:id" component={AuctionView} />
     <Route path="/runningAuction/:id" component={RunningAuctionView} />
+    <BuyersRoutes path="/finalized" exact component={FinalizedAuction} />
     <Route component={NotFound} />
   </Switch>
 );
