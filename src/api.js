@@ -165,4 +165,21 @@ export const getRunningAuctionById = async (token, id) => {
   }
 };
 
+export const getFinalizedAuctionsByUser = async (token, user) => {
+  try {
+    const response = await axios({
+      url: `${host}/auctionsFinalized/${user}`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ user }),
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default api;

@@ -46,12 +46,12 @@ const Sidebar = () => {
             </Grid.Row>
             {isAuthenticated() && isAuthenticated().user.role === 1 && (
               <Grid.Row>
-                <Link to="">
+                <Link to="/finalized">
                   <div className="sidebar-options">
                     <span>
                       <Image src={A1} />
                     </span>
-                    <span className="option-title">Mis Subastas</span>
+                    <span className="option-title">Subastas Finalizadas</span>
                   </div>
                 </Link>
               </Grid.Row>
