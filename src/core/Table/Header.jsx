@@ -1,5 +1,5 @@
 import React from "react";
-import { THeader, TRow, THeaderCell } from "./index";
+import { THeader, TRow, THeaderCell } from "../indexSemanticUi";
 
 export const TableHeader = ({ column, direction, handleSort }) => {
   return (

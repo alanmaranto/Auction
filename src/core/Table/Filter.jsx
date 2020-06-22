@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "semantic-ui-react";
-import { FField, FGroup, FInput } from "./index";
+import { FField, FGroup, FInput } from "../indexSemanticUi";
 
 const Filter = ({ auctionsFilter, onSubmitFilter }) => {
   return (

@@ -7,10 +7,9 @@ import {
   Button,
   Header,
   Icon,
-  Card
 } from "semantic-ui-react";
 import { signin } from "../../api";
-import { authenticate, isAuthenticated } from "../../helpers/authenticate";
+import { authenticate } from "../../helpers/authenticate";
 import { registerUserIOToken } from '../../socket';
 import "./App.css";
 
@@ -24,7 +23,6 @@ const Login = () => {
   });
 
   const { email, password, loading, error, redirectToReferrer } = values;
-  const { user, token } = isAuthenticated()
 
   const onChange = name => event => {
     setValues({

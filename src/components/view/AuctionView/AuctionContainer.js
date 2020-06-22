@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
 import Auction from "./Auction";
 import { getAuctionById } from "../../../api";
+import { isAuthenticated } from "../../../helpers/authenticate";
 import "moment/locale/es";
 
 class AuctionContainer extends Component {
@@ -12,7 +13,10 @@ class AuctionContainer extends Component {
   }
 
   componentDidMount() {
-    this.fetchAuction();
+    const { token } = isAuthenticated();
+    if (token) {
+      this.fetchAuction();
+    }
   }
 
   fetchAuction = async () => {
@@ -31,4 +35,3 @@ class AuctionContainer extends Component {
 }
 
 export default AuctionContainer;
-
