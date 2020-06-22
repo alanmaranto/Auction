@@ -92,12 +92,12 @@ const RunningAuction = ({
                               />
                               <br />
                               <Grid textAlign="center" columns={2}>
-                                <Button fluid compact fluid size="medium">
+                                <Button compact fluid size="medium">
                                   Send message
                                 </Button>
                               </Grid>
                             </Segment>
-                            <Button fluid compact fluid size="medium" onClick={onFinalizedAuction()}>
+                            <Button fluid compact size="medium" onClick={onFinalizedAuction()}>
                                   Send message
                                 </Button>
                           </Form>

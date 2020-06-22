@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Table, Pagination } from "semantic-ui-react";
 import { PagesSizeSelect } from "./SelectOptions";
 import { AuctionRow } from "./Row";
-import { TBody, TFooter, TRow, TCell } from "./index";
+import { TBody, TFooter, TRow, TCell } from "../indexSemanticUi";
 import { TableHeader } from "./Header";
 
 const AuctionTable = ({

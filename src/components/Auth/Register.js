@@ -7,7 +7,6 @@ import {
   Header,
   Message,
   Icon,
-  Card
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { signup } from "../../api";

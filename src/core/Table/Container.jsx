@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Segment, Header, Icon, Grid, Image, Divider } from "semantic-ui-react";
-import { Subheader, Row, Column, HContent } from "./index";
+import { Subheader, Row, Column } from "../indexSemanticUi";
 import AuctionTable from "./Table";
-import NoAuctions from "../../assets/humaaans.png";
 import Filter from "./Filter";
+import NoData from '../500/NoData';
 import { getFinalizedAuctionsByUser } from "../../api";
 import { isAuthenticated } from "../../helpers/authenticate";
 import "./style.css";
@@ -60,7 +60,6 @@ class TableContainer extends Component {
     } = isAuthenticated();
     const response = await getFinalizedAuctionsByUser(token, _id);
     if (response && response.data && response.data.body) {
-      console.log(response.data.body);
       this.setState({ auctions: response.data.body });
     }
   };
@@ -92,28 +91,6 @@ class TableContainer extends Component {
     }
   };
 
-  noData() {
-    return (
-      <Fragment>
-        <Grid className="no-data" container>
-          <Row>
-            <Column>
-              <Header as="h3" textAlign="center" color="blue">
-                <HContent>Aún no tienes subastas finalizadas</HContent>
-              </Header>
-              <Image
-                className="no-data__image"
-                centered
-                size="large"
-                src={NoAuctions}
-              />
-            </Column>
-          </Row>
-        </Grid>
-      </Fragment>
-    );
-  }
-
   render() {
     const { auctions, auctionsFilter, limit, sort, order, page } = this.state;
 
@@ -132,7 +109,7 @@ class TableContainer extends Component {
             </Header>
           </Row>
 
-          {auctions ? (
+          {auctions.length > 0 ? (
             <Row>
               <Column>
                 <Segment>
@@ -158,7 +135,7 @@ class TableContainer extends Component {
               </Column>
             </Row>
           ) : (
-            this.noData()
+             <NoData title="Aquí aparecerán tus subastas finalizadas" />
           )}
         </Grid>
       </Fragment>

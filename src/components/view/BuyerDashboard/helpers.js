@@ -1,6 +1,5 @@
 import React from "react";
-import { Grid, List, Item, Image, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Grid, Item, Icon } from "semantic-ui-react";
 import moment from 'moment'
 import 'moment/locale/es';
 
@@ -13,12 +12,6 @@ const selectedAuction = {
       return auction;
     }
   },
-  finalizedAuction: auction => {
-    const { finalized } = auction;
-    if (finalized) {
-      return auction;
-    }
-  }
 };
 
 export const showAuctions = (data, selected, callback) =>

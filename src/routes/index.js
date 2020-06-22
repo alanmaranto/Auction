@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Dashboard from "../components/view/Dashboard/DashboardContainer";
+import Dashboard from "../components/view/BuyerDashboard/DashboardContainer";
 import NotFound from "../core/404/404NotFound";
 import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
