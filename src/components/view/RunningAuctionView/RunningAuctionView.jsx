@@ -77,7 +77,6 @@ class RunningAuctionView extends Component {
       finalized: !finalized
     }
     const result = updateAuction(currentAuction, token, data);
-    console.log(result)
   }
 
   render() {

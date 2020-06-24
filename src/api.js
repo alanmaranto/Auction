@@ -199,4 +199,37 @@ export const getActiveAuctionsByUser = async (token, user) => {
   }
 };
 
+export const getProviders = async (token) => {
+  try {
+    const response = await axios({
+      url: `${host}/providers/`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postProviders = async (token, body) => {
+  try {
+    const response = await axios({
+      url: `${host}/providers`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      data: body
+    })
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export default api;

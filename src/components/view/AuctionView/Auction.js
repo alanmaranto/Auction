@@ -1,14 +1,14 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import {
   Card,
   Header,
   Grid,
-  Segment,
-  Icon,
   Button,
   Divider,
   Container,
   CardContent,
+  Feed,
+  FeedContent,
 } from "semantic-ui-react";
 import Timer from "react-compound-timer";
 import moment from "moment";
@@ -16,20 +16,29 @@ import history from "../../../modules/history/history";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import FileCardView from "./FileCardView";
+import { Row, Column, CContent } from "../../../core/indexSemanticUi";
 import { timerStyle } from "./style";
 import "./style.css";
+import AddProviders from "../AddProviders/AddProviders";
 
-const Auction = ({ auction }) => {
-  const [show, setShow] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
-
+const Auction = ({
+  auction,
+  providers,
+  openProviders,
+  openFiles,
+  onOpenProviderModal,
+  onCloseProviderModal,
+  onOpenFileModal,
+  onCloseFileModal,
+  submitProviders
+}) => {
   const { title, description, _id } = auction;
 
-  console.log('auc', auction)
+  console.log("auc", auction);
 
   const sendToRealTimeAuction = (id) => {
     console.log("Enviando a la subasta en tiempo real");
-    history.push(`/runningAuction/${id}`)
+    history.push(`/runningAuction/${id}`);
   };
 
   const timeToAuction = [
@@ -47,7 +56,6 @@ const Auction = ({ auction }) => {
   console.log("as secondss mary .... ", auction.openingAuction);
   console.log("as milliseconds .... ", milliseconds);
 
-
   /*
   const auctionDate = moment("");
   const nowDate = moment();
@@ -58,12 +66,79 @@ const Auction = ({ auction }) => {
   console.log("num", Number(difference));
   console.log("time", time);
 */
-  const onClose = () => {
+  /*   const onClose = () => {
     setOpenModal(false);
   };
 
   const onOpenModal = () => {
     setOpenModal(true);
+  }; */
+
+  const showInvitedProviders = (
+    providers,
+    openProviders,
+    onOpenProviderModal,
+    onCloseProviderModal,
+    submitProviders
+  ) => {
+    return (
+      <Column>
+        <Card>
+          <CContent>
+            Proveedores invitados
+            <Button
+              circular
+              onClick={onOpenProviderModal}
+              icon="add circle"
+              floated="right"
+            />
+            <AddProviders
+              providers={providers}
+              openProviders={openProviders}
+              onCloseProviderModal={onCloseProviderModal}
+              submitProviders={submitProviders}
+            />
+          </CContent>
+          <CContent>
+            <Feed>
+              <Feed.Event>
+                <Feed.Content>
+                  <Feed.Summary>
+                    Aqui van el componente que mapea los proveedores
+                  </Feed.Summary>
+                </Feed.Content>
+              </Feed.Event>
+            </Feed>
+          </CContent>
+        </Card>
+      </Column>
+    );
+  };
+
+  const showFiles = (openFiles, onOpenFileModal, onCloseFileModal, id) => {
+    return (
+      <Column>
+        <Card>
+          <CContent>
+            <div>
+              Archivos
+              <Button
+                circular
+                floated="right"
+                icon="add circle"
+                onClick={onOpenFileModal}
+              />
+              <FileCardView
+                openModal={openFiles}
+                onClose={onCloseFileModal}
+                auctionId={id}
+              />
+            </div>
+            <Card>Aqui van los archivos</Card>
+          </CContent>
+        </Card>
+      </Column>
+    );
   };
 
   return (
@@ -75,8 +150,8 @@ const Auction = ({ auction }) => {
             <Navbar />
             <div className="content-dynamic">
               <Grid>
-                <Grid.Row>
-                  <Grid.Column>
+                <Row>
+                  <Column>
                     <div className="auction-title">
                       <div className="auction-h">
                         <Header
@@ -87,25 +162,23 @@ const Auction = ({ auction }) => {
                         />
                       </div>
                       <div className="background-container">
-                        <Button onClick={() => setShow(!show)}>
-                          {show ? (
-                            <div style={{ color: "w" }}>
-                              Ver descripción completa
-                            </div>
-                          ) : (
-                            <div>
-                              <p className="auction-description">
-                                {description}
-                              </p>
-                            </div>
-                          )}
-                        </Button>
+                        <div>
+                          <p className="auction-description">{description}</p>
+                        </div>
                       </div>
                     </div>
-                  </Grid.Column>
-                </Grid.Row>
-                <Grid.Row columns={2}>
-                  <Grid.Column>
+                  </Column>
+                </Row>
+                <Row columns={3}>
+                  {showInvitedProviders(
+                    providers,
+                    openProviders,
+                    onOpenProviderModal,
+                    onCloseProviderModal,
+                    submitProviders
+                  )}
+                  {showFiles(openFiles, onOpenFileModal, onCloseFileModal, _id)}
+                  <Column>
                     <Card className="auction-card">
                       Time, Countdown and messages
                       <Card style={timerStyle}>
@@ -113,7 +186,7 @@ const Auction = ({ auction }) => {
                           <h2>Tiempo para iniciar la subasta</h2>
                         </div>
                         <Timer
-                          initialTime={10000} // formato miliseconds
+                          initialTime={10000000} // formato miliseconds
                           direction="backward"
                           lastUnit="d"
                           checkpoints={timeToAuction}
@@ -129,30 +202,8 @@ const Auction = ({ auction }) => {
                         </Timer>
                       </Card>
                     </Card>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Card>
-                      <Card.Content>
-                        <div>
-                          Archivos
-                          <Button
-                            circular
-                            floated="right"
-                            icon="add circle"
-                            onClick={onOpenModal}
-                          />
-                          <FileCardView
-                            openModal={openModal}
-                            setOpenModal={setOpenModal}
-                            onClose={onClose}
-                            auctionId={_id}
-                          />
-                        </div>
-                        <Card>Aqui van los archivos</Card>
-                      </Card.Content>
-                    </Card>
-                  </Grid.Column>
-                </Grid.Row>
+                  </Column>
+                </Row>
               </Grid>
             </div>
           </div>
