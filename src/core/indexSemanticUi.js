@@ -1,4 +1,4 @@
-import { Header, Grid, Table, Form, Card } from 'semantic-ui-react';
+import { Header, Grid, Table, Form, Card, Modal } from 'semantic-ui-react';
 // Grid
 export const Row = Grid.Row;
 export const Column = Grid.Column;
@@ -22,3 +22,8 @@ export const FInput = Form.Input;
 
 // Card
 export const CContent = Card.Content;
+
+// Modal
+export const MHeader = Modal.Header;
+export const MContent = Modal.Content;
+export const MActions = Modal.Actions;
