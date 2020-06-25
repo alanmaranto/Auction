@@ -66,13 +66,6 @@ const Auction = ({
   console.log("num", Number(difference));
   console.log("time", time);
 */
-  /*   const onClose = () => {
-    setOpenModal(false);
-  };
-
-  const onOpenModal = () => {
-    setOpenModal(true);
-  }; */
 
   const showInvitedProviders = (
     providers,
