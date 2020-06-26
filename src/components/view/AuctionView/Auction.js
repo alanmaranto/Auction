@@ -20,6 +20,29 @@ import { Row, Column, CContent } from "../../../core/indexSemanticUi";
 import { timerStyle } from "./style";
 import "./style.css";
 import AddProviders from "../AddProviders/AddProviders";
+import Countdown from "react-countdown";
+
+const Completionist = () => <span>Arrrancamos la subasta</span>;
+
+// Renderer callback with condition
+const renderer = ({ days, hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return (
+      <div>
+        <div>{days} (dias) </div>
+        <div>{hours} (horas)</div>
+        <div>{minutes} (minutos)</div>
+        <div>{seconds} (segundos) </div>
+        <div>Continua personalizando tanto como gustes...</div>
+        <div> gg saludistos</div>
+      </div>
+    );
+  }
+};
 
 const Auction = ({
   auction,
@@ -30,42 +53,10 @@ const Auction = ({
   onCloseProviderModal,
   onOpenFileModal,
   onCloseFileModal,
-  submitProviders
+  submitProviders,
 }) => {
-  const { title, description, _id } = auction;
-
-  console.log("auc", auction);
-
-  const sendToRealTimeAuction = (id) => {
-    console.log("Enviando a la subasta en tiempo real");
-    history.push(`/runningAuction/${id}`);
-  };
-
-  const timeToAuction = [
-    {
-      time: 0,
-      callback: () => sendToRealTimeAuction(_id),
-    },
-  ];
-
-  let now = moment(new Date()); //todays date
-  let end = moment(auction.openingAuction); // auction date as string
-  let duration = moment.duration(end.diff(now));
-  let seconds = duration.asSeconds();
-  const milliseconds = seconds * 1000;
-  console.log("as secondss mary .... ", auction.openingAuction);
-  console.log("as milliseconds .... ", milliseconds);
-
-  /*
-  const auctionDate = moment("");
-  const nowDate = moment();
-  const difference = 3000000; // 300000sg //moment.duration(auctionDate.diff(nowDate));
-  // const asd = moment(difference).format("MMMM Do YYYY, h:mm:ss a");
-  const time = Number(difference);
-  console.log("difference", difference);
-  console.log("num", Number(difference));
-  console.log("time", time);
-*/
+  const { title, description, _id, openingAuction } = auction;
+  const operation = new Date(openingAuction).getTime();
 
   const showInvitedProviders = (
     providers,
@@ -178,21 +169,14 @@ const Auction = ({
                         <div style={{ textAlign: "center" }}>
                           <h2>Tiempo para iniciar la subasta</h2>
                         </div>
-                        <Timer
-                          initialTime={10000000} // formato miliseconds
-                          direction="backward"
-                          lastUnit="d"
-                          checkpoints={timeToAuction}
-                        >
-                          {() => (
-                            <Fragment>
-                              <Timer.Days /> Días
-                              <Timer.Hours /> Horas
-                              <Timer.Minutes /> Minutos
-                              <Timer.Seconds /> Segundos
-                            </Fragment>
-                          )}
-                        </Timer>
+                        <Countdown
+                          date={new Date(operation)}
+                          renderer={renderer}
+                          onComplete={() => {
+                            console.log("con esta función le decimos bye al component")
+                            history.push(`/runningAuction/${_id}`);
+                          }}
+                        /> 
                       </Card>
                     </Card>
                   </Column>
