@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Dropzone from "react-dropzone";
-import { Modal, Button } from "semantic-ui-react";
+import { Modal, Button, Dimmer, Loader } from "semantic-ui-react";
+import { useToasts } from 'react-toast-notifications';
 
 import { postFile } from "../../../api";
 import { isAuthenticated } from "../../../helpers/authenticate";
@@ -35,7 +36,10 @@ function FileList({ files, onRemove }) {
 };
 
 function UploadFile({ openModal, onClose, setOpenModal, auctionId }) {
+  const { addToast } = useToasts();
+
   const [fileList, setFileList] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const onAddFile = (files) => {
     const currentFileList = [...fileList];
@@ -64,23 +68,39 @@ function UploadFile({ openModal, onClose, setOpenModal, auctionId }) {
   };
 
   const onSubmit = async (event) => {
+    setIsUploading(true);
+
     if (event) {
       event.preventDefault();
     }
   
     const requestBody = new FormData();
-    const { token } = isAuthenticated();
+    const { token, user } = isAuthenticated();
   
-    requestBody.append("auction", auctionId);
+    requestBody.append("userId", user._id);
   
     fileList.forEach(file => {
       requestBody.append("files", file);
     });
   
-    // const response = await postFile(token, requestBody);
+    const response = await postFile(token, requestBody, auctionId);
+
+    if (response && response.status === 201) {
+      setIsUploading(false);
+      onCloseUploadFile();
+      addToast('Archivos guardados con éxito', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
+    } else {
+      onCloseUploadFile();
+      addToast('Hubo un error al guardar los archivos', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
   };
   
-
   return (
     <div>
       <Modal
@@ -92,16 +112,26 @@ function UploadFile({ openModal, onClose, setOpenModal, auctionId }) {
       >
         <Modal.Header>Subir archivos</Modal.Header>
         <Modal.Content>
-          <Dropzone onDrop={onAddFile}>
-            {({ getRootProps, getInputProps }) => (
-              <div {...getRootProps({ className: "dropzone" })}>
-                <input {...getInputProps()} />
-                <p>Arrastra o da click para subir archivos</p>
+          {
+            isUploading ? (
+              <Dimmer active inverted>
+                <Loader inverted />
+              </Dimmer>
+            ) : (
+              <div>
+                <Dropzone onDrop={onAddFile}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps({ className: "dropzone" })}>
+                      <input {...getInputProps()} />
+                      <p>Arrastra o da click para subir archivos</p>
+                    </div>
+                  )}
+                </Dropzone>
+                <FileList files={fileList} onRemove={onRemoveFile} />
               </div>
-            )}
-          </Dropzone>
+            )
+          }
         </Modal.Content>
-        <FileList files={fileList} onRemove={onRemoveFile} />
         <Modal.Actions>
           <Button onClick={() => onCloseUploadFile()}>Cancelar</Button>
           <Button onClick={(event) => onSubmit(event)} content="Subir" />

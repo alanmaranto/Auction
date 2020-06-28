@@ -1,5 +1,5 @@
 import axios from "axios";
-const host = process.env.REACT_APP_API_URL || "localhost:3000";
+const host = process.env.REACT_APP_API_URL || "localhost:3100";
 const api = {
   host,
 };
@@ -131,10 +131,10 @@ export const posMessage = async (token, body) => {
 };
 
 // Files
-export const postFile = async (token, body) => {
+export const postFile = async (token, body, auctionId) => {
   try {
     const response = await axios({
-      url: `${host}/document/upload/`,
+      url: `${host}/auction/${auctionId}/files`,
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -142,9 +142,44 @@ export const postFile = async (token, body) => {
       },
       data: body,
     });
-    console.log(response);
+
+    return response;
   } catch (error) {
-    console.log(error);
+    return error;
+  }
+};
+
+export const getFiles = async (token, auctionId) => {
+  try {
+    const response = await axios({
+      url: `${host}/auction/${auctionId}/files`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteFile = async (token, fileId) => {
+  try {
+    const response = await axios({
+      url: `${host}/files/${fileId}`,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return error;
   }
 };
 
