@@ -108,7 +108,6 @@ export const updateAuction = async (id, token, auction) => {
       },
       data: auction,
     });
-    console.log('method',response)
   } catch (error) {
     console.log(error);
   }
@@ -142,7 +141,6 @@ export const postFile = async (token, body) => {
       },
       data: body,
     });
-    console.log(response);
   } catch (error) {
     console.log(error);
   }
@@ -222,11 +220,54 @@ export const postProviders = async (token, body) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      data: body
-    })
-    console.log(response)
+      data: body,
+    });
+    if (response) {
+      return response;
+    }
+    return response.data.error;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSelectedProvidersByAuctionId = async (token, auctionId) => {
+  try {
+    const response = await axios({
+      url: `${host}/selectedProviders/${auctionId}`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response) {
+      return response;
+    }
+    return response.data.error;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getInvitedAuctionsByProvider = async (token, userId) => {
+  try {
+    const response = await axios({
+      url: `${host}/auctions-provider`,
+      method: "GET",
+      headers: {
+        ['x-auction-id']: userId,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: userId,
+    });
+    if (response) {
+      return response
+    }
+    return response.data.error;
   } catch (error) {
     console.log(error)
   }

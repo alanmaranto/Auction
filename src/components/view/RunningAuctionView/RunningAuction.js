@@ -25,7 +25,6 @@ const RunningAuction = ({
   let duration = moment.duration(end.diff(now));
   let seconds = duration.asSeconds();
   const milliseconds = seconds * 1000;
-  console.log("as milliseconds .... ", milliseconds);
 
   const sendToDashboard = () => {
     console.log("Enviando al dashboard");

@@ -78,7 +78,6 @@ const NewAuction = () => {
     setValues({ ...values, error: "", loading: true });
 
     createAuction(user._id, token, auction).then(data => {
-      console.log('data', data)
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {

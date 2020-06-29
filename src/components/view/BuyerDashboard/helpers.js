@@ -14,7 +14,7 @@ const selectedAuction = {
   },
 };
 
-export const showAuctions = (data, selected, callback) =>
+export const showAuctions = (data, selected, callback) => 
   data
     .filter(auction => selectedAuction[selected](auction))
     .map(auction => ({
@@ -23,7 +23,7 @@ export const showAuctions = (data, selected, callback) =>
       openingAuction: auction.openingAuction,
       endingAuction: auction.endingAuction,
       onClickElement: () => callback(`/auction/${auction._id}`)
-    }));
+    }))
 
 export const displayAuction = ({ onClickElement, title, openingAuction }) => {
   return (

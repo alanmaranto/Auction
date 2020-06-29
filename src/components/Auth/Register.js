@@ -40,7 +40,6 @@ const Register = () => {
     });
     signup({ email, password, name, businessName }).then(data => {
       if (data.error) {
-        console.log("data", data);
         setValues({
           ...values,
           error: data.error,

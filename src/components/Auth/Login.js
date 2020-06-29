@@ -9,7 +9,7 @@ import {
   Icon,
 } from "semantic-ui-react";
 import { signin } from "../../api";
-import { authenticate } from "../../helpers/authenticate";
+import { authenticate, isAuthenticated } from "../../helpers/authenticate";
 import { registerUserIOToken } from '../../socket';
 import "./App.css";
 
@@ -23,6 +23,7 @@ const Login = () => {
   });
 
   const { email, password, loading, error, redirectToReferrer } = values;
+  const { user } = isAuthenticated()
 
   const onChange = name => event => {
     setValues({
@@ -41,7 +42,6 @@ const Login = () => {
     });
     signin({ email, password }).then(data => {
       if (data.error) {
-        console.log("data", data);
         setValues({
           ...values,
           error: data.error,
@@ -77,7 +77,16 @@ const Login = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      return <Redirect to="/" />;
+      if (user && user.role === 0) {
+        return <Redirect to="/" />;
+      } else if (user && user.role == 1) {
+        return <Redirect to="/provider-dashboard" />
+      } else {
+        return <Redirect to ="/" />
+      }
+    }
+    if (isAuthenticated()) {
+      return <Redirect to="/" />
     }
   };
 
