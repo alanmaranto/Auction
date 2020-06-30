@@ -6,7 +6,7 @@ import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
 
 import { getInvitedAuctionsByProvider } from "../../../api";
-import { showAuctions } from "../BuyerDashboard/helpers";
+import { showProvidersAuctions } from "../BuyerDashboard/helpers";
 
 import "../../../App.css";
 
@@ -44,9 +44,8 @@ class ProviderDashboardContainer extends Component {
 
     console.log('first auc', auctions)
     
-    const activeAuctions = showAuctions(
+    const activeAuctions = showProvidersAuctions(
       auctions,
-      "activeAuction",
       this.sendToAuctionView
     );
 

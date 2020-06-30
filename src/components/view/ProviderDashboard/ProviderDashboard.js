@@ -34,7 +34,7 @@ const ProvidersDashboard = ({ activeAuctions, user }) => {
                 </div>
               </Column>
             </Row>
-             {activeAuctions.length > 0 ? (
+             { activeAuctions && activeAuctions.length > 0 ? (
               <Row columns={4}>
                 <div className="dashboard-container">
                   <Column width={10}>
