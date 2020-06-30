@@ -10,16 +10,16 @@ import {
   Feed,
   FeedContent,
 } from "semantic-ui-react";
-import Timer from "react-compound-timer";
 import moment from "moment";
 import history from "../../../modules/history/history";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import { Row, Column, CContent } from "../../../core/indexSemanticUi";
 import { timerStyle } from "./style";
-import "./style.css";
 import AddProviders from "../AddProviders/AddProviders";
+import { isAuthenticated } from "../../../helpers/authenticate";
 import Countdown from "react-countdown";
+import "./style.css";
 
 import FileCard from "../../Files/FileCard";
 
@@ -33,13 +33,23 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
   } else {
     // Render a countdown
     return (
-      <div>
-        <div>{days} (dias) </div>
-        <div>{hours} (horas)</div>
-        <div>{minutes} (minutos)</div>
-        <div>{seconds} (segundos) </div>
-        <div>Continua personalizando tanto como gustes...</div>
-        <div> gg saludistos</div>
+      <div className="countdown">
+        <div className="time">
+          <div>{days}</div>
+          <span>Días</span>
+        </div>
+        <div className="time">
+          <div>{hours}</div>
+          <span>Horas</span>
+        </div>
+        <div className="time">
+          <div>{minutes}</div>
+          <span>Minutos</span>
+        </div>
+        <div className="time">
+          <div>{seconds}</div>
+          <span>Segundos</span>
+        </div>
       </div>
     );
   }
@@ -58,6 +68,7 @@ const Auction = ({
 }) => {
   const { title, description, _id, openingAuction } = auction;
   const operation = new Date(openingAuction).getTime();
+  const { user } = isAuthenticated();
 
   const showInvitedProviders = (
     providers,
@@ -68,15 +79,19 @@ const Auction = ({
   ) => {
     return (
       <Column>
-        <Card>
+        <Card color="blue" fluid>
           <CContent>
-            Proveedores invitados
             <Button
               circular
               onClick={onOpenProviderModal}
               icon="add circle"
               floated="right"
             />
+            <Card.Header>Proveedores Invitados</Card.Header>
+            <Card.Description>
+              Aquí podrás seleccionar a los proveedores que quieres que
+              participen en la subasta
+            </Card.Description>
             <AddProviders
               providers={providers}
               openProviders={openProviders}
@@ -120,47 +135,61 @@ const Auction = ({
                           icon="gavel"
                         />
                       </div>
-                      <div className="background-container">
-                        <div>
-                          <p className="auction-description">{description}</p>
-                        </div>
+                    </div>
+                  </Column>
+                </Row>
+                <Row>
+                  <Column>
+                    <div className="background-container">
+                      <div>
+                        <p className="auction-description">{description}</p>
                       </div>
                     </div>
                   </Column>
                 </Row>
-                <Row columns={3}>
-                  {showInvitedProviders(
-                    providers,
-                    openProviders,
-                    onOpenProviderModal,
-                    onCloseProviderModal,
-                    submitProviders
-                  )}
-                  <FileCard
-                    id={_id}
-                    openFiles={openFiles}
-                    onOpenFileModal={onOpenFileModal}
-                    onCloseFileModal={onCloseFileModal}
-                  />
+                <Row>
                   <Column>
-                    <Card className="auction-card">
-                      Time, Countdown and messages
-                      <Card style={timerStyle}>
-                        <div style={{ textAlign: "center" }}>
-                          <h2>Tiempo para iniciar la subasta</h2>
-                        </div>
-                        <Countdown
-                          date={new Date(operation)}
-                          renderer={renderer}
-                          onComplete={() => {
-                            console.log("con esta función le decimos bye al component")
-                            history.push(`/runningAuction/${_id}`);
-                          }}
-                        /> 
-                      </Card>
-                    </Card>
+                    <div style={{ textAlign: "center" }}>
+                      <h2>Tiempo para iniciar la subasta</h2>
+                    </div>
+                    <Countdown
+                      date={new Date(operation)}
+                      renderer={renderer}
+                      onComplete={() => {
+                        console.log(
+                          "con esta función le decimos bye al component"
+                        );
+                        history.push(`/runningAuction/${_id}`);
+                      }}
+                    />
                   </Column>
                 </Row>
+                {isAuthenticated() && isAuthenticated().user.role === 0 ? (
+                  <Row columns={2}>
+                    {showInvitedProviders(
+                      providers,
+                      openProviders,
+                      onOpenProviderModal,
+                      onCloseProviderModal,
+                      submitProviders
+                    )}
+                    <FileCard
+                      id={_id}
+                      openFiles={openFiles}
+                      onOpenFileModal={onOpenFileModal}
+                      onCloseFileModal={onCloseFileModal}
+                    />
+                  </Row>
+                ) : (
+                  <Row>
+                    <FileCard
+                      id={_id}
+                      openFiles={openFiles}
+                      onOpenFileModal={onOpenFileModal}
+                      onCloseFileModal={onCloseFileModal}
+                    />
+                  </Row>
+                )}
               </Grid>
             </div>
           </div>
