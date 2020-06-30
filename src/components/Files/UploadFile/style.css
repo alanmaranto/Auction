@@ -1,0 +1,24 @@
+.upload-file-list {
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: left;
+}
+
+.upload-file-item {
+  padding: 5px;
+}
+
+.upload-file-item .file-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.upload-file-item .delete-icon {
+  width: 25px;
+  height: 25px;
+  float: right;
+}
+
+.upload-file-item .delete-icon:hover {
+  cursor: pointer;
+}
