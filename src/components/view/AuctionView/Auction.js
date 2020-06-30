@@ -15,12 +15,13 @@ import moment from "moment";
 import history from "../../../modules/history/history";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
-import FileCardView from "./FileCardView";
 import { Row, Column, CContent } from "../../../core/indexSemanticUi";
 import { timerStyle } from "./style";
 import "./style.css";
 import AddProviders from "../AddProviders/AddProviders";
 import Countdown from "react-countdown";
+
+import FileCard from "../../Files/FileCard";
 
 const Completionist = () => <span>Arrrancamos la subasta</span>;
 
@@ -99,32 +100,6 @@ const Auction = ({
     );
   };
 
-  const showFiles = (openFiles, onOpenFileModal, onCloseFileModal, id) => {
-    return (
-      <Column>
-        <Card>
-          <CContent>
-            <div>
-              Archivos
-              <Button
-                circular
-                floated="right"
-                icon="add circle"
-                onClick={onOpenFileModal}
-              />
-              <FileCardView
-                openModal={openFiles}
-                onClose={onCloseFileModal}
-                auctionId={id}
-              />
-            </div>
-            <Card>Aqui van los archivos</Card>
-          </CContent>
-        </Card>
-      </Column>
-    );
-  };
-
   return (
     <Fragment>
       <div className="app">
@@ -161,7 +136,12 @@ const Auction = ({
                     onCloseProviderModal,
                     submitProviders
                   )}
-                  {showFiles(openFiles, onOpenFileModal, onCloseFileModal, _id)}
+                  <FileCard
+                    id={_id}
+                    openFiles={openFiles}
+                    onOpenFileModal={onOpenFileModal}
+                    onCloseFileModal={onCloseFileModal}
+                  />
                   <Column>
                     <Card className="auction-card">
                       Time, Countdown and messages
