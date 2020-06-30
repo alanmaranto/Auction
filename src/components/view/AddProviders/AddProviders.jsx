@@ -2,18 +2,22 @@ import React, { Component } from "react";
 import { Modal, Dropdown, Button } from "semantic-ui-react";
 import { getProviders } from "../../../api";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { MActions, MContent, MHeader } from '../../../core/indexSemanticUi.js'
+import { MActions, MContent, MHeader } from "../../../core/indexSemanticUi.js";
 import "./style.css";
 
 class AddProviders extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
-    const { providers, openProviders, onCloseProviderModal, submitProviders } = this.props;
+    const {
+      providers,
+      openProviders,
+      onCloseProviderModal,
+      submitProviders,
+    } = this.props;
 
     const providersOptions = providers.map((provider) => ({
       key: provider._id,

@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Dashboard from "../components/view/BuyerDashboard/DashboardContainer";
+import BuyerDashboard from "../components/view/BuyerDashboard/DashboardContainer";
 import NotFound from "../core/404/404NotFound";
 import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
@@ -12,19 +12,22 @@ import AdminRoutes from "./AdminRoutes";
 import BuyersRoutes from "./BuyersRoutes";
 import ProvidersRoutes from "./ProvidersRoutes";
 import FinalizedAuction from '../components/view/FinalizedAuctions/FinalizedAuction';
-
+import ProviderDashboard from '../components/view/ProviderDashboard/ProviderDashboardView';
+import WonAuctions from '../components/view/WonAuctions/WonAuctionsView'
 import "semantic-ui-css/semantic.min.css";
 
 const Routes = () => (
   <Switch>
-    <Route exact path="/" component={Dashboard} />
     <Route path="/login" component={Login} />
     <Route path="/register" component={Register} />
     <Route path="/user/settings" component={Settings} />
     <Route path="/create/auction" component={NewAuction} />
     <Route path="/auction/:id" component={AuctionView} />
     <Route path="/runningAuction/:id" component={RunningAuctionView} />
+    <BuyersRoutes exact path="/" component={BuyerDashboard} />
     <BuyersRoutes path="/finalized" exact component={FinalizedAuction} />
+    <ProvidersRoutes path="/provider-dashboard" exact component={ProviderDashboard} />
+    <ProvidersRoutes path="/wons" exact component={WonAuctions} />
     <Route component={NotFound} />
   </Switch>
 );

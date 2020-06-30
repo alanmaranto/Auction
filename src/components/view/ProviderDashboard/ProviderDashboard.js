@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Grid, Segment, Divider, Header } from "semantic-ui-react";
-import { displayAuction } from "./helpers";
+import { displayAuction } from "../BuyerDashboard/helpers";
 import NoData from "../../../core/500/NoData";
 import TotalAuctions from "../Reports/TotalAuctions";
 import NativeClock from "../../../core/Clock/NativeClock";
@@ -8,7 +8,7 @@ import { Row, Column } from "../../../core/indexSemanticUi";
 
 import "./style.css";
 
-const Dashboard = ({ activeAuctions, user }) => {
+const ProvidersDashboard = ({ activeAuctions, user }) => {
   const { name } = user || {};
   return (
     <Fragment>
@@ -34,7 +34,7 @@ const Dashboard = ({ activeAuctions, user }) => {
                 </div>
               </Column>
             </Row>
-            {activeAuctions.length > 0 ? (
+             { activeAuctions && activeAuctions.length > 0 ? (
               <Row columns={4}>
                 <div className="dashboard-container">
                   <Column width={10}>
@@ -59,7 +59,7 @@ const Dashboard = ({ activeAuctions, user }) => {
                 </div>
               </Row>
             ) : (
-              <NoData title="Aquí aparecerán tus subastas activas" />
+              <NoData title="Aquí aparecerán las subastas donde estás invitado" />
             )}
           </Grid>
         </div>
@@ -68,4 +68,4 @@ const Dashboard = ({ activeAuctions, user }) => {
   );
 };
 
-export default Dashboard;
+export default ProvidersDashboard;

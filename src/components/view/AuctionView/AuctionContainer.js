@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import Auction from "./Auction";
-import { Message } from 'semantic-ui-react'
-import { getAuctionById, getProviders, postProviders } from "../../../api";
+import { Message } from "semantic-ui-react";
+import {
+  getAuctionById,
+  getProviders,
+  postProviders,
+  getSelectedProvidersByAuctionId,
+} from "../../../api";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import "moment/locale/es";
 
@@ -10,6 +15,7 @@ class AuctionContainer extends Component {
     super(props);
     this.state = {
       providers: [],
+      selectedProviders: [], 
       auction: {},
       openProviders: false,
       openFiles: false,
@@ -44,34 +50,36 @@ class AuctionContainer extends Component {
 
   onDismissDoneNotification = () => {
     setTimeout(() => {
-      this.setState({ notification: false })
-    }, 5000)
+      this.setState({ notification: false });
+    }, 5000);
     return (
-      <Message positive
+      <Message
+        positive
         header="Listo"
         content="Has agregado proveedores con éxito"
       />
-    )
-  }
+    );
+  };
 
   onDismissErrorNotification = () => {
     setTimeout(() => {
-      this.setState({ notification: false })
-    }, 5000)
+      this.setState({ notification: false });
+    }, 5000);
     return (
-      <Message negative
+      <Message
+        negative
         header="Error"
         content="Ha ocurrido un error al intentar agregar proveedores"
       />
-    )
-  }
+    );
+  };
 
   submitProviders = async (e) => {
     if (e) {
-      e.preventDefault()
+      e.preventDefault();
     }
-    const { id }= this.props.match.params;
-    const { providers } = this.state
+    const { id } = this.props.match.params;
+    const { providers } = this.state;
     const { token } = isAuthenticated();
 
     const data = {
@@ -79,17 +87,17 @@ class AuctionContainer extends Component {
       invitedUsers: providers,
     };
 
-    const response = await postProviders(token, data)
+    const response = await postProviders(token, data);
+
 
     if (response.data.status === 201) {
-      this.onCloseProviderModal()
-      this.onDismissNotification()
+      this.onCloseProviderModal();
+      this.onDismissDoneNotification();
       // fetch
     } else {
-      this.onDismissNotification()
+      this.onDismissErrorNotification();
     }
-    console.log('resp data',response)
-  }
+  };
 
   onOpenProviderModal = () => {
     this.setState({
@@ -111,14 +119,24 @@ class AuctionContainer extends Component {
     this.setState({ openFiles: true });
   };
 
+  fetchSelectedProviders = async (auctionId) => {
+    const { token } = isAuthenticated();
+    const response = await getSelectedProvidersByAuctionId(token, auctionId);
+
+    if (response && response.status === 200) {
+      this.setState({ selectedProviders: response.data.body });
+    }
+  };
+
   render() {
-    const { auction, openProviders, openFiles, providers } = this.state;
-    
+    const { auction, openProviders, openFiles, providers, selectedProviders } = this.state;
+
     return (
       <Auction
         auction={auction}
         providers={providers}
         openProviders={openProviders}
+        selectedProviders={selectedProviders}
         openFiles={openFiles}
         onOpenProviderModal={this.onOpenProviderModal}
         onCloseProviderModal={this.onCloseProviderModal}

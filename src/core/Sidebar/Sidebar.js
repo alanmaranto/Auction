@@ -24,27 +24,43 @@ const Sidebar = () => {
                 </Header>
               </div>
             </Grid.Row>
-            <Grid.Row style={{ margin: 0 }}>
-              <Link to="/">
-                <div className="sidebar-options">
-                  <span>
-                    <Image src={Dashboard} />
-                  </span>
-                  <span className="option-title">Dashboard</span>
-                </div>
-              </Link>
-            </Grid.Row>
-            <Grid.Row>
-              <Link to="/create/auction">
-                <div className="sidebar-options">
-                  <span>
-                    <Image src={A1} />
-                  </span>
-                  <span className="option-title">Crear Subasta</span>
-                </div>
-              </Link>
-            </Grid.Row>
+            {isAuthenticated() && isAuthenticated().user.role === 0 && (
+              <Grid.Row style={{ margin: 0 }}>
+                <Link to="/">
+                  <div className="sidebar-options">
+                    <span>
+                      <Image src={Dashboard} />
+                    </span>
+                    <span className="option-title">Dashboard</span>
+                  </div>
+                </Link>
+              </Grid.Row>
+            )}
             {isAuthenticated() && isAuthenticated().user.role === 1 && (
+              <Grid.Row style={{ margin: 0 }}>
+                <Link to="/provider-dashboard">
+                  <div className="sidebar-options">
+                    <span>
+                      <Image src={Dashboard} />
+                    </span>
+                    <span className="option-title">Dashboard</span>
+                  </div>
+                </Link>
+              </Grid.Row>
+            )}
+            {isAuthenticated() && isAuthenticated().user.role === 0 && (
+              <Grid.Row>
+                <Link to="/create/auction">
+                  <div className="sidebar-options">
+                    <span>
+                      <Image src={A1} />
+                    </span>
+                    <span className="option-title">Crear Subasta</span>
+                  </div>
+                </Link>
+              </Grid.Row>
+            )}
+            {isAuthenticated() && isAuthenticated().user.role === 0 && (
               <Grid.Row>
                 <Link to="/finalized">
                   <div className="sidebar-options">
@@ -52,6 +68,18 @@ const Sidebar = () => {
                       <Image src={A1} />
                     </span>
                     <span className="option-title">Subastas Finalizadas</span>
+                  </div>
+                </Link>
+              </Grid.Row>
+            )}
+            {isAuthenticated() && isAuthenticated().user.role === 1 && (
+              <Grid.Row>
+                <Link to="/wons">
+                  <div className="sidebar-options">
+                    <span>
+                      <Image src={A1} />
+                    </span>
+                    <span className="option-title">Subastas Ganadas</span>
                   </div>
                 </Link>
               </Grid.Row>

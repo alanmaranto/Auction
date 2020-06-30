@@ -45,7 +45,6 @@ class RunningAuctionView extends Component {
     const { token } = isAuthenticated();
     const response = await getRunningAuctionById(token, currentAuction);
     if (response && response.data && response.data.body) {
-      console.log(response.data.body)
       this.setState({ auction: response.data.body });
     }
   };
