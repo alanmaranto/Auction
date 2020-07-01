@@ -27,16 +27,16 @@ function FileCard({ openFiles, onOpenFileModal, onCloseFileModal, id }) {
 
   return (
     <Column>
-      <Card>
+      <Card fluid color="blue">
         <CContent>
-          <div>
-            Archivos
             <Button
               circular
               floated="right"
               icon="add circle"
               onClick={onOpenFileModal}
-            />
+              />
+              <Card.Header>Archivos</Card.Header>
+              <Card.Description>Aquí pueden subir, ver y descargar archivos para la subasta</Card.Description>
             <UploadFile
               openModal={openFiles}
               onClose={() => {
@@ -45,7 +45,6 @@ function FileCard({ openFiles, onOpenFileModal, onCloseFileModal, id }) {
               }}
               auctionId={id}
             />
-          </div>
           <FileList files={fileList} onRemoveFile={() => fetchFiles()}/>
         </CContent>
       </Card>

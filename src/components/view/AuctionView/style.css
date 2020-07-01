@@ -11,13 +11,6 @@ li span {
   font-size: 1rem;
 }
 
-.time-container {
-  color: #333;
-  margin: 0 auto;
-  padding: 0.5rem;
-  text-align: center;
-}
-
 .auction-header {
   margin-top: 10px !important;
   text-transform: capitalize !important;
@@ -69,4 +62,37 @@ li span {
 
 ul {
   margin: 0;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.countdown .time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fff;
+  font-size: 48px;
+  min-width: 110px;
+  margin-right: 20px;
+  font-weight: 700;
+  padding: 25px 5px 15px;
+  border-radius: 4px;
+  color: #ff0083;
+}
+
+.countdown .time span {
+  margin-top: 20px;
+  padding: 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 600;
+  color: #312747;
 }

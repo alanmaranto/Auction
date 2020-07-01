@@ -1,14 +1,56 @@
-import React, { Fragment, useState } from "react";
-import { Button, Form, Grid, Segment, Header } from "semantic-ui-react";
+import React, { Fragment } from "react";
+import {
+  Button,
+  Form,
+  Grid,
+  Segment,
+  Header,
+  Card,
+  Icon,
+} from "semantic-ui-react";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import history from "../../../modules/history/history";
-import Timer from "react-compound-timer";
+import Countdown from "react-countdown";
 import moment from "moment";
+import "./style.css";
+import { isAuthenticated } from "../../../helpers/authenticate";
 
 const Input = Form.Input;
 const Row = Grid.Row;
 const Column = Grid.Column;
+
+const Completionist = () => <span>Finalizamos la subasta</span>;
+
+// Renderer callback with condition
+const renderer = ({ days, hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return (
+      <div className="countdown">
+        <div className="time">
+          <div>{days}</div>
+          <span>Días</span>
+        </div>
+        <div className="time">
+          <div>{hours}</div>
+          <span>Horas</span>
+        </div>
+        <div className="time">
+          <div>{minutes}</div>
+          <span>Minutos</span>
+        </div>
+        <div className="time">
+          <div>{seconds}</div>
+          <span>Segundos</span>
+        </div>
+      </div>
+    );
+  }
+};
 
 const RunningAuction = ({
   title,
@@ -19,26 +61,106 @@ const RunningAuction = ({
   endingAuction,
   onFinalizedAuction,
 }) => {
-  let now = moment(new Date()); //todays date
-  // let end = moment("2020-07-16T23:30:00.000Z"); // auction date as string
-  let end = moment(endingAuction)
-  let duration = moment.duration(end.diff(now));
-  let seconds = duration.asSeconds();
-  const milliseconds = seconds * 1000;
+  const operation = new Date(endingAuction).getTime();
+  console.log("op", operation);
 
-  const sendToDashboard = () => {
-    console.log("Enviando al dashboard");
-    // aqui va una funcion que edite el estado de la auction a finalized
-    onFinalizedAuction();
-    history.push(`/`);
+  const renderTitle = () => {
+    return (
+      <Fragment>
+        <Row>
+          <Column>
+            <div className="auction-h">
+              <Header
+                as="h1"
+                className="auction-header"
+                content={title}
+                icon="gavel"
+              />
+            </div>
+          </Column>
+        </Row>
+      </Fragment>
+    );
   };
 
-  const timeToAuction = [
-    {
-      time: 0,
-      callback: () => sendToDashboard(),
-    },
-  ];
+  const renderCountdown = () => {
+    return (
+      <Fragment>
+        <Row>
+          <Column>
+            <div style={{ textAlign: "center" }}>
+              <h2>La subasta finalizará en</h2>
+            </div>
+            <Countdown
+              date={new Date(operation)}
+              renderer={renderer}
+              onComplete={
+                isAuthenticated() && isAuthenticated().user.role === 0
+                  ? () => {
+                      console.log(
+                        "con esta función le decimos bye al component"
+                      );
+                      onFinalizedAuction();
+                      history.push("/");
+                    }
+                  : () => {
+                      console.log("proveedor");
+                      onFinalizedAuction();
+                      history.push("/provider-dashboard");
+                    }
+              }
+            />
+          </Column>
+        </Row>
+      </Fragment>
+    );
+  };
+
+  const renderBid = () => {
+    return (
+      <Fragment>
+        <Row columns={2}>
+          <Column>
+            <Form size="large" onSubmit={onSubmit}>
+              <Input
+                placeholder="Introduzca su puja"
+                type="number"
+                value={message}
+                name="title"
+                fluid
+                size="big"
+                inverted
+                onChange={(e) => onChange("message", e.target.value)}
+              />
+              <Button
+                style={{ background: "#19750c", color: "white" }}
+                icon
+                labelPosition="right"
+                compact
+                fluid
+                size="large"
+              >
+                <Icon name="dollar sign" />
+                ¡Pujar!
+              </Button>
+            </Form>
+          </Column>
+          <Column>
+            <Card fluid>
+              <Card.Content className="card-container" textAlign="center">
+                <Card.Header className="card-bid">
+                  Puja actual
+                </Card.Header>
+                <Card.Description className="card-bid-number">
+                  $ {lastMessage.bid || 0 } pesos
+                </Card.Description>
+              </Card.Content>
+            </Card>
+          </Column>
+        </Row>
+      </Fragment>
+    );
+  };
 
   return (
     <Fragment>
@@ -49,62 +171,9 @@ const RunningAuction = ({
             <Navbar />
             <div className="content-dynamic">
               <Grid>
-                <Row>
-                  <Column>
-                    <div className="auction-title">
-                      <div className="auction-h">
-                        <Header
-                          as="h1"
-                          className="auction-header"
-                          content={title}
-                          icon="gavel"
-                        />
-                      </div>
-                      <Timer
-                        initialTime={15000} // formato miliseconds
-                        direction="backward"
-                        lastUnit="d"
-                        checkpoints={timeToAuction}
-                      >
-                        {() => (
-                          <Fragment>
-                            <Timer.Days /> Días
-                            <Timer.Hours /> Horas
-                            <Timer.Minutes /> Minutos
-                            <Timer.Seconds /> Segundos
-                          </Fragment>
-                        )}
-                      </Timer>
-                      <div className="background-container">
-                        lastMessage :{lastMessage.bid}
-                        <div style={{ padding: "50px" }}>
-                          <Form size="large" onSubmit={onSubmit}>
-                            <Segment>
-                              <Input
-                                placeholder="Introduzca un nombre para la subasta"
-                                type="text"
-                                value={message}
-                                name="title"
-                                onChange={(e) =>
-                                  onChange("message", e.target.value)
-                                }
-                              />
-                              <br />
-                              <Grid textAlign="center" columns={2}>
-                                <Button compact fluid size="medium">
-                                  Send message
-                                </Button>
-                              </Grid>
-                            </Segment>
-                            <Button fluid compact size="medium" onClick={onFinalizedAuction()}>
-                                  Send message
-                                </Button>
-                          </Form>
-                        </div>
-                      </div>
-                    </div>
-                  </Column>
-                </Row>
+                {renderTitle()}
+                {renderCountdown()}
+                {renderBid()}
               </Grid>
             </div>
           </div>
