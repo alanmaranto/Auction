@@ -68,7 +68,8 @@ const Auction = ({
 }) => {
   const { title, description, _id, openingAuction } = auction;
   const operation = new Date(openingAuction).getTime();
-  const { user } = isAuthenticated();
+
+  console.log('oper', operation)
 
   const showInvitedProviders = (
     providers,
@@ -115,6 +116,109 @@ const Auction = ({
     );
   };
 
+  const renderAuctionHeader = () => {
+    return (
+      <Fragment>
+        <Row>
+          <Column>
+            <div className="auction-title">
+              <div className="auction-h">
+                <Header
+                  as="h1"
+                  className="auction-header"
+                  content={title}
+                  icon="gavel"
+                />
+              </div>
+            </div>
+          </Column>
+        </Row>
+        <Row>
+          <Column>
+            <div className="background-container">
+              <div>
+                <p className="auction-description">{description}</p>
+              </div>
+            </div>
+          </Column>
+        </Row>
+      </Fragment>
+    );
+  };
+
+  const renderBuyerAuctionView = () => {
+    return (
+      isAuthenticated() &&
+      isAuthenticated().user.role === 0 && (
+        <Fragment>
+          <Row>
+            <Column>
+              <div style={{ textAlign: "center" }}>
+                <h2>Tiempo para iniciar la subasta</h2>
+              </div>
+              <Countdown
+                date={new Date(operation)}
+                renderer={renderer}
+                onComplete={() => {
+                  console.log("con esta función le decimos bye al component");
+                  history.push(`/runningAuction/${_id}`);
+                }}
+              />
+            </Column>
+          </Row>
+          <Row columns={2}>
+            {showInvitedProviders(
+              providers,
+              openProviders,
+              onOpenProviderModal,
+              onCloseProviderModal,
+              submitProviders
+            )}
+            <FileCard
+              id={_id}
+              openFiles={openFiles}
+              onOpenFileModal={onOpenFileModal}
+              onCloseFileModal={onCloseFileModal}
+            />
+          </Row>
+        </Fragment>
+      )
+    );
+  };
+
+  const renderProvidersAuctionView = () => {
+    return (
+      isAuthenticated() &&
+      isAuthenticated().user.role === 1 && (
+        <Fragment>
+          <Row columns={2}>
+            <Column>
+              <FileCard
+                id={_id}
+                openFiles={openFiles}
+                onOpenFileModal={onOpenFileModal}
+                onCloseFileModal={onCloseFileModal}
+              />
+            </Column>
+            <Column>
+              <div style={{ textAlign: "center" }}>
+                <h2>Tiempo para iniciar la subasta</h2>
+              </div>
+              <Countdown
+                date={new Date(operation)}
+                renderer={renderer}
+                onComplete={() => {
+                  console.log("con esta función le decimos bye al component");
+                  history.push(`/runningAuction/${_id}`);
+                }}
+              />
+            </Column>
+          </Row>
+        </Fragment>
+      )
+    );
+  };
+
   return (
     <Fragment>
       <div className="app">
@@ -124,72 +228,9 @@ const Auction = ({
             <Navbar />
             <div className="content-dynamic">
               <Grid>
-                <Row>
-                  <Column>
-                    <div className="auction-title">
-                      <div className="auction-h">
-                        <Header
-                          as="h1"
-                          className="auction-header"
-                          content={title}
-                          icon="gavel"
-                        />
-                      </div>
-                    </div>
-                  </Column>
-                </Row>
-                <Row>
-                  <Column>
-                    <div className="background-container">
-                      <div>
-                        <p className="auction-description">{description}</p>
-                      </div>
-                    </div>
-                  </Column>
-                </Row>
-                <Row>
-                  <Column>
-                    <div style={{ textAlign: "center" }}>
-                      <h2>Tiempo para iniciar la subasta</h2>
-                    </div>
-                    <Countdown
-                      date={new Date(operation)}
-                      renderer={renderer}
-                      onComplete={() => {
-                        console.log(
-                          "con esta función le decimos bye al component"
-                        );
-                        history.push(`/runningAuction/${_id}`);
-                      }}
-                    />
-                  </Column>
-                </Row>
-                {isAuthenticated() && isAuthenticated().user.role === 0 ? (
-                  <Row columns={2}>
-                    {showInvitedProviders(
-                      providers,
-                      openProviders,
-                      onOpenProviderModal,
-                      onCloseProviderModal,
-                      submitProviders
-                    )}
-                    <FileCard
-                      id={_id}
-                      openFiles={openFiles}
-                      onOpenFileModal={onOpenFileModal}
-                      onCloseFileModal={onCloseFileModal}
-                    />
-                  </Row>
-                ) : (
-                  <Row>
-                    <FileCard
-                      id={_id}
-                      openFiles={openFiles}
-                      onOpenFileModal={onOpenFileModal}
-                      onCloseFileModal={onCloseFileModal}
-                    />
-                  </Row>
-                )}
+                {renderAuctionHeader()}
+                {renderBuyerAuctionView()}
+                {renderProvidersAuctionView()}
               </Grid>
             </div>
           </div>
