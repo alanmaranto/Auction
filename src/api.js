@@ -67,6 +67,7 @@ export const createAuction = async (userId, token, auction) => {
       },
       data: auction,
     });
+    return response;
   } catch (error) {
     console.log(error);
   }
