@@ -22,7 +22,7 @@ import { isAuthenticated } from "../../../helpers/authenticate";
 import { createAuction } from "../../../api";
 
 import "./style.css";
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css"; 
 
 const NewAuction = () => {
   const [openingAuction, setOpeningAuction] = useState("");
@@ -89,6 +89,7 @@ const NewAuction = () => {
           redirectToAuction: true,
           createdAuction: data.title
         });
+        history.push(`/`);
       }
     });
   };
