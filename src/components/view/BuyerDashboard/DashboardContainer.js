@@ -17,9 +17,11 @@ const DashboardContainer = () => {
 
   const fetchActiveAuctions = async () => {
     const {
-      user: { _id },
+      user,
       token,
     } = isAuthenticated();
+     let _id  = user ? user._id: undefined;
+  
     const response = await getActiveAuctionsByUser(token, _id);
 
     if (response && response.status === 200) {
