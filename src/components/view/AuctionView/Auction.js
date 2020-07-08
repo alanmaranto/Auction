@@ -69,8 +69,6 @@ const Auction = ({
   const { title, description, _id, openingAuction } = auction;
   const operation = new Date(openingAuction).getTime();
 
-  console.log('oper', operation)
-
   const showInvitedProviders = (
     providers,
     openProviders,
@@ -160,7 +158,6 @@ const Auction = ({
                 date={new Date(operation)}
                 renderer={renderer}
                 onComplete={() => {
-                  console.log("con esta función le decimos bye al component");
                   history.push(`/runningAuction/${_id}`);
                 }}
               />
@@ -208,7 +205,6 @@ const Auction = ({
                 date={new Date(operation)}
                 renderer={renderer}
                 onComplete={() => {
-                  console.log("con esta función le decimos bye al component");
                   history.push(`/runningAuction/${_id}`);
                 }}
               />

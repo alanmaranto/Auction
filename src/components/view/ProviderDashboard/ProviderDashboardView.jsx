@@ -32,7 +32,6 @@ class ProviderDashboardContainer extends Component {
     if (response && response.status === 200) {
       this.setState({ auctions: response.data.body });
     }
-    console.log(response);
   };
 
   sendToAuctionView = (redirect) => {
@@ -41,8 +40,6 @@ class ProviderDashboardContainer extends Component {
 
   render() {
     const { auctions } = this.state;
-
-    console.log('first auc', auctions)
     
     const activeAuctions = showProvidersAuctions(
       auctions,

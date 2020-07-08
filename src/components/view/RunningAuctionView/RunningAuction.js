@@ -62,7 +62,6 @@ const RunningAuction = ({
   onFinalizedAuction,
 }) => {
   const operation = new Date(endingAuction).getTime();
-  console.log("op", operation);
 
   const renderTitle = () => {
     return (
@@ -97,14 +96,10 @@ const RunningAuction = ({
               onComplete={
                 isAuthenticated() && isAuthenticated().user.role === 0
                   ? () => {
-                      console.log(
-                        "con esta función le decimos bye al component"
-                      );
                       onFinalizedAuction();
                       history.push("/");
                     }
                   : () => {
-                      console.log("proveedor");
                       onFinalizedAuction();
                       history.push("/provider-dashboard");
                     }

@@ -144,7 +144,6 @@ export const postFile = async (token, body, auctionId) => {
     });
 
     return response;
-
   } catch (error) {
     return error;
   }
@@ -296,19 +295,61 @@ export const getInvitedAuctionsByProvider = async (token, userId) => {
       url: `${host}/auctions-provider`,
       method: "GET",
       headers: {
-        ['x-auction-id']: userId,
+        ["x-auction-id"]: userId,
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: userId,
     });
     if (response) {
-      return response
+      return response;
     }
     return response.data.error;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
+
+// Bids
+export const getBidsByAuctionInfo = async (token, auctionId) => {
+  try {
+    const response = await axios({
+      url: `${host}/bids/${auctionId}`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response) {
+      return response;
+    }
+    return response.data.error;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const chooseWinner = async (token, auctionId, bidId) => {
+  try {
+    const response = await axios({
+      url: `${host}/bid-winner`,
+      method: "PUT",
+      headers: {
+        ["x-auction-id"]: auctionId,
+        ["x-bid-id"]: bidId,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('send res', response)
+    if (response) {
+      return response;
+    }
+    return response.data.error;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default api;

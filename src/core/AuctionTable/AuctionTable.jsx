@@ -21,7 +21,7 @@ export const AuctionTable = (props) => {
   return (
     <React.Fragment>
       <PageSizeSelect limit={props.limit} onChangeLimit={props.onChangeLimit} />
-      Total count: {props.totalCount}.
+      Subastas Totales: {props.totalCount}.
       <Table celled selectable sortable>
         <TableHeader
           column={props.column}

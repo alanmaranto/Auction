@@ -3,6 +3,7 @@ import { Divider, Header, Icon, Grid } from "semantic-ui-react";
 import { Subheader, Row, Column } from "../../../core/indexSemanticUi";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
+import history from '../../../modules/history/history';
 import { getTableSettings, filterData } from "./helper";
 import { AuctionTable } from "../../../core/AuctionTable/AuctionTable";
 import { AuctionFilter } from "../../../core/AuctionTable/AuctionFilter.jsx";
@@ -44,7 +45,6 @@ export default class FinalizedAuction extends React.Component {
   };
 
   onChangePage = (value) => {
-    console.log("currentPage", value)
     this.setState({ currentPage: value });
   };
 
@@ -68,14 +68,12 @@ export default class FinalizedAuction extends React.Component {
     });
   };
 
-  buttonAction = (data) => {
-    console.log(
-      "Esta funcion puede ser utiizada para acciones en los rows de tabla"
-    );
+  sendToBids = (id) => {
+    history.push(`/winner/auction/${id}`);
   };
 
   render() {
-    const { elementsByPage, currentPage, filter } = this.state; 
+    const { elementsByPage, currentPage, filter } = this.state;
     
     const {
       dataSource: finalizedAuctions,
@@ -116,7 +114,7 @@ export default class FinalizedAuction extends React.Component {
                   onChangePage={this.onChangePage}
                   onChangeLimit={this.onChangeLimit}
                   limit={elementsByPage.toString()}
-                  buttonAction={this.buttonAction}
+                  buttonAction={this.sendToBids}
                   handleSort={this.handleSort}
                   column={this.state._sort}
                 />

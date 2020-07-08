@@ -13,7 +13,8 @@ import BuyersRoutes from "./BuyersRoutes";
 import ProvidersRoutes from "./ProvidersRoutes";
 import FinalizedAuction from '../components/view/FinalizedAuctions/FinalizedAuction';
 import ProviderDashboard from '../components/view/ProviderDashboard/ProviderDashboardView';
-import WonAuctions from '../components/view/WonAuctions/WonAuctionsView'
+import WonAuctionsView from '../components/view/WonAuctions/WonAuctionsView'
+import ChooseWinnerView from '../components/view/ChooseWinner/ChooseWinnerView';
 import "semantic-ui-css/semantic.min.css";
 
 const Routes = () => (
@@ -26,8 +27,9 @@ const Routes = () => (
     <Route path="/runningAuction/:id" component={RunningAuctionView} />
     <BuyersRoutes exact path="/" component={BuyerDashboard} />
     <BuyersRoutes path="/finalized" exact component={FinalizedAuction} />
+    <BuyersRoutes exact path="/winner/auction/:id" component={ChooseWinnerView} />
     <ProvidersRoutes path="/provider-dashboard" exact component={ProviderDashboard} />
-    <ProvidersRoutes path="/wons" exact component={WonAuctions} />
+    <ProvidersRoutes path="/wons" exact component={WonAuctionsView} />
     <Route component={NotFound} />
   </Switch>
 );
