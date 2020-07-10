@@ -26,29 +26,31 @@ class AddProviders extends Component {
     }));
 
     return (
-      <Modal
-        centered
-        className="providers-modal"
-        size="small"
-        open={openProviders}
-        onClose={onCloseProviderModal}
-      >
-        <MHeader>Añadir proveedores</MHeader>
-        <MContent>
-          <Dropdown
-            placeholder="Agrega proveedores a tu subasta"
-            fluid
-            multiple
-            search
-            selection
-            options={providersOptions}
-          />
-        </MContent>
-        <MActions>
-          <Button onClick={onCloseProviderModal}>Cancelar</Button>
-          <Button onClick={submitProviders} content="Guardar" />
-        </MActions>
-      </Modal>
+      <div>
+        <Modal
+          centered
+          className="providers-modal"
+          size="tiny"
+          open={openProviders}
+          onClose={() => onCloseProviderModal()}
+        >
+          <MHeader>Añadir proveedores</MHeader>
+          <MContent>
+            <Dropdown
+              placeholder="Agrega proveedores a tu subasta"
+              fluid
+              multiple
+              search
+              selection
+              options={providersOptions}
+            />
+          </MContent>
+          <MActions>
+            <Button onClick={onCloseProviderModal}>Cancelar</Button>
+            <Button onClick={submitProviders} content="Guardar" />
+          </MActions>
+        </Modal>
+      </div>
     );
   }
 }
