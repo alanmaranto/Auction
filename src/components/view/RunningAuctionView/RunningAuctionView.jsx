@@ -45,7 +45,9 @@ class RunningAuctionView extends Component {
     const { token } = isAuthenticated();
     const response = await getRunningAuctionById(token, currentAuction);
     if (response && response.data && response.data.body) {
-      this.setState({ auction: response.data.body });
+      const { lastMessage, auctionResult } = response.data.body;
+
+      this.setState({ auction: auctionResult, lastMessage });
     }
   };
 
@@ -54,7 +56,10 @@ class RunningAuctionView extends Component {
       console.log("Welcome running auction", data);
     });
     socket.on("newMessage", (data) => {
-      this.setState({ lastMessage: data });
+      const { id: currentAuction } = this.props.match.params;
+      if (data.auctionId === currentAuction) {
+        this.setState({ lastMessage: data });
+      }
     });
   };
 

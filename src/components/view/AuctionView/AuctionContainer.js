@@ -97,6 +97,7 @@ class AuctionContainer extends Component {
     } else {
       this.onDismissErrorNotification();
     }
+    this.onCloseProviderModal();
   };
 
   onOpenProviderModal = () => {
