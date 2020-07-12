@@ -8,12 +8,12 @@ import {
   Header,
   Segment,
   GridColumn,
-  GridRow
+  GridRow,
 } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import history from '../../../modules/history/history';
+import history from "../../../modules/history/history";
 
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
@@ -22,7 +22,7 @@ import { isAuthenticated } from "../../../helpers/authenticate";
 import { createAuction } from "../../../api";
 
 import "./style.css";
-import "react-datepicker/dist/react-datepicker.css"; 
+import "react-datepicker/dist/react-datepicker.css";
 
 const NewAuction = () => {
   const [openingAuction, setOpeningAuction] = useState("");
@@ -30,21 +30,25 @@ const NewAuction = () => {
   const [values, setValues] = useState({
     title: "",
     description: "",
+    minimunPrice: null,
+    minimumBid: null,
     finalized: false,
     error: "",
     loading: false,
     redirectToAuction: false,
-    createdAuction: ""
+    createdAuction: "",
   });
 
   const {
     title,
     description,
+    minimumBid,
+    minimunPrice,
     finalized,
     redirectToAuction,
     createdAuction,
     error,
-    loading
+    loading,
   } = values;
 
   const { user, token } = isAuthenticated();
@@ -53,31 +57,22 @@ const NewAuction = () => {
     ...values,
     openingAuction,
     endingAuction,
-    user: user._id
+    user: user._id,
   };
 
-  const onChange = name => e => {
+  const onChange = (name) => (e) => {
     setValues({
       ...values,
       error: false,
-      [name]: e.target.value
+      [name]: e.target.value,
     });
   };
 
-  const showError = () => (
-    <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
-    >
-      {error}
-    </div>
-  );
-
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     setValues({ ...values, error: "", loading: true });
 
-    createAuction(user._id, token, auction).then(data => {
+    createAuction(user._id, token, auction).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
@@ -85,9 +80,11 @@ const NewAuction = () => {
           ...values,
           title: "",
           description: "",
+          minimumBid: null,
+          minimunPrice: null,
           finalized: false,
           redirectToAuction: true,
-          createdAuction: data.title
+          createdAuction: data.title,
         });
         history.push(`/`);
       }
@@ -133,29 +130,52 @@ const NewAuction = () => {
                         name="title"
                         onChange={onChange("description")}
                       />
+                      <Form.Field label="Precio base" />
+                      <Form.Input
+                        placeholder="Es el precio con el que iniciará la subasta"
+                        type="number"
+                        value={minimunPrice}
+                        name="minimumPrice"
+                        onChange={onChange("minimumPrice")}
+                      />
+                      <Form.Field label="Puja mínima recomendada" />
+                      <Form.Input
+                        placeholder="Es la puja que recomiendas que hagan los proveedores"
+                        type="number"
+                        value={minimumBid}
+                        name="minimumBid"
+                        onChange={onChange("minimumBid")}
+                      />
                       <Form.Field label="Fecha de comienzo de la subasta" />
                       <DatePicker
                         placeholderText="Introduzca la fecha de comienzo para la subasta"
                         selected={openingAuction}
-                        onChange={date => setOpeningAuction(date)}
+                        onChange={(date) => setOpeningAuction(date)}
                         showTimeSelect
                         timeFormat="HH:mm"
                         timeIntervals={30}
                         timeCaption="time"
                         dateFormat="MMMM d, yyyy h:mm aa"
                       />
-                      <Form.Field label="Fecha de finalización de la subasta" />
+                      <Form.Field
+                        style={{ paddingTop: "20px" }}
+                        label="Fecha de finalización de la subasta"
+                      />
                       <DatePicker
                         placeholderText="Introduzca la fecha de finalización para la subasta"
                         selected={endingAuction}
-                        onChange={date => setEndingAuction(date)}
+                        onChange={(date) => setEndingAuction(date)}
                         showTimeSelect
                         timeFormat="HH:mm"
                         timeIntervals={30}
                         timeCaption="time"
                         dateFormat="MMMM d, yyyy h:mm aa"
                       />
-                      <Grid textAlign="center" columns={2}>
+                      <Grid
+                        style={{ paddingTop: "20px" }}
+                        textAlign="center"
+                        columns={2}
+                      >
                         <GridRow>
                           <GridColumn>
                             <Link to="/">
@@ -181,22 +201,10 @@ const NewAuction = () => {
                               Enviar
                             </Button>
                           </GridColumn>
-                          <Link to="/auctionid">
-                            <Button
-                              fluid
-                              compact
-                              className="button-cancel-new-auction"
-                              fluid
-                              size="medium"
-                            >
-                              Ir a vista AuctionId
-                            </Button>
-                          </Link>
                         </GridRow>
                       </Grid>
                     </Segment>
                   </Form>
-                  {/* { error.length > 0 ? showError() : redirectAuction()} */}
                 </Grid.Column>
               </Grid>
             </div>

@@ -16,47 +16,61 @@ const Register = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
     name: "",
     businessName: "",
     error: "",
-    success: false
+    success: false,
   });
 
-  const { email, password, name, businessName, error, success } = values;
+  const {
+    email,
+    password,
+    confirmPassword,
+    name,
+    businessName,
+    error,
+    success,
+  } = values;
 
-  const onChange = name => e => {
+  const onChange = (name) => (e) => {
     setValues({
       ...values,
       error: false,
-      [name]: e.target.value
+      [name]: e.target.value,
     });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     setValues({
       ...values,
-      error: false
+      error: false,
     });
-    signup({ email, password, name, businessName }).then(data => {
-      if (data.error) {
-        setValues({
-          ...values,
-          error: data.error,
-          success: false
-        });
-      } else {
-        setValues({
-          ...values,
-          email: "",
-          password: "",
-          name: "",
-          businessName: "",
-          error: "",
-          success: true
-        });
-      }
-    });
+    if (password === confirmPassword) {
+      signup({ email, password, name, businessName }).then((data) => {
+        if (data.error) {
+          setValues({
+            ...values,
+            error: data.error,
+            success: false,
+          });
+        } else {
+          setValues({
+            ...values,
+            email: "",
+            password: "",
+            confirmPassword: "",
+            name: "",
+            businessName: "",
+            error: "",
+            success: true,
+          });
+        }
+      });
+    } else {
+      return false;
+    }
   };
 
   const showError = () => (
@@ -73,7 +87,8 @@ const Register = () => {
       className="alert alert-info"
       style={{ display: success ? "" : "none" }}
     >
-      Su cuenta ha sido creada, por favor inicie sesión{" "}
+      Su cuenta ha sido creada, sin embargo aún la estamos autorizando, le
+      haremos llegar un correo cuando esté lista{" "}
       <Link to="/login">Iniciar Sesión</Link>
     </div>
   );
@@ -88,6 +103,10 @@ const Register = () => {
           </Header>
           <Form size="large">
             <Segment stacked>
+              <Form.Field
+                style={{ textAlign: "left" }}
+                label="Nombre de usuario"
+              />
               <Form.Input
                 fluid
                 name="name"
@@ -97,6 +116,10 @@ const Register = () => {
                 type="text"
                 value={name}
                 onChange={onChange("name")}
+              />
+              <Form.Field
+                style={{ textAlign: "left" }}
+                label="Correo electrónico"
               />
               <Form.Input
                 fluid
@@ -108,25 +131,31 @@ const Register = () => {
                 value={email}
                 onChange={onChange("email")}
               />
+              <Form.Field style={{ textAlign: "left" }} label="Contraseña" />
               <Form.Input
                 fluid
                 name="password"
                 icon="lock"
                 iconPosition="left"
-                placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
+                placeholder="Debe ser mayor a 8 caractéres"
                 type="password"
                 value={password}
                 onChange={onChange("password")}
               />
-              {/* <Form.Input
-              fluid
-              name="passwordConfirmation"
-              icon="repeat"
-              iconPosition="left"
-              placeholder="Password Confirmation"
-              type="password"
-              onChange={this.handleChange}
-            /> */}
+              <Form.Field
+                style={{ textAlign: "left" }}
+                label="Confirmar contraseña"
+              />
+              <Form.Input
+                fluid
+                name="passwordConfirmation"
+                icon="repeat"
+                iconPosition="left"
+                placeholder="Confirmar contraseña"
+                type="password"
+                value={confirmPassword}
+                onChange={onChange("confirmPassword")}
+              />
 
               <Button onClick={onSubmit} color="blue" fluid size="large">
                 Enviar
