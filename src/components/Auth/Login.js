@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Redirect, Link } from "react-router-dom";
 import {
   Grid,
@@ -13,9 +13,11 @@ import {
 import { signin } from "../../api";
 import { authenticate, isAuthenticated } from "../../helpers/authenticate";
 import { registerUserIOToken } from "../../socket";
+import { useToasts } from "react-toast-notifications";
 import "./App.css";
 
 const Login = () => {
+  const [visible, setVisible] = useState(false)
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -71,17 +73,15 @@ const Login = () => {
   );
 
   const redirectUser = () => {
+    // const { addToast } = useToasts();
     if (redirectToReferrer) {
-      if (user && user.role === 0) {
+      if (user.isApproved && user && user.role === 0) {
         return <Redirect to="/" />;
-      } else if (user && user.role == 1) {
+      } else if (user.isApproved && user && user.role == 1) {
         return <Redirect to="/provider-dashboard" />;
       } else {
-        return <Redirect to="/" />;
+        return <Redirect to="/not-approved" />
       }
-    }
-    if (isAuthenticated()) {
-      return <Redirect to="/" />;
     }
   };
 
@@ -104,21 +104,18 @@ const Login = () => {
                 name="email"
                 icon="mail"
                 iconPosition="left"
-                placeholder="Introduzca un correo Electrónico"
+                placeholder="Introduzca tu correo Electrónico"
                 type="email"
                 value={email}
                 onChange={onChange("email")}
               />
-              <Form.Field
-                style={{ textAlign: "left" }}
-                label="Contraseña"
-              />
+              <Form.Field style={{ textAlign: "left" }} label="Contraseña" />
               <Form.Input
                 fluid
                 name="password"
                 icon="lock"
                 iconPosition="left"
-                placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
+                placeholder="Introduce tu contraseña"
                 type="password"
                 value={password}
                 onChange={onChange("password")}
@@ -137,12 +134,7 @@ const Login = () => {
     </Grid>
   );
 
-  return (
-    <div>
-      {/* {showLoading()} */}
-      {signInForm()}
-    </div>
-  );
+  return <div>{signInForm()}</div>;
 };
 
 export default Login;

@@ -6,6 +6,8 @@ import {
   Button,
   Header,
   Message,
+  Select,
+  Dropdown,
   Icon,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
@@ -21,6 +23,7 @@ const Register = () => {
     businessName: "",
     error: "",
     success: false,
+    userType: "",
   });
 
   const {
@@ -31,6 +34,7 @@ const Register = () => {
     businessName,
     error,
     success,
+    userType,
   } = values;
 
   const onChange = (name) => (e) => {
@@ -48,7 +52,7 @@ const Register = () => {
       error: false,
     });
     if (password === confirmPassword) {
-      signup({ email, password, name, businessName }).then((data) => {
+      signup({ email, password, name, businessName, userType }).then((data) => {
         if (data.error) {
           setValues({
             ...values,
@@ -62,6 +66,7 @@ const Register = () => {
             password: "",
             confirmPassword: "",
             name: "",
+            userType: "",
             businessName: "",
             error: "",
             success: true,
@@ -87,11 +92,21 @@ const Register = () => {
       className="alert alert-info"
       style={{ display: success ? "" : "none" }}
     >
-      Su cuenta ha sido creada, sin embargo aún la estamos autorizando, le
-      haremos llegar un correo cuando esté lista{" "}
+      Su cuenta ha sido creada, sin embargo estamos comprobando el estado de su
+      suscripción, le haremos llegar un correo cuando esté lista{" "}
       <Link to="/login">Iniciar Sesión</Link>
     </div>
   );
+
+  const userTypeOptions = [
+    { key: "buyer", text: "Comprador", value: "buyer" },
+    { key: "provider", text: "Proveedor", value: "provider" },
+  ];
+
+  const onChangeDropdown = (event, result) => {
+    const { name, value } = result || event.target;
+    setValues({ ...values, [name]: value });
+  };
 
   const signUpForm = () => (
     <Grid textAlign="center" verticalAlign="middle" className="register">
@@ -131,7 +146,20 @@ const Register = () => {
                 value={email}
                 onChange={onChange("email")}
               />
-              <Form.Field style={{ textAlign: "left" }} label="Contraseña" />
+              <Form.Field
+                style={{ textAlign: "left" }}
+                label="¿Eres comprador o proveedor?"
+              />
+              <Dropdown
+                placeholder="Selecciona una opción"
+                fluid
+                selection
+                options={userTypeOptions}
+                value={userType}
+                name="userType"
+                onChange={onChangeDropdown}
+              />
+              <Form.Field style={{ textAlign: "left", paddingTop: "15px" }} label="Contraseña" />
               <Form.Input
                 fluid
                 name="password"
