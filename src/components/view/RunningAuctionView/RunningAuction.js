@@ -7,6 +7,7 @@ import {
   Header,
   Card,
   Icon,
+  Message,
 } from "semantic-ui-react";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
@@ -60,8 +61,16 @@ const RunningAuction = ({
   lastMessage,
   endingAuction,
   onFinalizedAuction,
+  minimumBid,
+  minimumPrice,
+  role,
 }) => {
   const operation = new Date(endingAuction).getTime();
+
+  const auctionConditions = [
+    `La subasta inversa comienza en ${minimumPrice}`,
+    `Se recomiendan pujas mínimas de ${minimumBid}`,
+  ];
 
   const renderTitle = () => {
     return (
@@ -94,7 +103,7 @@ const RunningAuction = ({
               date={new Date(operation)}
               renderer={renderer}
               onComplete={
-                isAuthenticated() && isAuthenticated().user.role === 0
+                role === 0
                   ? () => {
                       onFinalizedAuction();
                       history.push("/");
@@ -116,41 +125,46 @@ const RunningAuction = ({
       <Fragment>
         <Row columns={2}>
           <Column>
-            <Form size="large" onSubmit={onSubmit}>
-              <Input
-                placeholder="Introduzca su puja"
-                type="number"
-                value={message}
-                name="title"
-                fluid
-                size="big"
-                inverted
-                onChange={(e) => onChange("message", e.target.value)}
-              />
-              <Button
-                style={{ background: "#19750c", color: "white" }}
-                icon
-                labelPosition="right"
-                compact
-                fluid
-                size="large"
-              >
-                <Icon name="dollar sign" />
-                ¡Pujar!
-              </Button>
-            </Form>
+            <Message
+              warning
+              header="Condiciones de la subasta"
+              list={auctionConditions}
+            />
           </Column>
           <Column>
             <Card fluid>
               <Card.Content className="card-container" textAlign="center">
-                <Card.Header className="card-bid">
-                  Puja actual
-                </Card.Header>
+                <Card.Header className="card-bid">Puja actual</Card.Header>
                 <Card.Description className="card-bid-number">
-                  $ {lastMessage.bid || 0 } pesos
+                  $ {(lastMessage && lastMessage.bid) || minimumPrice} pesos
                 </Card.Description>
               </Card.Content>
             </Card>
+            {role === 1 && (
+              <Form size="large" onSubmit={onSubmit}>
+                <Input
+                  placeholder="Introduzca su puja"
+                  type="number"
+                  value={message}
+                  name="title"
+                  fluid
+                  size="big"
+                  inverted
+                  onChange={(e) => onChange("message", e.target.value)}
+                />
+                <Button
+                  style={{ background: "#19750c", color: "white" }}
+                  icon
+                  labelPosition="right"
+                  compact
+                  fluid
+                  size="large"
+                >
+                  <Icon name="dollar sign" />
+                  ¡Pujar!
+                </Button>
+              </Form>
+            )}
           </Column>
         </Row>
       </Fragment>

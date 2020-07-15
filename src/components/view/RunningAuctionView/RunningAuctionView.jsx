@@ -71,6 +71,7 @@ class RunningAuctionView extends Component {
     const { message, auction } = this.state;
     const { token, user } = isAuthenticated();
     const result = await posMessage(token, { auction, message, user});
+    this.setState({ message: ''})
   };
 
   onFinalizedAuction = () => {
@@ -85,11 +86,15 @@ class RunningAuctionView extends Component {
 
   render() {
     const { auction, message, lastMessage } = this.state;
+    const { user } = isAuthenticated();
     return (
       <RunningAuction
         title={auction.title}
+        minimumBid={auction.minimumBid}
+        minimumPrice={auction.minimumPrice}
         onChange={this.onChange}
         message={message}
+        role={user.role}
         onSubmit={this.onSubmit}
         lastMessage={lastMessage}
         endingAuction={auction.endingAuction}

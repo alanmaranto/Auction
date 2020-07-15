@@ -73,7 +73,6 @@ const Login = () => {
   );
 
   const redirectUser = () => {
-    // const { addToast } = useToasts();
     if (redirectToReferrer) {
       if (user.isApproved && user && user.role === 0) {
         return <Redirect to="/" />;
