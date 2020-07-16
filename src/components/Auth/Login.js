@@ -13,7 +13,7 @@ import {
 import { signin } from "../../api";
 import { authenticate, isAuthenticated } from "../../helpers/authenticate";
 import { registerUserIOToken } from "../../socket";
-import { useToasts } from "react-toast-notifications";
+import { roles } from '../../helpers/roles'
 import "./App.css";
 
 const Login = () => {
@@ -74,9 +74,9 @@ const Login = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      if (user.isApproved && user && user.role === 0) {
+      if (user.isApproved && user.role === roles.BUYER) {
         return <Redirect to="/" />;
-      } else if (user.isApproved && user && user.role == 1) {
+      } else if (user.isApproved && user.role === roles.PROVIDER) {
         return <Redirect to="/provider-dashboard" />;
       } else {
         return <Redirect to="/not-approved" />

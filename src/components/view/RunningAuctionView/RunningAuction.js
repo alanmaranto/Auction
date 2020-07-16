@@ -14,6 +14,7 @@ import Navbar from "../../../core/Navbar/Navbar";
 import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
 import moment from "moment";
+import { roles } from '../../../helpers/roles'
 import "./style.css";
 import { isAuthenticated } from "../../../helpers/authenticate";
 
@@ -103,7 +104,7 @@ const RunningAuction = ({
               date={new Date(operation)}
               renderer={renderer}
               onComplete={
-                role === 0
+                role === roles.BUYER
                   ? () => {
                       onFinalizedAuction();
                       history.push("/");
@@ -140,7 +141,7 @@ const RunningAuction = ({
                 </Card.Description>
               </Card.Content>
             </Card>
-            {role === 1 && (
+            {role === roles.PROVIDER && (
               <Form size="large" onSubmit={onSubmit}>
                 <Input
                   placeholder="Introduzca su puja"

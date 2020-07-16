@@ -6,6 +6,8 @@ import AuctionIcon from "../../assets/auction.svg";
 import Dashboard from "../../assets/dashboard.svg";
 import A1 from "../../assets/auctionicon.svg";
 import A2 from "../../assets/auctionicon2.svg";
+import { roles } from '../../helpers/roles';
+
 
 import "../../App.css";
 import "./style.css";
@@ -24,7 +26,7 @@ const Sidebar = () => {
                 </Header>
               </div>
             </Grid.Row>
-            {isAuthenticated() && isAuthenticated().user.role === 0 && (
+            {isAuthenticated() && isAuthenticated().user.role === roles.BUYER && (
               <Grid.Row style={{ margin: 0 }}>
                 <Link to="/">
                   <div className="sidebar-options">
@@ -36,7 +38,7 @@ const Sidebar = () => {
                 </Link>
               </Grid.Row>
             )}
-            {isAuthenticated() && isAuthenticated().user.role === 1 && (
+            {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
               <Grid.Row style={{ margin: 0 }}>
                 <Link to="/provider-dashboard">
                   <div className="sidebar-options">
@@ -48,7 +50,7 @@ const Sidebar = () => {
                 </Link>
               </Grid.Row>
             )}
-            {isAuthenticated() && isAuthenticated().user.role === 0 && (
+            {isAuthenticated() && isAuthenticated().user.role === roles.BUYER && (
               <Grid.Row>
                 <Link to="/create/auction">
                   <div className="sidebar-options">
@@ -60,7 +62,7 @@ const Sidebar = () => {
                 </Link>
               </Grid.Row>
             )}
-            {isAuthenticated() && isAuthenticated().user.role === 0 && (
+            {isAuthenticated() && isAuthenticated().user.role === roles.BUYER && (
               <Grid.Row>
                 <Link to="/finalized">
                   <div className="sidebar-options">
@@ -72,7 +74,7 @@ const Sidebar = () => {
                 </Link>
               </Grid.Row>
             )}
-            {isAuthenticated() && isAuthenticated().user.role === 1 && (
+            {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
               <Grid.Row>
                 <Link to="/wons">
                   <div className="sidebar-options">

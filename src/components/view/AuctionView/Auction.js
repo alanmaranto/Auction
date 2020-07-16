@@ -15,7 +15,7 @@ import history from "../../../modules/history/history";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import { Row, Column, CContent } from "../../../core/indexSemanticUi";
-import { timerStyle } from "./style";
+import { roles } from '../../../helpers/roles'
 import AddProviders from "../AddProviders/AddProviders";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import Countdown from "react-countdown";
@@ -147,7 +147,7 @@ const Auction = ({
   const renderBuyerAuctionView = () => {
     return (
       isAuthenticated() &&
-      isAuthenticated().user.role === 0 && (
+      isAuthenticated().user.role === roles.BUYER && (
         <Fragment>
           <Row>
             <Column>
@@ -186,7 +186,7 @@ const Auction = ({
   const renderProvidersAuctionView = () => {
     return (
       isAuthenticated() &&
-      isAuthenticated().user.role === 1 && (
+      isAuthenticated().user.role === roles.PROVIDER && (
         <Fragment>
           <Row columns={2}>
             <Column>

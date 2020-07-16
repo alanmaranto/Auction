@@ -10,11 +10,11 @@ import {
   GridColumn,
   GridRow,
 } from "semantic-ui-react";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import history from "../../../modules/history/history";
-
+import es from 'date-fns/locale/es';
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 
@@ -23,6 +23,7 @@ import { createAuction } from "../../../api";
 
 import "./style.css";
 import "react-datepicker/dist/react-datepicker.css";
+registerLocale('es', es);
 
 const NewAuction = () => {
   const [openingAuction, setOpeningAuction] = useState("");
@@ -103,18 +104,18 @@ const NewAuction = () => {
                 <Grid.Column>
                   <Header
                     textAlign="center"
-                    style={{ color: "#142850", fontSize: "4em" }}
+                    style={{ color: "#142850", fontSize: "3em" }}
                   >
                     Crear Nueva Subasta
                     <Header.Subheader
-                      style={{ fontSize: "0.5em", marginBottom: "30px" }}
+                      style={{ fontSize: "0.45em", marginBottom: "30px" }}
                     >
                       Configura la información de la nueva subasta
                     </Header.Subheader>
                   </Header>
                   <Form size="large" onSubmit={onSubmit}>
                     <Segment>
-                      <Form.Field label="Titulo de la subasta" />
+                      <Form.Field label="Titulo de la subasta" required/>
                       <Form.Input
                         placeholder="Introduzca un nombre para la subasta"
                         type="text"
@@ -130,7 +131,7 @@ const NewAuction = () => {
                         name="title"
                         onChange={onChange("description")}
                       />
-                      <Form.Field label="Precio base" />
+                      <Form.Field label="Precio base" required />
                       <Form.Input
                         placeholder="Es el precio con el que iniciará la subasta"
                         type="number"
@@ -138,7 +139,7 @@ const NewAuction = () => {
                         name="minimumPrice"
                         onChange={onChange("minimumPrice")}
                       />
-                      <Form.Field label="Puja mínima recomendada" />
+                      <Form.Field label="Puja mínima recomendada" required />
                       <Form.Input
                         placeholder="Es la puja que recomiendas que hagan los proveedores"
                         type="number"
@@ -153,9 +154,11 @@ const NewAuction = () => {
                         onChange={(date) => setOpeningAuction(date)}
                         showTimeSelect
                         timeFormat="HH:mm"
-                        timeIntervals={30}
+                        timeIntervals={15}
                         timeCaption="time"
                         dateFormat="MMMM d, yyyy h:mm aa"
+                        minDate={new Date()}
+                        locale="es"
                       />
                       <Form.Field
                         style={{ paddingTop: "20px" }}
@@ -167,9 +170,13 @@ const NewAuction = () => {
                         onChange={(date) => setEndingAuction(date)}
                         showTimeSelect
                         timeFormat="HH:mm"
-                        timeIntervals={30}
+                        timeIntervals={15}
                         timeCaption="time"
                         dateFormat="MMMM d, yyyy h:mm aa"
+                        minDate={new Date()}
+                        locale="es"
+                        className="selected-date"
+                        style={{ width: '-webkit-fill-available'}}
                       />
                       <Grid
                         style={{ paddingTop: "20px" }}

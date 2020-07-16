@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import {
   Grid,
   Form,
@@ -11,10 +11,13 @@ import {
   Icon,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import { signup } from "../../api";
 import "./App.css";
 
 const Register = () => {
+  const { addToast } = useToasts();
+
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -23,7 +26,7 @@ const Register = () => {
     businessName: "",
     error: "",
     success: false,
-    userType: "",
+    role: "",
   });
 
   const {
@@ -33,8 +36,7 @@ const Register = () => {
     name,
     businessName,
     error,
-    success,
-    userType,
+    role
   } = values;
 
   const onChange = (name) => (e) => {
@@ -52,7 +54,7 @@ const Register = () => {
       error: false,
     });
     if (password === confirmPassword) {
-      signup({ email, password, name, businessName, userType }).then((data) => {
+      signup({ email, password, name, businessName, role }).then((data) => {
         if (data.error) {
           setValues({
             ...values,
@@ -66,15 +68,25 @@ const Register = () => {
             password: "",
             confirmPassword: "",
             name: "",
-            userType: "",
+            role: "",
             businessName: "",
             error: "",
             success: true,
           });
+          addToast(
+            showSuccess,
+            {
+              appearance: "info",
+              autoDismiss: false,
+            }
+          );
         }
       });
     } else {
-      return false;
+      addToast("Las contraseñas no coinciden", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
   };
 
@@ -87,18 +99,28 @@ const Register = () => {
     </div>
   );
 
-  const showSuccess = () => (
-    <div
+  const showSuccess = (
+      <Fragment>
+        <span>
+          Su cuenta ha sido creada, sin embargo estamos comprobando el estado de
+          su suscripción, espere unos minutos e inicie sesión
+        </span>
+        <br />
+        <Link to="/login">Ir a iniciar sesión</Link>
+      </Fragment>
+  )
+
+    /*     <div
       className="alert alert-info"
       style={{ display: success ? "" : "none" }}
     >
       Su cuenta ha sido creada, sin embargo estamos comprobando el estado de su
       suscripción, le haremos llegar un correo cuando esté lista{" "}
       <Link to="/login">Iniciar Sesión</Link>
-    </div>
-  );
+    </div> */
 
-  const userTypeOptions = [
+
+  const roleOptions = [
     { key: "buyer", text: "Comprador", value: "buyer" },
     { key: "provider", text: "Proveedor", value: "provider" },
   ];
@@ -154,12 +176,15 @@ const Register = () => {
                 placeholder="Selecciona una opción"
                 fluid
                 selection
-                options={userTypeOptions}
-                value={userType}
-                name="userType"
+                options={roleOptions}
+                value={role}
+                name="role"
                 onChange={onChangeDropdown}
               />
-              <Form.Field style={{ textAlign: "left", paddingTop: "15px" }} label="Contraseña" />
+              <Form.Field
+                style={{ textAlign: "left", paddingTop: "15px" }}
+                label="Contraseña"
+              />
               <Form.Input
                 fluid
                 name="password"
@@ -193,7 +218,7 @@ const Register = () => {
               </Message>
             </Segment>
           </Form>
-          {error.length > 0 ? showError() : showSuccess()}
+          {error.length > 0 ? showError() : null }
         </Segment>
       </Grid.Column>
     </Grid>
