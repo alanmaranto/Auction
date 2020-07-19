@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Image, Header, Button } from "semantic-ui-react";
 import Error from "../../assets/404.jpg";
 

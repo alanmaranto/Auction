@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Card, Icon, Button, Header, Grid, Confirm } from "semantic-ui-react";
+import { Header, Grid, Confirm } from "semantic-ui-react";
 import BidCard from "./BidCard";
 import { Row, Subheader, Column } from "../../../core/indexSemanticUi";
 import Sidebar from "../../../core/Sidebar/Sidebar";

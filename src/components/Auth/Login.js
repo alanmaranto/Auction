@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import {
   Grid,
   Form,
@@ -7,10 +7,12 @@ import {
   Button,
   Header,
   Icon,
+  Message,
 } from "semantic-ui-react";
 import { signin } from "../../api";
 import { authenticate, isAuthenticated } from "../../helpers/authenticate";
-import { registerUserIOToken } from '../../socket';
+import { registerUserIOToken } from "../../socket";
+import { roles } from "../../helpers/roles";
 import "./App.css";
 
 const Login = () => {
@@ -18,41 +20,38 @@ const Login = () => {
     email: "",
     password: "",
     error: "",
-    loading: false,
-    redirectToReferrer: false
+    redirectToReferrer: false,
   });
 
-  const { email, password, loading, error, redirectToReferrer } = values;
-  const { user } = isAuthenticated()
+  const { email, password, error, redirectToReferrer } = values;
+  const { user } = isAuthenticated();
 
-  const onChange = name => event => {
+  const onChange = (name) => (event) => {
     setValues({
       ...values,
       error: false,
-      [name]: event.target.value
+      [name]: event.target.value,
     });
   };
 
-  const onSubmit = async event => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     setValues({
       ...values,
       error: false,
-      loading: true
     });
-    signin({ email, password }).then(data => {
+    signin({ email, password }).then((data) => {
       if (data.error) {
         setValues({
           ...values,
           error: data.error,
-          loading: false
         });
       } else {
         registerUserIOToken(data.token);
         authenticate(data, () => {
           setValues({
             ...values,
-            redirectToReferrer: true
+            redirectToReferrer: true,
           });
         });
       }
@@ -68,25 +67,15 @@ const Login = () => {
     </div>
   );
 
-  const showLoading = () =>
-    loading && (
-      <div className="alert alert-info">
-        <h2>Loading...</h2>
-      </div>
-    );
-
   const redirectUser = () => {
     if (redirectToReferrer) {
-      if (user && user.role === 0) {
+      if (user.isApproved && user.role === roles.BUYER) {
         return <Redirect to="/" />;
-      } else if (user && user.role == 1) {
-        return <Redirect to="/provider-dashboard" />
+      } else if (user.isApproved && user.role === roles.PROVIDER) {
+        return <Redirect to="/provider-dashboard" />;
       } else {
-        return <Redirect to ="/" />
+        return <Redirect to="/not-approved" />;
       }
-    }
-    if (isAuthenticated()) {
-      return <Redirect to="/" />
     }
   };
 
@@ -96,33 +85,46 @@ const Login = () => {
         <Segment>
           <Header as="h2" icon color="violet" textAlign="center">
             <Icon name="id badge" color="violet"></Icon>
-            Iniciar Sesión
+            Bienvenido
           </Header>
           <Form size="large">
             <Segment stacked>
+              <Form.Field
+                style={{ textAlign: "left" }}
+                label="Correo electrónico"
+              />
               <Form.Input
                 fluid
                 name="email"
                 icon="mail"
                 iconPosition="left"
-                placeholder="Introduzca un correo Electrónico"
+                placeholder="Introduzca tu correo Electrónico"
                 type="email"
                 value={email}
                 onChange={onChange("email")}
               />
+              <Form.Field style={{ textAlign: "left" }} label="Contraseña" />
               <Form.Input
                 fluid
                 name="password"
                 icon="lock"
                 iconPosition="left"
-                placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
+                placeholder="Introduce tu contraseña"
                 type="password"
                 value={password}
                 onChange={onChange("password")}
               />
               <Button onClick={onSubmit} color="violet" fluid size="large">
-                Enviar
+                Iniciar Sesión
               </Button>
+              <Message>
+                <Link to="/auth/forgot-password">¿Olvidaste tu contraseña?</Link>
+              </Message>
+              <Message>
+                ¿Aún no tienes cuenta?
+                <br />
+                <Link to="/register">Regístrate</Link>
+              </Message>
             </Segment>
           </Form>
           {error.length > 0 ? showError() : redirectUser()}
@@ -131,12 +133,7 @@ const Login = () => {
     </Grid>
   );
 
-  return (
-    <div>
-      {/* {showLoading()} */}
-      {signInForm()}
-    </div>
-  );
+  return <div>{signInForm()}</div>;
 };
 
 export default Login;

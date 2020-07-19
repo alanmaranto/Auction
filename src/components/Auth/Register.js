@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import {
   Grid,
   Form,
@@ -6,57 +6,87 @@ import {
   Button,
   Header,
   Message,
+  Dropdown,
   Icon,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import { signup } from "../../api";
 import "./App.css";
 
 const Register = () => {
+  const { addToast } = useToasts();
+
   const [values, setValues] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
     name: "",
     businessName: "",
     error: "",
-    success: false
+    success: false,
+    role: "",
   });
 
-  const { email, password, name, businessName, error, success } = values;
+  const {
+    email,
+    password,
+    confirmPassword,
+    name,
+    businessName,
+    error,
+    role
+  } = values;
 
-  const onChange = name => e => {
+  const onChange = (name) => (e) => {
     setValues({
       ...values,
       error: false,
-      [name]: e.target.value
+      [name]: e.target.value,
     });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     setValues({
       ...values,
-      error: false
+      error: false,
     });
-    signup({ email, password, name, businessName }).then(data => {
-      if (data.error) {
-        setValues({
-          ...values,
-          error: data.error,
-          success: false
-        });
-      } else {
-        setValues({
-          ...values,
-          email: "",
-          password: "",
-          name: "",
-          businessName: "",
-          error: "",
-          success: true
-        });
-      }
-    });
+    if (password === confirmPassword) {
+      signup({ email, password, name, businessName, role }).then((data) => {
+        if (data.error) {
+          setValues({
+            ...values,
+            error: data.error,
+            success: false,
+          });
+        } else {
+          setValues({
+            ...values,
+            email: "",
+            password: "",
+            confirmPassword: "",
+            name: "",
+            role: "",
+            businessName: "",
+            error: "",
+            success: true,
+          });
+          addToast(
+            showSuccess,
+            {
+              appearance: "info",
+              autoDismiss: false,
+            }
+          );
+        }
+      });
+    } else {
+      addToast("Las contraseñas no coinciden", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    }
   };
 
   const showError = () => (
@@ -68,15 +98,36 @@ const Register = () => {
     </div>
   );
 
-  const showSuccess = () => (
-    <div
+  const showSuccess = (
+      <Fragment>
+        <span>
+          Su cuenta ha sido creada, sin embargo estamos comprobando el estado de
+          su suscripción, espere unos minutos e inicie sesión
+        </span>
+        <br />
+        <Link to="/login">Ir a iniciar sesión</Link>
+      </Fragment>
+  )
+
+    /*     <div
       className="alert alert-info"
       style={{ display: success ? "" : "none" }}
     >
-      Su cuenta ha sido creada, por favor inicie sesión{" "}
+      Su cuenta ha sido creada, sin embargo estamos comprobando el estado de su
+      suscripción, le haremos llegar un correo cuando esté lista{" "}
       <Link to="/login">Iniciar Sesión</Link>
-    </div>
-  );
+    </div> */
+
+
+  const roleOptions = [
+    { key: "buyer", text: "Comprador", value: "buyer" },
+    { key: "provider", text: "Proveedor", value: "provider" },
+  ];
+
+  const onChangeDropdown = (event, result) => {
+    const { name, value } = result || event.target;
+    setValues({ ...values, [name]: value });
+  };
 
   const signUpForm = () => (
     <Grid textAlign="center" verticalAlign="middle" className="register">
@@ -88,6 +139,10 @@ const Register = () => {
           </Header>
           <Form size="large">
             <Segment stacked>
+              <Form.Field
+                style={{ textAlign: "left" }}
+                label="Nombre de usuario"
+              />
               <Form.Input
                 fluid
                 name="name"
@@ -97,6 +152,10 @@ const Register = () => {
                 type="text"
                 value={name}
                 onChange={onChange("name")}
+              />
+              <Form.Field
+                style={{ textAlign: "left" }}
+                label="Correo electrónico"
               />
               <Form.Input
                 fluid
@@ -108,25 +167,47 @@ const Register = () => {
                 value={email}
                 onChange={onChange("email")}
               />
+              <Form.Field
+                style={{ textAlign: "left" }}
+                label="¿Eres comprador o proveedor?"
+              />
+              <Dropdown
+                placeholder="Selecciona una opción"
+                fluid
+                selection
+                options={roleOptions}
+                value={role}
+                name="role"
+                onChange={onChangeDropdown}
+              />
+              <Form.Field
+                style={{ textAlign: "left", paddingTop: "15px" }}
+                label="Contraseña"
+              />
               <Form.Input
                 fluid
                 name="password"
                 icon="lock"
                 iconPosition="left"
-                placeholder="Introduce una contraseña (Debe ser mayor a 8 caractéres)"
+                placeholder="Debe ser mayor a 8 caractéres"
                 type="password"
                 value={password}
                 onChange={onChange("password")}
               />
-              {/* <Form.Input
-              fluid
-              name="passwordConfirmation"
-              icon="repeat"
-              iconPosition="left"
-              placeholder="Password Confirmation"
-              type="password"
-              onChange={this.handleChange}
-            /> */}
+              <Form.Field
+                style={{ textAlign: "left" }}
+                label="Confirmar contraseña"
+              />
+              <Form.Input
+                fluid
+                name="passwordConfirmation"
+                icon="repeat"
+                iconPosition="left"
+                placeholder="Confirmar contraseña"
+                type="password"
+                value={confirmPassword}
+                onChange={onChange("confirmPassword")}
+              />
 
               <Button onClick={onSubmit} color="blue" fluid size="large">
                 Enviar
@@ -136,7 +217,7 @@ const Register = () => {
               </Message>
             </Segment>
           </Form>
-          {error.length > 0 ? showError() : showSuccess()}
+          {error.length > 0 ? showError() : null }
         </Segment>
       </Grid.Column>
     </Grid>

@@ -39,8 +39,6 @@ class ChooseWinnerView extends Component {
   };
 
   onOpenConfirm = (currentBid) => {
-    console.log("re", currentBid);
-    console.log('---------------------')
     this.setState({ openConfirm: true, currentBid });
   };
 

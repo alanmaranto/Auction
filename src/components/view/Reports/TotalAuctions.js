@@ -5,12 +5,8 @@ import {
   XAxis,
   YAxis,
   Text,
-  CartesianGrid,
   Tooltip,
-  ReferenceLine,
-  linearGradient,
   Area,
-  Legend,
   Label,
 } from "recharts";
 
@@ -73,7 +69,7 @@ const TotalAuctionsReport = () => {
         margin={{ top: 10, right: 15, left: 15, bottom: 15 }}
       >
         <defs>
-           <linearGradient id="colorAuction" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="colorAuction" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#58AFCF" stopOpacity={0.8} />
             <stop offset="95%" stopColor="#58AFCF" stopOpacity={0} />
           </linearGradient>
@@ -81,7 +77,7 @@ const TotalAuctionsReport = () => {
         <XAxis dataKey="name">
           <Label value="Meses" offset={0} position="bottom" />
         </XAxis>
-          <Text scaleToFit={true} ></Text>
+        <Text scaleToFit={true}></Text>
         <YAxis
           label={{
             value: "Subastas Totales",
@@ -90,7 +86,13 @@ const TotalAuctionsReport = () => {
           }}
         />
         <Tooltip />
-        <Area type="monotone" dataKey="subastas" stroke="#58AFCF" fillOpacity={1} fill="url(#colorAuction)" />
+        <Area
+          type="monotone"
+          dataKey="subastas"
+          stroke="#58AFCF"
+          fillOpacity={1}
+          fill="url(#colorAuction)"
+        />
       </AreaChart>
     </ResponsiveContainer>
   );

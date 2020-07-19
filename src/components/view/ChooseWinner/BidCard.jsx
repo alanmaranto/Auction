@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button, Card, Icon, Confirm } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import "./style.css";
 
@@ -8,14 +8,9 @@ const BidCard = ({
   bid,
   bidId,
   auctionId,
-  winner,
-  openConfirm,
-  onCancel,
   onOpenConfirm,
-  onChooseWinner,
 }) => {
-  console.log('bid id',bidId)
-  console.log('auction id',auctionId)
+
   return (
     <Fragment>
       <article className="card">
