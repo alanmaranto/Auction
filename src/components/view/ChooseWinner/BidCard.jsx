@@ -4,25 +4,30 @@ import PropTypes from "prop-types";
 import "./style.css";
 
 const BidCard = ({
-  provider,
+  providerName,
   bid,
   bidId,
   auctionId,
   onOpenConfirm,
+  isWinner,
 }) => {
-
   return (
     <Fragment>
       <article className="card">
-        <p className="card-title">
-          <img src="" alt="" />
-          Proveedor: {provider}
-        </p>
+        <p className="card-title">Proveedor: {providerName}</p>
         <p className="card-followers">
-          <span className="card-followers-number">{bid}</span>
+          <span className="card-followers-number">$ {bid}</span>
           <span className="card-followers-title">Pesos</span>
         </p>
-        <Button onClick={() => onOpenConfirm({ bidId, auctionId })} />
+        {!isWinner && (
+          <Button
+            color="olive"
+            onClick={() => onOpenConfirm({ bidId, auctionId })}
+          >
+            {" "}
+            Elegir como ganador
+          </Button>
+        )}
       </article>
     </Fragment>
   );

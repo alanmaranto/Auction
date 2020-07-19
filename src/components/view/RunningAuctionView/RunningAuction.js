@@ -67,7 +67,7 @@ const RunningAuction = ({
 
   const auctionConditions = [
     `La subasta inversa comienza en ${minimumPrice}`,
-    `Se recomiendan pujas mínimas de ${minimumBid}`,
+    `Las pujas mínimas son de ${minimumBid}`,
   ];
 
   const renderTitle = () => {
@@ -119,6 +119,8 @@ const RunningAuction = ({
   };
 
   const renderBid = () => {
+    const submitBid = (lastMessage && lastMessage.bid - minimumBid)
+    console.log('submitBid', submitBid)
     return (
       <Fragment>
         <Row columns={2}>
@@ -148,6 +150,7 @@ const RunningAuction = ({
                   fluid
                   size="big"
                   inverted
+                  min={submitBid}
                   onChange={(e) => onChange("message", e.target.value)}
                 />
                 <Button

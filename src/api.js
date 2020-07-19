@@ -370,6 +370,7 @@ export const chooseWinner = async (token, auctionId, bidId) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      // data: { auctionId, bidId}
     });
     console.log('send res', response)
     if (response) {
