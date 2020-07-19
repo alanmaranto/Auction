@@ -4,13 +4,8 @@ import {
   Header,
   Grid,
   Button,
-  Divider,
-  Container,
-  CardContent,
   Feed,
-  FeedContent,
 } from "semantic-ui-react";
-import moment from "moment";
 import history from "../../../modules/history/history";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";

@@ -2,7 +2,7 @@ import React from "react";
 import { Menu, Dropdown } from "semantic-ui-react";
 import { signout } from "../../api";
 
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import "./style.css";
 

@@ -3,7 +3,6 @@ import {
   Button,
   Form,
   Grid,
-  Segment,
   Header,
   Card,
   Icon,
@@ -13,10 +12,8 @@ import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
-import moment from "moment";
 import { roles } from '../../../helpers/roles'
 import "./style.css";
-import { isAuthenticated } from "../../../helpers/authenticate";
 
 const Input = Form.Input;
 const Row = Grid.Row;

@@ -6,7 +6,6 @@ import {
   Button,
   Header,
   Message,
-  Select,
   Dropdown,
   Icon,
 } from "semantic-ui-react";

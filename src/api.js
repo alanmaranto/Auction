@@ -61,6 +61,7 @@ export const forgotPassword =  async (email) => {
       url: `${host}/forgot-password`,
       data: email
     });
+    console.log('response', response)
     return response;
   } catch (error) {
     console.log(error)

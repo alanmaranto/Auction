@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Divider, Header, Icon, Grid } from "semantic-ui-react";
-import { Subheader, Row, Column } from "../../../core/indexSemanticUi";
+import { Subheader, Row } from "../../../core/indexSemanticUi";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import history from '../../../modules/history/history';

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Redirect, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Grid,
   Form,
@@ -7,12 +7,10 @@ import {
   Button,
   Header,
   Icon,
-  Label,
   Message,
 } from "semantic-ui-react";
 import jwt from "jsonwebtoken";
 import { resetPassword } from "../../api";
-import { isAuthenticated } from "../../helpers/authenticate";
 import { useToasts } from "react-toast-notifications";
 import "./App.css";
 

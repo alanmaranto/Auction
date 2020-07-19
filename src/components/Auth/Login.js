@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import {
   Grid,
@@ -7,7 +7,6 @@ import {
   Button,
   Header,
   Icon,
-  Label,
   Message,
 } from "semantic-ui-react";
 import { signin } from "../../api";
@@ -17,16 +16,14 @@ import { roles } from "../../helpers/roles";
 import "./App.css";
 
 const Login = () => {
-  const [visible, setVisible] = useState(false);
   const [values, setValues] = useState({
     email: "",
     password: "",
     error: "",
-    loading: false,
     redirectToReferrer: false,
   });
 
-  const { email, password, loading, error, redirectToReferrer } = values;
+  const { email, password, error, redirectToReferrer } = values;
   const { user } = isAuthenticated();
 
   const onChange = (name) => (event) => {
@@ -42,14 +39,12 @@ const Login = () => {
     setValues({
       ...values,
       error: false,
-      loading: true,
     });
     signin({ email, password }).then((data) => {
       if (data.error) {
         setValues({
           ...values,
           error: data.error,
-          loading: false,
         });
       } else {
         registerUserIOToken(data.token);

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Grid,
@@ -10,7 +10,6 @@ import {
   Message,
 } from "semantic-ui-react";
 import { forgotPassword } from "../../api";
-import { isAuthenticated } from "../../helpers/authenticate";
 import { useToasts } from "react-toast-notifications";
 import "./App.css";
 
@@ -40,15 +39,14 @@ const ForgotPassword = () => {
 
     if (response && response.status === 200) {
       addToast(
-        `Un email ha sido enviado a ${email}. Siga las instrucciones para restablecer su contraseña`,
+        response.data.message,
         {
           appearance: "success",
           autoDismiss: true,
-        }
-      );
+        })
       setValues({ ...values, buttonText: "Email enviado" });
     } else {
-      addToast("El usuario con ese correo no existe", {
+       addToast("El usuario con ese correo no existe", {
         appearance: "error",
         autoDismiss: true,
       });

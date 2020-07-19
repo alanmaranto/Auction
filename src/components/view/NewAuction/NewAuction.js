@@ -1,9 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
-  Card,
   Button,
   Form,
-  Input,
   Grid,
   Header,
   Segment,
@@ -11,10 +9,9 @@ import {
   GridRow,
 } from "semantic-ui-react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import history from "../../../modules/history/history";
-import es from 'date-fns/locale/es';
+import es from "date-fns/locale/es";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 
@@ -23,7 +20,7 @@ import { createAuction } from "../../../api";
 
 import "./style.css";
 import "react-datepicker/dist/react-datepicker.css";
-registerLocale('es', es);
+registerLocale("es", es);
 
 const NewAuction = () => {
   const [openingAuction, setOpeningAuction] = useState("");
@@ -40,17 +37,7 @@ const NewAuction = () => {
     createdAuction: "",
   });
 
-  const {
-    title,
-    description,
-    minimumBid,
-    minimunPrice,
-    finalized,
-    redirectToAuction,
-    createdAuction,
-    error,
-    loading,
-  } = values;
+  const { title, description, minimumBid, minimunPrice } = values;
 
   const { user, token } = isAuthenticated();
 
@@ -115,7 +102,7 @@ const NewAuction = () => {
                   </Header>
                   <Form size="large" onSubmit={onSubmit}>
                     <Segment>
-                      <Form.Field label="Titulo de la subasta" required/>
+                      <Form.Field label="Titulo de la subasta" required />
                       <Form.Input
                         placeholder="Introduzca un nombre para la subasta"
                         type="text"
@@ -176,7 +163,7 @@ const NewAuction = () => {
                         minDate={new Date()}
                         locale="es"
                         className="selected-date"
-                        style={{ width: '-webkit-fill-available'}}
+                        style={{ width: "-webkit-fill-available" }}
                       />
                       <Grid
                         style={{ paddingTop: "20px" }}
@@ -190,7 +177,6 @@ const NewAuction = () => {
                                 fluid
                                 compact
                                 className="button-cancel-new-auction"
-                                fluid
                                 size="medium"
                               >
                                 Cancelar
@@ -202,7 +188,6 @@ const NewAuction = () => {
                               fluid
                               compact
                               className="button-submit-new-auction"
-                              fluid
                               size="medium"
                             >
                               Enviar

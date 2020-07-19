@@ -8,7 +8,7 @@ import Register from "../components/auth/Register";
 import NewAuction from "../components/view/NewAuction/NewAuction";
 import AuctionView from "../components/view/AuctionView/AuctionContainer";
 import RunningAuctionView from "../components/view/RunningAuctionView";
-import AdminRoutes from "./AdminRoutes";
+// import AdminRoutes from "./AdminRoutes";
 import BuyersRoutes from "./BuyersRoutes";
 import ProvidersRoutes from "./ProvidersRoutes";
 import FinalizedAuction from '../components/view/FinalizedAuctions/FinalizedAuction';
