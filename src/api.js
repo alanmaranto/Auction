@@ -53,6 +53,34 @@ export const signout = (next) => {
       .catch((err) => console.log(err));
   }
 };
+
+export const forgotPassword =  async (email) => {
+  try {
+    const response = await axios({
+      method: 'PUT',
+      url: `${host}/forgot-password`,
+      data: email
+    });
+    return response;
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+};
+
+export const resetPassword =  async (body) => {
+  try {
+    const response = await axios({
+      method: 'PUT',
+      url: `${host}/reset-password`,
+      data: body
+    });
+    return response;
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+};
 //
 //Auction
 //

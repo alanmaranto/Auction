@@ -13,11 +13,11 @@ import {
 import { signin } from "../../api";
 import { authenticate, isAuthenticated } from "../../helpers/authenticate";
 import { registerUserIOToken } from "../../socket";
-import { roles } from '../../helpers/roles'
+import { roles } from "../../helpers/roles";
 import "./App.css";
 
 const Login = () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -79,7 +79,7 @@ const Login = () => {
       } else if (user.isApproved && user.role === roles.PROVIDER) {
         return <Redirect to="/provider-dashboard" />;
       } else {
-        return <Redirect to="/not-approved" />
+        return <Redirect to="/not-approved" />;
       }
     }
   };
@@ -96,7 +96,7 @@ const Login = () => {
             <Segment stacked>
               <Form.Field
                 style={{ textAlign: "left" }}
-                label="Nombre de usuario"
+                label="Correo electrónico"
               />
               <Form.Input
                 fluid
@@ -123,7 +123,12 @@ const Login = () => {
                 Iniciar Sesión
               </Button>
               <Message>
-                ¿Aún no tienes cuenta? <Link to="/register">Regístrate</Link>
+                <Link to="/auth/forgot-password">¿Olvidaste tu contraseña?</Link>
+              </Message>
+              <Message>
+                ¿Aún no tienes cuenta?
+                <br />
+                <Link to="/register">Regístrate</Link>
               </Message>
             </Segment>
           </Form>

@@ -16,6 +16,8 @@ import ProviderDashboard from '../components/view/ProviderDashboard/ProviderDash
 import WonAuctionsView from '../components/view/WonAuctions/WonAuctionsView'
 import ChooseWinnerView from '../components/view/ChooseWinner/ChooseWinnerView';
 import NotApproved from '../components/auth/NotApprove';
+import ForgotPassword from '../components/auth/ForgotPassword';
+import ResetPassword from '../components/auth/ResetPassword';
 import "semantic-ui-css/semantic.min.css";
 
 const Routes = () => (
@@ -27,6 +29,8 @@ const Routes = () => (
     <Route path="/auction/:id" component={AuctionView} />
     <Route path="/runningAuction/:id" component={RunningAuctionView} />
     <Route path="/not-approved" component={NotApproved} />
+    <Route path="/auth/forgot-password" component={ForgotPassword} />
+    <Route path="/auth/password/reset/:token" component={ResetPassword} />
     <BuyersRoutes exact path="/" component={BuyerDashboard} />
     <BuyersRoutes path="/finalized" exact component={FinalizedAuction} />
     <BuyersRoutes exact path="/winner/auction/:id" component={ChooseWinnerView} />
