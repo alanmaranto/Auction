@@ -33,6 +33,8 @@ export const showAuctions = (data, selected, callback) =>
       auction: auction._id,
       title: auction.title,
       openingAuction: auction.openingAuction,
+      minimumBid: auction.minimumBid,
+      minimumPrice: auction.minimumPrice,
       endingAuction: auction.endingAuction,
       onClickElement: () => callback(`/auction/${auction._id}`)
     }))

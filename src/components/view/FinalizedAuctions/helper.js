@@ -1,8 +1,21 @@
+import moment from "moment";
+import "moment/locale/es";
+
 const getTableSettings = () => {
   const header = [
     {
       name: "title",
       title: "Titulo",
+      sorted: false,
+    },
+    {
+      name: "minimumPrice",
+      title: "Precio Base",
+      sorted: false,
+    },
+    {
+      name: "minimumBid",
+      title: "Puja mínima",
       sorted: false,
     },
     {
@@ -13,7 +26,77 @@ const getTableSettings = () => {
     {
       name: "winner",
       sorted: true,
-      title: "Ganador",
+      title: "",
+      buttonActions: true,
+    },
+  ];
+  return header;
+};
+
+const getTableSettingsActiveAuctions = () => {
+  const header = [
+    {
+      name: "title",
+      title: "Titulo",
+      sorted: false,
+    },
+    {
+      name: "minimumPrice",
+      title: "Precio Base",
+      sorted: false,
+    },
+    {
+      name: "minimumBid",
+      title: "Puja mínima",
+      sorted: false,
+    },
+    {
+      name: "openingAuction",
+      sorted: true,
+      title: "Fecha de inicio",
+    },
+    {
+      name: "winner",
+      sorted: true,
+      title: "",
+      buttonActions: true,
+    },
+  ];
+  return header;
+};
+
+const getTableSettingsProviderActiveAuctions = () => {
+  const header = [
+    {
+      name: "user",
+      title: "Invitado por",
+      sorted: false,
+    },
+    {
+      name: "title",
+      title: "Titulo",
+      sorted: false,
+    },
+    {
+      name: "openingAuction",
+      sorted: true,
+      title: "Fecha de inicio",
+    },
+    {
+      name: "minimumPrice",
+      title: "Precio Base",
+      sorted: false,
+    },
+    {
+      name: "minimumBid",
+      title: "Puja mínima",
+      sorted: false,
+    },
+
+    {
+      name: "winner",
+      sorted: true,
+      title: "",
       buttonActions: true,
     },
   ];
@@ -37,7 +120,7 @@ const formatWithPagination = (dataSource, elementsByPage) => {
       }
       allPages[page].push(data);
     });
-  } 
+  }
   return { dataSource: allPages };
 };
 
@@ -83,4 +166,69 @@ const filterData = (props) => {
   return { dataSource: {}, dataSourceSize: 0 };
 };
 
-export { getTableSettings, filterData };
+const formatedProviderAuctionData = (dataSource) => {
+  const auction = dataSource.map(({ auctionId }) => {
+    return {
+    createdAt: auctionId.createdAt,
+    description: auctionId.description,
+    endingAuction: moment(auctionId.endingAuction).format(
+      "MMMM Do YYYY, h:mm:ss a"
+    ),
+    finalized: auctionId.finalized,
+    minimumBid: `$ ${formatNumber(auctionId.minimumBid)}`,
+    minimumPrice: `$ ${formatNumber(auctionId.minimumPrice)}`,
+    openingAuction: moment(auctionId.openingAuction).format(
+      "MMMM Do YYYY, h:mm:ss a"
+    ),
+    title: auctionId.title,
+    updatedAt: auctionId.updatedAt,
+    user: auctionId.user.name,
+    __v: auctionId.__v,
+    _id: auctionId._id,
+    }
+  });
+  return auction;
+};
+
+const formatedData = (dataSource) => {
+  const auction = dataSource.map((auction) => ({
+    createdAt: auction.createdAt,
+    description: auction.description,
+    endingAuction: moment(auction.endingAuction).format(
+      "MMMM Do YYYY, h:mm:ss a"
+    ),
+    finalized: auction.finalized,
+    minimumBid: `$ ${formatNumber(auction.minimumBid)}`,
+    minimumPrice: `$ ${formatNumber(auction.minimumPrice)}`,
+    openingAuction: moment(auction.openingAuction).format(
+      "MMMM Do YYYY, h:mm:ss a"
+    ),
+    title: auction.title,
+    updatedAt: auction.updatedAt,
+    user: auction.user,
+    __v: auction.__v,
+    _id: auction._id,
+  }));
+  return auction;
+};
+
+const formatNumber = (number, sep, decimals) => {
+  sep = sep || "."; // Default to period as decimal separator
+  decimals = decimals || 2; // Default to 2 decimals
+
+  return (
+    number.toLocaleString().split(sep)[0] +
+    sep +
+    number.toFixed(decimals).split(sep)[1]
+  );
+};
+
+export {
+  getTableSettings,
+  filterData,
+  formatedData,
+  formatNumber,
+  getTableSettingsActiveAuctions,
+  getTableSettingsProviderActiveAuctions,
+  formatedProviderAuctionData,
+};

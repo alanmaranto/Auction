@@ -23,12 +23,12 @@ export class AuctionFilter extends React.Component {
   };
 
   render() {
-    const { filter, filterValid, totalCount } = this.state;
+    const { filter, filterValid } = this.state;
     let popupMessage = "";
     if (!filterValid) {
       popupMessage = "Invalid character.";
     } else if (this.props.totalCount === 0) {
-      popupMessage = "No results found.";
+      popupMessage = "No se encontraron resultados";
     }
 
     return (
@@ -38,19 +38,17 @@ export class AuctionFilter extends React.Component {
             <Popup
               trigger={
                 <Form.Input
-                  placeholder="Enter the filter."
+                  placeholder="Busca..."
                   name="filter"
                   value={filter}
                   error={!filterValid}
-                  label="Filter"
+                  label="Buscador de subastas"
                   onChange={this.handleOnChange}
                   icon="search"
-                  loading={this.props.loading}
                 />
               }
               content={popupMessage}
               on="click"
-              open={!filterValid || totalCount === 0}
               position="right center"
             />
           </Form.Field>

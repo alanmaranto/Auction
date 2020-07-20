@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
-import { Header, Grid, Confirm } from "semantic-ui-react";
+import { Header, Grid, Confirm, Message } from "semantic-ui-react";
 import BidCard from "./BidCard";
 import { Row, Subheader, Column } from "../../../core/indexSemanticUi";
 import Sidebar from "../../../core/Sidebar/Sidebar";
+import NoData from "../../../core/500/NoData";
 import Navbar from "../../../core/Navbar/Navbar";
 import "./style.css";
 
@@ -13,6 +14,26 @@ const ChooseWinner = ({
   onOpenConfirm,
   onCancel,
 }) => {
+  const isWinner = bids.some((w) => w.winner);
+
+  const providerWinner =
+    bids &&
+    bids
+      .filter((winner) => winner.winner)
+      .map((providers) => providers.provider[0].name);
+
+  const showWinner = () => {
+    return (
+      <div className="show-winner">
+        <Message
+          success
+          size="big"
+          header={`El ganador de la subasta fue el proveedor ${providerWinner}`}
+        />
+      </div>
+    );
+  };
+
   return (
     <Fragment>
       <div className="app">
@@ -25,11 +46,24 @@ const ChooseWinner = ({
                 <Row textAlign="center">
                   <Column>
                     <Header as="h1">
-                      Pujas
-                      <Subheader>Elige la puja ganadora</Subheader>
+                      Elige la puja ganadora
+                      <Subheader>
+                        Se muestran las últimas pujas de cada proveedor que
+                        participó.
+                      </Subheader>
                     </Header>
                   </Column>
                 </Row>
+                <div>
+                  {bids.length === 0 && (
+                    <div className="no-bids">
+                      <NoData
+                        size="medium"
+                        title="Desafortunadamente no hubo pujas en esta subasta"
+                      />
+                    </div>
+                  )}
+                </div>
                 <div className="wrapper-bid-cards">
                   <div className="grid-bid-cards">
                     <Confirm
@@ -41,25 +75,32 @@ const ChooseWinner = ({
                       onConfirm={() => onChooseWinner()}
                     />
                     {bids &&
-                      bids.map(({ userId, _id, auctionId, bid, winner }) => {
-                        return (
-                          <BidCard
-                            key={_id}
-                            provider={userId.name}
-                            bid={bid}
-                            bidId={_id}
-                            auctionId={auctionId}
-                            winner={winner}
-                            openConfirm={openConfirm}
-                            onOpenConfirm={onOpenConfirm}
-                            onChooseWinner={onChooseWinner}
-                            onCancel={onCancel}
-                          />
-                        );
-                      })}
+                      bids.map(
+                        ({ provider, auctionId, bid, winner, idMessage }) => {
+                          return (
+                            <BidCard
+                              key={idMessage}
+                              providerName={
+                                provider &&
+                                provider.map((provider) => provider.name)
+                              }
+                              bid={bid}
+                              bidId={idMessage}
+                              auctionId={auctionId}
+                              winner={winner}
+                              openConfirm={openConfirm}
+                              onOpenConfirm={onOpenConfirm}
+                              onChooseWinner={onChooseWinner}
+                              onCancel={onCancel}
+                              isWinner={isWinner}
+                            />
+                          );
+                        }
+                      )}
                   </div>
                 </div>
               </Grid>
+              {isWinner && showWinner()}
             </div>
           </div>
         </div>

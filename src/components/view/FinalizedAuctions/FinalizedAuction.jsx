@@ -3,8 +3,8 @@ import { Divider, Header, Icon, Grid } from "semantic-ui-react";
 import { Subheader, Row } from "../../../core/indexSemanticUi";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
-import history from '../../../modules/history/history';
-import { getTableSettings, filterData } from "./helper";
+import history from "../../../modules/history/history";
+import { getTableSettings, filterData, formatedData } from "./helper";
 import { AuctionTable } from "../../../core/AuctionTable/AuctionTable";
 import { AuctionFilter } from "../../../core/AuctionTable/AuctionFilter.jsx";
 import { isAuthenticated } from "../../../helpers/authenticate";
@@ -38,8 +38,9 @@ export default class FinalizedAuction extends React.Component {
     } = isAuthenticated();
     const response = await getFinalizedAuctionsByUser(token, _id);
     if (response && response.data && response.data.body) {
+      const formatedAuction = formatedData(response.data.body);
       this.setState({
-        finalizedAuctions: response.data.body,
+        finalizedAuctions: formatedAuction,
       });
     }
   };
@@ -74,11 +75,14 @@ export default class FinalizedAuction extends React.Component {
 
   render() {
     const { elementsByPage, currentPage, filter } = this.state;
-    
+
     const {
       dataSource: finalizedAuctions,
       dataSourceSize: totalCount,
     } = this.onSubmitFilter(filter, currentPage);
+
+    console.log('fina', finalizedAuctions)
+
     return (
       <Fragment>
         <div className="app">
@@ -99,7 +103,6 @@ export default class FinalizedAuction extends React.Component {
                   </Row>
                 </Grid>
                 <AuctionFilter
-                  filter={this.state.q}
                   totalCount={totalCount}
                   onChangeValue={this.onChangeValue}
                   loading={this.state.loading}
@@ -115,6 +118,9 @@ export default class FinalizedAuction extends React.Component {
                   onChangeLimit={this.onChangeLimit}
                   limit={elementsByPage.toString()}
                   buttonAction={this.sendToBids}
+                  color="red"
+                  colorTable="red"
+                  buttonTitle="Ver pujas"
                   handleSort={this.handleSort}
                   column={this.state._sort}
                 />

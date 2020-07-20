@@ -14,17 +14,20 @@ import history from "../../../modules/history/history";
 import es from "date-fns/locale/es";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
-
+import { useToasts } from "react-toast-notifications";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { createAuction } from "../../../api";
+import { createAuction, getActiveAuctionsByUser } from "../../../api";
 
 import "./style.css";
 import "react-datepicker/dist/react-datepicker.css";
 registerLocale("es", es);
 
 const NewAuction = () => {
+  const { addToast } = useToasts();
+
   const [openingAuction, setOpeningAuction] = useState("");
   const [endingAuction, setEndingAuction] = useState("");
+  const [auctions, setAuctions] = useState([]);
   const [values, setValues] = useState({
     title: "",
     description: "",
@@ -56,14 +59,33 @@ const NewAuction = () => {
     });
   };
 
+  const fetchActiveAuctions = async () => {
+    let _id = user ? user._id : undefined;
+
+    const response = await getActiveAuctionsByUser(token, _id);
+
+    if (response && response.status === 200) {
+      setAuctions(response.data.body);
+    }
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     setValues({ ...values, error: "", loading: true });
 
     createAuction(user._id, token, auction).then((data) => {
       if (data.error) {
+        addToast("Hubo un error al crear la subasta", {
+          appearance: "error",
+          autoDismiss: true,
+        });
         setValues({ ...values, error: data.error });
       } else {
+        addToast("Subasta creada exitósamente", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+        fetchActiveAuctions();
         setValues({
           ...values,
           title: "",

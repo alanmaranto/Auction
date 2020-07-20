@@ -10,7 +10,7 @@ export function TableHeader(props) {
           <Table.HeaderCell
             width={1}
             sorted={sorted ? sorted: null}
-            onClick={() => props.handleSort(name)}
+            // onClick={() => props.handleSort(name)}
           >
             {
               title

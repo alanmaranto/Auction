@@ -10,19 +10,22 @@ export const AuctionTable = (props) => {
   if (!props.dataSource) {
     return <React.Fragment />;
   }
-  const tableRows = props.dataSource.map((rowElement, index) => (
+  const tableRows = props.dataSource.map((rowElement, index) => {
+  return (
     <TableRow
       key={index}
       dataRow={rowElement}
       buttonAction={props.buttonAction}
       columns={props.columns}
+      buttonTitle={props.buttonTitle}
+      color={props.color}
     />
-  ));
+  )});
   return (
     <React.Fragment>
       <PageSizeSelect limit={props.limit} onChangeLimit={props.onChangeLimit} />
       Subastas Totales: {props.totalCount}.
-      <Table celled selectable sortable>
+      <Table color={props.colorTable} padded /* selectable sortable */>
         <TableHeader
           column={props.column}
           direction={props.direction}
