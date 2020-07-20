@@ -324,7 +324,7 @@ export const getInvitedAuctionsByProvider = async (token, userId) => {
       url: `${host}/auctions-provider`,
       method: "GET",
       headers: {
-        ["x-auction-id"]: userId,
+        ["x-user-id"]: userId,
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },

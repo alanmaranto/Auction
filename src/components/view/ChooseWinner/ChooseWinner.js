@@ -3,6 +3,7 @@ import { Header, Grid, Confirm, Message } from "semantic-ui-react";
 import BidCard from "./BidCard";
 import { Row, Subheader, Column } from "../../../core/indexSemanticUi";
 import Sidebar from "../../../core/Sidebar/Sidebar";
+import NoData from "../../../core/500/NoData";
 import Navbar from "../../../core/Navbar/Navbar";
 import "./style.css";
 
@@ -15,21 +16,24 @@ const ChooseWinner = ({
 }) => {
   const isWinner = bids.some((w) => w.winner);
 
-const providerWinner =
+  const providerWinner =
     bids &&
     bids
       .filter((winner) => winner.winner)
       .map((providers) => providers.provider[0].name);
 
-   const showWinner = () => {
+  const showWinner = () => {
     return (
-      <Message
-        success
-        size="huge"
-        header={`El ganador de la subasta fue el proveedor ${providerWinner}`}
-      />
+      <div className="show-winner">
+        <Message
+          success
+          size="big"
+          header={`El ganador de la subasta fue el proveedor ${providerWinner}`}
+        />
+      </div>
     );
   };
+
   return (
     <Fragment>
       <div className="app">
@@ -50,6 +54,16 @@ const providerWinner =
                     </Header>
                   </Column>
                 </Row>
+                <div>
+                  {bids.length === 0 && (
+                    <div className="no-bids">
+                      <NoData
+                        size="medium"
+                        title="Desafortunadamente no hubo pujas en esta subasta"
+                      />
+                    </div>
+                  )}
+                </div>
                 <div className="wrapper-bid-cards">
                   <div className="grid-bid-cards">
                     <Confirm

@@ -3,7 +3,7 @@ import { Grid, Header, Image } from "semantic-ui-react";
 import { Row, Column, HContent } from "../indexSemanticUi";
 import NoAuctions from "../../assets/humaaans.png";
 
-const NoData = ({ title }) => {
+const NoData = ({ title, size }) => {
   return (
     <Fragment>
       <Grid className="no-data" container>
@@ -13,9 +13,8 @@ const NoData = ({ title }) => {
               <HContent>{title}</HContent>
             </Header>
             <Image
-              className="no-data__image"
               centered
-              size="large"
+              size={size}
               src={NoAuctions}
             />
           </Column>

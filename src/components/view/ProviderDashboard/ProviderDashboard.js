@@ -3,12 +3,27 @@ import { Grid, Segment, Divider, Header } from "semantic-ui-react";
 import { displayAuction } from "../BuyerDashboard/helpers";
 import NoData from "../../../core/500/NoData";
 import TotalAuctions from "../Reports/TotalAuctions";
+import { AuctionFilter } from '../../../core/AuctionTable/AuctionFilter'
+import { AuctionTable } from '../../../core/AuctionTable/AuctionTable'
 import NativeClock from "../../../core/Clock/NativeClock";
+import { getTableSettingsProviderActiveAuctions } from "../FinalizedAuctions/helper";
 import { Row, Column } from "../../../core/indexSemanticUi";
 
 import "./style.css";
 
-const ProvidersDashboard = ({ activeAuctions, user }) => {
+const ProvidersDashboard = ({
+  activeInvitedProviderAuctions,
+  user,
+  totalCount,
+  totalPages,
+  currentPage,
+  onChangeLimit,
+  onChangePage,
+  onChangeValue,
+  limit,
+  buttonAction,
+  loading,
+}) => {
   const { name } = user || {};
   return (
     <Fragment>
@@ -21,47 +36,51 @@ const ProvidersDashboard = ({ activeAuctions, user }) => {
                   Hola {(name || "").toUpperCase()}, Bienvenido
                 </Header>
               </Column>
-            </Row>
-            <Row>
-              <Column width={13}>
-                <Segment>
-                  <TotalAuctions />
-                </Segment>
-              </Column>
               <Column width={3}>
                 <div>
+                  Hora del sistema
                   <NativeClock />
                 </div>
               </Column>
             </Row>
-             { activeAuctions && activeAuctions.length > 0 ? (
-              <Row columns={4}>
-                <div className="dashboard-container">
-                  <Column width={10}>
-                    <Segment
-                      className="active-auction-card"
-                      textAlign="left"
-                      size="small"
-                    >
-                      <div>
-                        <h3>Subastas Activas</h3>
-                        <Divider />
-                        <div className="dashboard-card">
-                          {activeAuctions
-                            ? activeAuctions.map((auction) =>
-                                displayAuction(auction)
-                              )
-                            : undefined}
-                        </div>
-                      </div>
-                    </Segment>
-                  </Column>
-                </div>
-              </Row>
-            ) : (
-              <NoData title="Aquí aparecerán las subastas donde estás invitado" />
-            )}
+            <Row>
+              <Column width={13}>
+                {/*                 <Segment>
+                  <TotalAuctions />
+                </Segment>
+ */}{" "}
+              </Column>
+            </Row>
           </Grid>
+          <AuctionFilter
+            totalCount={totalCount}
+            onChangeValue={onChangeValue}
+            loading={loading}
+          />
+          <Divider />
+          {activeInvitedProviderAuctions && activeInvitedProviderAuctions.length > 0 ? (
+            <AuctionTable
+              columns={getTableSettingsProviderActiveAuctions()}
+              dataSource={activeInvitedProviderAuctions}
+              totalCount={totalCount}
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onChangePage={onChangePage}
+              onChangeLimit={onChangeLimit}
+              limit={limit}
+              buttonAction={buttonAction}
+              buttonTitle="Ir a la subasta"
+              color="blue"
+              colorTable="blue"
+              // handleSort={this.handleSort}
+              // column={this.state._sort}
+            />
+          ) : (
+            <NoData
+              size="medium"
+              title="Aquí aparecerán tus subastas activas"
+            />
+          )}
         </div>
       </div>
     </Fragment>

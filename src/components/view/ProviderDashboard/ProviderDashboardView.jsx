@@ -4,7 +4,7 @@ import Navbar from "../../../core/Navbar/Navbar";
 import ProviderDashboard from "./ProviderDashboard";
 import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
-
+import { formatedProviderAuctionData, filterData } from "../FinalizedAuctions/helper";
 import { getInvitedAuctionsByProvider } from "../../../api";
 import { showProvidersAuctions } from "../BuyerDashboard/helpers";
 
@@ -14,7 +14,13 @@ class ProviderDashboardContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auctions: [],
+      activeInvitedProviderAuctions: [],
+      currentPage: 1,
+      elementsByPage: 5,
+      totalCount: 0,
+      loading: false,
+      _sort: "id",
+      _order: null,
     };
   }
 
@@ -27,25 +33,56 @@ class ProviderDashboardContainer extends Component {
 
   fetchAuctions = async () => {
     const { token, user } = isAuthenticated();
-    const response = await getInvitedAuctionsByProvider(token, user._id);
+    let _id = user ? user._id : undefined;
+    const response = await getInvitedAuctionsByProvider(token, _id);
 
     if (response && response.status === 200) {
-      this.setState({ auctions: response.data.body });
+      const formatedAuction = formatedProviderAuctionData(response.data.body);
+      console.log("form", formatedAuction);
+      this.setState({
+        activeInvitedProviderAuctions: formatedAuction,
+      });
     }
   };
 
-  sendToAuctionView = (redirect) => {
-    history.push(`${redirect}`);
+  onChangePage = (value) => {
+    this.setState({ currentPage: value });
+  };
+
+  onChangeValue = (value) => {
+    this.setState({ filter: value });
+  };
+
+  onChangeLimit = (value) => {
+    this.setState({ elementsByPage: value, currentPage: 1 });
+  };
+
+  onSubmitFilter = (filter, currentPage) => {
+    const {
+      elementsByPage,
+      activeInvitedProviderAuctions,
+      pageItems,
+    } = this.state;
+
+    return filterData({
+      dataSource: activeInvitedProviderAuctions,
+      elementsByPage,
+      currentPage,
+      pageItems,
+      filter,
+    });
+  };
+
+  sendToAuctionView = (id) => {
+    history.push(`/auction/${id}`);
   };
 
   render() {
-    const { auctions } = this.state;
-    
-    const activeAuctions = showProvidersAuctions(
-      auctions,
-      this.sendToAuctionView
-    );
-
+    const { elementsByPage, currentPage, filter, loading } = this.state;
+    const {
+      dataSource: activeInvitedProviderAuctions,
+      dataSourceSize: totalCount,
+    } = this.onSubmitFilter(filter, currentPage);
     const { user } = isAuthenticated();
     return (
       <div className="app">
@@ -54,7 +91,20 @@ class ProviderDashboardContainer extends Component {
           <div className="content-components">
             <Navbar />
             <div className="content-dynamic">
-              <ProviderDashboard activeAuctions={activeAuctions} user={user} />
+              <ProviderDashboard
+                activeInvitedProviderAuctions={activeInvitedProviderAuctions}
+                user={user}
+                totalCount={totalCount}
+                currentPage={currentPage}
+                totalPages={Math.ceil(totalCount / elementsByPage)}
+                currentPage={currentPage}
+                onChangePage={this.onChangePage}
+                onChangeLimit={this.onChangeLimit}
+                limit={elementsByPage.toString()}
+                buttonAction={this.sendToAuctionView}
+                onChangeValue={this.onChangeValue}
+                loading={loading}
+              />
             </div>
           </div>
         </div>

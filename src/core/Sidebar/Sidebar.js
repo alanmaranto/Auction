@@ -26,7 +26,7 @@ const Sidebar = () => {
               </div>
             </Grid.Row>
             {isAuthenticated() && isAuthenticated().user.role === roles.BUYER && (
-              <Grid.Row style={{ margin: 0 }}>
+              <Grid.Row>
                 <Link to="/">
                   <div className="sidebar-options">
                     <span>
@@ -73,7 +73,7 @@ const Sidebar = () => {
                 </Link>
               </Grid.Row>
             )}
-            {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
+{/*             {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
               <Grid.Row>
                 <Link to="/wons">
                   <div className="sidebar-options">
@@ -84,7 +84,7 @@ const Sidebar = () => {
                   </div>
                 </Link>
               </Grid.Row>
-            )}
+            )} */}
           </Grid.Column>
         </Grid>
       </div>

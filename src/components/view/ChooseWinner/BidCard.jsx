@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Button } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { formatNumber } from "../../view/FinalizedAuctions/helper";
 import "./style.css";
 
 const BidCard = ({
@@ -16,7 +17,7 @@ const BidCard = ({
       <article className="card">
         <p className="card-title">Proveedor: {providerName}</p>
         <p className="card-followers">
-          <span className="card-followers-number">$ {bid}</span>
+          <span className="card-followers-number">$ {formatNumber(parseInt(bid))}</span>
           <span className="card-followers-title">Pesos</span>
         </p>
         {!isWinner && (
