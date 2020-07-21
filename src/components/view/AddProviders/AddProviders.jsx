@@ -17,6 +17,8 @@ class AddProviders extends Component {
       openProviders,
       onCloseProviderModal,
       submitProviders,
+      onSelectProviders,
+      choosedProviders,
     } = this.props;
 
     const providersOptions = providers.map((provider) => ({
@@ -24,6 +26,11 @@ class AddProviders extends Component {
       text: provider.name,
       value: provider._id,
     }));
+
+    const formatChoosedProviders = [];
+    choosedProviders.forEach((element) => {
+      formatChoosedProviders.push(element.invitedProvider._id);
+    });
 
     return (
       <div>
@@ -42,7 +49,11 @@ class AddProviders extends Component {
               multiple
               search
               selection
+              defaultValue={formatChoosedProviders}
               options={providersOptions}
+              onChange={(e, { value }) => {
+                onSelectProviders(value);
+              }}
             />
           </MContent>
           <MActions>

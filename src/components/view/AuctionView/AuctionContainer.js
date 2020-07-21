@@ -15,11 +15,12 @@ class AuctionContainer extends Component {
     super(props);
     this.state = {
       providers: [],
-      selectedProviders: [], 
+      selectedProviders: [],
       auction: {},
       openProviders: false,
       openFiles: false,
       notification: false,
+      choosedProviders: [],
     };
   }
 
@@ -28,6 +29,7 @@ class AuctionContainer extends Component {
     if (token) {
       this.fetchAuction();
       this.fetchProviders();
+      this.fetchChoosedProviders();
     }
   }
 
@@ -45,6 +47,17 @@ class AuctionContainer extends Component {
 
     if (response && response.status === 200) {
       this.setState({ providers: response.data.body });
+    }
+  };
+
+  fetchChoosedProviders = async () => {
+    const { id } = this.props.match.params;
+    const { token } = isAuthenticated();
+    const response = await getSelectedProvidersByAuctionId(token, id);
+    let choosedProviders = response.data.body; 
+
+    if (response && response.status === 200) {
+      this.setState({ choosedProviders: response.data.body });
     }
   };
 
@@ -79,16 +92,23 @@ class AuctionContainer extends Component {
       e.preventDefault();
     }
     const { id } = this.props.match.params;
-    const { providers } = this.state;
+    const { providers, currentProviders } = this.state;
     const { token } = isAuthenticated();
+    const sendProviders = [];
+    if (currentProviders && currentProviders.length) {
+      providers.forEach((item) => {
+        if (currentProviders.includes(item._id)) {
+          sendProviders.push(item);
+        }
+      });
+    }
 
     const data = {
       auction: id,
-      invitedUsers: providers,
+      invitedUsers: sendProviders,
     };
 
     const response = await postProviders(token, data);
-
 
     if (response.data.status === 201) {
       this.onCloseProviderModal();
@@ -97,6 +117,7 @@ class AuctionContainer extends Component {
     } else {
       this.onDismissErrorNotification();
     }
+    this.fetchChoosedProviders();
     this.onCloseProviderModal();
   };
 
@@ -129,8 +150,21 @@ class AuctionContainer extends Component {
     }
   };
 
+  onSelectProviders = (proviers) => {
+    this.setState({
+      currentProviders: proviers,
+    });
+  };
+
   render() {
-    const { auction, openProviders, openFiles, providers, selectedProviders } = this.state;
+    const {
+      auction,
+      openProviders,
+      openFiles,
+      providers,
+      selectedProviders,
+      choosedProviders,
+    } = this.state;
 
     return (
       <Auction
@@ -145,6 +179,8 @@ class AuctionContainer extends Component {
         onCloseFileModal={this.onCloseFileModal}
         onShowDescription={this.onShowDescription}
         submitProviders={this.submitProviders}
+        choosedProviders={choosedProviders}
+        onSelectProviders={this.onSelectProviders}
       />
     );
   }
