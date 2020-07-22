@@ -73,7 +73,7 @@ const NewAuction = () => {
     e.preventDefault();
     setValues({ ...values, error: "", loading: true });
 
-    createAuction(user._id, token, auction).then((data) => {
+    createAuction(token, user._id, auction).then((data) => {
       if (data.error) {
         addToast("Hubo un error al crear la subasta", {
           appearance: "error",

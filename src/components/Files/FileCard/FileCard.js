@@ -36,7 +36,6 @@ function FileCard({ openFiles, onOpenFileModal, onCloseFileModal, id }) {
               onClick={onOpenFileModal}
               />
               <Card.Header>Archivos</Card.Header>
-              <Card.Description>Aquí pueden subir, ver y descargar archivos para la subasta</Card.Description>
             <UploadFile
               openModal={openFiles}
               onClose={() => {

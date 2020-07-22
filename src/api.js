@@ -85,7 +85,7 @@ export const resetPassword =  async (body) => {
 //
 //Auction
 //
-export const createAuction = async (userId, token, auction) => {
+export const createAuction = async (token, userId, auction) => {
   try {
     const response = await axios({
       url: `${host}/auctionInformation/create/${userId}`,

@@ -45,7 +45,8 @@ class AuctionContainer extends Component {
   };
 
   fetchProviders = async () => {
-    const response = await getProviders();
+    const { token } = isAuthenticated()
+    const response = await getProviders(token);
 
     if (response && response.status === 200) {
       this.setState({ providers: response.data.body });

@@ -6,7 +6,6 @@ import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import { formatedProviderAuctionData, filterData } from "../FinalizedAuctions/helper";
 import { getInvitedAuctionsByProvider } from "../../../api";
-import { showProvidersAuctions } from "../BuyerDashboard/helpers";
 
 import "../../../App.css";
 
