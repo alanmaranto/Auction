@@ -1,16 +1,10 @@
 import React, { Fragment } from "react";
-import {
-  Card,
-  Header,
-  Grid,
-  Button,
-  Feed,
-} from "semantic-ui-react";
+import { Card, Header, Grid, Button, Feed } from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import Sidebar from "../../../core/Sidebar/Sidebar";
 import Navbar from "../../../core/Navbar/Navbar";
 import { Row, Column, CContent } from "../../../core/indexSemanticUi";
-import { roles } from '../../../helpers/roles'
+import { roles } from "../../../helpers/roles";
 import AddProviders from "../AddProviders/AddProviders";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import Countdown from "react-countdown";
@@ -60,6 +54,8 @@ const Auction = ({
   onOpenFileModal,
   onCloseFileModal,
   submitProviders,
+  choosedProviders,
+  onSelectProviders,
 }) => {
   const { title, description, _id, openingAuction } = auction;
   const operation = new Date(openingAuction).getTime();
@@ -69,7 +65,9 @@ const Auction = ({
     openProviders,
     onOpenProviderModal,
     onCloseProviderModal,
-    submitProviders
+    submitProviders,
+    choosedProviders,
+    onSelectProviders,
   ) => {
     return (
       <Column>
@@ -91,6 +89,8 @@ const Auction = ({
               openProviders={openProviders}
               onCloseProviderModal={onCloseProviderModal}
               submitProviders={submitProviders}
+              onSelectProviders={onSelectProviders}
+              choosedProviders={choosedProviders}
             />
           </CContent>
           <CContent>
@@ -98,7 +98,11 @@ const Auction = ({
               <Feed.Event>
                 <Feed.Content>
                   <Feed.Summary>
-                    Aqui van el componente que mapea los proveedores
+                    Aqui van el componente que mapea los proveedores 
+                    {choosedProviders &&
+                      choosedProviders.map((provider) => {
+                        return <div>{provider.invitedProvider.name}</div>;
+                      })}
                   </Feed.Summary>
                 </Feed.Content>
               </Feed.Event>
@@ -164,7 +168,9 @@ const Auction = ({
               openProviders,
               onOpenProviderModal,
               onCloseProviderModal,
-              submitProviders
+              submitProviders,
+              choosedProviders,
+              onSelectProviders,
             )}
             <FileCard
               id={_id}
