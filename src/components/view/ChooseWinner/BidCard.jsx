@@ -6,6 +6,8 @@ import "./style.css";
 
 const BidCard = ({
   providerName,
+  providerEmail,
+  auctionTitle,
   bid,
   bidId,
   auctionId,
@@ -17,13 +19,23 @@ const BidCard = ({
       <article className="card">
         <p className="card-title">Proveedor: {providerName}</p>
         <p className="card-followers">
-          <span className="card-followers-number">$ {formatNumber(parseInt(bid))}</span>
+          <span className="card-followers-number">
+            $ {formatNumber(parseInt(bid))}
+          </span>
           <span className="card-followers-title">Pesos</span>
         </p>
         {!isWinner && (
           <Button
             color="olive"
-            onClick={() => onOpenConfirm({ bidId, auctionId })}
+            onClick={() =>
+              onOpenConfirm({
+                bidId,
+                auctionId,
+                providerEmail: providerEmail[0],
+                providerName: providerName[0],
+                auctionTitle: auctionTitle[0],
+              })
+            }
           >
             {" "}
             Elegir como ganador

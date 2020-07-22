@@ -76,13 +76,21 @@ const ChooseWinner = ({
                     />
                     {bids &&
                       bids.map(
-                        ({ provider, auctionId, bid, winner, idMessage }) => {
+                        ({ provider, auctionInfo ,auctionId, bid, winner, idMessage }) => {
                           return (
                             <BidCard
                               key={idMessage}
                               providerName={
                                 provider &&
                                 provider.map((provider) => provider.name)
+                              }
+                              providerEmail={
+                                provider &&
+                                provider.map((provider) => provider.email)
+                              }
+                              auctionTitle={
+                                auctionInfo &&
+                                auctionInfo.map((auction) => auction.title)
                               }
                               bid={bid}
                               bidId={idMessage}
