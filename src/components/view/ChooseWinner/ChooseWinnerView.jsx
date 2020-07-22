@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ChooseWinner from "./ChooseWinner";
 import { getBidsByAuctionInfo, chooseWinner } from "../../../api";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import withToast from '../../../core/Toasts';
+import withToast from "../../../core/Toasts";
 
 class ChooseWinnerView extends Component {
   constructor(props) {
@@ -32,33 +32,33 @@ class ChooseWinnerView extends Component {
   };
 
   chooseWinnerBid = async () => {
-
     const { addToast } = this.props;
 
     const { token } = isAuthenticated();
-    const { currentBid } = this.state;
-    const { auctionId, bidId } = currentBid;
+    const { currentBid, bids } = this.state;
+    const { auctionId, bidId, providerName, providerEmail, auctionTitle } = currentBid;
 
-    const response = await chooseWinner(token, auctionId, bidId);
-
-    if (response && response.status === 200) {
-      this.fetchBids()
-      addToast(
-        'Listo',
-        {
-          appearance: "success",
-          autoDismiss: true,
-        })
-        this.setState({ openConfirm: false })
-    } else {
-      addToast(
-        'Hubo un error al intentar seleccionar un ganador',
-        {
-          appearance: "error",
-          autoDismiss: true,
-        })
+    const data = {
+      providerName,
+      providerEmail,
+      auctionTitle
     }
 
+    const response = await chooseWinner(token, auctionId, bidId, data);
+
+    if (response && response.status === 200) {
+      this.fetchBids();
+      addToast("Listo", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      this.setState({ openConfirm: false });
+    } else {
+      addToast("Hubo un error al intentar seleccionar un ganador", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    }
   };
 
   onOpenConfirm = (currentBid) => {
@@ -69,7 +69,6 @@ class ChooseWinnerView extends Component {
 
   render() {
     const { bids, openConfirm } = this.state;
-    console.log('bids', bids)
     return (
       <ChooseWinner
         bids={bids}

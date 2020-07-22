@@ -359,7 +359,7 @@ export const getBidsByAuctionInfo = async (token, auctionId) => {
   }
 };
 
-export const chooseWinner = async (token, auctionId, bidId) => {
+export const chooseWinner = async (token, auctionId, bidId, body) => {
   try {
     const response = await axios({
       url: `${host}/bid-winner`,
@@ -370,9 +370,8 @@ export const chooseWinner = async (token, auctionId, bidId) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      // data: { auctionId, bidId}
+      data: body
     });
-    console.log('send res', response)
     if (response) {
       return response;
     }
