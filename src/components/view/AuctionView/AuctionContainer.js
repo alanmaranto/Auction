@@ -34,8 +34,10 @@ class AuctionContainer extends Component {
   }
 
   fetchAuction = async () => {
+    const { token } = isAuthenticated();
+
     const { id } = this.props.match.params;
-    const response = await getAuctionById(id);
+    const response = await getAuctionById(token, id);
 
     if (response && response.status && response.status === 200) {
       this.setState({ auction: response.data.body });

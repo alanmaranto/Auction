@@ -102,24 +102,16 @@ export const createAuction = async (userId, token, auction) => {
   }
 };
 
-export const getAuctions = async () => {
+export const getAuctionById = async (token, id) => {
   try {
-    const response = await axios({
-      url: `${host}/auctionInformation`,
-      method: "GET",
-    });
-
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getAuctionById = async (id) => {
-  try {
+    console.log(token)
     const response = await axios({
       url: `${host}/auctionInformation/${id}`,
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response;
   } catch (error) {
