@@ -150,7 +150,7 @@ const RunningAuction = ({
                   fluid
                   size="big"
                   inverted
-                  min={submitBid}
+                  max={submitBid === null ? minimumPrice : submitBid}
                   onChange={(e) => onChange("message", e.target.value)}
                 />
                 <Button

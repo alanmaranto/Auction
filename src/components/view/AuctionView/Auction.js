@@ -67,7 +67,7 @@ const Auction = ({
     onCloseProviderModal,
     submitProviders,
     choosedProviders,
-    onSelectProviders,
+    onSelectProviders
   ) => {
     return (
       <Column>
@@ -81,8 +81,6 @@ const Auction = ({
             />
             <Card.Header>Proveedores Invitados</Card.Header>
             <Card.Description>
-              Aquí podrás seleccionar a los proveedores que quieres que
-              participen en la subasta
             </Card.Description>
             <AddProviders
               providers={providers}
@@ -98,7 +96,6 @@ const Auction = ({
               <Feed.Event>
                 <Feed.Content>
                   <Feed.Summary>
-                    Aqui van el componente que mapea los proveedores 
                     {choosedProviders &&
                       choosedProviders.map((provider) => {
                         return <div>{provider.invitedProvider.name}</div>;
@@ -170,7 +167,7 @@ const Auction = ({
               onCloseProviderModal,
               submitProviders,
               choosedProviders,
-              onSelectProviders,
+              onSelectProviders
             )}
             <FileCard
               id={_id}

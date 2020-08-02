@@ -14,18 +14,6 @@ const selectedAuction = {
   },
 };
 
-export const showProvidersAuctions = (data, callback) => {
-  const result = data.map(({ auctionId }) => {
-    const { _id } = auctionId
-    return {
-      ...auctionId,
-      onClickElement: () => callback(`/auction/${_id}`)
-    }
-  })
-  const isActive = result.filter(filter => filter.finalized === false)
-  return isActive
-}
-
 export const showAuctions = (data, selected, callback) =>
   data
     .filter(auction => selectedAuction[selected](auction))
