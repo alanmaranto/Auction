@@ -83,8 +83,8 @@ const Login = () => {
     <Grid textAlign="center" verticalAlign="middle" className="register">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Segment>
-          <Header as="h2" icon color="violet" textAlign="center">
-            <Icon name="id badge" color="violet"></Icon>
+          <Header as="h2" icon color="blue" textAlign="center">
+            <Icon name="id badge" color="blue"></Icon>
             Bienvenido
           </Header>
           <Form size="large">
@@ -114,7 +114,7 @@ const Login = () => {
                 value={password}
                 onChange={onChange("password")}
               />
-              <Button onClick={onSubmit} color="violet" fluid size="large">
+              <Button onClick={onSubmit} color="blue" fluid size="large">
                 Iniciar Sesión
               </Button>
               <Message>

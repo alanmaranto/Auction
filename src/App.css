@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
 
 html {
-  background: #142850;
+  background: linear-gradient(to right, #00acee, #13abc4);
 }
 
 body {

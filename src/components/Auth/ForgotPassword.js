@@ -78,7 +78,7 @@ const ForgotPassword = () => {
                 value={email}
                 onChange={onChange("email")}
               />
-              <Button onClick={onSubmit} color="grey" fluid size="large">
+              <Button onClick={onSubmit} color="blue" fluid size="large">
                 {buttonText}
               </Button>
               <Message>

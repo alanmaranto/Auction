@@ -133,8 +133,8 @@ const Register = () => {
     <Grid textAlign="center" verticalAlign="middle" className="register">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Segment stacked>
-          <Header as="h2" icon color="blue" textAlign="center">
-            <Icon name="id badge" color="blue"></Icon>
+          <Header as="h2" icon color="violet" textAlign="center">
+            <Icon name="add user" color="violet"></Icon>
             Registrarse
           </Header>
           <Form size="large">
