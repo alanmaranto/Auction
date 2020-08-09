@@ -1,32 +1,32 @@
 .sidebar-menu {
-    position: fixed;
-    min-height: 100%;
-    width: 200px;
-    background: linear-gradient(to bottom, #142850, #010038)
-
+  position: fixed;
+  min-height: 100%;
+  width: 200px;
+  background: linear-gradient(to bottom, #00acee, #1366c4);
 }
 
-.sidebar-header{
-    color: white;
-    text-align: center;
-    margin-left: 1em;
+.sidebar-header {
+  color: white;
+  text-align: center;
+  margin-left: 1em;
 }
 
-.sidebar-options{
-    cursor: pointer;
-    align-items: center;
-    margin-top: 2em;
-    padding: 1em 2em 1em 0em;
-    margin-left: 2em;
-    display: flex;
-    color: white;
+.sidebar-options {
+  cursor: pointer;
+  align-items: center;
+  padding: 10px 16px 10px 20px;
+  margin-left: 4px;
+  display: flex;
+  color: white;
+  min-width: 211px;
 }
 
-.sidebar-options:hover{
-    background: linear-gradient(to right, #142850, #010038);
-    border-radius: 1em;
+.sidebar-options:hover {
+  background: #37bdf1;
+  border-radius: 10px;
+  transition: 200ms ease-out;
 }
 
 .option-title {
-    padding-left: 1em;
+  padding-left: 1em;
 }
