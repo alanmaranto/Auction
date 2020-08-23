@@ -27,3 +27,4 @@ export const CContent = Card.Content;
 export const MHeader = Modal.Header;
 export const MContent = Modal.Content;
 export const MActions = Modal.Actions;
+export const MDescription = Modal.Description;
