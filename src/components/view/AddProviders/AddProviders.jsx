@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { Modal, Dropdown, Button } from "semantic-ui-react";
 import { getProviders } from "../../../api";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { MActions, MContent, MHeader } from "../../../core/indexSemanticUi.js";
+import {
+  MActions,
+  MContent,
+  MHeader,
+  MDescription,
+} from "../../../core/indexSemanticUi.js";
 import "./style.css";
 
 class AddProviders extends Component {
@@ -37,24 +42,27 @@ class AddProviders extends Component {
         <Modal
           centered
           className="providers-modal"
-          size="tiny"
+          size="small"
           open={openProviders}
           onClose={() => onCloseProviderModal()}
         >
           <MHeader>Añadir proveedores</MHeader>
-          <MContent>
-            <Dropdown
-              placeholder="Agrega proveedores a tu subasta"
-              fluid
-              multiple
-              search
-              selection
-              defaultValue={formatChoosedProviders}
-              options={providersOptions}
-              onChange={(e, { value }) => {
-                onSelectProviders(value);
-              }}
-            />
+          <MContent scrolling content className="add-provider">
+            <MDescription>
+              <Dropdown
+                placeholder="Agrega proveedores a tu subasta"
+                fluid
+                multiple
+                search
+                scrolling
+                selection
+                defaultValue={formatChoosedProviders}
+                options={providersOptions}
+                onChange={(e, { value }) => {
+                  onSelectProviders(value);
+                }}
+              />
+            </MDescription>
           </MContent>
           <MActions>
             <Button onClick={onCloseProviderModal}>Cancelar</Button>
