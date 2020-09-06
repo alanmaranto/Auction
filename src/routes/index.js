@@ -2,8 +2,8 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import BuyerDashboard from "../components/view/BuyerDashboard/DashboardContainer";
 import NotFound from "../core/404/404NotFound";
-import Login from "../components/auth/Login";
-import Register from "../components/auth/Register";
+import Login from "../components/Auth/Login";
+import Register from "../components/Auth/Register";
 // import Settings from "../components/user/Settings";
 import NewAuction from "../components/view/NewAuction/NewAuction";
 import AuctionView from "../components/view/AuctionView/AuctionContainer";
@@ -15,9 +15,9 @@ import FinalizedAuction from '../components/view/FinalizedAuctions/FinalizedAuct
 import ProviderDashboard from '../components/view/ProviderDashboard/ProviderDashboardView';
 // import WonAuctionsView from '../components/view/WonAuctions/WonAuctionsView'
 import ChooseWinnerView from '../components/view/ChooseWinner/ChooseWinnerView';
-import NotApproved from '../components/auth/NotApprove';
-import ForgotPassword from '../components/auth/ForgotPassword';
-import ResetPassword from '../components/auth/ResetPassword';
+import NotApproved from '../components/Auth/NotApprove';
+import ForgotPassword from '../components/Auth/ForgotPassword';
+import ResetPassword from '../components/Auth/ResetPassword';
 import "semantic-ui-css/semantic.min.css";
 
 const Routes = () => (
