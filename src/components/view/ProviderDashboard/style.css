@@ -1,0 +1,48 @@
+.dashboard-container {
+    margin-top: 20px;
+  }
+  
+  .dashboard-header {
+    margin-left: 0 !important;
+  }
+  
+  .dashboard-name {
+    font-family: "Open sans", sans-serif !important;
+  }
+  
+  .active-auction-card {
+    background-color: #f4a01d !important;
+    color: white;
+  }
+  
+  .display-auction {
+    color: white !important;
+    cursor: pointer;
+    border-radius: 1em;
+    font-family: "Open Sans", sans-serif !important;
+  }
+  
+  .display-auction:hover {
+    background: #edbc67;
+    color: white !important;
+  }
+  
+  .item-card {
+    color: white !important;
+  }
+  
+  .item-icon {
+    margin-right: 10px !important;
+  }
+  
+  .item-content {
+    margin-bottom: 10px !important;
+  }
+  
+  .item-header {
+      font-size: 1.2em !important;
+  }
+  
+  .item-description {
+      font-size: 1.1em !important;
+  }

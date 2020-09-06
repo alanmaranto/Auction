@@ -1,0 +1,98 @@
+li {
+  display: inline-block;
+  font-size: 1em;
+  list-style-type: none;
+  padding: 1em;
+  text-transform: uppercase;
+}
+
+li span {
+  display: block;
+  font-size: 1rem;
+}
+
+.auction-header {
+  margin-top: 10px !important;
+  text-transform: capitalize !important;
+  font-size: 2.5em !important;
+  text-align: justify !important;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4) !important;
+  color: #104488 !important;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.background-container{
+  padding: 20px;
+}
+
+.auction-description {
+  cursor: pointer !important;
+  color: black !important;
+  font-weight: 500;
+  font-size: 1.1em;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+
+.auction-card {
+  height: 400px !important;
+  width: 500px !important;
+  border-radius: 3% !important;
+}
+
+.file-modal {
+  height: -webkit-max-content;
+}
+
+.modal {
+  text-align: center !important;
+  top: auto !important;
+  left: auto !important;
+}
+
+.dropzone {
+  text-align: center;
+  padding: 20px;
+  border: 3px dashed #eeeeee;
+  background-color: #fafafa;
+  color: #bdbdbd;
+
+  margin-bottom: 20px;
+}
+
+ul {
+  margin: 0;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.countdown .time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fff;
+  font-size: 48px;
+  min-width: 110px;
+  margin-right: 20px;
+  font-weight: 700;
+  padding: 25px 5px 15px;
+  border-radius: 4px;
+  color: #ff0083;
+}
+
+.countdown .time span {
+  margin-top: 20px;
+  padding: 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 600;
+  color: #312747;
+}
