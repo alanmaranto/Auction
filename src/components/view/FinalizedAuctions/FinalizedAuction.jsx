@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
 import { Divider, Header, Icon, Grid } from "semantic-ui-react";
 import { Subheader, Row } from "../../../core/indexSemanticUi";
-import Sidebar from "../../../core/Sidebar/Sidebar";
-import Navbar from "../../../core/Navbar/Navbar";
 import history from "../../../modules/history/history";
 import { getTableSettings, filterData, formatedData } from "./helper";
 import { AuctionTable } from "../../../core/AuctionTable/AuctionTable";
@@ -81,53 +79,41 @@ export default class FinalizedAuction extends React.Component {
       dataSourceSize: totalCount,
     } = this.onSubmitFilter(filter, currentPage);
 
-    console.log('fina', finalizedAuctions)
-
     return (
       <Fragment>
-        <div className="app">
-          <div className="generalContainer">
-            <Sidebar />
-            <div className="content-components">
-              <Navbar />
-              <div className="content-dynamic">
-                <Grid>
-                  <Row>
-                    <Header as="h2" icon textAlign="center">
-                      <Icon name="handshake" />
-                      Subastas Finalizadas
-                      <Subheader>
-                        Aquí puedes decidir al ganador de tus subastas
-                      </Subheader>
-                    </Header>
-                  </Row>
-                </Grid>
-                <AuctionFilter
-                  totalCount={totalCount}
-                  onChangeValue={this.onChangeValue}
-                  loading={this.state.loading}
-                />
-                <Divider />
-                <AuctionTable
-                  columns={getTableSettings()}
-                  dataSource={finalizedAuctions}
-                  totalCount={totalCount}
-                  totalPages={Math.ceil(totalCount / elementsByPage)}
-                  currentPage={currentPage}
-                  onChangePage={this.onChangePage}
-                  onChangeLimit={this.onChangeLimit}
-                  limit={elementsByPage.toString()}
-                  buttonAction={this.sendToBids}
-                  color="red"
-                  colorTable="red"
-                  buttonTitle="Ver pujas"
-                  handleSort={this.handleSort}
-                  column={this.state._sort}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <Grid>
+          <Row>
+            <Header as="h2" icon textAlign="center">
+              <Icon name="handshake" />
+              Subastas Finalizadas
+              <Subheader>
+                Aquí puedes decidir al ganador de tus subastas
+              </Subheader>
+            </Header>
+          </Row>
+        </Grid>
+        <AuctionFilter
+          totalCount={totalCount}
+          onChangeValue={this.onChangeValue}
+          loading={this.state.loading}
+        />
+        <Divider />
+        <AuctionTable
+          columns={getTableSettings()}
+          dataSource={finalizedAuctions}
+          totalCount={totalCount}
+          totalPages={Math.ceil(totalCount / elementsByPage)}
+          currentPage={currentPage}
+          onChangePage={this.onChangePage}
+          onChangeLimit={this.onChangeLimit}
+          limit={elementsByPage.toString()}
+          buttonAction={this.sendToBids}
+          color="red"
+          colorTable="red"
+          buttonTitle="Ver pujas"
+          handleSort={this.handleSort}
+          column={this.state._sort}
+        />
       </Fragment>
     );
   }

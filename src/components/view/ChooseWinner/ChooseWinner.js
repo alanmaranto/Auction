@@ -2,9 +2,7 @@ import React, { Fragment } from "react";
 import { Header, Grid, Confirm, Message } from "semantic-ui-react";
 import BidCard from "./BidCard";
 import { Row, Subheader, Column } from "../../../core/indexSemanticUi";
-import Sidebar from "../../../core/Sidebar/Sidebar";
 import NoData from "../../../core/500/NoData";
-import Navbar from "../../../core/Navbar/Navbar";
 import "./style.css";
 
 const ChooseWinner = ({
@@ -36,83 +34,77 @@ const ChooseWinner = ({
 
   return (
     <Fragment>
-      <div className="app">
-        <div className="generalContainer">
-          <Sidebar />
-          <div className="content-components">
-            <Navbar />
-            <div className="content-dynamic">
-              <Grid>
-                <Row textAlign="center">
-                  <Column>
-                    <Header as="h1">
-                      Elige la puja ganadora
-                      <Subheader>
-                        Se muestran las últimas pujas de cada proveedor que
-                        participó.
-                      </Subheader>
-                    </Header>
-                  </Column>
-                </Row>
-                <div>
-                  {bids.length === 0 && (
-                    <div className="no-bids">
-                      <NoData
-                        size="medium"
-                        title="Desafortunadamente no hubo pujas en esta subasta"
-                      />
-                    </div>
-                  )}
-                </div>
-                <div className="wrapper-bid-cards">
-                  <div className="grid-bid-cards">
-                    <Confirm
-                      size="mini"
-                      className="file-modal"
-                      open={openConfirm}
-                      content="¿Estas seguro de querer elegir esta puja como ganadora?"
-                      onCancel={onCancel}
-                      onConfirm={() => onChooseWinner()}
-                    />
-                    {bids &&
-                      bids.map(
-                        ({ provider, auctionInfo ,auctionId, bid, winner, idMessage }) => {
-                          return (
-                            <BidCard
-                              key={idMessage}
-                              providerName={
-                                provider &&
-                                provider.map((provider) => provider.name)
-                              }
-                              providerEmail={
-                                provider &&
-                                provider.map((provider) => provider.email)
-                              }
-                              auctionTitle={
-                                auctionInfo &&
-                                auctionInfo.map((auction) => auction.title)
-                              }
-                              bid={bid}
-                              bidId={idMessage}
-                              auctionId={auctionId}
-                              winner={winner}
-                              openConfirm={openConfirm}
-                              onOpenConfirm={onOpenConfirm}
-                              onChooseWinner={onChooseWinner}
-                              onCancel={onCancel}
-                              isWinner={isWinner}
-                            />
-                          );
-                        }
-                      )}
-                  </div>
-                </div>
-              </Grid>
-              {isWinner && showWinner()}
+      <Grid>
+        <Row textAlign="center">
+          <Column>
+            <Header as="h1">
+              Elige la puja ganadora
+              <Subheader>
+                Se muestran las últimas pujas de cada proveedor que participó.
+              </Subheader>
+            </Header>
+          </Column>
+        </Row>
+        <div>
+          {bids.length === 0 && (
+            <div className="no-bids">
+              <NoData
+                size="medium"
+                title="Desafortunadamente no hubo pujas en esta subasta"
+              />
             </div>
+          )}
+        </div>
+        <div className="wrapper-bid-cards">
+          <div className="grid-bid-cards">
+            <Confirm
+              size="mini"
+              className="file-modal"
+              open={openConfirm}
+              content="¿Estas seguro de querer elegir esta puja como ganadora?"
+              onCancel={onCancel}
+              onConfirm={() => onChooseWinner()}
+            />
+            {bids &&
+              bids.map(
+                ({
+                  provider,
+                  auctionInfo,
+                  auctionId,
+                  bid,
+                  winner,
+                  idMessage,
+                }) => {
+                  return (
+                    <BidCard
+                      key={idMessage}
+                      providerName={
+                        provider && provider.map((provider) => provider.name)
+                      }
+                      providerEmail={
+                        provider && provider.map((provider) => provider.email)
+                      }
+                      auctionTitle={
+                        auctionInfo &&
+                        auctionInfo.map((auction) => auction.title)
+                      }
+                      bid={bid}
+                      bidId={idMessage}
+                      auctionId={auctionId}
+                      winner={winner}
+                      openConfirm={openConfirm}
+                      onOpenConfirm={onOpenConfirm}
+                      onChooseWinner={onChooseWinner}
+                      onCancel={onCancel}
+                      isWinner={isWinner}
+                    />
+                  );
+                }
+              )}
           </div>
         </div>
-      </div>
+      </Grid>
+      {isWinner && showWinner()}
     </Fragment>
   );
 };

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import {
   Button,
   Form,
@@ -8,11 +8,9 @@ import {
   Icon,
   Message,
 } from "semantic-ui-react";
-import Sidebar from "../../../core/Sidebar/Sidebar";
-import Navbar from "../../../core/Navbar/Navbar";
 import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
-import { roles } from '../../../helpers/roles'
+import { roles } from "../../../helpers/roles";
 import "./style.css";
 
 const Input = Form.Input;
@@ -72,124 +70,106 @@ const RunningAuction = ({
 
   const renderTitle = () => {
     return (
-      <Fragment>
-        <Row>
-          <Column>
-            <div className="auction-h">
-              <Header
-                as="h1"
-                className="auction-header"
-                content={title}
-                icon="gavel"
-              />
-            </div>
-          </Column>
-        </Row>
-      </Fragment>
+      <Row>
+        <Column>
+          <div className="auction-h">
+            <Header
+              as="h1"
+              className="auction-header"
+              content={title}
+              icon="gavel"
+            />
+          </div>
+        </Column>
+      </Row>
     );
   };
 
   const renderCountdown = () => {
     return (
-      <Fragment>
-        <Row>
-          <Column>
-            <div style={{ textAlign: "center" }}>
-              <h2>La subasta finalizará en</h2>
-            </div>
-            <Countdown
-              date={new Date(operation)}
-              renderer={renderer}
-              onComplete={
-                role === roles.BUYER
-                  ? () => {
-                      onFinalizedAuction();
-                      history.push("/");
-                    }
-                  : () => {
-                      onFinalizedAuction();
-                      history.push("/provider-dashboard");
-                    }
-              }
-            />
-          </Column>
-        </Row>
-      </Fragment>
+      <Row>
+        <Column>
+          <div style={{ textAlign: "center" }}>
+            <h2>La subasta finalizará en</h2>
+          </div>
+          <Countdown
+            date={new Date(operation)}
+            renderer={renderer}
+            onComplete={
+              role === roles.BUYER
+                ? () => {
+                    onFinalizedAuction();
+                    history.push("/");
+                  }
+                : () => {
+                    onFinalizedAuction();
+                    history.push("/provider-dashboard");
+                  }
+            }
+          />
+        </Column>
+      </Row>
     );
   };
 
   const renderBid = () => {
-    const submitBid = (lastMessage && lastMessage.bid - minimumBid)
-    console.log('submitBid', submitBid)
+    const submitBid = lastMessage && lastMessage.bid - minimumBid;
+    console.log("submitBid", submitBid);
     return (
-      <Fragment>
-        <Row columns={2}>
-          <Column>
-            <Message
-              warning
-              header="Condiciones de la subasta"
-              list={auctionConditions}
-            />
-          </Column>
-          <Column>
-            <Card fluid>
-              <Card.Content className="card-container" textAlign="center">
-                <Card.Header className="card-bid">Puja actual</Card.Header>
-                <Card.Description className="card-bid-number">
-                  $ {(lastMessage && lastMessage.bid) || minimumPrice} pesos
-                </Card.Description>
-              </Card.Content>
-            </Card>
-            {role === roles.PROVIDER && (
-              <Form size="large" onSubmit={onSubmit}>
-                <Input
-                  placeholder="Introduzca su puja"
-                  type="number"
-                  value={message}
-                  name="title"
-                  fluid
-                  size="big"
-                  inverted
-                  max={submitBid === null ? minimumPrice : submitBid}
-                  onChange={(e) => onChange("message", e.target.value)}
-                />
-                <Button
-                  style={{ background: "#19750c", color: "white" }}
-                  icon
-                  labelPosition="right"
-                  compact
-                  fluid
-                  size="large"
-                >
-                  <Icon name="dollar sign" />
-                  ¡Pujar!
-                </Button>
-              </Form>
-            )}
-          </Column>
-        </Row>
-      </Fragment>
+      <Row columns={2}>
+        <Column>
+          <Message
+            warning
+            header="Condiciones de la subasta"
+            list={auctionConditions}
+          />
+        </Column>
+        <Column>
+          <Card fluid>
+            <Card.Content className="card-container" textAlign="center">
+              <Card.Header className="card-bid">Puja actual</Card.Header>
+              <Card.Description className="card-bid-number">
+                $ {(lastMessage && lastMessage.bid) || minimumPrice} pesos
+              </Card.Description>
+            </Card.Content>
+          </Card>
+          {role === roles.PROVIDER && (
+            <Form size="large" onSubmit={onSubmit}>
+              <Input
+                placeholder="Introduzca su puja"
+                type="number"
+                value={message}
+                name="title"
+                fluid
+                size="big"
+                inverted
+                max={submitBid === null ? minimumPrice : submitBid}
+                onChange={(e) => onChange("message", e.target.value)}
+              />
+              <Button
+                style={{ background: "#19750c", color: "white" }}
+                icon
+                labelPosition="right"
+                compact
+                fluid
+                size="large"
+              >
+                <Icon name="dollar sign" />
+                ¡Pujar!
+              </Button>
+            </Form>
+          )}
+        </Column>
+      </Row>
     );
   };
 
   return (
-    <Fragment>
-      <div className="app">
-        <div className="generalContainer">
-          <Sidebar />
-          <div className="content-components">
-            <Navbar />
-            <div className="content-dynamic">
-              <Grid>
-                {renderTitle()}
-                {renderCountdown()}
-                {renderBid()}
-              </Grid>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Fragment>
+    <Grid>
+      {renderTitle()}
+      {renderCountdown()}
+      {renderBid()}
+    </Grid>
   );
 };
 

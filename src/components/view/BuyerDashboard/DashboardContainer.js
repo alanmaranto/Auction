@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Sidebar from "../../../core/Sidebar/Sidebar";
-import Navbar from "../../../core/Navbar/Navbar";
 import Dashboard from "./Dashboard";
 import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
@@ -84,30 +82,19 @@ class BuyerDashboardContainer extends Component {
     } = this.onSubmitFilter(filter, currentPage);
     const { user } = isAuthenticated();
     return (
-      <div className="app">
-        <div className="generalContainer">
-          <Sidebar />
-          <div className="content-components">
-            <Navbar />
-            <div className="content-dynamic">
-              <Dashboard
-                activeAuctions={activeAuctions}
-                user={user}
-                totalCount={totalCount}
-                currentPage={currentPage}
-                totalPages={Math.ceil(totalCount / elementsByPage)}
-                currentPage={currentPage}
-                onChangePage={this.onChangePage}
-                onChangeLimit={this.onChangeLimit}
-                limit={elementsByPage.toString()}
-                buttonAction={this.sendToAuctionView}
-                onChangeValue={this.onChangeValue}
-                loading={loading}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      <Dashboard
+        activeAuctions={activeAuctions}
+        user={user}
+        totalCount={totalCount}
+        totalPages={Math.ceil(totalCount / elementsByPage)}
+        currentPage={currentPage}
+        onChangePage={this.onChangePage}
+        onChangeLimit={this.onChangeLimit}
+        limit={elementsByPage.toString()}
+        buttonAction={this.sendToAuctionView}
+        onChangeValue={this.onChangeValue}
+        loading={loading}
+      />
     );
   }
 }
