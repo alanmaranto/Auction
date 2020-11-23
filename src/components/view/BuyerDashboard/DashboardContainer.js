@@ -81,6 +81,7 @@ class BuyerDashboardContainer extends Component {
       dataSourceSize: totalCount,
     } = this.onSubmitFilter(filter, currentPage);
     const { user } = isAuthenticated();
+    console.log(this.props)
     return (
       <Dashboard
         activeAuctions={activeAuctions}
