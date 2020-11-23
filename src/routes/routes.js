@@ -83,7 +83,7 @@ export const generalRoutes = {
     term: "resetPassword",
     role: "general",
   },
-  CHOOSE_WINNER: {
+   CHOOSE_WINNER: {
     path: "/winner/auction/:id",
     component: ChooseWinnerView,
     term: "chooseWinner",
@@ -124,8 +124,8 @@ export const generalRoutes = {
     role: "supplier",
   },
 };
-/* 
-export const buyerRoutes = {
+
+/* export const buyerRoutes = {
     CHOOSE_WINNER: {
         path: "/winner/auction/:id",
         component: ChooseWinnerView,
@@ -158,9 +158,9 @@ export const buyerRoutes = {
         showInNavbar: true,
         role: 'buyer',
       },
-} */
+}
 
-/* export const suppliersRoutes = {
+export const suppliersRoutes = {
     SUPPLIER_DASHBOARD: {
         path: "/provider-dashboard",
         component: SupplierDashboard,
@@ -170,4 +170,5 @@ export const buyerRoutes = {
         role: 'supplier',
       }
 }
+
  */

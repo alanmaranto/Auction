@@ -1,18 +1,16 @@
 import React, { Suspense } from "react";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Error404 from "../404/404NotFound";
 import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 import { matchPath } from "react-router";
 import { generalRoutes } from "../../routes/routes";
+import { isAuthenticated } from "../../helpers/authenticate";
 
 import "../../App.css";
 
 const Content = ({ children, history, location }) => {
-  console.log(children);
-  console.log(history);
-  console.log(location);
   const LoaderExampleLoader = () => (
     <Segment>
       <Dimmer active>
@@ -42,6 +40,8 @@ const Content = ({ children, history, location }) => {
   };
   if (!validateRoute()) return <Error404 history={history} />;
 
+  const { user } = isAuthenticated();
+
   return (
     <div className="app">
       <div className="generalContainer">
@@ -51,16 +51,20 @@ const Content = ({ children, history, location }) => {
           <div className="content-dynamic">
             {children}
             <Suspense fallback={LoaderExampleLoader()}>
-              {Object.keys(generalRoutes)
-                .filter((key) => generalRoutes[key].showSidebar)
-                .map((key) => (
-                  <Route
-                    exact
-                    key={generalRoutes[key].path}
-                    path={generalRoutes[key].path}
-                    component={generalRoutes[key].component}
-                  />
-                ))}
+              {isAuthenticated() ? (
+                Object.keys(generalRoutes)
+                  .filter((key) => generalRoutes[key].showSidebar)
+                  .map((key) => (
+                    <Route
+                      exact
+                      key={generalRoutes[key].path}
+                      path={generalRoutes[key].path}
+                      component={generalRoutes[key].component}
+                    />
+                  ))
+              ) : (
+                <Redirect to={{ pathname: "/login" }} />
+              )}
             </Suspense>
           </div>
         </div>
