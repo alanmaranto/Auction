@@ -3,22 +3,13 @@ import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 import { Route, Redirect } from "react-router-dom";
 import Error404 from "../404/404NotFound";
-import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 import { matchPath } from "react-router";
 import { generalRoutes } from "../../routes/routes";
 import { isAuthenticated } from "../../helpers/authenticate";
-
+import Loader from "../Loader";
 import "../../App.css";
 
 const Content = ({ children, history, location }) => {
-  const LoaderExampleLoader = () => (
-    <Segment>
-      <Dimmer active>
-        <Loader />
-      </Dimmer>
-      <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
-    </Segment>
-  );
   const validateRoute = () => {
     let isValid = false;
     const routes = Object.values(generalRoutes);
@@ -50,7 +41,7 @@ const Content = ({ children, history, location }) => {
           <Navbar history={history} />
           <div className="content-dynamic">
             {children}
-            <Suspense fallback={LoaderExampleLoader()}>
+            <Suspense fallback={<Loader />}>
               {isAuthenticated() ? (
                 Object.keys(generalRoutes)
                   .filter((key) => generalRoutes[key].showSidebar)
