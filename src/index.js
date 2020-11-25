@@ -1,9 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Router } from "react-router-dom";
-import { ToastProvider } from 'react-toast-notifications'
-import history from './modules/history/history';
+import { ToastProvider } from "react-toast-notifications";
+import history from "./modules/history/history";
 import Routes from "./routes/index";
+
+
+import "./App.css";
 
 ReactDOM.render(
   <Router history={history}>

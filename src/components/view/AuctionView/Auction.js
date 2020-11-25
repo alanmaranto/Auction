@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
 import { Card, Header, Grid, Button, Feed } from "semantic-ui-react";
 import history from "../../../modules/history/history";
-import Sidebar from "../../../core/Sidebar/Sidebar";
-import Navbar from "../../../core/Navbar/Navbar";
 import { Row, Column, CContent } from "../../../core/indexSemanticUi";
 import { roles } from "../../../helpers/roles";
 import AddProviders from "../AddProviders/AddProviders";
@@ -80,8 +78,7 @@ const Auction = ({
               floated="right"
             />
             <Card.Header>Proveedores Invitados</Card.Header>
-            <Card.Description>
-            </Card.Description>
+            <Card.Description></Card.Description>
             <AddProviders
               providers={providers}
               openProviders={openProviders}
@@ -214,23 +211,11 @@ const Auction = ({
   };
 
   return (
-    <Fragment>
-      <div className="app">
-        <div className="generalContainer">
-          <Sidebar />
-          <div className="content-components">
-            <Navbar />
-            <div className="content-dynamic">
-              <Grid>
-                {renderAuctionHeader()}
-                {renderBuyerAuctionView()}
-                {renderProvidersAuctionView()}
-              </Grid>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Fragment>
+    <Grid>
+      {renderAuctionHeader()}
+      {renderBuyerAuctionView()}
+      {renderProvidersAuctionView()}
+    </Grid>
   );
 };
 

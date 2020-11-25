@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import Sidebar from "../../../core/Sidebar/Sidebar";
-import Navbar from "../../../core/Navbar/Navbar";
 import ProviderDashboard from "./ProviderDashboard";
 import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { formatedProviderAuctionData, filterData } from "../FinalizedAuctions/helper";
+import {
+  formatedProviderAuctionData,
+  filterData,
+} from "../FinalizedAuctions/helper";
 import { getInvitedAuctionsByProvider } from "../../../api";
-
-import "../../../App.css";
-
 class ProviderDashboardContainer extends Component {
   constructor(props) {
     super(props);
@@ -84,30 +82,20 @@ class ProviderDashboardContainer extends Component {
     } = this.onSubmitFilter(filter, currentPage);
     const { user } = isAuthenticated();
     return (
-      <div className="app">
-        <div className="generalContainer">
-          <Sidebar />
-          <div className="content-components">
-            <Navbar />
-            <div className="content-dynamic">
-              <ProviderDashboard
-                activeInvitedProviderAuctions={activeInvitedProviderAuctions}
-                user={user}
-                totalCount={totalCount}
-                currentPage={currentPage}
-                totalPages={Math.ceil(totalCount / elementsByPage)}
-                currentPage={currentPage}
-                onChangePage={this.onChangePage}
-                onChangeLimit={this.onChangeLimit}
-                limit={elementsByPage.toString()}
-                buttonAction={this.sendToAuctionView}
-                onChangeValue={this.onChangeValue}
-                loading={loading}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProviderDashboard
+        activeInvitedProviderAuctions={activeInvitedProviderAuctions}
+        user={user}
+        totalCount={totalCount}
+        currentPage={currentPage}
+        totalPages={Math.ceil(totalCount / elementsByPage)}
+        currentPage={currentPage}
+        onChangePage={this.onChangePage}
+        onChangeLimit={this.onChangeLimit}
+        limit={elementsByPage.toString()}
+        buttonAction={this.sendToAuctionView}
+        onChangeValue={this.onChangeValue}
+        loading={loading}
+      />
     );
   }
 }

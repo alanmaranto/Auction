@@ -5,7 +5,7 @@ import Error from "../../assets/404.jpg";
 import "./style.css";
 
 const NotFound = ({ history }) => (
-  <div className>
+  <div>
     <Image centered size="big" src={Error} />
     <Header as="h2" textAlign="center" color="blue">
       <Header.Content>Pagina No Encontrada</Header.Content>
