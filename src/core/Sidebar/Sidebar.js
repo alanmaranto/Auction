@@ -71,6 +71,18 @@ const Sidebar = () => {
               </Link>
             </Grid.Row>
           )}
+          {isAuthenticated() && isAuthenticated().user.role === roles.BUYER && (
+            <Grid.Row>
+              <Link to="/favorite-suppliers">
+                <div className="sidebar-options">
+                  <span>
+                    <Image src={A1} />
+                  </span>
+                  <span className="option-title">Mis Proveedores</span>
+                </div>
+              </Link>
+            </Grid.Row>
+          )}
           {/*             {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
               <Grid.Row>
                 <Link to="/wons">

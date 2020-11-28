@@ -9,7 +9,7 @@ import {
   Icon,
   Message,
 } from "semantic-ui-react";
-import { signin } from "../../api";
+import { signin } from "../../api/auth";
 import { authenticate, isAuthenticated } from "../../helpers/authenticate";
 import { registerUserIOToken } from "../../socket";
 import { roles } from "../../helpers/roles";

@@ -14,8 +14,6 @@ const Content = ({ children, history, location }) => {
     let isValid = false;
     const routes = Object.values(generalRoutes);
 
-    console.log(routes);
-
     routes.forEach((route) => {
       if (
         matchPath(location.pathname, {

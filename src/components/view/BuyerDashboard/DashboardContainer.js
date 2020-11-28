@@ -3,7 +3,7 @@ import Dashboard from "./Dashboard";
 import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import { filterData, formatedData } from "../FinalizedAuctions/helper";
-import { getActiveAuctionsByUser } from "../../../api";
+import { getActiveAuctionsByUser } from "../../../api/auction";
 import { showAuctions } from "./helpers";
 
 import "../../../App.css";
@@ -35,11 +35,8 @@ class BuyerDashboardContainer extends Component {
 
     const response = await getActiveAuctionsByUser(token, _id);
 
-    console.log("re", response);
-
     if (response && response.status === 200) {
       const formatedAuction = formatedData(response.data.body);
-      console.log("form", formatedAuction);
       this.setState({
         activeAuctions: formatedAuction,
       });
@@ -81,7 +78,6 @@ class BuyerDashboardContainer extends Component {
       dataSourceSize: totalCount,
     } = this.onSubmitFilter(filter, currentPage);
     const { user } = isAuthenticated();
-    console.log(this.props)
     return (
       <Dashboard
         activeAuctions={activeAuctions}

@@ -3,12 +3,12 @@ import { Confirm } from 'semantic-ui-react';
 import { useToasts } from 'react-toast-notifications';
 
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { deleteFile } from "../../../api";
+import { deleteFile } from "../../../api/api";
 import fileIcon from "../../../assets/file-icon.png";
 import deleteIcon from "../../../assets/delete-icon.png";
 import "./style.css";
 
-function FileList({ files, onRemoveFile }) {
+const FileList = ({ files, onRemoveFile }) => {
   const { addToast } = useToasts();
   const [isRemoving, setIsRemoving ] = useState(false);
   const [fileId, setFileId ] = useState(null);

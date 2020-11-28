@@ -6,7 +6,7 @@ import {
   formatedProviderAuctionData,
   filterData,
 } from "../FinalizedAuctions/helper";
-import { getInvitedAuctionsByProvider } from "../../../api";
+import { getInvitedAuctionsByProvider } from "../../../api/api";
 class ProviderDashboardContainer extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +35,6 @@ class ProviderDashboardContainer extends Component {
 
     if (response && response.status === 200) {
       const formatedAuction = formatedProviderAuctionData(response.data.body);
-      console.log("form", formatedAuction);
       this.setState({
         activeInvitedProviderAuctions: formatedAuction,
       });

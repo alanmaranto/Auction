@@ -1,0 +1,7 @@
+.favorite-suppliers-card-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0px; }
+  .favorite-suppliers-card-container__avatar {
+    max-width: 110px;
+    border-radius: 90px; }

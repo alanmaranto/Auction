@@ -34,6 +34,7 @@ const ForgotPassword = React.lazy(() =>
 const ResetPassword = React.lazy(() =>
   import("../components/auth/ResetPassword")
 );
+const FavoriteSuppliers = React.lazy(() => import ('../components/view/favoriteSuppliers'))
 
 export const generalRoutes = {
   LOGIN: {
@@ -42,7 +43,6 @@ export const generalRoutes = {
     term: "login",
     role: "general",
   },
-
   REGISTER: {
     path: "/register",
     component: Register,
@@ -123,4 +123,12 @@ export const generalRoutes = {
     showInNavbar: true,
     role: "supplier",
   },
+  FAVORITE_SUPPLIERS: {
+    path: '/favorite-suppliers',
+    component: FavoriteSuppliers,
+    term: 'favoriteSuppliers',
+    showSidebar: true,
+    showInNavbar: true,
+    role: 'buyer'
+  }
 };

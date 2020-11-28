@@ -1,14 +1,11 @@
-.button-submit-new-auction{
-    background: #0a42b3 !important;
-    color: white !important;
-}
+.button-submit-new-auction {
+  background: #0a42b3 !important;
+  color: white !important; }
 
-.button-cancel-new-auction{
-    background: #aa1219e3 !important;
-    color: white !important;
-}
+.button-cancel-new-auction {
+  background: #aa1219e3 !important;
+  color: white !important; }
 
 /* overwritting datepicker class */
-.react-datepicker-wrapper  {
-    width: -webkit-fill-available !important;
-}
+.react-datepicker-wrapper {
+  width: -webkit-fill-available !important; }

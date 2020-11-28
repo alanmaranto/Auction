@@ -10,7 +10,7 @@ import {
   Message,
 } from "semantic-ui-react";
 import jwt from "jsonwebtoken";
-import { resetPassword } from "../../api";
+import { resetPassword } from "../../api/api";
 import { useToasts } from "react-toast-notifications";
 import "./App.css";
 
@@ -27,7 +27,6 @@ const ResetPassword = ({ match }) => {
     let token = match.params.token;
     let { name } = jwt.decode(token);
 
-    console.log(name);
     if (token) {
       setValues({ ...values, name, token });
     }

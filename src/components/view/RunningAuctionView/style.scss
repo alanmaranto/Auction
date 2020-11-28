@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 0; }
+  margin: 20px 0;
+}
 
 .countdown .time {
   display: flex;
@@ -16,7 +17,8 @@
   font-weight: 700;
   padding: 25px 5px 15px;
   border-radius: 4px;
-  color: #19750c; }
+  color: #19750c;
+}
 
 .countdown .time span {
   margin-top: 20px;
@@ -26,23 +28,28 @@
   align-items: center;
   font-size: 17px;
   font-weight: 600;
-  color: #312747; }
+  color: #312747;
+}
 
 .bid {
-  background-color: #19750c; }
+  background-color: #19750c;
+}
 
 .card-bid {
-  font-size: 1.5em !important;
-  color: white !important; }
+    font-size: 1.5em !important;
+    color: white !important;
+}
 
 .card-bid-number {
-  font-size: 2.5em !important;
-  color: white !important; }
+    font-size: 2.5em !important;
+    color: white !important;
+}
 
 .card-container {
-  background: #19750c !important;
-  min-height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; }
+    background: #19750c !important;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

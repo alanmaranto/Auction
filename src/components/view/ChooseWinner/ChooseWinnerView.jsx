@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ChooseWinner from "./ChooseWinner";
-import { getBidsByAuctionInfo, chooseWinner } from "../../../api";
+import { getBidsByAuctionInfo, chooseWinner } from "../../../api/api";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import withToast from "../../../core/Toasts";
 

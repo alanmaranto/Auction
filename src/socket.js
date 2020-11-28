@@ -1,5 +1,5 @@
 import openSocket from 'socket.io-client';
-import api from './api';
+import api from './api/api';
 
 export const socket = openSocket(api.host);
 

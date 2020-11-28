@@ -6,7 +6,7 @@ import {
   getProviders,
   postProviders,
   getSelectedProvidersByAuctionId,
-} from "../../../api";
+} from "../../../api/api";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import "moment/locale/es";
 

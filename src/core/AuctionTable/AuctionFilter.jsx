@@ -58,8 +58,12 @@ export class AuctionFilter extends React.Component {
   }
 }
 
+AuctionFilter.defailtProps = {
+  filter: '',
+}
+
 AuctionFilter.propTypes = {
   onChangeValue: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
+  filter: PropTypes.string,
   totalCount: PropTypes.number.isRequired,
 };

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, Dropdown, Button } from "semantic-ui-react";
-import { getProviders } from "../../../api";
+import { getProviders } from "../../../api/api";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import {
   MActions,

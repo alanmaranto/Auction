@@ -14,7 +14,8 @@ import history from "../../../modules/history/history";
 import es from "date-fns/locale/es";
 import { useToasts } from "react-toast-notifications";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { createAuction, getActiveAuctionsByUser } from "../../../api";
+import { createAuction } from "../../../api/api";
+import { getActiveAuctionsByUser } from "../../../api/auction";
 
 import "./style.css";
 import "react-datepicker/dist/react-datepicker.css";
