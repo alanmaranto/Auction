@@ -37,10 +37,10 @@ body .app {
   padding: 20px; }
 
 .modal {
-  /*   top: auto !important;
+  top: auto !important;
   left: auto !important;
   text-align: center !important;
- */ }
+  height: auto !important; }
 
 :root {
   --gray: #5f616d;

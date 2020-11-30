@@ -37,6 +37,12 @@ class AddProviders extends Component {
       formatChoosedProviders.push(element.invitedProvider._id);
     });
 
+    const renderLabel = (label) => ({
+      color: 'blue',
+      content: label.text,
+      icon: 'check',
+    })
+
     return (
       <div>
         <Modal
@@ -61,6 +67,7 @@ class AddProviders extends Component {
                 onChange={(e, { value }) => {
                   onSelectProviders(value);
                 }}
+                renderLabel={renderLabel}
               />
             </MDescription>
           </MContent>
