@@ -36,11 +36,6 @@ li span {
 .file-modal {
   height: -webkit-max-content; }
 
-.modal {
-  text-align: center !important;
-  top: auto !important;
-  left: auto !important; }
-
 .dropzone {
   text-align: center;
   padding: 20px;

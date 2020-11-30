@@ -3,10 +3,10 @@ import Auction from "./Auction";
 import { Message } from "semantic-ui-react";
 import {
   getAuctionById,
-  getProviders,
   postProviders,
   getSelectedProvidersByAuctionId,
 } from "../../../api/api";
+import { getProviders} from "../../../api/suppliers";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import "moment/locale/es";
 

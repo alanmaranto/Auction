@@ -106,7 +106,7 @@ function UploadFile({ openModal, onClose, setOpenModal, auctionId }) {
       <Modal
         size="tiny"
         className="file-modal"
-        centered={false}
+        centered
         open={openModal}
         onClose={() => onCloseUploadFile()}
       >

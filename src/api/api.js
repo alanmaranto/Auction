@@ -1,10 +1,6 @@
 import axios from "axios";
 export const host = process.env.REACT_APP_API_URL;
 
-const api = {
-  host,
-};
-
 export const forgotPassword = async (email) => {
   try {
     const response = await axios({
@@ -54,7 +50,6 @@ export const createAuction = async (token, userId, auction) => {
 
 export const getAuctionById = async (token, id) => {
   try {
-    console.log(token);
     const response = await axios({
       url: `${host}/auctionInformation/${id}`,
       method: "GET",
@@ -188,24 +183,6 @@ export const getFinalizedAuctionsByUser = async (token, user) => {
   }
 };
 
-
-
-export const getProviders = async (token) => {
-  try {
-    const response = await axios({
-      url: `${host}/providers/`,
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const postProviders = async (token, body) => {
   try {
     const response = await axios({
@@ -308,4 +285,3 @@ export const chooseWinner = async (token, auctionId, bidId, body) => {
   }
 };
 
-export default api;

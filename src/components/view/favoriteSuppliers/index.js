@@ -1,2 +1,2 @@
-import View from './FavoriteSuppliersContainer';
+import View from './FavoriteSuppliersView';
 export default View
