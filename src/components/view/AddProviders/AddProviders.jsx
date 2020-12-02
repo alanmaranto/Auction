@@ -18,12 +18,12 @@ class AddProviders extends Component {
 
   render() {
     const {
-      providers,
+      providers, // all
       openProviders,
       onCloseProviderModal,
       submitProviders,
-      onSelectProviders,
-      choosedProviders,
+      onSelectProviders, // select from all suppliers and save into temporarl array
+      choosedProviders, // selected providers
     } = this.props;
 
     const providersOptions = providers.map((provider) => ({

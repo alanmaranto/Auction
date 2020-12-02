@@ -15,7 +15,6 @@ class AuctionContainer extends Component {
     super(props);
     this.state = {
       providers: [],
-      selectedProviders: [],
       auction: {},
       openProviders: false,
       openFiles: false,
@@ -57,7 +56,7 @@ class AuctionContainer extends Component {
     const { id } = this.props.match.params;
     const { token } = isAuthenticated();
     const response = await getSelectedProvidersByAuctionId(token, id);
-    let choosedProviders = response.data.body; 
+    let choosedProviders = response.data.body;
 
     if (response && response.status === 200) {
       this.setState({ choosedProviders: response.data.body });
@@ -144,15 +143,6 @@ class AuctionContainer extends Component {
     this.setState({ openFiles: true });
   };
 
-  fetchSelectedProviders = async (auctionId) => {
-    const { token } = isAuthenticated();
-    const response = await getSelectedProvidersByAuctionId(token, auctionId);
-
-    if (response && response.status === 200) {
-      this.setState({ selectedProviders: response.data.body });
-    }
-  };
-
   onSelectProviders = (proviers) => {
     this.setState({
       currentProviders: proviers,
@@ -165,7 +155,6 @@ class AuctionContainer extends Component {
       openProviders,
       openFiles,
       providers,
-      selectedProviders,
       choosedProviders,
     } = this.state;
 
@@ -174,7 +163,6 @@ class AuctionContainer extends Component {
         auction={auction}
         providers={providers}
         openProviders={openProviders}
-        selectedProviders={selectedProviders}
         openFiles={openFiles}
         onOpenProviderModal={this.onOpenProviderModal}
         onCloseProviderModal={this.onCloseProviderModal}

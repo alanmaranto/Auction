@@ -6,45 +6,54 @@ import {
   Button,
   Grid,
   Modal,
-  Image,
+  Dropdown,
+  Dimmer
 } from "semantic-ui-react";
-import { getFavoriteSuppliers } from "../../../api/favoriteSuppliers";
+import { useToasts } from "react-toast-notifications";
+import {
+  getFavoriteSuppliers,
+  postFavoriteSuppliers,
+} from "../../../api/favoriteSuppliers";
 import { getProviders } from "../../../api/suppliers";
 import { isAuthenticated } from "../../../helpers/authenticate";
+import Loader from "../../../core/Loader";
 import "./style.css";
 
 const FavoriteSuppliersView = () => {
+  const { addToast } = useToasts();
   const [favoriteSuppliers, setFavoriteSuppliers] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
+  const [selectedTemporalSuppliers, setSelectedTemporalSuppliers] = useState(
+    []
+  );
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const { token, user } = isAuthenticated();
 
-  console.log(user);
+  const fetchSuppliers = async () => {
+    const response = await getProviders(token);
+
+    if (response && response.status === 200) {
+      setSuppliers(response.data.body);
+    }
+  };
 
   useEffect(() => {
     if (token && user) {
-      const fetchSuppliers = async () => {
-        const response = await getProviders(token);
-
-        if (response && response.status === 200) {
-          setSuppliers(response.data.body);
-        }
-      };
       fetchSuppliers();
     }
   }, []);
 
+  const fetchFavoriteSuppliers = async () => {
+    const data = await getFavoriteSuppliers(token);
+    if (data.status === 200) {
+      setFavoriteSuppliers(data.data.body);
+    }
+  };
+
   useEffect(() => {
     if (token && user) {
-      const fetchFavoriteSuppliers = async () => {
-        const data = await getFavoriteSuppliers(token);
-        console.log("data", data);
-        if (data.status === 200) {
-          setFavoriteSuppliers(data.data.body);
-        }
-      };
       fetchFavoriteSuppliers();
     }
   }, []);
@@ -59,16 +68,70 @@ const FavoriteSuppliersView = () => {
     }, 2000);
   };
 
-  console.log(favoriteSuppliers)
-  console.log(suppliers)
+  const suppliersOptions = suppliers.map((supplier) => ({
+    key: supplier._id,
+    text: supplier.name,
+    value: supplier._id,
+  }));
+
+  const renderLabel = (label) => ({
+    color: "blue",
+    content: label.text,
+    icon: "check",
+  });
+
+  const submitSuppliers = async (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    setLoading(true);
+    const sendSuppliers = [];
+    if (selectedTemporalSuppliers && selectedTemporalSuppliers.length) {
+      suppliers.forEach((supplier) => {
+        if (selectedTemporalSuppliers.includes(supplier._id)) {
+          sendSuppliers.push(supplier);
+        }
+      });
+    } else {
+      addToast("Debes agregar al menos un proveedor", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      setOpenModal(false);
+      return false;
+    }
+
+    const data = {
+      favoriteSuppliers: sendSuppliers,
+    };
+
+    const response = await postFavoriteSuppliers(token, data);
+
+    if (response.status === 201) {
+      fetchFavoriteSuppliers();
+      addToast("Agregaste proveedores con éxito", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      setLoading(false);
+      setOpenModal(false);
+    } else {
+      addToast("Hubo un error al agregar proveedores", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      setLoading(false);
+      setOpenModal(false);
+    }
+  };
 
   const renderModal = () => {
     return (
       <div>
         <Modal
-          open={open}
-          onClose={() => setOpen(false)}
-          onOpen={() => setOpen(true)}
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          onOpen={() => setOpenModal(true)}
           trigger={<Button>Añadir proveedores</Button>}
           centered
           closeIcon
@@ -76,53 +139,28 @@ const FavoriteSuppliersView = () => {
         >
           <Modal.Header>Seleccionar proveedores</Modal.Header>
           <Modal.Content image scrolling>
-            <Image
-              size="medium"
-              src="https://react.semantic-ui.com/images/wireframe/image.png"
-              wrapped
-            />
-
-            <Modal.Description>
-              <p>
-                This is an example of expanded content that will cause the
-                modal's dimmer to scroll.
-              </p>
-
-              <Image
-                src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-                style={{ marginBottom: 10 }}
+            {loading ? (
+              <Dimmer active inverted>
+                <Loader inverted />
+              </Dimmer>
+            ) : (
+              <Dropdown
+                placeholder="Agrega tus proveedores"
+                fluid
+                multiple
+                search
+                scrolling
+                selection
+                defaultValue={[]}
+                options={suppliersOptions}
+                renderLabel={renderLabel}
+                onChange={(e, { value }) => setSelectedTemporalSuppliers(value)}
               />
-              <Image
-                src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-                style={{ marginBottom: 10 }}
-              />
-              <Image
-                src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-                style={{ marginBottom: 10 }}
-              />
-              <Image
-                src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-                style={{ marginBottom: 10 }}
-              />
-              <Image
-                src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-                style={{ marginBottom: 10 }}
-              />
-              <Image
-                src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-                style={{ marginBottom: 10 }}
-              />
-              <Image
-                src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-                style={{ marginBottom: 10 }}
-              />
-              <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
-            </Modal.Description>
+            )}
           </Modal.Content>
           <Modal.Actions>
-            <Button onClick={() => setOpen(false)} primary>
-              Proceed <Icon name="chevron right" />
-            </Button>
+            <Button onClick={() => setOpenModal(false)}>Cancelar</Button>
+            <Button onClick={submitSuppliers} content="Guardar" />
           </Modal.Actions>
         </Modal>
       </div>

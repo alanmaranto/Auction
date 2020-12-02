@@ -87,7 +87,6 @@ class ProviderDashboardContainer extends Component {
         totalCount={totalCount}
         currentPage={currentPage}
         totalPages={Math.ceil(totalCount / elementsByPage)}
-        currentPage={currentPage}
         onChangePage={this.onChangePage}
         onChangeLimit={this.onChangeLimit}
         limit={elementsByPage.toString()}
