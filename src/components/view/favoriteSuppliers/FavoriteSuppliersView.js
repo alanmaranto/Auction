@@ -7,16 +7,19 @@ import {
   Grid,
   Modal,
   Dropdown,
-  Dimmer
+  Dimmer,
 } from "semantic-ui-react";
 import { useToasts } from "react-toast-notifications";
+import Loader from "../../../core/Loader";
+import NoData from "../../../core/500/NoData";
+import FavoriteSupplierCard from "./FavoriteSupplierCard";
 import {
   getFavoriteSuppliers,
   postFavoriteSuppliers,
+  deleteFavoritSupplier,
 } from "../../../api/favoriteSuppliers";
 import { getProviders } from "../../../api/suppliers";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import Loader from "../../../core/Loader";
 import "./style.css";
 
 const FavoriteSuppliersView = () => {
@@ -28,6 +31,10 @@ const FavoriteSuppliersView = () => {
   );
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [search, setSearch] = useState("");
+  const [filteredFavoriteSuppliers, setFilteredFavoriteSuppliers] = useState(
+    []
+  );
 
   const { token, user } = isAuthenticated();
 
@@ -58,14 +65,24 @@ const FavoriteSuppliersView = () => {
     }
   }, []);
 
-  const deleteSupplier = () => {
+  const deleteSupplier = async (id) => {
     setLoading(true);
-    setTimeout(() => {
-      console.log("acabo el tiempo");
+    const response = await deleteFavoritSupplier(token, id);
+
+    if (response.status === 200) {
+      fetchFavoriteSuppliers();
+      addToast("Se eliminó el proveedor con éxito", {
+        appearance: "success",
+        autoDismiss: true,
+      });
       setLoading(false);
-      // FETCH FAVORITE PROVIDERS
-      console.log("proveedor id borrado");
-    }, 2000);
+    } else {
+      addToast("Hubo un error al eliminar el proveedor", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      setLoading(false);
+    }
   };
 
   const suppliersOptions = suppliers.map((supplier) => ({
@@ -138,7 +155,7 @@ const FavoriteSuppliersView = () => {
           size="small"
         >
           <Modal.Header>Seleccionar proveedores</Modal.Header>
-          <Modal.Content image scrolling>
+          <Modal.Content scrolling style={{ height: "200px" }}>
             {loading ? (
               <Dimmer active inverted>
                 <Loader inverted />
@@ -167,53 +184,54 @@ const FavoriteSuppliersView = () => {
     );
   };
 
+  useEffect(() => {
+    setFilteredFavoriteSuppliers(
+      favoriteSuppliers.filter((supplier) => {
+        return supplier.favoriteSuppliers.name
+          .toLowerCase()
+          .includes(search.toLowerCase());
+      })
+    );
+  }, [search, favoriteSuppliers]);
+
+  const renderFavoriteSuppliers = () => {
+    if (filteredFavoriteSuppliers && filteredFavoriteSuppliers.length > 0) {
+      return filteredFavoriteSuppliers.map((supplier, idx) => {
+        return (
+          <Grid.Column
+            mobile={16}
+            tablet={8}
+            computer={4}
+            className="favorite-supplier-column"
+          >
+            <FavoriteSupplierCard
+              idx={idx}
+              supplier={supplier}
+              loading={loading}
+              deleteSupplier={deleteSupplier}
+            />
+          </Grid.Column>
+        );
+      });
+    }
+    return <NoData title="No hay proveedores" size="large" />;
+  };
+
   return (
-    <Grid columns={1}>
+    <Grid>
       <Grid.Row>
         <Grid.Column width={12}>
           <Input
             fluid
             icon={<Icon name="search" inverted circular link />}
             placeholder="Search..."
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
           />
         </Grid.Column>
         <Grid.Column width={4}>{renderModal()}</Grid.Column>
       </Grid.Row>
-      <Grid.Row>
-        <Grid.Column>
-          <Card>
-            <div className="favorite-suppliers-card-container">
-              <img
-                src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-                alt=""
-                className="favorite-suppliers-card-container__avatar"
-              />
-            </div>
-            <Card.Content>
-              <Card.Header textAlign="center">Proveedor Oxxo</Card.Header>
-              <Card.Meta textAlign="center">
-                <span className="date">
-                  Seleccionado como proveedor en FECHA
-                </span>
-              </Card.Meta>
-            </Card.Content>
-            <Card.Content extra textAlign="center">
-              <Button
-                animated
-                color="red"
-                loading={loading ? true : false}
-                size="medium"
-                onClick={deleteSupplier}
-              >
-                <Button.Content visible>Eliminar Proveedor</Button.Content>
-                <Button.Content hidden>
-                  <Icon name="user delete" />
-                </Button.Content>
-              </Button>
-            </Card.Content>
-          </Card>
-        </Grid.Column>
-      </Grid.Row>
+      <Grid.Row>{renderFavoriteSuppliers()}</Grid.Row>
     </Grid>
   );
 };
