@@ -7,7 +7,6 @@ export const TableRow = ({ dataRow, columns, buttonAction, buttonTitle, color })
     <Table.Row>
       {columns &&
         columns.map(({ name, buttonActions }) => {
-          console.log("name", name);
           return (
             <Table.Cell>
               {buttonActions ? (

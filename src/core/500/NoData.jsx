@@ -1,22 +1,34 @@
 import React, { Fragment } from "react";
 import { Grid, Header, Image } from "semantic-ui-react";
 import { Row, Column, HContent } from "../indexSemanticUi";
-import NoAuctions from "../../assets/humaaans.png";
+import NoContent from "../../assets/no_content.svg";
+import "./style.css";
 
-const NoData = ({ title, size }) => {
+const NoData = ({
+  title,
+  size,
+  className,
+  color,
+  textAlign,
+  headerText,
+  classNameHeader,
+  headerConfig,
+}) => {
   return (
     <Fragment>
-      <Grid className="no-data" container>
+      <Grid className={className ? className : "no-data"} container>
         <Row>
           <Column>
-            <Header as="h3" textAlign="center" color="blue">
+            <Header
+              as={headerText ? headerText : "h2"}
+              textAlign={textAlign ? textAlign : "center"}
+              color={color ? color : "blue"}
+              className={classNameHeader ? classNameHeader : "no-data-header"}
+              style={headerConfig ? headerConfig : { padding: "1.2em 0" }}
+            >
               <HContent>{title}</HContent>
             </Header>
-            <Image
-              centered
-              size={size}
-              src={NoAuctions}
-            />
+            <Image centered size={size} src={NoContent} />
           </Column>
         </Row>
       </Grid>

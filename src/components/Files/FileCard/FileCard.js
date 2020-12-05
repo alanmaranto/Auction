@@ -4,7 +4,7 @@ import { Column, CContent } from "../../../core/indexSemanticUi";
 
 import FileList from '../FileList';
 import UploadFile from '../UploadFile';
-import { getFiles } from "../../../api";
+import { getFiles } from "../../../api/api";
 import { isAuthenticated } from "../../../helpers/authenticate";
 
 function FileCard({ openFiles, onOpenFileModal, onCloseFileModal, id }) {

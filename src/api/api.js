@@ -1,85 +1,31 @@
 import axios from "axios";
-const host = process.env.REACT_APP_API_URL
-const api = {
-  host,
-};
-//
-// Auth
-//
-export const signup = (user) => {
-  return fetch(`${host}/signup`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+export const host = process.env.REACT_APP_API_URL;
 
-export const signin = (user) => {
-  return fetch(`${host}/signin`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-export const signout = (next) => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("jwt");
-    next();
-    return fetch(`${host}/signout`, {
-      method: "GET",
-    })
-      .then((response) => {
-        console.log("signout", response);
-      })
-      .catch((err) => console.log(err));
-  }
-};
-
-export const forgotPassword =  async (email) => {
+export const forgotPassword = async (email) => {
   try {
     const response = await axios({
-      method: 'PUT',
+      method: "PUT",
       url: `${host}/forgot-password`,
-      data: email
+      data: email,
     });
-    console.log('response', response)
     return response;
   } catch (error) {
-    console.log(error)
-    return error
+    console.log(error);
+    return error;
   }
 };
 
-export const resetPassword =  async (body) => {
+export const resetPassword = async (body) => {
   try {
     const response = await axios({
-      method: 'PUT',
+      method: "PUT",
       url: `${host}/reset-password`,
-      data: body
+      data: body,
     });
     return response;
   } catch (error) {
-    console.log(error)
-    return error
+    console.log(error);
+    return error;
   }
 };
 //
@@ -104,7 +50,6 @@ export const createAuction = async (token, userId, auction) => {
 
 export const getAuctionById = async (token, id) => {
   try {
-    console.log(token)
     const response = await axios({
       url: `${host}/auctionInformation/${id}`,
       method: "GET",
@@ -238,39 +183,6 @@ export const getFinalizedAuctionsByUser = async (token, user) => {
   }
 };
 
-export const getActiveAuctionsByUser = async (token, user) => {
-  try {
-    const response = await axios({
-      url: `${host}/auctionsActives/${user}`,
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ user }),
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getProviders = async (token) => {
-  try {
-    const response = await axios({
-      url: `${host}/providers/`,
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const postProviders = async (token, body) => {
   try {
     const response = await axios({
@@ -362,7 +274,7 @@ export const chooseWinner = async (token, auctionId, bidId, body) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      data: body
+      data: body,
     });
     if (response) {
       return response;
@@ -373,4 +285,3 @@ export const chooseWinner = async (token, auctionId, bidId, body) => {
   }
 };
 
-export default api;

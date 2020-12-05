@@ -6,7 +6,7 @@ import { getTableSettings, filterData, formatedData } from "./helper";
 import { AuctionTable } from "../../../core/AuctionTable/AuctionTable";
 import { AuctionFilter } from "../../../core/AuctionTable/AuctionFilter.jsx";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { getFinalizedAuctionsByUser } from "../../../api";
+import { getFinalizedAuctionsByUser } from "../../../api/api";
 
 export default class FinalizedAuction extends React.Component {
   constructor(props) {

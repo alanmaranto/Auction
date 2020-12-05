@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { signout } from "../../api";
+import { signout } from "../../api/auth";
 import history from "../../modules/history/history";
 
 import {

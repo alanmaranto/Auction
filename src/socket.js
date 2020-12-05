@@ -1,7 +1,7 @@
 import openSocket from 'socket.io-client';
-import api from './api';
+import { host } from './api/api';
 
-export const socket = openSocket(api.host);
+export const socket = openSocket(host);
 
 export const registerUserIOToken = (userId) => {
   socket.emit('registerUserIOToken', { userId, id: socket.id });

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, Dropdown, Button } from "semantic-ui-react";
-import { getProviders } from "../../../api";
+import { getProviders } from "../../../api/api";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import {
   MActions,
@@ -18,12 +18,12 @@ class AddProviders extends Component {
 
   render() {
     const {
-      providers,
+      providers, // all
       openProviders,
       onCloseProviderModal,
       submitProviders,
-      onSelectProviders,
-      choosedProviders,
+      onSelectProviders, // select from all suppliers and save into temporarl array
+      choosedProviders, // selected providers
     } = this.props;
 
     const providersOptions = providers.map((provider) => ({
@@ -36,6 +36,12 @@ class AddProviders extends Component {
     choosedProviders.forEach((element) => {
       formatChoosedProviders.push(element.invitedProvider._id);
     });
+
+    const renderLabel = (label) => ({
+      color: 'blue',
+      content: label.text,
+      icon: 'check',
+    })
 
     return (
       <div>
@@ -61,6 +67,7 @@ class AddProviders extends Component {
                 onChange={(e, { value }) => {
                   onSelectProviders(value);
                 }}
+                renderLabel={renderLabel}
               />
             </MDescription>
           </MContent>

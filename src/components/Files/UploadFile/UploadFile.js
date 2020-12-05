@@ -3,7 +3,7 @@ import Dropzone from "react-dropzone";
 import { Modal, Button, Dimmer, Loader } from "semantic-ui-react";
 import { useToasts } from 'react-toast-notifications';
 
-import { postFile } from "../../../api";
+import { postFile } from "../../../api/api";
 import { isAuthenticated } from "../../../helpers/authenticate";
 
 import fileIcon from "../../../assets/file-icon.png";
@@ -106,7 +106,7 @@ function UploadFile({ openModal, onClose, setOpenModal, auctionId }) {
       <Modal
         size="tiny"
         className="file-modal"
-        centered={false}
+        centered
         open={openModal}
         onClose={() => onCloseUploadFile()}
       >

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import RunningAuction from "./RunningAuction";
 
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { getRunningAuctionById, posMessage, updateAuction } from "../../../api";
+import { getRunningAuctionById, posMessage, updateAuction } from "../../../api/api";
 import { socket, registerUserIOToken } from "../../../socket";
 
 class RunningAuctionView extends Component {

@@ -9,7 +9,7 @@ import {
   Icon,
   Message,
 } from "semantic-ui-react";
-import { forgotPassword } from "../../api";
+import { forgotPassword } from "../../api/api";
 import { useToasts } from "react-toast-notifications";
 import "./App.css";
 

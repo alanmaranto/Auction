@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
-import { signup } from "../../api";
+import { signup } from "../../api/auth";
 import "./App.css";
 
 const Register = () => {
