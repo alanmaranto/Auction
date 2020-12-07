@@ -13,7 +13,7 @@ export const signup = (user) => {
       return response.json();
     })
     .catch((err) => {
-      console.log(err);
+      return err
     });
 };
 
@@ -30,7 +30,7 @@ export const signin = (user) => {
       return response.json();
     })
     .catch((err) => {
-      console.log(err);
+      return err
     });
 };
 

@@ -5,16 +5,78 @@
   background: linear-gradient(to bottom, #00acee, #1366c4);
 }
 
+.sidebar-image-container {
+  display: flex;
+  justify-content: center;
+  &__logo {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    border: 3px solid #1366c4;
+  }
+}
+
+.sidebar-image-input {
+  max-width: 160px;
+  max-height: 160px;
+  display: flex;
+  justify-content: center;
+  padding-top: 18px;
+  &__upload {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+  }
+  &__label {
+    background-color: #fff;
+    border-radius: 90px;
+    border: dashed 2px #1366c4;
+    color: #1366c4;
+    cursor: pointer;
+    outline: none;
+    width: 130px;
+    height: 125px;
+    position: relative;
+    transition: all 0.2s;
+    vertical-align: middle;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.sidebar-image-container:hover {
+  cursor: pointer;
+}
+
+.sidebar-user-information-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px 0px;
+  color: white;
+  &__name {
+    text-transform: capitalize;
+  }
+  &__email {
+    font-size: 14px;
+  }
+}
+
 .sidebar-header {
   color: white;
   text-align: center;
-  margin-left: 1em;
+  display: flex;
+  &__logo {
+    padding-right: 15px;
+  }
 }
 
 .sidebar-options {
   cursor: pointer;
   align-items: center;
-  padding: 10px 16px 10px 20px;
+  padding: 10px 0px 10px 20px;
   margin-left: 4px;
   display: flex;
   color: white;

@@ -53,7 +53,6 @@ class RunningAuctionView extends Component {
 
   listenMessages = () => {
     socket.on("wellcome", (data) => {
-      console.log("Welcome running auction", data);
     });
     socket.on("newMessage", (data) => {
       const { id: currentAuction } = this.props.match.params;

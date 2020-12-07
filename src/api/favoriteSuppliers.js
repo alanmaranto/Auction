@@ -13,14 +13,12 @@ export const getFavoriteSuppliers = async (token) => {
     });
      return response;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
 
 export const postFavoriteSuppliers = async (token, body) => {
   try {
-    console.log('body', body);
     const response = await axios({
       url: `${host}/favorite-suppliers`,
       method: "POST",
