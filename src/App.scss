@@ -1,16 +1,16 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
-
 html {
   background: linear-gradient(to right, #00acee, #1366c4);
 }
 
 body {
   background: #f0f0f5 !important;
+  font-family: 'Lato' !important;
+  font-size: 16px !important;
 }
 
 body .app {
   background: #f0f0f5 !important;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Lato' !important;
 }
 
 .generalContainer {

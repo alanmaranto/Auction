@@ -10,7 +10,6 @@ export const forgotPassword = async (email) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -24,7 +23,6 @@ export const resetPassword = async (body) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -92,7 +90,7 @@ export const posMessage = async (token, body) => {
       data: body,
     });
   } catch (error) {
-    console.log(error);
+    return error
   }
 };
 
@@ -162,7 +160,7 @@ export const getRunningAuctionById = async (token, id) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error
   }
 };
 
@@ -179,7 +177,7 @@ export const getFinalizedAuctionsByUser = async (token, user) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error
   }
 };
 

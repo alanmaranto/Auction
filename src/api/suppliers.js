@@ -13,6 +13,6 @@ export const getProviders = async (token) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error
   }
 };

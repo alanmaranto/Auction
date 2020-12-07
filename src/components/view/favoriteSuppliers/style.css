@@ -6,7 +6,8 @@
   .favorite-suppliers-card-container__image--delete-icon {
     width: 20px;
     height: 20px;
-    float: right; }
+    float: right;
+    cursor: pointer; }
 
 .favorite-suppliers-card-container__content {
   display: flex;

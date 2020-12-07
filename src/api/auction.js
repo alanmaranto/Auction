@@ -14,6 +14,6 @@ export const getActiveAuctionsByUser = async (token, user) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error
   }
 };
