@@ -41,8 +41,8 @@ const getTableSettingsActiveAuctions = () => {
       sorted: false,
     },
     {
-      name: "minimumPrice",
-      title: "Precio Base",
+      name: "totalItemsPrice",
+      title: "Total",
       sorted: false,
     },
     {
@@ -51,7 +51,7 @@ const getTableSettingsActiveAuctions = () => {
       sorted: false,
     },
     {
-      name: "openingAuction",
+      name: "openingAuctionProjectDate",
       sorted: true,
       title: "Fecha de inicio",
     },
@@ -194,13 +194,13 @@ const formatedData = (dataSource) => {
   const auction = dataSource.map((auction) => ({
     createdAt: auction.createdAt,
     description: auction.description,
-    endingAuction: moment(auction.endingAuction).format(
+    endingAuctionProjectDate: moment(auction.endingAuctionProjectDate).format(
       "MMMM Do YYYY, h:mm:ss a"
     ),
     finalized: auction.finalized,
     minimumBid: `$ ${formatNumber(auction.minimumBid)}`,
-    minimumPrice: `$ ${formatNumber(auction.minimumPrice)}`,
-    openingAuction: moment(auction.openingAuction).format(
+    totalItemsPrice: `$ ${formatNumber(auction.totalItemsPrice)}`,
+    openingAuctionProjectDate: moment(auction.openingAuctionProjectDate).format(
       "MMMM Do YYYY, h:mm:ss a"
     ),
     title: auction.title,

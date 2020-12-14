@@ -29,22 +29,7 @@ export const resetPassword = async (body) => {
 //
 //Auction
 //
-export const createAuction = async (token, userId, auction) => {
-  try {
-    const response = await axios({
-      url: `${host}/auctionInformation/create/${userId}`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      data: auction,
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 export const getAuctionById = async (token, id) => {
   try {

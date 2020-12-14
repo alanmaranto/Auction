@@ -14,7 +14,7 @@ import history from "../../../modules/history/history";
 import es from "date-fns/locale/es";
 import { useToasts } from "react-toast-notifications";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { createAuction } from "../../../api/api";
+import { createAuction } from "../../../api/auction";
 import { getActiveAuctionsByUser } from "../../../api/auction";
 
 import "./style.css";
@@ -59,9 +59,8 @@ const NewAuction = () => {
   };
 
   const fetchActiveAuctions = async () => {
-    let _id = user ? user._id : undefined;
 
-    const response = await getActiveAuctionsByUser(token, _id);
+    const response = await getActiveAuctionsByUser(token);
 
     if (response && response.status === 200) {
       setAuctions(response.data.body);
@@ -72,7 +71,7 @@ const NewAuction = () => {
     e.preventDefault();
     setValues({ ...values, error: "", loading: true });
 
-    createAuction(token, user._id, auction).then((data) => {
+    createAuction(token, auction).then((data) => {
       if (data.error) {
         addToast("Hubo un error al crear la subasta", {
           appearance: "error",
