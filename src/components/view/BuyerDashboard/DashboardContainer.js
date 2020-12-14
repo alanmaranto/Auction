@@ -30,10 +30,9 @@ class BuyerDashboardContainer extends Component {
   };
 
   fetchActiveAuctions = async () => {
-    const { user, token } = isAuthenticated();
-    let _id = user ? user._id : undefined;
+    const { token } = isAuthenticated();
 
-    const response = await getActiveAuctionsByUser(token, _id);
+    const response = await getActiveAuctionsByUser(token);
 
     if (response && response.status === 200) {
       const formatedAuction = formatedData(response.data.body);
