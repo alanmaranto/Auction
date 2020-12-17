@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React from "react";
 import {
   Button,
   Form,
@@ -10,97 +10,20 @@ import {
 } from "semantic-ui-react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { Link } from "react-router-dom";
-import history from "../../../modules/history/history";
-import es from "date-fns/locale/es";
-import { useToasts } from "react-toast-notifications";
-import { isAuthenticated } from "../../../helpers/authenticate";
-import { createAuction } from "../../../api/auction";
-import { getActiveAuctionsByUser } from "../../../api/auction";
 
-import "./style.css";
-import "react-datepicker/dist/react-datepicker.css";
-registerLocale("es", es);
-
-const NewAuction = () => {
-  const { addToast } = useToasts();
-
-  const [openingAuction, setOpeningAuction] = useState("");
-  const [endingAuction, setEndingAuction] = useState("");
-  const [auctions, setAuctions] = useState([]);
-  const [values, setValues] = useState({
-    title: "",
-    description: "",
-    minimunPrice: null,
-    minimumBid: null,
-    finalized: false,
-    error: "",
-    loading: false,
-    redirectToAuction: false,
-    createdAuction: "",
-  });
-
-  const { title, description, minimumBid, minimunPrice } = values;
-
-  const { user, token } = isAuthenticated();
-
-  const auction = {
-    ...values,
-    openingAuction,
-    endingAuction,
-    user: user._id,
-  };
-
-  const onChange = (name) => (e) => {
-    setValues({
-      ...values,
-      error: false,
-      [name]: e.target.value,
-    });
-  };
-
-  const fetchActiveAuctions = async () => {
-
-    const response = await getActiveAuctionsByUser(token);
-
-    if (response && response.status === 200) {
-      setAuctions(response.data.body);
-    }
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setValues({ ...values, error: "", loading: true });
-
-    createAuction(token, auction).then((data) => {
-      if (data.error) {
-        addToast("Hubo un error al crear la subasta", {
-          appearance: "error",
-          autoDismiss: true,
-        });
-        setValues({ ...values, error: data.error });
-      } else {
-        addToast("Subasta creada exitósamente", {
-          appearance: "success",
-          autoDismiss: true,
-        });
-        fetchActiveAuctions();
-        setValues({
-          ...values,
-          title: "",
-          description: "",
-          minimumBid: null,
-          minimunPrice: null,
-          finalized: false,
-          redirectToAuction: true,
-          createdAuction: data.title,
-        });
-        history.push(`/`);
-      }
-    });
-  };
-
-  const newAuctionForm = () => (
-    <Fragment>
+const InvitationFiles = ({
+  values,
+  onSubmit,
+  onChange,
+  openingAuction,
+  setOpeningAuction,
+  endingAuction,
+  setEndingAuction,
+}) => {
+  console.log(values);
+  return (
+    <>
+      <div>InvitationFiles</div>
       <Grid verticalAlign="top" container centered columns={1}>
         <Grid.Column>
           <Header
@@ -120,7 +43,7 @@ const NewAuction = () => {
               <Form.Input
                 placeholder="Introduzca un nombre para la subasta"
                 type="text"
-                value={title}
+                value={values.title}
                 name="title"
                 onChange={onChange("title")}
               />
@@ -128,38 +51,25 @@ const NewAuction = () => {
               <Form.TextArea
                 placeholder="Descripción (Opcional)"
                 type="textarea"
-                value={description}
+                value={values.description}
                 name="title"
                 onChange={onChange("description")}
               />
               <Form.Field label="Precio base" required />
-              <Form.Input
-                placeholder="Es el precio con el que iniciará la subasta"
-                type="number"
-                value={minimunPrice}
-                name="minimumPrice"
-                onChange={onChange("minimumPrice")}
-              />
+              {/*               <Form.Input
+                  placeholder="Es el precio con el que iniciará la subasta"
+                  type="number"
+                  value={minimunPrice}
+                  name="minimumPrice"
+                  onChange={onChange("minimumPrice")}
+                /> */}
               <Form.Field label="Puja mínima recomendada" required />
               <Form.Input
                 placeholder="Es la puja que recomiendas que hagan los proveedores"
                 type="number"
-                value={minimumBid}
+                value={values.minimumBid}
                 name="minimumBid"
                 onChange={onChange("minimumBid")}
-              />
-              <Form.Field label="Fecha de comienzo de la subasta" />
-              <DatePicker
-                placeholderText="Introduzca la fecha de comienzo para la subasta"
-                selected={openingAuction}
-                onChange={(date) => setOpeningAuction(date)}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                timeCaption="time"
-                dateFormat="MMMM d, yyyy h:mm aa"
-                minDate={new Date()}
-                locale="es"
               />
               <Form.Field
                 style={{ paddingTop: "20px" }}
@@ -213,10 +123,8 @@ const NewAuction = () => {
           </Form>
         </Grid.Column>
       </Grid>
-    </Fragment>
+    </>
   );
-
-  return <div>{newAuctionForm()}</div>;
 };
 
-export default NewAuction;
+export default InvitationFiles;

@@ -6,6 +6,7 @@
   background: #aa1219e3 !important;
   color: white !important; }
 
-/* overwritting datepicker class */
-.react-datepicker-wrapper {
-  width: -webkit-fill-available !important; }
+.label-date-title {
+  font-weight: 700;
+  padding-bottom: 10;
+  color: #1366c4; }

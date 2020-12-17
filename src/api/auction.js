@@ -31,5 +31,6 @@ export const createAuction = async (token, auction) => {
     return response;
   } catch (error) {
     console.log(error);
+    return error
   }
 };
