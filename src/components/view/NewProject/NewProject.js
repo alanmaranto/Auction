@@ -1,17 +1,5 @@
-import React, { Fragment, useState, useContext } from "react";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Segment,
-  GridColumn,
-  GridRow,
-  Tab,
-  Icon,
-  Card,
-  Step,
-} from "semantic-ui-react";
+import React, { useState } from "react";
+import { Button, Header, Card, Step } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import history from "../../../modules/history/history";
 import { useToasts } from "react-toast-notifications";
@@ -24,11 +12,14 @@ import ItemsTable from "./ItemsTable";
 
 import "./style.css";
 import "react-datepicker/dist/react-datepicker.css";
+import ProjectDates from "./ProjectDates";
 
 const NewAuction = () => {
   const { addToast } = useToasts();
 
-  const [openingAuctionProjectDate, setOpeningAuctionProjectDate] = useState("");
+  const [openingAuctionProjectDate, setOpeningAuctionProjectDate] = useState(
+    ""
+  );
   const [endingAuctionProjectDate, setEndingAuctionProjectDate] = useState("");
   const [openingRFIDate, setOpeningRFIDate] = useState("");
   const [endingRFIDate, setEndingRFIDate] = useState("");
@@ -51,6 +42,7 @@ const NewAuction = () => {
     error: "",
     redirectToAuction: false,
     createdAuction: "",
+    extensionTime: "",
   });
 
   const { title, description, minimumBid /* minimunPrice */ } = values;
@@ -83,10 +75,15 @@ const NewAuction = () => {
       openingAuctionProjectDate,
       endingAuctionProjectDate,
       isPrivate,
-      visibleDates
+      visibleDates,
     };
 
-    if (!title || !openingAuctionProjectDate || !endingAuctionProjectDate || !minimumBid) {
+    if (
+      !title ||
+      !openingAuctionProjectDate ||
+      !endingAuctionProjectDate ||
+      !minimumBid
+    ) {
       addToast("Debes llenar los campos obligatorios", {
         appearance: "error",
         autoDismiss: true,
@@ -112,106 +109,12 @@ const NewAuction = () => {
     }
   };
 
-  const newAuctionForm = () => (
-    <Fragment>
-      <Grid verticalAlign="top" container centered columns={1}>
-        <Grid.Column>
-          <Header
-            textAlign="center"
-            style={{ color: "#142850", fontSize: "2em" }}
-          >
-            Información general del proyecto
-          </Header>
-          <Form size="large" onSubmit={onSubmit}>
-            <Segment>
-              <Form.Field label="Descripción de la subasta (Opcional)" />
-              <Form.TextArea
-                placeholder="Descripción (Opcional)"
-                type="textarea"
-                value={description}
-                name="title"
-                onChange={onChange("description")}
-              />
-              <Form.Field label="Precio base" required />
-              {/*               <Form.Input
-                placeholder="Es el precio con el que iniciará la subasta"
-                type="number"
-                value={minimunPrice}
-                name="minimumPrice"
-                onChange={onChange("minimumPrice")}
-              /> */}
-              <Form.Field label="Puja mínima recomendada" required />
-              <Form.Input
-                placeholder="Es la puja que recomiendas que hagan los proveedores"
-                type="number"
-                value={minimumBid}
-                name="minimumBid"
-                onChange={onChange("minimumBid")}
-              />
-              <Grid
-                style={{ paddingTop: "20px" }}
-                textAlign="center"
-                columns={2}
-              >
-                <GridRow>
-                  <GridColumn>
-                    <Link to="/">
-                      <Button
-                        fluid
-                        compact
-                        className="button-cancel-new-auction"
-                        size="medium"
-                      >
-                        Cancelar
-                      </Button>
-                    </Link>
-                  </GridColumn>
-                  <GridColumn>
-                    <Button
-                      fluid
-                      compact
-                      className="button-submit-new-auction"
-                      size="medium"
-                    >
-                      Enviar
-                    </Button>
-                  </GridColumn>
-                </GridRow>
-              </Grid>
-            </Segment>
-          </Form>
-        </Grid.Column>
-      </Grid>
-    </Fragment>
-  );
-
   const renderActiveStep = () => {
     switch (currentStep) {
       case 1:
         return (
-          <ItemsTable
-            values={values}
+          <ProjectDates
             onChange={onChange}
-            // nextStep={nextStep}
-            prevStep={prevStep}
-          />
-        );
-      case 2:
-        return (
-          <InvitationFiles
-            values={values}
-            onChange={onChange}
-            nextStep={nextStep}
-            prevStep={prevStep}
-            onSubmit={onSubmit}
-          />
-        );
-      default:
-        return (
-          <Overview
-            values={values}
-            isPrivate={isPrivate}
-            setIsPrivate={setIsPrivate}
             visibleDates={visibleDates}
             setVisibleDates={setVisibleDates}
             openingAuctionProjectDate={openingAuctionProjectDate}
@@ -226,10 +129,28 @@ const NewAuction = () => {
             endingFADate={endingFADate}
             setOpeningFADate={setOpeningFADate}
             setEndingFADate={setEndingFADate}
+            extensionTime={values.extensionTime}
+          />
+        );
+      case 2:
+        return <ItemsTable values={values} onChange={onChange} />;
+      case 3:
+        return (
+          <InvitationFiles
+            values={values}
             onChange={onChange}
-            nextStep={nextStep}
+            onSubmit={onSubmit}
+          />
+        );
+      default:
+        return (
+          <Overview
+            values={values}
+            isPrivate={isPrivate}
+            setIsPrivate={setIsPrivate}
+            onChange={onChange}
             currency={currency}
-            setCurrency={setCurrency}
+            setCurrency={handleChangeCurrency}
           />
         );
     }
@@ -248,6 +169,13 @@ const NewAuction = () => {
         return (
           <div>
             <Button onClick={prevStep}>Regresar </Button>
+            <Button onClick={nextStep}>Guardar y continuar </Button>
+          </div>
+        );
+      case 3:
+        return (
+          <div>
+            <Button onClick={prevStep}>Regresar </Button>
             <Button onClick={onSubmit}>Terminar proyecto </Button>
           </div>
         );
@@ -263,23 +191,31 @@ const NewAuction = () => {
   const steps = [
     {
       key: "Overview",
-      icon: "truck",
-      title: "Overview",
-      description: "Choose your shipping options",
+      icon: "info circle",
+      title: "Información General",
       active: currentStep === 0 ? true : false,
+      description: "Completa la información",
+    },
+    {
+      key: "Dates",
+      active: currentStep === 1 ? true : false,
+      icon: "calendar alternate",
+      description: "Selecciona las fechas",
+      title: "Fechas",
     },
     {
       key: "ItemsTable",
-      active: currentStep === 1 ? true : false,
-      icon: "payment",
-      title: "ItemsTable",
-      description: "Enter billing information",
+      active: currentStep === 2 ? true : false,
+      icon: "unordered list",
+      title: "Artículos a subastar",
+      description: "Elige tus artículos",
     },
     {
       key: "Invitation Providers",
-      icon: "info",
-      title: "Invitation Providers",
-      active: currentStep === 2 ? true : false,
+      icon: "user plus",
+      title: "Invitar Proveedores",
+      active: currentStep === 3 ? true : false,
+      description: "Añade tus proveedores",
     },
   ];
 
@@ -291,19 +227,20 @@ const NewAuction = () => {
     setCurrentStep(currentStep - 1);
   };
 
+  const handleChangeCurrency = (event, { value: currency }) =>
+    setCurrency(currency);
+
   return (
     <>
-      {console.log(currentStep + 1 < steps.length)}
-      {console.log(currentStep)}
       <div>
         <Header textAlign="left" style={{ color: "#142850", fontSize: "2em" }}>
           Información general del proyecto
         </Header>
-        <Step.Group items={steps} />
+        <Step.Group size="mini" fluid stackable="tablet" items={steps} />
       </div>
       <Card fluid>
         <Card.Content>
-          <div style={{ paddingTop: 10 }}>{renderActiveStep()}</div>
+          <div className="new-project-card-content">{renderActiveStep()}</div>
           <div>{renderStepButtons()}</div>
         </Card.Content>
       </Card>

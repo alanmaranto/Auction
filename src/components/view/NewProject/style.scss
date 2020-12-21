@@ -8,8 +8,14 @@
   color: white !important;
 }
 
-.label-date-title {
-  font-weight: 700;
-  padding-bottom: 10;
-  color: #1366c4;
+.project-date-container {
+  &__label-date-title {
+    font-weight: 700;
+    padding-bottom: 10;
+    color: #1366c4;
+  }
+}
+
+.new-project-card-content {
+  padding: 10px 0;
 }
