@@ -8,13 +8,13 @@ const getTableSettings = () => {
       title: "Titulo",
       sorted: false,
     },
-    {
-      name: "minimumPrice",
+/*     {
+      name: "minimunPrice",
       title: "Precio Base",
       sorted: false,
-    },
+    }, */
     {
-      name: "minimumBid",
+      name: "minimunBid",
       title: "Puja mínima",
       sorted: false,
     },
@@ -46,7 +46,7 @@ const getTableSettingsActiveAuctions = () => {
       sorted: false,
     },
     {
-      name: "minimumBid",
+      name: "minimunBid",
       title: "Puja mínima",
       sorted: false,
     },
@@ -82,13 +82,13 @@ const getTableSettingsProviderActiveAuctions = () => {
       sorted: true,
       title: "Fecha de inicio",
     },
-    {
-      name: "minimumPrice",
+/*     {
+      name: "minimunPrice",
       title: "Precio Base",
       sorted: false,
-    },
+    }, */
     {
-      name: "minimumBid",
+      name: "minimunBid",
       title: "Puja mínima",
       sorted: false,
     },
@@ -166,7 +166,7 @@ const filterData = (props) => {
   return { dataSource: {}, dataSourceSize: 0 };
 };
 
-const formatedProviderAuctionData = (dataSource) => {
+/* const formatedProviderAuctionData = (dataSource) => {
   const auction = dataSource.map(({ auctionId }) => {
     return {
     createdAt: auctionId.createdAt,
@@ -177,35 +177,36 @@ const formatedProviderAuctionData = (dataSource) => {
     finalized: auctionId.finalized,
     minimumBid: `$ ${formatNumber(auctionId.minimumBid)}`,
     minimumPrice: `$ ${formatNumber(auctionId.minimumPrice)}`,
-    openingAuction: moment(auctionId.openingAuction).format(
+     openingAuction: moment(auctionId.openingAuction).format(
       "MMMM Do YYYY, h:mm:ss a"
     ),
     title: auctionId.title,
     updatedAt: auctionId.updatedAt,
-    user: auctionId.user.name,
+    user_id: auctionId.user.name,
     __v: auctionId.__v,
     _id: auctionId._id,
     }
   });
   return auction;
-};
+}; */
 
 const formatedData = (dataSource) => {
+  console.log(dataSource)
   const auction = dataSource.map((auction) => ({
     createdAt: auction.createdAt,
     description: auction.description,
-    endingAuctionProjectDate: moment(auction.endingAuctionProjectDate).format(
+/*     endingAuctionProjectDate: moment(auction.endingAuctionProjectDate).format(
       "MMMM Do YYYY, h:mm:ss a"
-    ),
+    ), */
     finalized: auction.finalized,
-    minimumBid: `$ ${formatNumber(auction.minimumBid)}`,
+    minimunBid: `$ ${formatNumber(auction.minimunBid)}`,
     totalItemsPrice: `$ ${formatNumber(auction.totalItemsPrice)}`,
-    openingAuctionProjectDate: moment(auction.openingAuctionProjectDate).format(
+/*     openingAuctionProjectDate: moment(auction.openingAuctionProjectDate).format(
       "MMMM Do YYYY, h:mm:ss a"
-    ),
+    ), */
     title: auction.title,
     updatedAt: auction.updatedAt,
-    user: auction.user,
+    user: auction.user_id,
     __v: auction.__v,
     _id: auction._id,
   }));
@@ -230,5 +231,5 @@ export {
   formatNumber,
   getTableSettingsActiveAuctions,
   getTableSettingsProviderActiveAuctions,
-  formatedProviderAuctionData,
+  // formatedProviderAuctionData,
 };

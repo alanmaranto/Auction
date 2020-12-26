@@ -7,7 +7,7 @@ const BuyerDashboard = React.lazy(() =>
 // const NotFound = React.lazy(() => import("../components/core/404/404NotFound"));
 const Register = React.lazy(() => import("../components/auth/Register"));
 // import Settings = React.lazy(() => import('../components/')) "../components/user/Settings";
-const NewProject = React.lazy(() => import("../components/view/NewProject"));
+const NewProject = React.lazy(() => import("../components/view/newProject"));
 const AuctionView = React.lazy(() =>
   import("../components/view/AuctionView/AuctionContainer")
 );

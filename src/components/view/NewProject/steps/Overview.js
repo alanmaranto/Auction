@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "semantic-ui-react";
-import "./style.css";
+import "../style.css";
 
 const Overview = ({
   values,

@@ -3,7 +3,7 @@ import { Form, Checkbox } from "semantic-ui-react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
-import "./style.css";
+import "../style.css";
 registerLocale("es", es);
 
 const ProjectDates = ({

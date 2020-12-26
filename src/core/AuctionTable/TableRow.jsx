@@ -2,7 +2,13 @@ import React from "react";
 import { Button, Table } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-export const TableRow = ({ dataRow, columns, buttonAction, buttonTitle, color }) => {
+export const TableRow = ({
+  dataRow,
+  columns,
+  buttonAction,
+  buttonTitle,
+  color,
+}) => {
   return (
     <Table.Row>
       {columns &&

@@ -3,7 +3,7 @@ import ProviderDashboard from "./ProviderDashboard";
 import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import {
-  formatedProviderAuctionData,
+  // formatedProviderAuctionData,
   filterData,
 } from "../FinalizedAuctions/helper";
 import { getInvitedAuctionsByProvider } from "../../../api/api";
@@ -24,11 +24,11 @@ class ProviderDashboardContainer extends Component {
   componentDidMount() {
     const { token } = isAuthenticated();
     if (token) {
-      this.fetchAuctions();
+      // this.fetchAuctions();
     }
   }
 
-  fetchAuctions = async () => {
+/*   fetchAuctions = async () => {
     const { token, user } = isAuthenticated();
     let _id = user ? user._id : undefined;
     const response = await getInvitedAuctionsByProvider(token, _id);
@@ -39,7 +39,7 @@ class ProviderDashboardContainer extends Component {
         activeInvitedProviderAuctions: formatedAuction,
       });
     }
-  };
+  }; */
 
   onChangePage = (value) => {
     this.setState({ currentPage: value });

@@ -6,6 +6,7 @@ import {
   postProviders,
   getSelectedProvidersByAuctionId,
 } from "../../../api/api";
+import { postInvitedSuppliers } from '../../../api/invitedSuppliers'
 import { getProviders} from "../../../api/suppliers";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import "moment/locale/es";
@@ -110,7 +111,7 @@ class AuctionContainer extends Component {
       invitedUsers: sendProviders,
     };
 
-    const response = await postProviders(token, data);
+    const response = await postInvitedSuppliers(token, data);
 
     if (response.data.status === 201) {
       this.onCloseProviderModal();

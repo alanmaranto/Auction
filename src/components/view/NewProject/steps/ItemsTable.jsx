@@ -2,7 +2,7 @@ import React from 'react';
 
 const ItemsTable = () => {
     return ( 
-        <div>ItemsTable</div>
+        <div>Tabla</div>
      );
 }
  

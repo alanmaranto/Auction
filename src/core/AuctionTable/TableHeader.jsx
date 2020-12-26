@@ -6,17 +6,15 @@ export function TableHeader(props) {
     <Table.Header>
       <Table.Row>
         {props.columns &&
-        props.columns.map(({ name, title, sorted }) => (
-          <Table.HeaderCell
-            width={1}
-            sorted={sorted ? sorted: null}
-            // onClick={() => props.handleSort(name)}
-          >
-            {
-              title
-            }
+          props.columns.map(({ name, title, sorted }) => (
+            <Table.HeaderCell
+              width={1}
+              sorted={sorted ? sorted : null}
+              // onClick={() => props.handleSort(name)}
+            >
+              {title}
             </Table.HeaderCell>
-        ))}
+          ))}
       </Table.Row>
     </Table.Header>
   );

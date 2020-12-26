@@ -6,13 +6,13 @@ import { useToasts } from "react-toast-notifications";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import { createAuction } from "../../../api/auction";
 import { getActiveAuctionsByUser } from "../../../api/auction";
-import Overview from "./Overview";
-import InvitationFiles from "./InvitationFiles";
-import ItemsTable from "./ItemsTable";
+import Overview from "./steps/Overview";
+import InvitationFiles from "./steps/InvitationFiles";
+import ItemsTable from "./steps/ItemsTable";
+import ProjectDates from "./steps/ProjectDates";
 
 import "./style.css";
 import "react-datepicker/dist/react-datepicker.css";
-import ProjectDates from "./ProjectDates";
 
 const NewAuction = () => {
   const { addToast } = useToasts();
@@ -28,10 +28,11 @@ const NewAuction = () => {
   const [isPrivate, setIsPrivate] = useState(true);
   const [visibleDates, setVisibleDates] = useState(true);
   const [currency, setCurrency] = useState("mxn");
+  const [invitedSuppliers, setInvitedSuppliers] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [auctions, setAuctions] = useState([]);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(2);
   const [values, setValues] = useState({
     title: "",
     identifier: "",
@@ -133,13 +134,15 @@ const NewAuction = () => {
           />
         );
       case 2:
-        return <ItemsTable values={values} onChange={onChange} />;
+        return <ItemsTable />;
       case 3:
         return (
           <InvitationFiles
             values={values}
             onChange={onChange}
             onSubmit={onSubmit}
+            invitedSuppliers={invitedSuppliers}
+            setInvitedSuppliers={setInvitedSuppliers}
           />
         );
       default:
