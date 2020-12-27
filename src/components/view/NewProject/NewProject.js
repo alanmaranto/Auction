@@ -6,7 +6,7 @@ import { isAuthenticated } from "../../../helpers/authenticate";
 import { createAuction } from "../../../api/auction";
 import { getActiveAuctionsByUser } from "../../../api/auction";
 import Overview from "./steps/Overview";
-import InvitationFiles from "./steps/InvitationSuppliers";
+import InvitationSuppliers from "./steps/InvitationSuppliers";
 import ItemsTable from "./steps/ItemsTable";
 import ProjectDates from "./steps/ProjectDates";
 
@@ -136,7 +136,7 @@ const NewAuction = () => {
         return <ItemsTable />;
       case 3:
         return (
-          <InvitationFiles
+          <InvitationSuppliers
             values={values}
             onChange={onChange}
             onSubmit={onSubmit}
