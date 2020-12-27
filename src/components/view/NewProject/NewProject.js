@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Button, Header, Card, Step } from "semantic-ui-react";
-import { Link } from "react-router-dom";
 import history from "../../../modules/history/history";
 import { useToasts } from "react-toast-notifications";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import { createAuction } from "../../../api/auction";
 import { getActiveAuctionsByUser } from "../../../api/auction";
 import Overview from "./steps/Overview";
-import InvitationFiles from "./steps/InvitationFiles";
+import InvitationFiles from "./steps/InvitationSuppliers";
 import ItemsTable from "./steps/ItemsTable";
 import ProjectDates from "./steps/ProjectDates";
 

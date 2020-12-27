@@ -13,6 +13,7 @@ const NoData = ({
   headerText,
   classNameHeader,
   headerConfig,
+  classNameImg,
 }) => {
   return (
     <Fragment>
@@ -28,7 +29,12 @@ const NoData = ({
             >
               <HContent>{title}</HContent>
             </Header>
-            <Image centered size={size} src={NoContent} />
+            <Image
+              centered
+              size={size}
+              src={NoContent}
+              className={classNameImg ? classNameImg : "no-image-class"}
+            />
           </Column>
         </Row>
       </Grid>

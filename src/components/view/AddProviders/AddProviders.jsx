@@ -34,7 +34,7 @@ class AddProviders extends Component {
 
     const formatChoosedProviders = [];
     choosedProviders.forEach((element) => {
-      formatChoosedProviders.push(element.invitedProvider._id);
+      formatChoosedProviders.push(element.invitedProvider?._id);
     });
 
     const renderLabel = (label) => ({

@@ -95,7 +95,7 @@ const Auction = ({
                   <Feed.Summary>
                     {choosedProviders &&
                       choosedProviders.map((provider) => {
-                        return <div>{provider.invitedProvider.name}</div>;
+                        return <div>{provider?.invitedProvider?.name}</div>;
                       })}
                   </Feed.Summary>
                 </Feed.Content>
