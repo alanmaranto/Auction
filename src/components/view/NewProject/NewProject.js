@@ -6,7 +6,7 @@ import { isAuthenticated } from "../../../helpers/authenticate";
 import { createAuction } from "../../../api/auction";
 import { getActiveAuctionsByUser } from "../../../api/auction";
 import Overview from "./steps/Overview";
-import InvitationSuppliers from "./steps/InvitationSuppliers";
+import FileList from "./steps/FileListStep";
 import ItemsTable from "./steps/ItemsTable";
 import ProjectDates from "./steps/ProjectDates";
 
@@ -27,7 +27,6 @@ const NewAuction = () => {
   const [isPrivate, setIsPrivate] = useState(true);
   const [visibleDates, setVisibleDates] = useState(true);
   const [currency, setCurrency] = useState("mxn");
-  const [invitedSuppliers, setInvitedSuppliers] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [auctions, setAuctions] = useState([]);
@@ -134,16 +133,16 @@ const NewAuction = () => {
         );
       case 2:
         return <ItemsTable />;
-      case 3:
-        return (
-          <InvitationSuppliers
-            values={values}
+       case 3:
+         return (
+           <FileList
+/*             values={values}
             onChange={onChange}
             onSubmit={onSubmit}
             invitedSuppliers={invitedSuppliers}
-            setInvitedSuppliers={setInvitedSuppliers}
-          />
-        );
+            setInvitedSuppliers={setInvitedSuppliers} */
+           />
+         );
       default:
         return (
           <Overview
@@ -213,11 +212,11 @@ const NewAuction = () => {
       description: "Elige tus artículos",
     },
     {
-      key: "Invitation Providers",
-      icon: "user plus",
-      title: "Invitar Proveedores",
+      key: "Files Invitation",
+      icon: "file excel",
+      title: "Documentos de invitación",
       active: currentStep === 3 ? true : false,
-      description: "Añade tus proveedores",
+      description: "Agrega documentos necesarios",
     },
   ];
 
