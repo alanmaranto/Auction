@@ -3,7 +3,7 @@ import ProductRow from "./itemTable/ProductRow";
 import SearchBar from "./itemTable/SearchBar";
 import ProductTable from "./itemTable/ProductTable";
 
-const Products = () => {
+/* const Products = () => {
   const [filterText, setFilterText] = useState("");
   const [products, setProducts] = useState([
     {
@@ -35,8 +35,9 @@ const Products = () => {
       category: "",
       qty: 0,
     };
-    products.push(product);
-    setProducts(products);
+
+    const hola = products.push(product);
+    setProducts(hola);
   };
 
   const handleProductTable = (evt) => {
@@ -59,31 +60,37 @@ const Products = () => {
 
   return (
     <div>
-      <SearchBar filterText={filterText} onUserInput={handleUserInput} />
+      <SearchBar
+        filterText={filterText}
+        onUserInput={handleUserInput}
+        onRowAdd={handleAddEvent}
+      />
       <ProductTable
         onProductTableUpdate={handleProductTable}
-        onRowAdd={handleAddEvent}
+        // onRowAdd={handleAddEvent}
         onRowDel={handleRowDel}
         products={products}
         filterText={filterText}
       />
     </div>
   );
-};
+}; */
 
-/* class Products extends React.Component {
+  class Products extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {};
     this.state.filterText = "";
-    this.state.products = [
+    this.state.items = [
       {
         id: +new Date() + Math.floor(Math.random() * 999999).toString(36),
-        category: "",
-        price: "",
-        qty: 0,
+        code: "",
         name: "",
+        unitMeasure: "",
+        quantity: null,
+        basePrice: null,
+        totalItemsPrice: null,
       },
     ];
   }
@@ -92,33 +99,35 @@ const Products = () => {
     this.setState({ filterText });
   }
 
-  handleRowDel(product) {
-    var index = this.state.products.indexOf(product);
-    this.state.products.splice(index, 1);
-    this.setState(this.state.products);
+  handleRowDel(row) {
+    var index = this.state.items.indexOf(row);
+    this.state.items.splice(index, 1);
+    this.setState(this.state.items);
   }
 
   handleAddEvent(evt) {
     var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-    var product = {
-      id: id,
+    var item = {
+      id,
+      code: "",
       name: "",
-      price: "",
-      category: "",
-      qty: 0,
+      unitMeasure: "",
+      quantity: null,
+      basePrice: null,
+      totalItemsPrice: null,
     };
-    this.state.products.push(product);
-    this.setState(this.state.products);
+    this.state.items.push(item);
+    this.setState(this.state.items);
   }
 
-  handleProductTable(evt) {
+  handleItemsTable(evt) {
     var item = {
       id: evt.target.id,
       name: evt.target.name,
       value: evt.target.value,
     };
-    var products = this.state.products.slice();
-    var newProducts = products.map(function (product) {
+    var products = this.state.items.slice();
+    var newItems = products.map(function (product) {
       for (var key in product) {
         if (key == item.name && product.id == item.id) {
           product[key] = item.value;
@@ -126,7 +135,7 @@ const Products = () => {
       }
       return product;
     });
-    this.setState({ products: newProducts });
+    this.setState({ items: newItems });
   }
   render() {
     return (
@@ -134,12 +143,12 @@ const Products = () => {
         <SearchBar
           filterText={this.state.filterText}
           onUserInput={this.handleUserInput.bind(this)}
+          onRowAdd={this.handleAddEvent.bind(this)}
         />
         <ProductTable
-          onProductTableUpdate={this.handleProductTable.bind(this)}
-          onRowAdd={this.handleAddEvent.bind(this)}
+          onProductTableUpdate={this.handleItemsTable.bind(this)}
           onRowDel={this.handleRowDel.bind(this)}
-          products={this.state.products}
+          items={this.state.items}
           filterText={this.state.filterText}
         />
       </div>
@@ -147,5 +156,5 @@ const Products = () => {
   }
 }
 
-*/
+
 export default Products;

@@ -1,45 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Dropzone from "react-dropzone";
 import { Button, Dimmer } from "semantic-ui-react";
 import { useToasts } from "react-toast-notifications";
 import Loader from "../../../../core/Loader";
 import { isAuthenticated } from "../../../../helpers/authenticate";
-// import FileList from "./fileList/FileList";
 
 import fileIcon from "../../../../assets/file-icon.png";
 import deleteIcon from "../../../../assets/delete-icon.png";
 
+import "react-dropzone-uploader/dist/styles.css";
 import "./style.css";
 
-function FileList({ files, onRemove }) {
-  console.log("object", files);
-  const fileNames = files.map((file) => file.name);
-  return (
-    <div className="upload-file-list">
-      {fileNames.map((file, index) => (
-        <div key={`img-${file}`} className="upload-file-item">
-          <img src={fileIcon} alt="file-icon" className="file-icon" />
-          {file}
-          <img
-            src={deleteIcon}
-            alt="delete-icon"
-            className="delete-icon"
-            onClick={onRemove(index)}
-          />
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function FileListStep() {
-  const [fileList, setFileList] = useState([]);
+const FileListStep = () => {
+  const [fileList, setFileList] = useState([{ inicial: true}]);
   const [isUploading, setIsUploading] = useState(false);
 
   const onAddFile = (files) => {
-    console.log("files", files);
     const currentFileList = [...fileList];
-    console.log("cFL", currentFileList);
 
     if (Array.isArray(files)) {
       files.forEach((file) => {
@@ -47,11 +24,10 @@ function FileListStep() {
         currentFileList.push(file);
       });
     } else {
-      console.log("else");
       currentFileList.push(files);
     }
+    console.log("setting archivos", files);
     setFileList(currentFileList);
-    console.log("ultimo", fileList);
   };
 
   const onRemoveFile = (index) => {
@@ -60,6 +36,8 @@ function FileListStep() {
 
     setFileList(currentFileList);
   };
+
+  const fileNames = fileList && fileList.map((file) => file.name);
 
   return (
     <div>
@@ -81,16 +59,27 @@ function FileListStep() {
               </div>
             )}
           </Dropzone>
-          {fileList.length > 0 && (
-            <>
-              <h2>Hola</h2>
-              <FileList files={fileList} onRemove={onRemoveFile} />
-            </>
-          )}
+          <div className="upload-file-list">
+            {console.log("render file list", fileList)}
+            {fileList.map((file, index) => {
+              return (
+                <div key={`img-${file}`} className="upload-file-item">
+                  <img src={fileIcon} alt="file-icon" className="file-icon" />
+                  {file}
+                  <img
+                    src={deleteIcon}
+                    alt="delete-icon"
+                    className="delete-icon"
+                    onClick={onRemoveFile(index)}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>
   );
-}
+};
 
 export default FileListStep;

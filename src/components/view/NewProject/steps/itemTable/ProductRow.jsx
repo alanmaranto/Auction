@@ -1,13 +1,30 @@
 import React from "react";
+import { Table } from "semantic-ui-react";
 import EditableCell from "./EditableCell";
+import TableCell from "./TableCell";
 
-const ProductRow = ({ product, onProductTableUpdate, onDeleteEvent, key }) => {
+const ProductRow = ({
+  product,
+  onProductTableUpdate,
+  onDeleteEvent,
+  index,
+  key,
+}) => {
   const deleteRow = () => {
     onDeleteEvent(product);
   };
 
   return (
-    <tr className="eachRow">
+    <Table.Row>
+      <TableCell name={index} />
+      <EditableCell
+        onProductTableUpdate={onProductTableUpdate}
+        cellData={{
+          type: "code",
+          value: product.code,
+          id: product.id,
+        }}
+      />
       <EditableCell
         onProductTableUpdate={onProductTableUpdate}
         cellData={{
@@ -19,36 +36,35 @@ const ProductRow = ({ product, onProductTableUpdate, onDeleteEvent, key }) => {
       <EditableCell
         onProductTableUpdate={onProductTableUpdate}
         cellData={{
-          type: "price",
-          value: product.price,
+          type: "unitMeasure",
+          value: product.unitMeasure,
           id: product.id,
         }}
       />
       <EditableCell
         onProductTableUpdate={onProductTableUpdate}
         cellData={{
-          type: "qty",
-          value: product.qty,
+          type: "quantity",
+          value: product.quantity,
           id: product.id,
         }}
       />
       <EditableCell
         onProductTableUpdate={onProductTableUpdate}
         cellData={{
-          type: "category",
-          value: product.category,
+          type: "basePrice",
+          value: product.basePrice,
           id: product.id,
         }}
       />
-      <td className="del-cell">
-        <input
-          type="button"
-          onClick={deleteRow}
-          value="X"
-          className="del-btn"
-        />
-      </td>
-    </tr>
+      <TableCell name="Aqui va el total" />
+      <TableCell
+        buttonAction={deleteRow}
+        color="blue"
+        size="small"
+        icon="delete"
+      />
+    </Table.Row>
   );
 };
 

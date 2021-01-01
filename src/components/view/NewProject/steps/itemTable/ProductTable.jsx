@@ -1,49 +1,82 @@
 import React from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Icon, Input, Grid } from "semantic-ui-react";
 import ProductRow from "./ProductRow";
+import { TableHeader } from "../../../../../core/AuctionTable/TableHeader";
 
 const ProductTable = ({
   onProductTableUpdate,
-  onRowAdd,
   onRowDel,
-  products,
+  items,
   filterText,
 }) => {
-  const productRow = products.map((product) => {
-    console.log(product);
-    if (product.name.indexOf(filterText) === -1) {
+  const itemRow = items.map((item, index) => {
+    console.log(item);
+    console.log("index", index);
+    if (item.name.indexOf(filterText) === -1) {
       return;
     }
     return (
       <ProductRow
-        product={product}
+        product={item}
         onProductTableUpdate={onProductTableUpdate}
         onDeleteEvent={onRowDel}
-        key={product.id}
+        key={item.id}
+        index={index}
       />
     );
   });
-  return (
-    <div>
-      <button
-        type="button"
-        onClick={onRowAdd}
-        className="btn btn-success pull-right"
-      >
-        Add
-      </button>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>price</th>
-            <th>quantity</th>
-            <th>category</th>
-          </tr>
-        </thead>
 
-        <tbody>{productRow}</tbody>
-      </table>
+  const itemsHeader = [
+    {
+      name: "id",
+      title: "#",
+      sorted: false,
+    },
+    {
+      name: "code",
+      title: "Código",
+      sorted: false,
+    },
+    {
+      name: "name",
+      title: "Artículo",
+      sorted: false,
+    },
+    {
+      name: "unitMeasure",
+      title: "Unidad de medida",
+      sorted: false,
+    },
+    {
+      name: "quantity",
+      title: "Cantidad",
+      sorted: false,
+    },
+    {
+      name: "basePrice",
+      title: "Precio base",
+      sorted: false,
+    },
+    {
+      name: "totalItemsPrice",
+      title: "Total",
+      sorted: false,
+      buttonActions: true,
+    },
+    {
+      name: "",
+      title: "",
+      sorted: false,
+      buttonActions: true,
+    },
+  ];
+
+  return (
+    <div className="items-table-container">
+      <Table compact color="blue" size="small">
+        <TableHeader columns={itemsHeader} />
+        <Table.Body>{itemRow}</Table.Body>
+      </Table>
     </div>
   );
 };
