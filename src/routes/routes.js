@@ -7,7 +7,7 @@ const BuyerDashboard = React.lazy(() =>
 // const NotFound = React.lazy(() => import("../components/core/404/404NotFound"));
 const Register = React.lazy(() => import("../components/auth/Register"));
 // import Settings = React.lazy(() => import('../components/')) "../components/user/Settings";
-const NewAuction = React.lazy(() => import("../components/view/NewAuction"));
+const NewProject = React.lazy(() => import("../components/view/newProject"));
 const AuctionView = React.lazy(() =>
   import("../components/view/AuctionView/AuctionContainer")
 );
@@ -99,10 +99,10 @@ export const generalRoutes = {
     showInNavbar: true,
     role: "buyer",
   },
-  NEW_AUCTION: {
+  NEW_PROJECT: {
     path: "/create/auction",
-    component: NewAuction,
-    term: "newAuction",
+    component: NewProject,
+    term: "newProject",
     showSidebar: true,
     showInNavbar: true,
     role: "buyer",
