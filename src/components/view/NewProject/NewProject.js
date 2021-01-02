@@ -194,6 +194,20 @@ const NewAuction = () => {
         autoDismiss: true,
       });
     } else {
+      // Instancear new formdata
+      // const requestBody = new FormData();
+
+      // Agregar los valores del objeto y enviarlo en el formdata
+      // requestBody.append("source", source);
+
+      // Recorrer los files y hacer un append hacia el form data
+      /*
+      fileList.forEach((file) => {
+        requestBody.append("files", file);
+      });
+      */
+
+      // Enviar el formdata en vez del auction
       const response = await createAuction(token, auction);
 
       if (response.status === 201) {
