@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Input } from "semantic-ui-react";
 
-const EditableCell = ({ cellData, onProductTableUpdate }) => {
+const EditableCell = ({ cellData, handleItemsTable }) => {
   return (
     <Table.Cell>
       <Input
@@ -9,7 +9,7 @@ const EditableCell = ({ cellData, onProductTableUpdate }) => {
         name={cellData.type}
         id={cellData.id}
         value={cellData.value}
-        onChange={onProductTableUpdate}
+        onChange={handleItemsTable}
         size="mini"
       />
     </Table.Cell>

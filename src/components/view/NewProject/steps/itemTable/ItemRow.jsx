@@ -4,60 +4,60 @@ import EditableCell from "./EditableCell";
 import TableCell from "./TableCell";
 
 const ProductRow = ({
-  product,
-  onProductTableUpdate,
-  onDeleteEvent,
+  item,
+  handleItemsTable,
+  handleRowDel,
   index,
   key,
 }) => {
   const deleteRow = () => {
-    onDeleteEvent(product);
+    handleRowDel(item);
   };
 
   return (
     <Table.Row>
-      <TableCell name={index} />
+      <TableCell index={index} />
       <EditableCell
-        onProductTableUpdate={onProductTableUpdate}
+        handleItemsTable={handleItemsTable}
         cellData={{
           type: "code",
-          value: product.code,
-          id: product.id,
+          value: item.code,
+          id: item.id,
         }}
       />
       <EditableCell
-        onProductTableUpdate={onProductTableUpdate}
+        handleItemsTable={handleItemsTable}
         cellData={{
           type: "name",
-          value: product.name,
-          id: product.id,
+          value: item.name,
+          id: item.id,
         }}
       />
       <EditableCell
-        onProductTableUpdate={onProductTableUpdate}
+        handleItemsTable={handleItemsTable}
         cellData={{
           type: "unitMeasure",
-          value: product.unitMeasure,
-          id: product.id,
+          value: item.unitMeasure,
+          id: item.id,
         }}
       />
       <EditableCell
-        onProductTableUpdate={onProductTableUpdate}
+        handleItemsTable={handleItemsTable}
         cellData={{
           type: "quantity",
-          value: product.quantity,
-          id: product.id,
+          value: item.quantity,
+          id: item.id,
         }}
       />
       <EditableCell
-        onProductTableUpdate={onProductTableUpdate}
+        handleItemsTable={handleItemsTable}
         cellData={{
           type: "basePrice",
-          value: product.basePrice,
-          id: product.id,
+          value: item.basePrice,
+          id: item.id,
         }}
       />
-      <TableCell name="Aqui va el total" />
+      <Table.Cell>{item.quantity * item.basePrice}</Table.Cell>
       <TableCell
         buttonAction={deleteRow}
         color="blue"

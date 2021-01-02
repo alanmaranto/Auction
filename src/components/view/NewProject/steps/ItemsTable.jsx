@@ -1,82 +1,40 @@
-import React, { useState } from "react";
-import ProductRow from "./itemTable/ProductRow";
+import React from "react";
+import { Statistic } from "semantic-ui-react";
 import SearchBar from "./itemTable/SearchBar";
-import ProductTable from "./itemTable/ProductTable";
+import ItemTable from "./itemTable/ItemTable";
 
-/* const Products = () => {
-  const [filterText, setFilterText] = useState("");
-  const [products, setProducts] = useState([
-    {
-      id: +new Date() + Math.floor(Math.random() * 999999).toString(36),
-      category: "",
-      price: "",
-      qty: 0,
-      name: "",
-    },
-  ]);
-
-  const handleUserInput = (filterText) => {
-    setFilterText(filterText);
-  };
-
-  const handleRowDel = (product) => {
-    const index = products.indexOf(product);
-    products.splice(index, 1);
-    setProducts(products);
-  };
-
-  const handleAddEvent = (evt) => {
-    console.log("s");
-    const id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-    const product = {
-      id,
-      name: "",
-      price: "",
-      category: "",
-      qty: 0,
-    };
-
-    const hola = products.push(product);
-    setProducts(hola);
-  };
-
-  const handleProductTable = (evt) => {
-    const item = {
-      id: evt.target.id,
-      name: evt.target.name,
-      value: evt.target.value,
-    };
-    const productsSlice = products.slice();
-    const newProducts = productsSlice.map((product) => {
-      for (var key in product) {
-        if (key == item.name && product.id == item.id) {
-          product[key] = item.value;
-        }
-      }
-      return product;
-    });
-    setProducts(newProducts);
-  };
-
+const ItemsTableContainer = ({
+  filterText,
+  items,
+  handleUserInput,
+  handleRowDel,
+  handleAddRow,
+  handleItemsTable,
+  totalItemsPrice,
+  currency
+}) => {
   return (
     <div>
       <SearchBar
         filterText={filterText}
         onUserInput={handleUserInput}
-        onRowAdd={handleAddEvent}
+        handleAddRow={handleAddRow}
       />
-      <ProductTable
-        onProductTableUpdate={handleProductTable}
-        // onRowAdd={handleAddEvent}
-        onRowDel={handleRowDel}
-        products={products}
+      <ItemTable
+        handleItemsTable={handleItemsTable}
+        handleRowDel={handleRowDel}
+        items={items}
         filterText={filterText}
       />
+      <Statistic horizontal size="mini" color="blue">
+        <Statistic.Label style={{ paddingRight: 10}}>Total de la subasta</Statistic.Label>
+        <Statistic.Value>{totalItemsPrice} {currency}</Statistic.Value>
+      </Statistic>
     </div>
   );
-}; */
+};
 
-  class Products extends React.Component {
+/* class ItemsTable extends React.Component {
   constructor(props) {
     super(props);
 
@@ -155,6 +113,6 @@ import ProductTable from "./itemTable/ProductTable";
     );
   }
 }
+ */
 
-
-export default Products;
+export default ItemsTableContainer;

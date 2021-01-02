@@ -16,10 +16,27 @@ import "react-datepicker/dist/react-datepicker.css";
 const NewAuction = () => {
   const { addToast } = useToasts();
 
-  const [openingAuctionProjectDate, setOpeningAuctionProjectDate] = useState(
+  // Step 1 - Overview
+  const [loading, setLoading] = useState(false);
+  const [auctions, setAuctions] = useState([]);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [source, setSource] = useState("PROJECT");
+  const [values, setValues] = useState({
+    title: "",
+    identifier: "",
+    description: "",
+    minimumBid: null,
+    finalized: false,
+    extensionTime: "",
+  });
+
+  // Step 2 - Dates
+  const [openingRealTimeAuctionDate, setOpeningRealTimeAuctionDate] = useState(
     ""
   );
-  const [endingAuctionProjectDate, setEndingAuctionProjectDate] = useState("");
+  const [endingRealTimeAuctionDate, setEndingRealTimeAuctionDate] = useState(
+    ""
+  );
   const [openingRFIDate, setOpeningRFIDate] = useState("");
   const [endingRFIDate, setEndingRFIDate] = useState("");
   const [openingFADate, setOpeningFADate] = useState("");
@@ -28,24 +45,105 @@ const NewAuction = () => {
   const [visibleDates, setVisibleDates] = useState(true);
   const [currency, setCurrency] = useState("mxn");
 
-  const [loading, setLoading] = useState(false);
-  const [auctions, setAuctions] = useState([]);
-  const [currentStep, setCurrentStep] = useState(2);
-  const [values, setValues] = useState({
-    title: "",
-    identifier: "",
-    description: "",
-    // minimunPrice: null,
-    minimumBid: null,
-    finalized: false,
-    error: "",
-    redirectToAuction: false,
-    createdAuction: "",
-    extensionTime: "",
-  });
+  // Step 3 - Items
+  const [filterText, setFilterText] = useState("");
+  const [items, setItems] = useState([
+    {
+      id: +new Date() + Math.floor(Math.random() * 999999).toString(36),
+      code: "",
+      name: "",
+      unitMeasure: "",
+      quantity: null,
+      basePrice: null,
+      totalPrice: null,
+    },
+  ]);
+  const [totalItemsPrice, setTotalItemsPrice] = useState(5500);
 
-  const { title, description, minimumBid /* minimunPrice */ } = values;
+  // Step 4 - Files
+  const [fileList, setFileList] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const { title, description, minimumBid } = values;
   const { token } = isAuthenticated();
+
+  const handleUserInput = (filterText) => {
+    setFilterText(filterText);
+  };
+
+  const handleRowDel = (item) => {
+    const index = items.indexOf(item);
+    items.splice(index, 1);
+    setItems(items);
+  };
+
+  const handleAddRow = (evt) => {
+    console.log("s");
+    const id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
+    const itemRow = {
+      id,
+      code: "",
+      name: "",
+      unitMeasure: "",
+      quantity: null,
+      basePrice: null,
+      totalPrice: null,
+    };
+
+    items.push(itemRow);
+    setItems(items);
+  };
+
+  const handleItemsTable = (evt) => {
+    const eventItem = {
+      id: evt.target.id,
+      name: evt.target.name,
+      value: evt.target.value,
+    };
+    const itemsSlice = items.slice();
+    console.log(itemsSlice);
+    const newItems = itemsSlice.map((item) => {
+      for (var key in item) {
+        if (key === eventItem.name && item.id === eventItem.id) {
+          // Aqui va logica para evaluar quantity * basePrice y set
+          // the item.totalPrice con ese valor
+          if (eventItem.name === "quantity") {
+            console.log("SETEAR TOTALPRICE");
+          }
+          if (eventItem.name === "basePrice") {
+            console.log("SETEAR TOTALPRICE");
+          }
+          item[key] = eventItem.value;
+        }
+      }
+      return item;
+    });
+    setItems(newItems);
+  };
+
+  const onAddFile = (files) => {
+    const currentFileList = [...fileList];
+
+    if (Array.isArray(files)) {
+      files.forEach((file) => {
+        console.log("file", file);
+        currentFileList.push(file);
+      });
+    } else {
+      currentFileList.push(files);
+    }
+    console.log("setting archivos", files);
+    setFileList(currentFileList);
+  };
+
+  const onRemoveFile = (index) => {
+    const currentFileList = [...fileList];
+    currentFileList.splice(index, 1);
+
+    setFileList(currentFileList);
+  };
+
+  const fileNames = fileList && fileList.map((file) => file.name);
 
   const onChange = (name) => (e) => {
     setValues({
@@ -65,22 +163,30 @@ const NewAuction = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setValues({ ...values, error: "" });
-
     setLoading(true);
 
     const auction = {
       ...values,
-      openingAuctionProjectDate,
-      endingAuctionProjectDate,
+      openingRealTimeAuctionDate,
+      endingRealTimeAuctionDate,
+      openingRFIDate,
+      endingRFIDate,
+      openingFADate,
+      endingFADate,
       isPrivate,
       visibleDates,
+      currency,
+      totalItemsPrice,
+      items,
+      source,
     };
+
+    console.log("submitAuction", auction);
 
     if (
       !title ||
-      !openingAuctionProjectDate ||
-      !endingAuctionProjectDate ||
+      !openingRealTimeAuctionDate ||
+      !endingRealTimeAuctionDate ||
       !minimumBid
     ) {
       addToast("Debes llenar los campos obligatorios", {
@@ -116,10 +222,6 @@ const NewAuction = () => {
             onChange={onChange}
             visibleDates={visibleDates}
             setVisibleDates={setVisibleDates}
-            openingAuctionProjectDate={openingAuctionProjectDate}
-            endingAuctionProjectDate={endingAuctionProjectDate}
-            setOpeningAuctionProjectDate={setOpeningAuctionProjectDate}
-            setEndingAuctionProjectDate={setEndingAuctionProjectDate}
             openingRFIDate={openingRFIDate}
             endingRFIDate={endingRFIDate}
             setOpeningRFIDate={setOpeningRFIDate}
@@ -128,21 +230,37 @@ const NewAuction = () => {
             endingFADate={endingFADate}
             setOpeningFADate={setOpeningFADate}
             setEndingFADate={setEndingFADate}
-            extensionTime={values.extensionTime}
+            openingRealTimeAuctionDate={openingRealTimeAuctionDate}
+            endingRealTimeAuctionDate={endingRealTimeAuctionDate}
+            setOpeningRealTimeAuctionDate={setOpeningRealTimeAuctionDate}
+            setEndingRealTimeAuctionDate={setEndingRealTimeAuctionDate}
           />
         );
       case 2:
-        return <ItemsTable />;
-       case 3:
-         return (
-           <FileList
-/*             values={values}
-            onChange={onChange}
-            onSubmit={onSubmit}
-            invitedSuppliers={invitedSuppliers}
-            setInvitedSuppliers={setInvitedSuppliers} */
-           />
-         );
+        return (
+          <ItemsTable
+            filterText={filterText}
+            items={items}
+            handleUserInput={handleUserInput}
+            handleRowDel={handleRowDel}
+            handleAddRow={handleAddRow}
+            handleItemsTable={handleItemsTable}
+            totalItemsPrice={totalItemsPrice}
+            currency={currency}
+          />
+        );
+      case 3:
+        return (
+          <FileList
+            fileList={fileList}
+            setFileList={setFileList}
+            isUploading={isUploading}
+            setIsUploading={setIsUploading}
+            onAddFile={onAddFile}
+            onRemoveFile={onRemoveFile}
+            // fileNames={fileNames}
+          />
+        );
       default:
         return (
           <Overview

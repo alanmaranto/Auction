@@ -11,8 +11,15 @@ import deleteIcon from "../../../../assets/delete-icon.png";
 import "react-dropzone-uploader/dist/styles.css";
 import "./style.css";
 
-const FileListStep = () => {
-  const [fileList, setFileList] = useState([{ inicial: true}]);
+const FileListStep = ({
+  fileList,
+  setFileList,
+  isUploading,
+  setIsUploading,
+  onAddFile,
+  onRemoveFile,
+}) => {
+  /*   const [fileList, setFileList] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
 
   const onAddFile = (files) => {
@@ -37,6 +44,8 @@ const FileListStep = () => {
     setFileList(currentFileList);
   };
 
+   */
+
   const fileNames = fileList && fileList.map((file) => file.name);
 
   return (
@@ -60,8 +69,7 @@ const FileListStep = () => {
             )}
           </Dropzone>
           <div className="upload-file-list">
-            {console.log("render file list", fileList)}
-            {fileList.map((file, index) => {
+            {fileNames.map((file, index) => {
               return (
                 <div key={`img-${file}`} className="upload-file-item">
                   <img src={fileIcon} alt="file-icon" className="file-icon" />

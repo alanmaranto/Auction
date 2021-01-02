@@ -10,7 +10,6 @@ const Overview = ({
   currency,
   setCurrency,
 }) => {
-
   return (
     <Form>
       <Form.Group inline>
@@ -52,25 +51,46 @@ const Overview = ({
           onChange={onChange("description")}
         />
       </Form.Group>
+      <Form.Group>
+        <Form.Input
+          label="Mejora mínima (%)"
+          placeholder=""
+          width={4}
+          type="text"
+          value={values.minimumBid}
+          name="minimumBid"
+          required
+          onChange={onChange("minimumBid")}
+        />
+        <Form.Input
+          width={4}
+          label="Tiempo de prórroga (min)"
+          placeholder=""
+          type="number"
+          value={values.extensionTime}
+          required
+          onChange={onChange("extensionTime")}
+        />
+      </Form.Group>
 
       <label>Moneda</label>
       <Form.Group>
         <Form.Radio
           label="MXN"
-          value="mxn"
-          checked={currency === "mxn"}
+          value="MXN"
+          checked={currency === "MXN"}
           onChange={setCurrency}
         />
         <Form.Radio
           label="USD"
-          value="usd"
-          checked={currency === "usd"}
+          value="USD"
+          checked={currency === "USD"}
           onChange={setCurrency}
         />
         <Form.Radio
           label="EUR"
-          value="eur"
-          checked={currency === "eur"}
+          value="EUR"
+          checked={currency === "EUR"}
           onChange={setCurrency}
         />
       </Form.Group>

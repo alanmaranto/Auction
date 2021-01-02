@@ -1,7 +1,15 @@
 import React from "react";
 import { Table, Button } from "semantic-ui-react";
 
-const TableCell = ({ name, buttonAction, color, size, buttonTitle, icon }) => {
+const TableCell = ({
+  index,
+  name,
+  buttonAction,
+  color,
+  size,
+  buttonTitle,
+  icon,
+}) => {
   return (
     <Table.Cell>
       {buttonAction ? (
@@ -13,10 +21,10 @@ const TableCell = ({ name, buttonAction, color, size, buttonTitle, icon }) => {
         >
           {buttonTitle}
         </Button>
-      ) : name === 0 ? (
-        name + 1
+      ) : index > 0 ? (
+        index + 1
       ) : (
-        name + 1
+        1
       )}
     </Table.Cell>
   );

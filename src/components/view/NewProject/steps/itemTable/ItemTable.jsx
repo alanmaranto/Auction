@@ -1,25 +1,23 @@
 import React from "react";
 import { Table, Icon, Input, Grid } from "semantic-ui-react";
-import ProductRow from "./ProductRow";
+import ItemRow from "./ItemRow";
 import { TableHeader } from "../../../../../core/AuctionTable/TableHeader";
 
-const ProductTable = ({
-  onProductTableUpdate,
-  onRowDel,
+const ItemsTable = ({
+  handleItemsTable,
+  handleRowDel,
   items,
   filterText,
 }) => {
   const itemRow = items.map((item, index) => {
-    console.log(item);
-    console.log("index", index);
     if (item.name.indexOf(filterText) === -1) {
       return;
     }
     return (
-      <ProductRow
-        product={item}
-        onProductTableUpdate={onProductTableUpdate}
-        onDeleteEvent={onRowDel}
+      <ItemRow
+        item={item}
+        handleItemsTable={handleItemsTable}
+        handleRowDel={handleRowDel}
         key={item.id}
         index={index}
       />
@@ -58,7 +56,7 @@ const ProductTable = ({
       sorted: false,
     },
     {
-      name: "totalItemsPrice",
+      name: "totalPrice",
       title: "Total",
       sorted: false,
       buttonActions: true,
@@ -81,4 +79,4 @@ const ProductTable = ({
   );
 };
 
-export default ProductTable;
+export default ItemsTable;

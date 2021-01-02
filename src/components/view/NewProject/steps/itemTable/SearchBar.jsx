@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Button } from "semantic-ui-react";
 import "./style.css";
 
-const SearchBar = ({ onUserInput, filterText, onRowAdd }) => {
+const SearchBar = ({ onUserInput, filterText, handleAddRow }) => {
   const inputRef = useRef(null);
 
   const handleChange = () => {
@@ -22,7 +22,7 @@ const SearchBar = ({ onUserInput, filterText, onRowAdd }) => {
       <div style={{ paddingLeft: 10}}>
         <Button
           content="Agregar artículo"
-          onClick={() => onRowAdd()}
+          onClick={handleAddRow}
           size="small"
         />
       </div>

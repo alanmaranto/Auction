@@ -9,10 +9,6 @@ registerLocale("es", es);
 const ProjectDates = ({
   visibleDates,
   setVisibleDates,
-  openingAuctionProjectDate,
-  setOpeningAuctionProjectDate,
-  endingAuctionProjectDate,
-  setEndingAuctionProjectDate,
   openingRFIDate,
   setOpeningRFIDate,
   endingRFIDate,
@@ -21,9 +17,10 @@ const ProjectDates = ({
   setOpeningFADate,
   endingFADate,
   setEndingFADate,
-  extensionTime,
-  setExtensionTime,
-  onChange,
+  openingRealTimeAuctionDate,
+  setOpeningRealTimeAuctionDate,
+  endingRealTimeAuctionDate,
+  setEndingRealTimeAuctionDate,
 }) => {
   return (
     <Form className="project-date-container">
@@ -124,8 +121,8 @@ const ProjectDates = ({
       >
         <label>Inicia</label>
         <DatePicker
-          selected={openingAuctionProjectDate}
-          onChange={(date) => setOpeningAuctionProjectDate(date)}
+          selected={openingRealTimeAuctionDate}
+          onChange={(date) => setOpeningRealTimeAuctionDate(date)}
           showTimeSelect
           timeFormat="HH:mm"
           timeIntervals={15}
@@ -138,8 +135,8 @@ const ProjectDates = ({
         />
         <label>Termina</label>
         <DatePicker
-          selected={endingAuctionProjectDate}
-          onChange={(date) => setEndingAuctionProjectDate(date)}
+          selected={endingRealTimeAuctionDate}
+          onChange={(date) => setEndingRealTimeAuctionDate(date)}
           showTimeSelect
           timeFormat="HH:mm"
           timeIntervals={15}
@@ -152,21 +149,12 @@ const ProjectDates = ({
         />
       </Form.Field>
       <Form.Group>
-        <Form.Input
-          width={4}
-          label="Tiempo de prórroga (min)"
-          placeholder="5,10,15...etc"
-          type="number"
-          value={extensionTime}
-          required
-          onChange={onChange("extensionTime")}
-        />
         <Checkbox
           label="¿Fechas visibles?"
           value={visibleDates}
           checked={visibleDates ? true : false}
           onChange={() => setVisibleDates(!visibleDates)}
-          style={{ paddingLeft: 50}}
+          style={{ paddingLeft: 10}}
         />
       </Form.Group>
     </Form>
