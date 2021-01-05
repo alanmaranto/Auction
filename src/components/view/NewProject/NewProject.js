@@ -92,30 +92,6 @@ const NewAuction = () => {
     setTotalItemsPrice(calculateTotalItemsPrice);
   };
 
-  const onAddFile = (files) => {
-    const currentFileList = [...fileList];
-
-    if (Array.isArray(files)) {
-      files.forEach((file) => {
-        console.log("file", file);
-        currentFileList.push(file);
-      });
-    } else {
-      currentFileList.push(files);
-    }
-    console.log("setting archivos", files);
-    setFileList(currentFileList);
-  };
-
-  const onRemoveFile = (index) => {
-    const currentFileList = [...fileList];
-    currentFileList.splice(index, 1);
-
-    setFileList(currentFileList);
-  };
-
-  const fileNames = fileList && fileList.map((file) => file.name);
-
   const onChange = (name) => (e) => {
     setValues({
       ...values,
@@ -241,9 +217,6 @@ const NewAuction = () => {
             setFileList={setFileList}
             isUploading={isUploading}
             setIsUploading={setIsUploading}
-            onAddFile={onAddFile}
-            onRemoveFile={onRemoveFile}
-            // fileNames={fileNames}
           />
         );
       default:
@@ -334,6 +307,11 @@ const NewAuction = () => {
   const handleChangeCurrency = (event, { value: currency }) =>
     setCurrency(currency);
 
+  console.log("------------------");
+  console.log("Datos en el satate:");
+  console.log("fileList:", fileList);
+  console.log("tabla:", items);
+  console.log("------------------");
   return (
     <>
       <div>
