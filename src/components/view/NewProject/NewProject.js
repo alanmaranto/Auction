@@ -203,8 +203,7 @@ const NewAuction = () => {
             filterText={filterText}
             items={[...items]}
             handleUserInput={handleUserInput}
-            handleRowDel={setItems}
-            handleAddRow={setItems}
+            setItems={setItems}
             handleItemsTable={handleItemsTable}
             totalItemsPrice={totalItemsPrice}
             currency={currency}

@@ -7,11 +7,10 @@ const ItemsTableContainer = ({
   filterText,
   items,
   handleUserInput,
-  handleRowDel,
-  handleAddRow,
   handleItemsTable,
   totalItemsPrice,
   currency, 
+  setItems,
 }) => {
   return (
     <div>
@@ -19,11 +18,11 @@ const ItemsTableContainer = ({
         filterText={filterText}
         onUserInput={handleUserInput}
         items={items}
-        handleAddRow={handleAddRow}
+        handleAddRow={setItems}
       />
       <ItemTable
         handleItemsTable={handleItemsTable}
-        handleRowDel={handleRowDel}
+        handleRowDel={setItems}
         items={items}
         filterText={filterText} 
       />
