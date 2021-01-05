@@ -4,18 +4,15 @@ import EditableCell from "./EditableCell";
 import TableCell from "./TableCell";
 
 const ProductRow = ({
+  items,
   item,
   handleItemsTable,
   handleRowDel,
   index,
-  key,
+  id,
 }) => {
-  const deleteRow = () => {
-    handleRowDel(item);
-  };
-
   return (
-    <Table.Row>
+    <Table.Row key={id}>
       <TableCell index={index} />
       <EditableCell
         handleItemsTable={handleItemsTable}
@@ -57,9 +54,15 @@ const ProductRow = ({
           id: item.id,
         }}
       />
-      <Table.Cell>{item.quantity * item.basePrice}</Table.Cell>
+      <Table.Cell>{item.totalPrice || 0}</Table.Cell>
       <TableCell
-        buttonAction={deleteRow}
+        buttonAction={() => {
+          if (items) {
+            const index = items.indexOf(item);
+            items.splice(index, 1);
+            handleRowDel(items);
+          }
+        }}
         color="blue"
         size="small"
         icon="delete"

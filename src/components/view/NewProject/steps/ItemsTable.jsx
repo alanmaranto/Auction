@@ -11,24 +11,29 @@ const ItemsTableContainer = ({
   handleAddRow,
   handleItemsTable,
   totalItemsPrice,
-  currency
+  currency, 
 }) => {
   return (
     <div>
       <SearchBar
         filterText={filterText}
         onUserInput={handleUserInput}
+        items={items}
         handleAddRow={handleAddRow}
       />
       <ItemTable
         handleItemsTable={handleItemsTable}
         handleRowDel={handleRowDel}
         items={items}
-        filterText={filterText}
+        filterText={filterText} 
       />
       <Statistic horizontal size="mini" color="blue">
-        <Statistic.Label style={{ paddingRight: 10}}>Total de la subasta</Statistic.Label>
-        <Statistic.Value>{totalItemsPrice} {currency}</Statistic.Value>
+        <Statistic.Label style={{ paddingRight: 10 }}>
+          Total de la subasta
+        </Statistic.Label>
+        <Statistic.Value>
+          {totalItemsPrice} {currency}
+        </Statistic.Value>
       </Statistic>
     </div>
   );

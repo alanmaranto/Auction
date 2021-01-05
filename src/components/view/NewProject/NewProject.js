@@ -58,7 +58,7 @@ const NewAuction = () => {
       totalPrice: null,
     },
   ]);
-  const [totalItemsPrice, setTotalItemsPrice] = useState(5500);
+  const [totalItemsPrice, setTotalItemsPrice] = useState(0);
 
   // Step 4 - Files
   const [fileList, setFileList] = useState([]);
@@ -71,54 +71,25 @@ const NewAuction = () => {
     setFilterText(filterText);
   };
 
-  const handleRowDel = (item) => {
-    const index = items.indexOf(item);
-    items.splice(index, 1);
-    setItems(items);
-  };
-
-  const handleAddRow = (evt) => {
-    console.log("s");
-    const id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-    const itemRow = {
-      id,
-      code: "",
-      name: "",
-      unitMeasure: "",
-      quantity: null,
-      basePrice: null,
-      totalPrice: null,
-    };
-
-    items.push(itemRow);
-    setItems(items);
-  };
-
   const handleItemsTable = (evt) => {
-    const eventItem = {
-      id: evt.target.id,
-      name: evt.target.name,
-      value: evt.target.value,
-    };
-    const itemsSlice = items.slice();
-    console.log(itemsSlice);
-    const newItems = itemsSlice.map((item) => {
-      for (var key in item) {
-        if (key === eventItem.name && item.id === eventItem.id) {
-          // Aqui va logica para evaluar quantity * basePrice y set
-          // the item.totalPrice con ese valor
-          if (eventItem.name === "quantity") {
-            console.log("SETEAR TOTALPRICE");
-          }
-          if (eventItem.name === "basePrice") {
-            console.log("SETEAR TOTALPRICE");
-          }
-          item[key] = eventItem.value;
+    const { id, name, value } = evt.target || {};
+    let calculateTotalItemsPrice = 0;
+
+    const newItems = [...items].map((item) => {
+      if (item.id === id) {
+        item[name] = value;
+        if (["basePrice", "quantity"].includes(name)) {
+          item.totalPrice = (item.basePrice || 0) * (item.quantity || 0);
         }
+      }
+      if (["basePrice", "quantity"].includes(name)) {
+        calculateTotalItemsPrice +=
+          (item.basePrice || 0) * (item.quantity || 0);
       }
       return item;
     });
     setItems(newItems);
+    setTotalItemsPrice(calculateTotalItemsPrice);
   };
 
   const onAddFile = (files) => {
@@ -254,10 +225,10 @@ const NewAuction = () => {
         return (
           <ItemsTable
             filterText={filterText}
-            items={items}
+            items={[...items]}
             handleUserInput={handleUserInput}
-            handleRowDel={handleRowDel}
-            handleAddRow={handleAddRow}
+            handleRowDel={setItems}
+            handleAddRow={setItems}
             handleItemsTable={handleItemsTable}
             totalItemsPrice={totalItemsPrice}
             currency={currency}
