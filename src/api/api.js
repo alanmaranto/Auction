@@ -30,7 +30,6 @@ export const resetPassword = async (body) => {
 //Auction
 //
 
-
 export const getAuctionById = async (token, id) => {
   try {
     const response = await axios({
@@ -75,7 +74,7 @@ export const posMessage = async (token, body) => {
       data: body,
     });
   } catch (error) {
-    return error
+    return error;
   }
 };
 
@@ -145,7 +144,7 @@ export const getRunningAuctionById = async (token, id) => {
     });
     return response;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
@@ -162,11 +161,9 @@ export const getFinalizedAuctionsByUser = async (token, user) => {
     });
     return response;
   } catch (error) {
-    return error
+    return error;
   }
 };
-
-
 
 export const getSelectedProvidersByAuctionId = async (token, auctionId) => {
   try {
@@ -177,27 +174,6 @@ export const getSelectedProvidersByAuctionId = async (token, auctionId) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    });
-    if (response) {
-      return response;
-    }
-    return response.data.error;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getInvitedAuctionsByProvider = async (token, userId) => {
-  try {
-    const response = await axios({
-      url: `${host}/auctions-provider`,
-      method: "GET",
-      headers: {
-        ["x-user-id"]: userId,
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: userId,
     });
     if (response) {
       return response;
@@ -249,4 +225,3 @@ export const chooseWinner = async (token, auctionId, bidId, body) => {
     console.log(error);
   }
 };
-

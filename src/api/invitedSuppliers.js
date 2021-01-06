@@ -20,3 +20,22 @@ export const postInvitedSuppliers = async (token, body) => {
     console.log(error);
   }
 };
+
+export const getInvitedAuctionsBySupplier = async (token) => {
+  try {
+    const response = await axios({
+      url: `${host}/invited-auctions`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response) {
+      return response;
+    }
+    return response.data.error;
+  } catch (error) {
+    console.log(error);
+  }
+};

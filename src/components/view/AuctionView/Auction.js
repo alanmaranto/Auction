@@ -55,8 +55,8 @@ const Auction = ({
   choosedProviders,
   onSelectProviders,
 }) => {
-  const { title, description, _id, openingAuction } = auction;
-  const operation = new Date(openingAuction).getTime();
+  const { title, description, _id, openingRealTimeAuctionDate } = auction;
+  const operation = new Date(openingRealTimeAuctionDate).getTime();
 
   const showInvitedProviders = (
     providers,

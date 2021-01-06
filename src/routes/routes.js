@@ -4,9 +4,7 @@ const Login = React.lazy(() => import("../components/auth/Login"));
 const BuyerDashboard = React.lazy(() =>
   import("../components/view/BuyerDashboard/DashboardContainer")
 );
-// const NotFound = React.lazy(() => import("../components/core/404/404NotFound"));
 const Register = React.lazy(() => import("../components/auth/Register"));
-// import Settings = React.lazy(() => import('../components/')) "../components/user/Settings";
 const NewProject = React.lazy(() => import("../components/view/newProject"));
 const AuctionView = React.lazy(() =>
   import("../components/view/AuctionView/AuctionContainer")
@@ -14,16 +12,12 @@ const AuctionView = React.lazy(() =>
 const RunningAuctionView = React.lazy(() =>
   import("../components/view/RunningAuctionView")
 );
-// import AdminRoutes = React.lazy(() => import('../components/')) "./AdminRoutes";
-const BuyersRoutes = React.lazy(() => import("./BuyersRoutes"));
-const ProvidersRoutes = React.lazy(() => import("./ProvidersRoutes"));
 const FinalizedAuction = React.lazy(() =>
   import("../components/view/FinalizedAuctions")
 );
 const SupplierDashboard = React.lazy(() =>
   import("../components/view/ProviderDashboard")
 );
-// import WonAuctionsView = React.lazy(() => import('../components/')) '../components/view/WonAuctions/WonAuctionsView'
 const ChooseWinnerView = React.lazy(() =>
   import("../components/view/ChooseWinner/ChooseWinnerView")
 );
@@ -34,7 +28,12 @@ const ForgotPassword = React.lazy(() =>
 const ResetPassword = React.lazy(() =>
   import("../components/auth/ResetPassword")
 );
-const FavoriteSuppliers = React.lazy(() => import ('../components/view/favoriteSuppliers'))
+const FavoriteSuppliers = React.lazy(() =>
+  import("../components/view/favoriteSuppliers")
+);
+const InvitationsSuppliers = React.lazy(() =>
+  import ("../components/supplier/invitations/Invitations")
+)
 
 export const generalRoutes = {
   LOGIN: {
@@ -83,7 +82,7 @@ export const generalRoutes = {
     term: "resetPassword",
     role: "general",
   },
-   CHOOSE_WINNER: {
+  CHOOSE_WINNER: {
     path: "/winner/auction/:id",
     component: ChooseWinnerView,
     term: "chooseWinner",
@@ -124,11 +123,19 @@ export const generalRoutes = {
     role: "supplier",
   },
   FAVORITE_SUPPLIERS: {
-    path: '/favorite-suppliers',
+    path: "/favorite-suppliers",
     component: FavoriteSuppliers,
-    term: 'favoriteSuppliers',
+    term: "favoriteSuppliers",
     showSidebar: true,
     showInNavbar: true,
-    role: 'buyer'
+    role: "buyer",
+  },
+  INVITATIONS_SUPPLIERS : {
+    path: "/invitations",
+    component: InvitationsSuppliers,
+    term: "invitationsSuppliers",
+    showSidebar: true,
+    showInNavbar: true,
+    role: "supplier",
   }
 };
