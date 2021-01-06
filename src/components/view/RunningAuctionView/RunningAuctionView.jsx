@@ -86,6 +86,7 @@ class RunningAuctionView extends Component {
   render() {
     const { auction, message, lastMessage } = this.state;
     const { user } = isAuthenticated();
+
     return (
       <RunningAuction
         title={auction.title}
@@ -96,7 +97,7 @@ class RunningAuctionView extends Component {
         role={user.role}
         onSubmit={this.onSubmit}
         lastMessage={lastMessage}
-        endingAuction={auction.endingAuction}
+        endingAuction={auction.endingRealTimeAuctionDate}
         onFinalizedAuction={this.onFinalizedAuction}
       />
     );
