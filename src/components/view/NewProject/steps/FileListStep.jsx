@@ -19,35 +19,6 @@ const FileListStep = ({
   onAddFile,
   onRemoveFile,
 }) => {
-  /*   const [fileList, setFileList] = useState([]);
-  const [isUploading, setIsUploading] = useState(false);
-
-  const onAddFile = (files) => {
-    const currentFileList = [...fileList];
-
-    if (Array.isArray(files)) {
-      files.forEach((file) => {
-        console.log("file", file);
-        currentFileList.push(file);
-      });
-    } else {
-      currentFileList.push(files);
-    }
-    console.log("setting archivos", files);
-    setFileList(currentFileList);
-  };
-
-  const onRemoveFile = (index) => {
-    const currentFileList = [...fileList];
-    currentFileList.splice(index, 1);
-
-    setFileList(currentFileList);
-  };
-
-   */
-
-  const fileNames = fileList && fileList.map((file) => file.name);
-
   return (
     <div>
       {isUploading ? (
@@ -56,7 +27,18 @@ const FileListStep = ({
         </Dimmer>
       ) : (
         <div className="file-step-container">
-          <Dropzone onDrop={onAddFile}>
+          <Dropzone
+            onDrop={(files) => {
+              const currentFileList = [...fileList];
+              if (Array.isArray(files)) {
+                files.forEach((file) => {
+                  currentFileList.push(file);
+                });
+              } else {
+              }
+              setFileList(currentFileList);
+            }}
+          >
             {({ getRootProps, getInputProps }) => (
               <div
                 {...getRootProps({
@@ -69,20 +51,32 @@ const FileListStep = ({
             )}
           </Dropzone>
           <div className="upload-file-list">
-            {fileNames.map((file, index) => {
-              return (
-                <div key={`img-${file}`} className="upload-file-item">
-                  <img src={fileIcon} alt="file-icon" className="file-icon" />
-                  {file}
-                  <img
-                    src={deleteIcon}
-                    alt="delete-icon"
-                    className="delete-icon"
-                    onClick={onRemoveFile(index)}
-                  />
-                </div>
-              );
-            })}
+            {fileList
+              ? fileList.map(({ name: fileName }, index) => {
+                  return (
+                    <div key={`img-${fileName}`} className="upload-file-item">
+                      <img
+                        src={fileIcon}
+                        alt="file-icon"
+                        className="file-icon"
+                        style={{ width: "20px" }}
+                      />
+                      {fileName}
+                      <img
+                        src={deleteIcon}
+                        alt="delete-icon"
+                        className="delete-icon"
+                        onClick={() => {
+                          const currentFileList = [...fileList];
+                          currentFileList.splice(index, 1);
+                          setFileList(currentFileList);
+                        }}
+                        style={{ width: "20px" }}
+                      />
+                    </div>
+                  );
+                })
+              : []}
           </div>
         </div>
       )}
