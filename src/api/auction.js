@@ -7,7 +7,7 @@ export const getActiveAuctionsByUser = async (token) => {
       url: `${host}/active-auctions`,
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
     });
