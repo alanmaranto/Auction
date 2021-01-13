@@ -1,0 +1,6 @@
+.custom-table td {
+  padding-bottom: 5px !important;
+  padding-top: 5px !important; }
+
+.custom-table .ui.button {
+  padding: 10px 10px; }

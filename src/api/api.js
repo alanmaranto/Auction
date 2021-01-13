@@ -30,7 +30,6 @@ export const resetPassword = async (body) => {
 //Auction
 //
 
-
 export const getAuctionById = async (token, id) => {
   try {
     const response = await axios({
@@ -75,7 +74,7 @@ export const posMessage = async (token, body) => {
       data: body,
     });
   } catch (error) {
-    return error
+    return error;
   }
 };
 
@@ -145,7 +144,7 @@ export const getRunningAuctionById = async (token, id) => {
     });
     return response;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
@@ -162,11 +161,9 @@ export const getFinalizedAuctionsByUser = async (token, user) => {
     });
     return response;
   } catch (error) {
-    return error
+    return error;
   }
 };
-
-
 
 export const getSelectedProvidersByAuctionId = async (token, auctionId) => {
   try {
@@ -250,3 +247,56 @@ export const chooseWinner = async (token, auctionId, bidId, body) => {
   }
 };
 
+/**
+ * Auction config
+ */
+export const getAuctionInfo = async (token, id) => {
+  try {
+    const response = await axios({
+      url: `${host}/auction/${id}/info`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMissingSuppliersByAuction = async (token, id) => {
+  try {
+    const response = await axios({
+      url: `${host}/auction/${id}/missing-suppliers`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const inviteSupplier = async (token, id, userId) => {
+  try {
+    const response = await axios({
+      url: `${host}/auction/${id}/supplier`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        userId,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
