@@ -300,3 +300,45 @@ export const inviteSupplier = async (token, id, userId) => {
     return error;
   }
 };
+
+export const putRejectSupplier = async (token, options) => {
+  try {
+    const { auctionId } = options;
+    const response = await axios({
+      url: `${host}/auction/${auctionId}/supplier-reject`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        userId: options.userId,
+        invitationId: options.invitationId,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const putAcceptSupplier = async (token, options) => {
+  try {
+    const { auctionId } = options;
+    const response = await axios({
+      url: `${host}/auction/${auctionId}/supplier-accept`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        userId: options.userId,
+        invitationId: options.invitationId,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

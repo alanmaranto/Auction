@@ -8,7 +8,7 @@ export const TableRow = ({ dataRow, columns }) => {
       {columns &&
         columns.map(({ name, renderData, width }) => {
           return (
-            <Table.Cell negative={dataRow.negative || false} >
+            <Table.Cell negative={dataRow.negative || false}>
               {renderData ? renderData(dataRow) : dataRow[name]}
             </Table.Cell>
           );

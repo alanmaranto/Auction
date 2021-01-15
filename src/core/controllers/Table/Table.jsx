@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Table, Pagination } from "semantic-ui-react";
+import { Table, Pagination , Menu, Icon} from "semantic-ui-react";
 
 import { PageSizeSelect } from "./PageSizeSelect.jsx";
 import { TableRow } from "./TableRow.jsx";
@@ -27,8 +27,8 @@ const CoreTable = (props) => {
 
   if (!dataSource) {
     return <React.Fragment />;
-  } 
-  
+  }
+
   return (
     <>
       {pageSelector ? (
@@ -37,9 +37,15 @@ const CoreTable = (props) => {
         []
       )}
       {title}
-      <Table color={colorTable || "blue"} className="custom-table">
-        <TableHeader columns={columns} />
-        <Table.Body>
+      <Table
+        size="small"
+        compact
+        fixed
+        color={colorTable || "blue"}
+        className="custom-table" 
+      >
+        <TableHeader columns={columns}  />
+        <Table.Body colSpan="16">
           {dataSource.map((rowElement, index) => (
             <TableRow
               key={index}
@@ -51,16 +57,21 @@ const CoreTable = (props) => {
             />
           ))}
         </Table.Body>
-        <Table.Footer>
+        <Table.Footer >
           <Table.Row>
-            <Table.HeaderCell>
-              <Pagination
-                totalPages={totalPages}
-                activePage={currentPage}
-                onPageChange={(event, data) => {
-                  onChangePage(data.activePage);
-                }}
-              />
+            <Table.HeaderCell colSpan="6" >
+              <Menu floated="right" pagination>
+                <Menu.Item as="a" icon>
+                  <Icon name="chevron left" />
+                </Menu.Item>
+                <Menu.Item as="a">1</Menu.Item>
+                <Menu.Item as="a">2</Menu.Item>
+                <Menu.Item as="a">3</Menu.Item>
+                <Menu.Item as="a">4</Menu.Item>
+                <Menu.Item as="a" icon>
+                  <Icon name="chevron right" />
+                </Menu.Item>
+              </Menu>
             </Table.HeaderCell>
           </Table.Row>
         </Table.Footer>

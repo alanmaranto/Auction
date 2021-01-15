@@ -1,18 +1,18 @@
 import React from "react";
 import moment from "moment";
-import { Label, Button } from "semantic-ui-react";
+import { Label, Button, Icon, Popup } from "semantic-ui-react";
 
-const rfiColumns = [
+const rfiColumns = ({ onHandleInvitation }) => [
   {
     id: "1",
     name: "userName",
     title: "Invitado",
     renderData: (dataRow) => {
-      const { userName, status, userId } = dataRow || {};
+      const { userName, status } = dataRow || {};
       if (status === "rejected") {
         return (
           <div>
-            <Label color="red" ribbon>
+            <Label color="orange" ribbon>
               Rejected
             </Label>
             <div>{userName}</div>
@@ -49,8 +49,8 @@ const rfiColumns = [
               ? ""
               : {
                   send: "",
-                  accepted: "green",
-                  rejected: "red",
+                  accepted: "teal",
+                  rejected: "orange",
                 }[invitationStatus]
           }
           horizontal
@@ -71,15 +71,63 @@ const rfiColumns = [
     title: "Documentos",
     renderData: (dataRow) => {
       const { invitationStatus, status } = dataRow || {};
-      const sendDocuments = true;
-
-      if (invitationStatus !== "send" && status !== "rejected")
-        return <Button primary>Enviar</Button>;
+      if (invitationStatus !== "sent" && status !== "rejected")
+        return <Button color="blue">Enviar</Button>;
       return "-";
     },
     width: 3,
   },
-  { id: "5", name: "readedDocuments", title: "Status de documentos", width: 5 },
+  {
+    id: "5",
+    name: "readedDocuments",
+    title: "Status de documentos",
+    width: 2,
+    renderData: (dataRow) => {
+      return "Leidos";
+    },
+  },
+  {
+    id: "6",
+    name: "actions",
+    title: "Acciones",
+    width: 3,
+    renderData: (dataRow) => {
+      const { userId, invitationId, status } = dataRow || {};
+      if (["rejected", "accepted"].includes(status)) {
+        return [];
+      }
+      return (
+        <>
+          <Popup
+            content="Rechazar usuario"
+            trigger={
+              <Button
+                icon
+                onClick={() => {
+                  onHandleInvitation({ userId, invitationId }, true);
+                }}
+              >
+                <Icon name="user times" color="red" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Aprobar usuario"
+            trigger={
+              <Button
+                icon
+                onClick={() => {
+                  onHandleInvitation({ userId, invitationId }, false);
+                }}
+              >
+                <Icon name="user plus" color="teal" />
+              </Button>
+            }
+          />
+        </>
+      );
+    },
+  },
 ];
 
 export default rfiColumns;

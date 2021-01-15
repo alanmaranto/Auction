@@ -1,21 +1,35 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Container, Header, Grid, Button, Feed, Icon } from "semantic-ui-react";
 import { Table } from "../../../../../core/controllers";
 // import { getSteps } from "./helper";
 import rfiColumns from "./rfiColumns";
+import { useInvitedSupplier } from "./UseInvitedSuppliers";
 
-// import "./style.css";
-const headerInfo = {
-  RFI: { title: "Invitaciones" },
-};
+const SuppliersTable = ({ fetch, providers, auctionId }) => {
+  const { rejectSupplier, acceptSupplier } = useInvitedSupplier();
 
-const SuppliersTable = ({ auctionStep, title, description, providers }) => {
-  const { title: tableTitle } = headerInfo[auctionStep] || {};
+  const onHandleInvitation = async (data, reject) => {
+    try {
+      let result = reject
+        ? await rejectSupplier({
+            auctionId,
+            ...data,
+          })
+        : await acceptSupplier({
+            auctionId,
+            ...data,
+          });
+      if (result) {
+        fetch();
+      }
+    } catch (error) {}
+  };
 
   return (
     <Table
-      title={""}
-      columns={rfiColumns}
+      columns={rfiColumns({
+        onHandleInvitation,
+      })}
       dataSource={
         providers
           ? providers.map((provider) => {
