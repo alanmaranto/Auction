@@ -78,21 +78,25 @@ const getTableSettingsProviderActiveAuctions = () => {
       sorted: false,
     },
     {
-      name: "openingAuction",
+      name: "openingAuctionProjectDate",
       sorted: true,
       title: "Fecha de inicio",
     },
-    {
+/*     {
       name: "minimumPrice",
       title: "Precio Base",
       sorted: false,
-    },
+    }, */
     {
-      name: "minimunBid",
+      name: "minimumBid",
       title: "Puja mínima",
       sorted: false,
     },
-
+    {
+      name: "totalItemsPrice",
+      title: "Total",
+      sorted: false,
+    },
     {
       name: "winner",
       sorted: true,
@@ -178,7 +182,7 @@ const formatedProviderAuctionData = (dataSource) => {
  */ finalized:
         auctionId.finalized,
       minimumBid: `$ ${formatNumber(auctionId.minimumBid)}`,
-      minimumPrice: `$ ${formatNumber(auctionId.totalItemsPrice)}`,
+      totalItemsPrice: `$ ${formatNumber(auctionId.totalItemsPrice)}`,
       /*      openingAuction: moment(auctionId.openingAuction).format(
       "MMMM Do YYYY, h:mm:ss a"
     ),
