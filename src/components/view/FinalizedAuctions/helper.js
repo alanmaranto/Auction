@@ -14,7 +14,7 @@ const getTableSettings = () => {
       sorted: false,
     },
     {
-      name: "minimunBid",
+      name: "minimumBid",
       title: "Puja mínima",
       sorted: false,
     },
@@ -51,7 +51,7 @@ const getTableSettingsActiveAuctions = () => {
       sorted: false,
     },
     {
-      name: "openingAuctionProjectDate",
+      name: "openingRealTimeAuctionDate",
       sorted: true,
       title: "Fecha de inicio",
     },

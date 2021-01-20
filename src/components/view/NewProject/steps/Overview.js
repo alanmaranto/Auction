@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "semantic-ui-react";
+import { Form, Checkbox } from "semantic-ui-react";
 import "../style.css";
 
 const Overview = ({
@@ -9,6 +9,8 @@ const Overview = ({
   setIsPrivate,
   currency,
   setCurrency,
+  isOpenAuction,
+  setIsOpenAuction
 }) => {
   return (
     <Form>
@@ -92,6 +94,15 @@ const Overview = ({
           value="EUR"
           checked={currency === "EUR"}
           onChange={setCurrency}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Checkbox
+          label="¿Es subasta abierta?"
+          value={isOpenAuction}
+          checked={isOpenAuction ? true : false}
+          onChange={() => setIsOpenAuction(!isOpenAuction)}
+          style={{ paddingLeft: 10}}
         />
       </Form.Group>
     </Form>

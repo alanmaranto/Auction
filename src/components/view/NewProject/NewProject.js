@@ -9,6 +9,7 @@ import Overview from "./steps/Overview";
 import FileList from "./steps/FileListStep";
 import ItemsTable from "./steps/ItemsTable";
 import ProjectDates from "./steps/ProjectDates";
+import { getSteps } from './steps'
 
 import "./style.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,8 +20,10 @@ const NewAuction = () => {
   // Step 1 - Overview
   const [loading, setLoading] = useState(false);
   const [auctions, setAuctions] = useState([]);
+  const [fileType, setFileType] = useState('BUYER');
+  const [auctionStep, setAuctionStep] = useState('PROJECT');
   const [currentStep, setCurrentStep] = useState(0);
-  const [source, setSource] = useState("PROJECT");
+  const [isOpenAuction, setIsOpenAuction] = useState(true);
   const [values, setValues] = useState({
     title: "",
     identifier: "",
@@ -29,7 +32,6 @@ const NewAuction = () => {
     finalized: false,
     extensionTime: "",
   });
-
   // Step 2 - Dates
   const [openingRealTimeAuctionDate, setOpeningRealTimeAuctionDate] = useState(
     ""
@@ -42,9 +44,8 @@ const NewAuction = () => {
   const [openingFADate, setOpeningFADate] = useState("");
   const [endingFADate, setEndingFADate] = useState("");
   const [isPrivate, setIsPrivate] = useState(true);
-  const [visibleDates, setVisibleDates] = useState(true);
-  const [currency, setCurrency] = useState("mxn");
-
+  const [visibleDates, setVisibleDates] = useState(false);
+  const [currency, setCurrency] = useState("MXN");
   // Step 3 - Items
   const [filterText, setFilterText] = useState("");
   const [items, setItems] = useState([
@@ -58,92 +59,45 @@ const NewAuction = () => {
       totalPrice: null,
     },
   ]);
-  const [totalItemsPrice, setTotalItemsPrice] = useState(5500);
-
+  const [totalItemsPrice, setTotalItemsPrice] = useState(0);
   // Step 4 - Files
   const [fileList, setFileList] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
 
-  const { title, description, minimumBid } = values;
+  const {
+    title,
+    description,
+    minimumBid,
+    identifier,
+    finalized,
+    extensionTime,
+  } = values;
   const { token } = isAuthenticated();
 
   const handleUserInput = (filterText) => {
     setFilterText(filterText);
   };
 
-  const handleRowDel = (item) => {
-    const index = items.indexOf(item);
-    items.splice(index, 1);
-    setItems(items);
-  };
-
-  const handleAddRow = (evt) => {
-    console.log("s");
-    const id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-    const itemRow = {
-      id,
-      code: "",
-      name: "",
-      unitMeasure: "",
-      quantity: null,
-      basePrice: null,
-      totalPrice: null,
-    };
-
-    items.push(itemRow);
-    setItems(items);
-  };
-
   const handleItemsTable = (evt) => {
-    const eventItem = {
-      id: evt.target.id,
-      name: evt.target.name,
-      value: evt.target.value,
-    };
-    const itemsSlice = items.slice();
-    console.log(itemsSlice);
-    const newItems = itemsSlice.map((item) => {
-      for (var key in item) {
-        if (key === eventItem.name && item.id === eventItem.id) {
-          // Aqui va logica para evaluar quantity * basePrice y set
-          // the item.totalPrice con ese valor
-          if (eventItem.name === "quantity") {
-            console.log("SETEAR TOTALPRICE");
-          }
-          if (eventItem.name === "basePrice") {
-            console.log("SETEAR TOTALPRICE");
-          }
-          item[key] = eventItem.value;
+    const { id, name, value } = evt.target || {};
+    let calculateTotalItemsPrice = 0;
+
+    const newItems = [...items].map((item) => {
+      if (item.id === id) {
+        item[name] = value;
+        if (["basePrice", "quantity"].includes(name)) {
+          item.totalPrice = (item.basePrice || 0) * (item.quantity || 0);
         }
+      }
+      if (["basePrice", "quantity"].includes(name)) {
+        calculateTotalItemsPrice +=
+          (item.basePrice || 0) * (item.quantity || 0);
       }
       return item;
     });
     setItems(newItems);
+    setTotalItemsPrice(calculateTotalItemsPrice);
   };
-
-  const onAddFile = (files) => {
-    const currentFileList = [...fileList];
-
-    if (Array.isArray(files)) {
-      files.forEach((file) => {
-        console.log("file", file);
-        currentFileList.push(file);
-      });
-    } else {
-      currentFileList.push(files);
-    }
-    console.log("setting archivos", files);
-    setFileList(currentFileList);
-  };
-
-  const onRemoveFile = (index) => {
-    const currentFileList = [...fileList];
-    currentFileList.splice(index, 1);
-
-    setFileList(currentFileList);
-  };
-
-  const fileNames = fileList && fileList.map((file) => file.name);
 
   const onChange = (name) => (e) => {
     setValues({
@@ -165,23 +119,31 @@ const NewAuction = () => {
     e.preventDefault();
     setLoading(true);
 
-    const auction = {
-      ...values,
-      openingRealTimeAuctionDate,
-      endingRealTimeAuctionDate,
-      openingRFIDate,
-      endingRFIDate,
-      openingFADate,
-      endingFADate,
-      isPrivate,
-      visibleDates,
-      currency,
-      totalItemsPrice,
-      items,
-      source,
-    };
+    const bodyData = new FormData();
 
-    console.log("submitAuction", auction);
+    fileList.forEach((file) => {
+      bodyData.append("files", file);
+    })
+    bodyData.append("items", JSON.stringify(items));
+    bodyData.append("openingRealTimeAuctionDate", openingRealTimeAuctionDate);
+    bodyData.append("endingRealTimeAuctionDate", endingRealTimeAuctionDate);
+    bodyData.append("openingRFIDate", openingRFIDate);
+    bodyData.append("endingRFIDate", endingRFIDate);
+    bodyData.append("openingFADate", openingFADate);
+    bodyData.append("endingFADate", endingFADate);
+    bodyData.append("isPrivate", isPrivate);
+    bodyData.append("visibleDates", visibleDates);
+    bodyData.append("currency", currency);
+    bodyData.append("totalItemsPrice", totalItemsPrice);
+    bodyData.append("isOpenAuction", true);
+    bodyData.append("title", title);
+    bodyData.append("description", description);
+    bodyData.append("minimumBid", minimumBid);
+    bodyData.append("identifier", identifier);
+    bodyData.append("finalized", finalized);
+    bodyData.append("extensionTime", extensionTime);
+    bodyData.append("fileType", fileType);
+    bodyData.append("auctionStep", auctionStep);
 
     if (
       !title ||
@@ -194,21 +156,7 @@ const NewAuction = () => {
         autoDismiss: true,
       });
     } else {
-      // Instancear new formdata
-      // const requestBody = new FormData();
-
-      // Agregar los valores del objeto y enviarlo en el formdata
-      // requestBody.append("source", source);
-
-      // Recorrer los files y hacer un append hacia el form data
-      /*
-      fileList.forEach((file) => {
-        requestBody.append("files", file);
-      });
-      */
-
-      // Enviar el formdata en vez del auction
-      const response = await createAuction(token, auction);
+      const response = await createAuction(token, bodyData);
 
       if (response.status === 201) {
         setLoading(false);
@@ -254,10 +202,9 @@ const NewAuction = () => {
         return (
           <ItemsTable
             filterText={filterText}
-            items={items}
+            items={[...items]}
             handleUserInput={handleUserInput}
-            handleRowDel={handleRowDel}
-            handleAddRow={handleAddRow}
+            setItems={setItems}
             handleItemsTable={handleItemsTable}
             totalItemsPrice={totalItemsPrice}
             currency={currency}
@@ -270,9 +217,6 @@ const NewAuction = () => {
             setFileList={setFileList}
             isUploading={isUploading}
             setIsUploading={setIsUploading}
-            onAddFile={onAddFile}
-            onRemoveFile={onRemoveFile}
-            // fileNames={fileNames}
           />
         );
       default:
@@ -284,6 +228,8 @@ const NewAuction = () => {
             onChange={onChange}
             currency={currency}
             setCurrency={handleChangeCurrency}
+            isOpenAuction={isOpenAuction}
+            setIsOpenAuction={setIsOpenAuction}
           />
         );
     }
@@ -321,37 +267,6 @@ const NewAuction = () => {
     }
   };
 
-  const steps = [
-    {
-      key: "Overview",
-      icon: "info circle",
-      title: "Información General",
-      active: currentStep === 0 ? true : false,
-      description: "Completa la información",
-    },
-    {
-      key: "Dates",
-      active: currentStep === 1 ? true : false,
-      icon: "calendar alternate",
-      description: "Selecciona las fechas",
-      title: "Fechas",
-    },
-    {
-      key: "ItemsTable",
-      active: currentStep === 2 ? true : false,
-      icon: "unordered list",
-      title: "Artículos a subastar",
-      description: "Elige tus artículos",
-    },
-    {
-      key: "Files Invitation",
-      icon: "file excel",
-      title: "Documentos de invitación",
-      active: currentStep === 3 ? true : false,
-      description: "Agrega documentos necesarios",
-    },
-  ];
-
   const nextStep = () => {
     setCurrentStep(currentStep + 1);
   };
@@ -369,7 +284,7 @@ const NewAuction = () => {
         <Header textAlign="left" style={{ color: "#142850", fontSize: "2em" }}>
           Información general del proyecto
         </Header>
-        <Step.Group size="mini" fluid stackable="tablet" items={steps} />
+        <Step.Group size="mini" fluid stackable="tablet" items={getSteps(currentStep)} />
       </div>
       <Card fluid>
         <Card.Content>
