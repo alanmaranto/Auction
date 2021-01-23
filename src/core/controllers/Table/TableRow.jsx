@@ -3,12 +3,25 @@ import { Button, Table } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 export const TableRow = ({ dataRow, columns }) => {
+  let finalColumns = columns;
+  if (columns && typeof columns[0] === "object") {
+    finalColumns = [];
+    columns.forEach((currentColumn) => {
+      currentColumn.forEach((data) => {
+        if (!data.isHeader) finalColumns.push(data);
+      });
+    });
+  }
+
   return (
     <Table.Row>
-      {columns &&
-        columns.map(({ name, renderData, width }) => {
+      {finalColumns &&
+        finalColumns.map(({ name, renderData }) => {
           return (
-            <Table.Cell negative={dataRow.negative || false}>
+            <Table.Cell
+              negative={dataRow.negative || false}
+              positive={dataRow.positive || false}
+            >
               {renderData ? renderData(dataRow) : dataRow[name]}
             </Table.Cell>
           );

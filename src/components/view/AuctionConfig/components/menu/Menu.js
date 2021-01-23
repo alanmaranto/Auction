@@ -5,7 +5,12 @@ import Documents from "./documents/Documents";
 
 import "./style.css";
 
-const MenuInvited = ({ auctionId, fetchAuction }) => {
+const MenuInvited = ({
+  auctionId,
+  auctionStep,
+  fetchAuction,
+  auctionFiles,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   return (
     <>
@@ -24,7 +29,14 @@ const MenuInvited = ({ auctionId, fetchAuction }) => {
           />
           <Accordion.Content
             active={activeIndex === 0}
-            content={<Documents />}
+            content={
+              <Documents
+                fetchAuction={fetchAuction}
+                auctionStep={auctionStep}
+                auctionId={auctionId}
+                auctionFiles={auctionFiles}
+              />
+            }
           />
         </Menu.Item>
       </Accordion>

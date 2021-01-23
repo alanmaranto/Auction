@@ -342,3 +342,21 @@ export const putAcceptSupplier = async (token, options) => {
     return error;
   }
 };
+
+export const postInvitationDocuments = async (token, options) => {
+  try {
+    const { auctionId } = options;
+    const response = await axios({
+      url: `${host}/auction/${auctionId}/invitation-files`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: options,
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

@@ -1,6 +1,10 @@
 import { useState, useCallback } from "react";
 import { isAuthenticated } from "../../../../../helpers/authenticate";
-import { putRejectSupplier, putAcceptSupplier } from "../../../../../api/api";
+import {
+  putRejectSupplier,
+  putAcceptSupplier,
+  postInvitationDocuments,
+} from "../../../../../api/api";
 
 const updateInvitation = async (options) => {
   const { token } = isAuthenticated();
@@ -9,6 +13,16 @@ const updateInvitation = async (options) => {
       ? await putRejectSupplier(token, options)
       : await putAcceptSupplier(token, options);
 
+    if (response?.status && response?.status === 200) {
+      return response.data.body;
+    }
+  }
+  return {};
+};
+const sendDocuments = async (options) => {
+  const { token } = isAuthenticated();
+  if (token) {
+    const response = await postInvitationDocuments(token, options);
     if (response?.status && response?.status === 200) {
       return response.data.body;
     }
@@ -50,11 +64,22 @@ export const useInvitedSupplier = () => {
     }
   };
 
+  const sendInvitationDocuments = async (options = {}) => {
+    try {
+      const supplierResult = (await sendDocuments(options)) || {};
+      return supplierResult;
+    } catch (e) {
+      setError(e);
+      throw e;
+    }
+  };
+
   return {
     isLoading,
     error,
     status,
     rejectSupplier: useCallback(rejectUser, []),
     acceptSupplier: useCallback(acceptUser, []),
+    sendInvitationDocuments: sendInvitationDocuments,
   };
 };

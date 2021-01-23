@@ -1,17 +1,4 @@
-const steps = [
-  {
-    title: "rfi",
-    subtitle: "Propuesta técnica y registro de inventarios",
-  },
-  {
-    title: "fa_hl",
-    subtitle: "Foro Aclaraciones / Propuesta Técnica",
-  },
-  {
-    title: "sub",
-    subtitle: "Suministros y Ulala",
-  },
-];
+import { steps } from "../../helper";
 
 const getSteps = (auctionStep) => {
   let completed = true;

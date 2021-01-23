@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Table, Pagination , Menu, Icon} from "semantic-ui-react";
+import { Table, Pagination, Menu, Icon } from "semantic-ui-react";
 
 import { PageSizeSelect } from "./PageSizeSelect.jsx";
 import { TableRow } from "./TableRow.jsx";
@@ -42,9 +42,11 @@ const CoreTable = (props) => {
         compact
         fixed
         color={colorTable || "blue"}
-        className="custom-table" 
+        className="custom-table"
+        celled
+        structured
       >
-        <TableHeader columns={columns}  />
+        <TableHeader columns={columns} />
         <Table.Body colSpan="16">
           {dataSource.map((rowElement, index) => (
             <TableRow
@@ -57,9 +59,9 @@ const CoreTable = (props) => {
             />
           ))}
         </Table.Body>
-        <Table.Footer >
+        <Table.Footer>
           <Table.Row>
-            <Table.HeaderCell colSpan="6" >
+            <Table.HeaderCell colSpan="6">
               <Menu floated="right" pagination>
                 <Menu.Item as="a" icon>
                   <Icon name="chevron left" />
