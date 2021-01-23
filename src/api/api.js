@@ -225,3 +225,117 @@ export const chooseWinner = async (token, auctionId, bidId, body) => {
     console.log(error);
   }
 };
+
+/**
+ * Auction config
+ */
+export const getAuctionInfo = async (token, id) => {
+  try {
+    const response = await axios({
+      url: `${host}/auction/${id}/info`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMissingSuppliersByAuction = async (token, id) => {
+  try {
+    const response = await axios({
+      url: `${host}/auction/${id}/missing-suppliers`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const inviteSupplier = async (token, id, userId) => {
+  try {
+    const response = await axios({
+      url: `${host}/auction/${id}/supplier`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        userId,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const putRejectSupplier = async (token, options) => {
+  try {
+    const { auctionId } = options;
+    const response = await axios({
+      url: `${host}/auction/${auctionId}/supplier-reject`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        userId: options.userId,
+        invitationId: options.invitationId,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const putAcceptSupplier = async (token, options) => {
+  try {
+    const { auctionId } = options;
+    const response = await axios({
+      url: `${host}/auction/${auctionId}/supplier-accept`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        userId: options.userId,
+        invitationId: options.invitationId,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const postInvitationDocuments = async (token, options) => {
+  try {
+    const { auctionId } = options;
+    const response = await axios({
+      url: `${host}/auction/${auctionId}/invitation-files`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: options,
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

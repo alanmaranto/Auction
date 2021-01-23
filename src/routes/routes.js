@@ -5,7 +5,13 @@ const BuyerDashboard = React.lazy(() =>
   import("../components/view/BuyerDashboard/DashboardContainer")
 );
 const Register = React.lazy(() => import("../components/auth/Register"));
-const NewProject = React.lazy(() => import("../components/view/newProject"));
+// import Settings = React.lazy(() => import('../components/')) "../components/user/Settings";
+// const NewProject = React.lazy(() => import("../components/view/newProject/NewProject"));
+const NewProject = React.lazy(() =>
+  import("../components/view/NewProject/NewProject")
+);
+// const NewProject = React.lazy(() => import("../components/view/newProject"));
+
 const AuctionView = React.lazy(() =>
   import("../components/view/AuctionView/AuctionContainer")
 );
@@ -31,9 +37,12 @@ const ResetPassword = React.lazy(() =>
 const FavoriteSuppliers = React.lazy(() =>
   import("../components/view/favoriteSuppliers")
 );
+const AuctonConfigView = React.lazy(() =>
+  import("../components/view/AuctionConfig")
+);
 const InvitationsSuppliers = React.lazy(() =>
-  import ("../components/supplier/invitations/Invitations")
-)
+  import("../components/supplier/invitations/Invitations")
+);
 
 export const generalRoutes = {
   LOGIN: {
@@ -53,7 +62,7 @@ export const generalRoutes = {
     component: AuctionView,
     term: "newAuction",
     showSidebar: true,
-    showInNavbar: true,
+    showInNavbar: false,
     role: "general",
   },
   RUNNING_AUCTION_VIEW: {
@@ -61,33 +70,44 @@ export const generalRoutes = {
     component: RunningAuctionView,
     term: "runningAuction",
     showSidebar: true,
-    showInNavbar: true,
+    showInNavbar: false,
     role: "general",
+  },
+  AUCTION_CONFIG: {
+    path: "/auction-config/:id",
+    component: AuctonConfigView,
+    term: "runningAuction",
+    showSidebar: true,
+    showInNavbar: true,
+    role: "buyer",
   },
   NOT_APPROVED: {
     path: "/not-approved",
     component: NotApproved,
     term: "notApproved",
     role: "general",
+    showInNavbar: false,
   },
   FORGOT_PASSWORD: {
     path: "/auth/forgot-password",
     component: ForgotPassword,
     term: "forgotPassword",
     role: "general",
+    showInNavbar: false,
   },
   RESET_PASSWORD: {
     path: "/auth/password/reset/:token",
     component: ResetPassword,
     term: "resetPassword",
     role: "general",
+    showInNavbar: false,
   },
   CHOOSE_WINNER: {
     path: "/winner/auction/:id",
     component: ChooseWinnerView,
     term: "chooseWinner",
     showSidebar: true,
-    showInNavbar: true,
+    showInNavbar: false,
     role: "buyer",
   },
   FINALIZED_AUCTION: {
@@ -130,12 +150,12 @@ export const generalRoutes = {
     showInNavbar: true,
     role: "buyer",
   },
-  INVITATIONS_SUPPLIERS : {
+  INVITATIONS_SUPPLIERS: {
     path: "/invitations",
     component: InvitationsSuppliers,
     term: "invitationsSuppliers",
     showSidebar: true,
     showInNavbar: true,
     role: "supplier",
-  }
+  },
 };

@@ -27,8 +27,10 @@ const Sidebar = () => {
 
   const fetchUser = async () => {
     const response = await getUserInfoById(token);
-    setUser(response.data.body);
-    setLogo(response.data.body.logoUrl);
+    //if (response?.data) {
+      setUser(response.data.body);
+      setLogo(response.data.body.logoUrl);
+    // }
   };
 
   const onChangeLogo = (e) => {
