@@ -20,8 +20,8 @@ const NewAuction = () => {
   // Step 1 - Overview
   const [loading, setLoading] = useState(false);
   const [auctions, setAuctions] = useState([]);
-  const [fileType, setFileType] = useState('BUYER');
-  const [auctionStep, setAuctionStep] = useState('PROJECT');
+  const [fileType, setFileType] = useState('buyer');
+  const [auctionStep, setAuctionStep] = useState('buyer');
   const [currentStep, setCurrentStep] = useState(0);
   const [isOpenAuction, setIsOpenAuction] = useState(true);
   const [values, setValues] = useState({
