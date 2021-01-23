@@ -174,13 +174,25 @@ const Sidebar = () => {
             </Grid.Row>
           )}
           {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
-            <Grid.Row style={{ margin: 0 }}>
+            <Grid.Row>
               <Link to="/provider-dashboard">
                 <div className="sidebar-options">
                   <span>
                     <Image src={Dashboard} />
                   </span>
                   <span className="option-title">Dashboard</span>
+                </div>
+              </Link>
+            </Grid.Row>
+          )}
+          {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
+            <Grid.Row>
+              <Link to="/invitations">
+                <div className="sidebar-options">
+                  <span>
+                    <Image src={Dashboard} />
+                  </span>
+                  <span className="option-title">Invitaciones</span>
                 </div>
               </Link>
             </Grid.Row>

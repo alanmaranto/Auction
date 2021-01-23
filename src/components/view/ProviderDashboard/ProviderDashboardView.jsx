@@ -3,10 +3,10 @@ import ProviderDashboard from "./ProviderDashboard";
 import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import {
-  // formatedProviderAuctionData,
+  formatedProviderAuctionData,
   filterData,
 } from "../FinalizedAuctions/helper";
-import { getInvitedAuctionsByProvider } from "../../../api/api";
+import { getInvitedAuctionsBySupplier } from "../../../api/invitedSuppliers";
 class ProviderDashboardContainer extends Component {
   constructor(props) {
     super(props);
@@ -24,14 +24,13 @@ class ProviderDashboardContainer extends Component {
   componentDidMount() {
     const { token } = isAuthenticated();
     if (token) {
-      // this.fetchAuctions();
+      this.fetchAuctions();
     }
   }
 
-/*   fetchAuctions = async () => {
-    const { token, user } = isAuthenticated();
-    let _id = user ? user._id : undefined;
-    const response = await getInvitedAuctionsByProvider(token, _id);
+   fetchAuctions = async () => {
+    const { token } = isAuthenticated();
+    const response = await getInvitedAuctionsBySupplier(token);
 
     if (response && response.status === 200) {
       const formatedAuction = formatedProviderAuctionData(response.data.body);
@@ -39,7 +38,7 @@ class ProviderDashboardContainer extends Component {
         activeInvitedProviderAuctions: formatedAuction,
       });
     }
-  }; */
+  };
 
   onChangePage = (value) => {
     this.setState({ currentPage: value });

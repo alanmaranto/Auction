@@ -184,27 +184,6 @@ export const getSelectedProvidersByAuctionId = async (token, auctionId) => {
   }
 };
 
-export const getInvitedAuctionsByProvider = async (token, userId) => {
-  try {
-    const response = await axios({
-      url: `${host}/auctions-provider`,
-      method: "GET",
-      headers: {
-        ["x-user-id"]: userId,
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: userId,
-    });
-    if (response) {
-      return response;
-    }
-    return response.data.error;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 // Bids
 export const getBidsByAuctionInfo = async (token, auctionId) => {
   try {

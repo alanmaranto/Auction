@@ -4,11 +4,13 @@ const Login = React.lazy(() => import("../components/auth/Login"));
 const BuyerDashboard = React.lazy(() =>
   import("../components/view/BuyerDashboard/DashboardContainer")
 );
-// const NotFound = React.lazy(() => import("../components/core/404/404NotFound"));
 const Register = React.lazy(() => import("../components/auth/Register"));
 // import Settings = React.lazy(() => import('../components/')) "../components/user/Settings";
 // const NewProject = React.lazy(() => import("../components/view/newProject/NewProject"));
-const NewProject = React.lazy(() => import("../components/view/NewProject/NewProject"));
+const NewProject = React.lazy(() =>
+  import("../components/view/NewProject/NewProject")
+);
+// const NewProject = React.lazy(() => import("../components/view/newProject"));
 
 const AuctionView = React.lazy(() =>
   import("../components/view/AuctionView/AuctionContainer")
@@ -16,16 +18,12 @@ const AuctionView = React.lazy(() =>
 const RunningAuctionView = React.lazy(() =>
   import("../components/view/RunningAuctionView")
 );
-// import AdminRoutes = React.lazy(() => import('../components/')) "./AdminRoutes";
-const BuyersRoutes = React.lazy(() => import("./BuyersRoutes"));
-const ProvidersRoutes = React.lazy(() => import("./ProvidersRoutes"));
 const FinalizedAuction = React.lazy(() =>
   import("../components/view/FinalizedAuctions")
 );
 const SupplierDashboard = React.lazy(() =>
   import("../components/view/ProviderDashboard")
 );
-// import WonAuctionsView = React.lazy(() => import('../components/')) '../components/view/WonAuctions/WonAuctionsView'
 const ChooseWinnerView = React.lazy(() =>
   import("../components/view/ChooseWinner/ChooseWinnerView")
 );
@@ -41,6 +39,9 @@ const FavoriteSuppliers = React.lazy(() =>
 );
 const AuctonConfigView = React.lazy(() =>
   import("../components/view/AuctionConfig")
+);
+const InvitationsSuppliers = React.lazy(() =>
+  import("../components/supplier/invitations/Invitations")
 );
 
 export const generalRoutes = {
@@ -148,5 +149,13 @@ export const generalRoutes = {
     showSidebar: true,
     showInNavbar: true,
     role: "buyer",
+  },
+  INVITATIONS_SUPPLIERS: {
+    path: "/invitations",
+    component: InvitationsSuppliers,
+    term: "invitationsSuppliers",
+    showSidebar: true,
+    showInNavbar: true,
+    role: "supplier",
   },
 };

@@ -14,7 +14,7 @@ const steps = [
 ];
 
 const getNextStep = (currentStep) => {
-  let currentStepIndex = 0; 
+  let currentStepIndex = 0;
   steps.forEach((element, index) => {
     if (element.title === currentStep) {
       currentStepIndex = index;
@@ -27,4 +27,12 @@ const getNextStep = (currentStep) => {
   return steps[currentStepIndex + 1].title;
 };
 
-export { steps, getNextStep };
+const getAcceptedSuppliers = (suppliers) => {
+  if (suppliers) {
+      console.log("suppliers", )
+    return suppliers.filter((supplier) => supplier.status === "accepted");
+  }
+  return [];
+};
+
+export { steps, getNextStep, getAcceptedSuppliers };

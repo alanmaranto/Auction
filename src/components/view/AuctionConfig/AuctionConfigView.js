@@ -6,7 +6,7 @@ import {
   Menu,
   MoveToStepModal,
 } from "./components";
-import { getNextStep } from "./helper";
+import { getNextStep, getAcceptedSuppliers } from "./helper";
 
 import "./style.css";
 
@@ -15,6 +15,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
   const [openMoveToStepModal, setOpenMoveToStepModal] = useState(false);
   const { auctionStep, title, description, suppliers } = auction;
   const nexStep = getNextStep(auctionStep || "");
+  const acceptedSuppliers = getAcceptedSuppliers(suppliers || []);
 
   return (
     <>
@@ -35,15 +36,19 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
             open={openMoveToStepModal}
             setOpen={setOpenMoveToStepModal}
             nexStep={nexStep}
-            suppliers={suppliers}
+            suppliers={acceptedSuppliers}
           />
-          <Button
-            color="primary"
-            labelPosition="right"
-            icon="right chevron"
-            content={`mover a ${nexStep}`}
-            onClick={() => setOpenMoveToStepModal(true)}
-          />
+          {acceptedSuppliers.lenght ? (
+            <Button
+              color="primary"
+              labelPosition="right"
+              icon="right chevron"
+              content={`mover a ${nexStep}`}
+              onClick={() => setOpenMoveToStepModal(true)}
+            />
+          ) : (
+            []
+          )}
         </Grid.Column>
         <Grid.Column width={11} style={{ background: "#fafafa" }}>
           <SuppliersTable
