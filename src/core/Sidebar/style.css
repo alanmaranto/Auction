@@ -5,11 +5,22 @@
   background: linear-gradient(to bottom, #00acee, #1366c4);
   height: 100vh; }
 
-.pro-sidebar .pro-menu.shaped .pro-menu-item > .pro-inner-item > .pro-icon-wrapper {
+.pro-sidebar
+.pro-menu.shaped
+.pro-menu-item
+> .pro-inner-item
+> .pro-icon-wrapper {
   background-color: #1366c4; }
 
 .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
   background-color: #1366c4; }
+
+.pro-sidebar
+.pro-menu
+.pro-menu-item.pro-sub-menu
+.pro-inner-list-item
+.pro-inner-item:before {
+  border: 1px solid #fff; }
 
 .sidebar-image-container {
   border-radius: 12px;
