@@ -29,8 +29,6 @@ const Content = ({ children, history, location }) => {
   };
   if (!validateRoute()) return <Error404 history={history} />;
 
-  const { user } = isAuthenticated();
-
   return (
     <div className="app">
       <div className="generalContainer">
