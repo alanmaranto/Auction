@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { Grid, Button, Icon } from "semantic-ui-react";
+import {
+  ProSidebar,
+  SidebarHeader,
+  SidebarContent,
+  Menu,
+  MenuItem,
+  SubMenu,
+} from "react-pro-sidebar";
 import { isAuthenticated } from "../../helpers/authenticate";
-import { Grid, Image, Button, Dimmer } from "semantic-ui-react";
 import Loader from "../Loader";
-import AuctionIcon from "../../assets/auction.svg";
-import Dashboard from "../../assets/dashboard.svg";
-import A1 from "../../assets/auctionicon.svg";
 import logoB from "../../assets/Bidanna-02-altern.svg";
 import logoBiddana from "../../assets/Bidanna-03-altern.svg";
 import { getUserInfoById, uploadLogo } from "../../api/user";
 import { useToasts } from "react-toast-notifications";
-
 import { roles } from "../../helpers/roles";
 
+import "react-pro-sidebar/dist/css/styles.css";
 import "../../App.css";
 import "./style.css";
 
@@ -28,8 +33,8 @@ const Sidebar = () => {
   const fetchUser = async () => {
     const response = await getUserInfoById(token);
     //if (response?.data) {
-      setUser(response.data.body);
-      setLogo(response.data.body.logoUrl);
+    setUser(response.data.body);
+    setLogo(response.data.body.logoUrl);
     // }
   };
 
@@ -68,186 +73,166 @@ const Sidebar = () => {
     }
   }, []);
 
-  return (
-    <div className="sidebar-menu">
-      <Grid>
-        <Grid.Column>
-          <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
-            <div className="sidebar-header">
-              <div className="sidebar-header__logo">
-                <img
-                  src={logoB}
-                  alt=""
-                  style={{ width: "50px", height: "30px" }}
-                />
-              </div>
-              <div className="sidebar-header__logoBiddana">
-                <img
-                  src={logoBiddana}
-                  alt=""
-                  style={{ width: "85px", height: "30px" }}
-                />
-              </div>
-            </div>
-          </Grid.Row>
+  const renderBuyerSidebar = (size) => {
+    if (isAuthenticated() && isAuthenticated().user.role === roles.BUYER) {
+      return (
+        <SidebarContent>
+          <Menu iconShape="round" popperArrow>
+            <MenuItem icon={<Icon name="chart line" size={size} />}>
+              Dashboard
+              <Link to="/" />
+            </MenuItem>
+            <MenuItem icon={<Icon name="chart line" size={size} />}>
+              Crear Subasta
+              <Link to="/create/auction" />
+            </MenuItem>
+            <SubMenu
+              title="Subastas"
+              icon={<Icon name="chart line" size={size} />}
+            >
+              <MenuItem icon={<Icon name="chart line" size={size} />}>
+                RFI
+                <Link to={`/auction/rfi/${user._id}`} />
+              </MenuItem>
+              <MenuItem icon={<Icon name="chart line" size={size} />}>
+                FA
+                <Link to={`/auction/fa/${user._id}`} />
+              </MenuItem>
+              <MenuItem icon={<Icon name="chart line" size={size} />}>
+                Finalizadas
+                <Link to={`/auction/finalized/${user._id}`} />
+              </MenuItem>
+            </SubMenu>
+            <MenuItem icon={<Icon name="chart line" size={size} />}>
+              Mis Proveedores
+              <Link to="/favorite-suppliers" />
+            </MenuItem>
+          </Menu>
+        </SidebarContent>
+      );
+    }
+  };
 
-          <Grid.Row
-            style={{
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {logo ? (
+  const renderSupplierSidebar = (size) => {
+    if (isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER) {
+      return (
+        <SidebarContent>
+          <Menu iconShape="round">
+            <MenuItem icon={<Icon name="chart line" size={size} />}>
+              Dashboard
+              <Link to="/provider-dashboard" />
+            </MenuItem>
+            <MenuItem icon={<Icon name="chart line" size={size} />}>
+              Invitaciones
+              <Link to="/invitations" />
+            </MenuItem>
+            <MenuItem icon={<Icon name="chart line" size={size} />}>
+              Subastas Ganadas
+              <Link to="/wons" />
+            </MenuItem>
+          </Menu>
+        </SidebarContent>
+      );
+    }
+  };
+
+  const renderHeaderLogo = () => {
+    return (
+      <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
+        <div className="sidebar-header">
+          <div className="sidebar-header__logo">
+            <img src={logoB} alt="" style={{ width: "50px", height: "30px" }} />
+          </div>
+          <div className="sidebar-header__logoBiddana">
+            <img
+              src={logoBiddana}
+              alt=""
+              style={{ width: "85px", height: "30px" }}
+            />
+          </div>
+        </div>
+      </Grid.Row>
+    );
+  };
+
+  const renderHeader = () => {
+    return (
+      <Grid.Row
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {logo ? (
+          <>
+            {user.logoUrl ? (
+              <div className="sidebar-image-container">
+                <img
+                  src={logo}
+                  alt={`${user?.name} - ${user?.email}`}
+                  className="sidebar-image-container__logo"
+                />
+              </div>
+            ) : (
               <>
-                {user.logoUrl ? (
-                  <div className="sidebar-image-container">
+                <div className="sidebar-image-container">
+                  {loading ? (
+                    <Loader inverted />
+                  ) : (
                     <img
-                      src={logo}
+                      src={logo.name ? URL.createObjectURL(logo) : user.logoUrl}
                       alt={`${user?.name} - ${user?.email}`}
                       className="sidebar-image-container__logo"
                     />
-                  </div>
-                ) : (
-                  <>
-                    <div className="sidebar-image-container">
-                      {loading ? (
-                        <Loader inverted />
-                      ) : (
-                        <img
-                          src={
-                            logo.name ? URL.createObjectURL(logo) : user.logoUrl
-                          }
-                          alt={`${user?.name} - ${user?.email}`}
-                          className="sidebar-image-container__logo"
-                        />
-                      )}
-                    </div>
-                    <div style={{ paddingTop: "15px" }}>
-                      <Button
-                        icon="upload"
-                        content="Guardar"
-                        onClick={onSubmitLogo}
-                        compact
-                        size="small"
-                        color="blue"
-                      />
-                    </div>
-                  </>
-                )}
+                  )}
+                </div>
+                <div style={{ paddingTop: "15px" }}>
+                  <Button
+                    icon="upload"
+                    content="Guardar"
+                    onClick={onSubmitLogo}
+                    compact
+                    size="small"
+                    color="blue"
+                  />
+                </div>
               </>
-            ) : (
-              <div className="sidebar-image-input">
-                <input
-                  className="sidebar-image-input__upload"
-                  type="file"
-                  id="file"
-                  accept="image/*"
-                  onChange={onChangeLogo}
-                />
-                <label className="sidebar-image-input__label" htmlFor="file">
-                  Subir logo
-                  <br />
-                  PNG o JPG
-                </label>
-              </div>
             )}
+          </>
+        ) : (
+          <div className="sidebar-image-input">
+            <input
+              className="sidebar-image-input__upload"
+              type="file"
+              id="file"
+              accept="image/*"
+              onChange={onChangeLogo}
+            />
+            <label className="sidebar-image-input__label" htmlFor="file">
+              Subir logo
+            </label>
+          </div>
+        )}
 
-            <div className="sidebar-user-information-container">
-              <span className="sidebar-user-information-container__name">
-                {user?.name}
-              </span>
-              <span>{user?.email}</span>
-            </div>
-          </Grid.Row>
+        <div className="sidebar-user-information-container">
+          <span className="sidebar-user-information-container__name">
+            {user?.name}
+          </span>
+          <span style={{ fontSize: "14px" }}>{user?.email}</span>
+        </div>
+      </Grid.Row>
+    );
+  };
 
-          {isAuthenticated() && isAuthenticated().user.role === roles.BUYER && (
-            <Grid.Row>
-              <Link to="/">
-                <div className="sidebar-options">
-                  <span>
-                    <Image src={Dashboard} />
-                  </span>
-                  <span className="option-title">Dashboard</span>
-                </div>
-              </Link>
-            </Grid.Row>
-          )}
-          {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
-            <Grid.Row>
-              <Link to="/provider-dashboard">
-                <div className="sidebar-options">
-                  <span>
-                    <Image src={Dashboard} />
-                  </span>
-                  <span className="option-title">Dashboard</span>
-                </div>
-              </Link>
-            </Grid.Row>
-          )}
-          {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
-            <Grid.Row>
-              <Link to="/invitations">
-                <div className="sidebar-options">
-                  <span>
-                    <Image src={Dashboard} />
-                  </span>
-                  <span className="option-title">Invitaciones</span>
-                </div>
-              </Link>
-            </Grid.Row>
-          )}
-          {isAuthenticated() && isAuthenticated().user.role === roles.BUYER && (
-            <Grid.Row>
-              <Link to="/create/auction">
-                <div className="sidebar-options">
-                  <span>
-                    <Image src={A1} />
-                  </span>
-                  <span className="option-title">Crear Subasta</span>
-                </div>
-              </Link>
-            </Grid.Row>
-          )}
-          {isAuthenticated() && isAuthenticated().user.role === roles.BUYER && (
-            <Grid.Row>
-              <Link to="/finalized">
-                <div className="sidebar-options">
-                  <span>
-                    <Image src={A1} />
-                  </span>
-                  <span className="option-title">Subastas Finalizadas</span>
-                </div>
-              </Link>
-            </Grid.Row>
-          )}
-          {isAuthenticated() && isAuthenticated().user.role === roles.BUYER && (
-            <Grid.Row>
-              <Link to="/favorite-suppliers">
-                <div className="sidebar-options">
-                  <span>
-                    <Image src={A1} />
-                  </span>
-                  <span className="option-title">Mis Proveedores</span>
-                </div>
-              </Link>
-            </Grid.Row>
-          )}
-          {/*             {isAuthenticated() && isAuthenticated().user.role === roles.PROVIDER && (
-              <Grid.Row>
-                <Link to="/wons">
-                  <div className="sidebar-options">
-                    <span>
-                      <Image src={A1} />
-                    </span>
-                    <span className="option-title">Subastas Ganadas</span>
-                  </div>
-                </Link>
-              </Grid.Row>
-            )} */}
-        </Grid.Column>
-      </Grid>
-    </div>
+  return (
+    <ProSidebar>
+      <SidebarHeader>
+        {renderHeaderLogo()}
+        {renderHeader()}
+      </SidebarHeader>
+      {renderBuyerSidebar("large")}
+      {renderSupplierSidebar("large")}
+    </ProSidebar>
   );
 };
 

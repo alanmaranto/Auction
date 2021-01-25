@@ -43,6 +43,10 @@ const AuctonConfigView = React.lazy(() =>
 const InvitationsSuppliers = React.lazy(() =>
   import("../components/supplier/invitations/Invitations")
 );
+const AuctionRFIView = React.lazy(() =>
+  import("../components/view/AuctionRFI")
+);
+const AuctionFAView = React.lazy(() => import("../components/view/AuctionFA"));
 
 export const generalRoutes = {
   LOGIN: {
@@ -61,7 +65,7 @@ export const generalRoutes = {
     path: "/auction/:id",
     component: AuctionView,
     term: "newAuction",
-    showSidebar: true,
+    showSidebar: false,
     showInNavbar: false,
     role: "general",
   },
@@ -69,7 +73,7 @@ export const generalRoutes = {
     path: "/runningAuction/:id",
     component: RunningAuctionView,
     term: "runningAuction",
-    showSidebar: true,
+    showSidebar: false,
     showInNavbar: false,
     role: "general",
   },
@@ -77,7 +81,7 @@ export const generalRoutes = {
     path: "/auction-config/:id",
     component: AuctonConfigView,
     term: "runningAuction",
-    showSidebar: true,
+    showSidebar: false,
     showInNavbar: true,
     role: "buyer",
   },
@@ -106,22 +110,14 @@ export const generalRoutes = {
     path: "/winner/auction/:id",
     component: ChooseWinnerView,
     term: "chooseWinner",
-    showSidebar: true,
+    showSidebar: false,
     showInNavbar: false,
-    role: "buyer",
-  },
-  FINALIZED_AUCTION: {
-    path: "/finalized",
-    component: FinalizedAuction,
-    term: "finalizedAuction",
-    showSidebar: true,
-    showInNavbar: true,
     role: "buyer",
   },
   NEW_PROJECT: {
     path: "/create/auction",
     component: NewProject,
-    term: "newProject",
+    term: "Crear Proyecto",
     showSidebar: true,
     showInNavbar: true,
     role: "buyer",
@@ -129,7 +125,7 @@ export const generalRoutes = {
   BUYER_DASHBOARD: {
     path: "/",
     component: BuyerDashboard,
-    term: "buyerDashboard",
+    term: "Dashboard",
     showSidebar: true,
     showInNavbar: true,
     role: "buyer",
@@ -145,7 +141,7 @@ export const generalRoutes = {
   FAVORITE_SUPPLIERS: {
     path: "/favorite-suppliers",
     component: FavoriteSuppliers,
-    term: "favoriteSuppliers",
+    term: "Mis Proveedores",
     showSidebar: true,
     showInNavbar: true,
     role: "buyer",
@@ -157,5 +153,41 @@ export const generalRoutes = {
     showSidebar: true,
     showInNavbar: true,
     role: "supplier",
+  },
+  AUCTION_RFI: {
+    path: "/auction/rfi/:userId",
+    component: AuctionRFIView,
+    term: "auctionRFI",
+    subMenu: true,
+    showSidebar: true,
+    subMenuTitle: "Subastas",
+    showInNavbar: true,
+    role: "buyer",
+    icon: "chart line",
+    iconSubMenu: "chart line",
+  },
+  AUCTION_FA: {
+    path: "/auction/fa/:userId",
+    component: AuctionFAView,
+    term: "auctionFA",
+    subMenu: true,
+    showSidebar: true,
+    subMenuTitle: "Subastas",
+    showInNavbar: true,
+    role: "buyer",
+    icon: "chart line",
+    iconSubMenu: "chart line",
+  },
+  FINALIZED_AUCTION: {
+    path: "/auction/finalized/:userId",
+    component: FinalizedAuction,
+    term: "Finalizadas",
+    subMenu: true,
+    showSidebar: true,
+    subMenuTitle: "Subastas",
+    showInNavbar: true,
+    role: "buyer",
+    icon: "chart line",
+    iconSubMenu: "chart line",
   },
 };

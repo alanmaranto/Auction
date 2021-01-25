@@ -11,7 +11,7 @@ import "./App.scss";
 ReactDOM.render(
   <Router history={history}>
     <ToastProvider>
-      <Routes />
+      <Routes history={history} />
     </ToastProvider>
   </Router>,
   document.getElementById("root")
