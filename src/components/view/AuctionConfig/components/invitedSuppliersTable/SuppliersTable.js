@@ -3,9 +3,11 @@ import { Container, Header, Grid, Button, Feed, Icon } from "semantic-ui-react";
 import { Table } from "../../../../../core/controllers";
 // import { getSteps } from "./helper";
 import rfiColumns from "./rfiColumns";
+import faColumns from "./faColumns";
+
 import { useInvitedSupplier } from "./UseInvitedSuppliers";
 
-const SuppliersTable = ({ fetch, suppliers, auctionId }) => {
+const SuppliersTable = ({ fetch, suppliers, auctionId, auctionStep }) => {
   const {
     rejectSupplier,
     acceptSupplier,
@@ -42,12 +44,18 @@ const SuppliersTable = ({ fetch, suppliers, auctionId }) => {
     } catch (error) {}
   };
 
+  const tableColums = {
+    rfi: rfiColumns({
+      onHandleInvitation,
+      onHandleInvitationDocuments,
+    }),
+    fa_hl: faColumns({}),
+  }[auctionStep];
+
   return (
     <Table
-      columns={rfiColumns({
-        onHandleInvitation,
-        onHandleInvitationDocuments,
-      })}
+      columns={tableColums}
+      paginated={false}
       dataSource={
         suppliers
           ? suppliers.map((supplier) => {

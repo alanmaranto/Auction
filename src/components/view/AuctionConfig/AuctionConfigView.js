@@ -37,8 +37,10 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
             setOpen={setOpenMoveToStepModal}
             nexStep={nexStep}
             suppliers={acceptedSuppliers}
+            auctionId={auctionId}
+            fetchAuction={fetchAuction}
           />
-          {acceptedSuppliers.lenght ? (
+          {acceptedSuppliers.length ? (
             <Button
               color="primary"
               labelPosition="right"
@@ -61,15 +63,17 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
             }}
           />
         </Grid.Column>
-        <Grid.Column width={5} style={{ background: "#fafafa" }}>
-          <Menu
-            auctionStep={auctionStep}
-            auctionId={auctionId}
-            fetchAuction={fetchAuction}
-            auctionFiles={auction?.files || []}
-            fetchMissingSuppliers={fetchMissingSuppliers}
-          />
-        </Grid.Column>
+        {auctionStep === "rfi" && (
+          <Grid.Column width={5} style={{ background: "#fafafa" }}>
+            <Menu
+              auctionStep={auctionStep}
+              auctionId={auctionId}
+              fetchAuction={fetchAuction}
+              auctionFiles={auction?.files || []}
+              fetchMissingSuppliers={fetchMissingSuppliers}
+            />
+          </Grid.Column>
+        )}
       </Grid>
     </>
   );
