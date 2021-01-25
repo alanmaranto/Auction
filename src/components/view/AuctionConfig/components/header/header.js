@@ -13,7 +13,7 @@ const AuctionHeader = ({ auctionStep, title, description }) => {
         <Grid.Column width={6} className="center-align">
           <Header as="h2">
             <Header.Content>
-              {title}: {"5feab439e70abc969b303616"}
+              {title}
               <Header.Subheader>{description}</Header.Subheader>
             </Header.Content>
           </Header>

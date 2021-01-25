@@ -1,14 +1,17 @@
 const steps = [
   {
-    title: "rfi",
+    value: "rfi",
+    display: "RFI",
     subtitle: "Propuesta técnica y registro de inventarios",
   },
   {
-    title: "fa_hl",
+    value: "fa_hl",
+    display: "FA/HL",
     subtitle: "Foro Aclaraciones / Propuesta Técnica",
   },
   {
-    title: "sub",
+    value: "sub",
+    display: "SUB",
     subtitle: "Suministros y Ulala",
   },
 ];
@@ -16,7 +19,7 @@ const steps = [
 const getNextStep = (currentStep) => {
   let currentStepIndex = 0;
   steps.forEach((element, index) => {
-    if (element.title === currentStep) {
+    if (element.value === currentStep) {
       currentStepIndex = index;
     }
   });
@@ -24,12 +27,11 @@ const getNextStep = (currentStep) => {
   if (currentStepIndex === steps.length) {
     return false;
   }
-  return steps[currentStepIndex + 1].title;
+  return steps[currentStepIndex + 1].display;
 };
 
 const getAcceptedSuppliers = (suppliers) => {
   if (suppliers) {
-      console.log("suppliers", )
     return suppliers.filter((supplier) => supplier.status === "accepted");
   }
   return [];

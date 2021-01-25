@@ -14,7 +14,7 @@ const Stepper = ({ steps }) => (
               {step.active ? <Icon name="settings" /> : <Icon name="payment" />}
               {!step.completed && !step.active ? [] : []}
               <Step.Content>
-                <Step.Title>{step.title}</Step.Title>
+                <Step.Title>{step.display}</Step.Title>
                 <Step.Description>
                   {step.active ? step.subtitle : ""}
                 </Step.Description>

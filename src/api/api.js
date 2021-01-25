@@ -245,6 +245,25 @@ export const getAuctionInfo = async (token, id) => {
   }
 };
 
+export const putAuctionStep = async (token, data) => {
+  try {
+    const response = await axios({
+      url: `${host}/auction/${data?.auctionId}/info-step`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        suppliers: data.suppliers,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const getMissingSuppliersByAuction = async (token, id) => {
   try {
     const response = await axios({
