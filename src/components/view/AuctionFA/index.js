@@ -1,3 +1,3 @@
-import View from "./AuctionFA";
+import View from "./AuctionFAContainer";
 
 export default View;

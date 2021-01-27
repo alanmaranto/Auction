@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import Dashboard from "./Dashboard";
+import { getFAAuctionByUser } from "../../../api/auction";
 import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { filterData, formatedData } from "../FinalizedAuctions/helper";
-import { getActiveAuctionsByUser } from "../../../api/auction";
-import { showAuctions } from "./helpers";
+import { formatedData } from "../../../helpers/auctions";
+import { filterData } from "../FinalizedAuctions/helper";
+import AuctionFA from "./AuctionFAView";
+import withToast from "../../../core/Toasts";
 
-import "../../../App.css";
-
-class BuyerDashboardContainer extends Component {
+class AuctionFAContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeAuctions: [],
+      faAuctions: [],
       currentPage: 1,
       elementsByPage: 5,
       totalCount: 0,
@@ -21,23 +20,29 @@ class BuyerDashboardContainer extends Component {
       _order: null,
     };
   }
-  
+
   componentDidMount = () => {
     const { token } = isAuthenticated();
     if (token) {
-      this.fetchActiveAuctions();
+      this.fetchFaAuctions(token);
     }
   };
-  
-  fetchActiveAuctions = async () => {
-    const { token } = isAuthenticated();
 
-    const response = await getActiveAuctionsByUser(token);
+  fetchFaAuctions = async (token) => {
+    // const { token } = isAuthenticated();
+    const { addToast } = this.props;
 
-    if (response && response.status === 200) {
+    const response = await getFAAuctionByUser(token);
+
+    if (response && response.data.body.length > 0) {
       const formatedAuction = formatedData(response.data.body);
       this.setState({
-        activeAuctions: formatedAuction,
+        faAuctions: formatedAuction || [],
+      });
+    } else {
+      addToast("No hay subastas FA", {
+        appearance: "error",
+        autoDismiss: true,
       });
     }
   };
@@ -54,11 +59,14 @@ class BuyerDashboardContainer extends Component {
     this.setState({ elementsByPage: value, currentPage: 1 });
   };
 
-  onSubmitFilter = (filter, currentPage) => {
-    const { elementsByPage, activeAuctions, pageItems } = this.state;
+  sendToAuctionView = (id) => {
+    history.push(`/auction-config/${id}`);
+  };
 
+  onSubmitFilter = (filter, currentPage) => {
+    const { elementsByPage, faAuctions, pageItems } = this.state;
     return filterData({
-      dataSource: activeAuctions,
+      dataSource: faAuctions,
       elementsByPage,
       currentPage,
       pageItems,
@@ -66,20 +74,17 @@ class BuyerDashboardContainer extends Component {
     });
   };
 
-  sendToAuctionView = (id) => {
-    history.push(`/auction/${id}`);
-  };
-
   render() {
     const { elementsByPage, currentPage, filter, loading } = this.state;
     const {
-      dataSource: activeAuctions,
+      dataSource: faAuctions,
       dataSourceSize: totalCount,
     } = this.onSubmitFilter(filter, currentPage);
     const { user } = isAuthenticated();
+
     return (
-      <Dashboard
-        activeAuctions={activeAuctions}
+      <AuctionFA
+        faAuctions={faAuctions}
         user={user}
         totalCount={totalCount}
         totalPages={Math.ceil(totalCount / elementsByPage)}
@@ -95,4 +100,4 @@ class BuyerDashboardContainer extends Component {
   }
 }
 
-export default BuyerDashboardContainer;
+export default withToast(AuctionFAContainer);
