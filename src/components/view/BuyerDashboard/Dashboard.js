@@ -1,9 +1,15 @@
 import React from "react";
-import { Grid, Card, Divider, Header } from "semantic-ui-react";
+import { Grid, Header } from "semantic-ui-react";
 import AuctionTotalCard from "./components/AuctionTotalCard";
 import AuctionStepCard from "./components/AuctionStepCard";
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({
+  user,
+  rfiAuctions,
+  faAuctions,
+  finalizedAuctions,
+  history,
+}) => {
   return (
     <Grid textAlign="left" padded columns={16}>
       <Grid.Row>
@@ -15,34 +21,35 @@ const Dashboard = ({ user }) => {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column computer={16} largeScreen={16} widescreen={16}>
-          <AuctionTotalCard />
+          <AuctionTotalCard
+            rfiAuctions={rfiAuctions}
+            faAuctions={faAuctions}
+            finalizedAuctions={finalizedAuctions}
+          />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={16}>
           <AuctionStepCard
-            header="RFI"
-            identifier="OXXO_01213"
-            content="Aquí va el titulo de la subasta"
-            summary="Aqui va la super ultra larga hiper mega descripción"
-            view={`/auction/rfi/${user}`}
+            rfiAuctions={rfiAuctions.slice(0, 3)}
+            user={user}
             stepAuction="RFI"
+            view={`/auction/rfi/${user}`}
+            history={history}
           />
           <AuctionStepCard
-            header="FA/PT"
-            identifier="OXXO_01213"
-            content="Aquí va el titulo de la subasta"
-            summary="Aqui va la super ultra larga hiper mega descripción"
+            rfiAuctions={faAuctions.slice(0, 3)}
+            user={user}
+            stepAuction="FA"
             view={`/auction/fa/${user}`}
-            stepAuction="FA/PT"
+            history={history}
           />
           <AuctionStepCard
-            header="Finalizadas"
-            identifier="OXXO_01213"
-            content="Aquí va el titulo de la subasta"
-            summary="Aqui va la super ultra larga hiper mega descripción"
+            rfiAuctions={finalizedAuctions.slice(0, 3)}
+            user={user}
+            stepAuction="Finalizadas"
             view={`/auction/finalized/${user}`}
-            stepAuction="finalizadas"
+            history={history}
           />
         </Grid.Column>
       </Grid.Row>

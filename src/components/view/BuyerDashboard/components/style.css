@@ -1,5 +1,8 @@
-.total-auction-card {
+.total-auction-container__card {
   background-color: #1366c4 !important; }
+
+.total-auction-container .ui.card, .total-auction-container .ui.cards > .card {
+  width: 236px !important; }
 
 .statistic-total-auction-label {
   color: #fff !important; }
@@ -7,9 +10,12 @@
 .statistic-total-auction-value {
   color: #fff !important; }
 
-.auction-step-feed-label {
+.auction-step-feed-event:hover {
+  background-color: aliceblue !important; }
+
+.auction-step-feed-event__label {
   width: 8em !important; }
-  .auction-step-feed-label__container {
+  .auction-step-feed-event__label--text {
     color: #fff;
     background-color: #1366c4;
     max-width: 100%;
@@ -25,3 +31,7 @@
 
 .auction-step-card-footer:hover {
   cursor: pointer; }
+
+@media (min-width: 1200px) {
+  .total-auction-container {
+    justify-content: space-between; } }

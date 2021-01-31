@@ -66,3 +66,20 @@ export const getFAAuctionByUser = async (token) => {
     return error
   }
 };
+
+export const getFinalizedAuctionsByUser = async (token, user) => {
+  try {
+    const response = await axios({
+      url: `${host}/auctionsFinalized/${user}`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ user }),
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
