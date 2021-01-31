@@ -31,21 +31,21 @@ const Dashboard = ({
       <Grid.Row>
         <Grid.Column width={16}>
           <AuctionStepCard
-            rfiAuctions={rfiAuctions.slice(0, 3)}
+            auctions={rfiAuctions.slice(0, 3)}
             user={user}
             stepAuction="RFI"
             view={`/auction/rfi/${user}`}
             history={history}
           />
           <AuctionStepCard
-            rfiAuctions={faAuctions.slice(0, 3)}
+            auctions={faAuctions.slice(0, 3)}
             user={user}
             stepAuction="FA"
             view={`/auction/fa/${user}`}
             history={history}
           />
           <AuctionStepCard
-            rfiAuctions={finalizedAuctions.slice(0, 3)}
+            auctions={finalizedAuctions.slice(0, 3)}
             user={user}
             stepAuction="Finalizadas"
             view={`/auction/finalized/${user}`}

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AuctionFeedEvent from "./AuctionFeedEvent";
 import "./style.css";
 
-const AuctionStepCard = ({ rfiAuctions, stepAuction, view, history }) => {
+const AuctionStepCard = ({ auctions, stepAuction, view, history }) => {
   return (
     <Card fluid>
       <Card.Content>
@@ -13,13 +13,13 @@ const AuctionStepCard = ({ rfiAuctions, stepAuction, view, history }) => {
       <Card.Content
         style={{ overflow: "auto", maxHeight: 140, cursor: "pointer" }}
       >
-        {rfiAuctions.map((rfi) => {
+        {auctions.map((auction) => {
           return (
             <AuctionFeedEvent
-              auctionId={rfi._id}
-              identifier={rfi.identifier}
-              content={rfi.title}
-              summary={rfi.description}
+              auctionId={auction._id}
+              identifier={auction.identifier}
+              content={auction.title}
+              summary={auction.description}
               history={history}
             />
           );
