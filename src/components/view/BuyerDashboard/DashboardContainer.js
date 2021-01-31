@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+/* import React, { Component } from "react";
 import Dashboard from "./Dashboard";
 import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
@@ -96,3 +96,17 @@ class BuyerDashboardContainer extends Component {
 }
 
 export default BuyerDashboardContainer;
+ */
+
+ import React from 'react';
+ import Dashboard from './Dashboard';
+ import { isAuthenticated } from "../../../helpers/authenticate";
+
+ const DashboardContainer = () => {
+   const { user } = isAuthenticated()
+   return ( 
+     <Dashboard user={user._id} />
+    );
+ }
+  
+ export default DashboardContainer;

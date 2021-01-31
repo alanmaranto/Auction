@@ -1,0 +1,27 @@
+.total-auction-card {
+  background-color: #1366c4 !important; }
+
+.statistic-total-auction-label {
+  color: #fff !important; }
+
+.statistic-total-auction-value {
+  color: #fff !important; }
+
+.auction-step-feed-label {
+  width: 8em !important; }
+  .auction-step-feed-label__container {
+    color: #fff;
+    background-color: #1366c4;
+    max-width: 100%;
+    border: none;
+    border-radius: 0.28571429rem;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    transition: box-shadow 0.1s ease, transform 0.1s ease;
+    display: flex;
+    height: 80%;
+    text-align: center;
+    align-items: center;
+    justify-content: center; }
+
+.auction-step-card-footer:hover {
+  cursor: pointer; }

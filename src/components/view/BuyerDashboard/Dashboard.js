@@ -1,89 +1,52 @@
-import React, { Fragment } from "react";
-import { Grid, Segment, Divider, Header } from "semantic-ui-react";
-import { displayAuction } from "./helpers";
-import NoData from "../../../core/500/NoData";
-// import TotalAuctions from "../Reports/TotalAuctions";
-import NativeClock from "../../../core/Clock/NativeClock";
-import { Row, Column } from "../../../core/indexSemanticUi";
-import { AuctionTable } from "../../../core/AuctionTable/AuctionTable";
-import { AuctionFilter } from "../../../core/AuctionTable/AuctionFilter";
-import { getTableSettingsActiveAuctions } from "../FinalizedAuctions/helper";
+import React from "react";
+import { Grid, Card, Divider, Header } from "semantic-ui-react";
+import AuctionTotalCard from "./components/AuctionTotalCard";
+import AuctionStepCard from "./components/AuctionStepCard";
 
-import "./style.css";
-
-const Dashboard = ({
-  activeAuctions,
-  user,
-  totalCount,
-  totalPages,
-  currentPage,
-  onChangeLimit,
-  onChangePage,
-  onChangeValue,
-  limit,
-  buttonAction,
-  loading,
-}) => {
-  const { name } = user || {};
+const Dashboard = ({ user }) => {
   return (
-    <Fragment>
-      <div className="dashboard-view">
-        <div className="card-graphics">
-          <Grid verticalAlign="middle" textAlign="left" padded columns={1}>
-            <Row className="dashboard-header">
-              <Column width={13}>
-                <Header className="dashboard-name" as="h1">
-                  Hola {(name || "").toUpperCase()}, Bienvenido
-                </Header>
-              </Column>
-              <Column width={3}>
-                <div>
-                  Hora del sistema
-                  <NativeClock />
-                </div>
-              </Column>
-            </Row>
-            <Row>
-              <Column width={13}>
-                {/*                 <Segment>
-                  <TotalAuctions />
-                </Segment>
- */}{" "}
-              </Column>
-            </Row>
-          </Grid>
-          <AuctionFilter
-            totalCount={totalCount}
-            onChangeValue={onChangeValue}
-            loading={loading}
+    <Grid textAlign="left" padded columns={16}>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <Header className="dashboard-name" as="h1">
+            Hola Alan, Bienvenido
+          </Header>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column computer={16} largeScreen={16} widescreen={16}>
+          <AuctionTotalCard />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <AuctionStepCard
+            header="RFI"
+            identifier="OXXO_01213"
+            content="Aquí va el titulo de la subasta"
+            summary="Aqui va la super ultra larga hiper mega descripción"
+            view={`/auction/rfi/${user}`}
+            stepAuction="RFI"
           />
-          <Divider />
-          {activeAuctions && activeAuctions.length > 0 ? (
-            <AuctionTable
-              columns={getTableSettingsActiveAuctions()}
-              dataSource={activeAuctions}
-              totalCount={totalCount}
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onChangePage={onChangePage}
-              onChangeLimit={onChangeLimit}
-              limit={limit}
-              buttonAction={buttonAction}
-              buttonTitle="Ir a la subasta"
-              color="blue"
-              colorTable="blue"
-              // handleSort={this.handleSort}
-              // column={this.state._sort}
-            />
-          ) : (
-            <NoData
-              size="medium"
-              title="Aquí aparecerán tus subastas activas"
-            />
-          )}
-        </div>
-      </div>
-    </Fragment>
+          <AuctionStepCard
+            header="FA/PT"
+            identifier="OXXO_01213"
+            content="Aquí va el titulo de la subasta"
+            summary="Aqui va la super ultra larga hiper mega descripción"
+            view={`/auction/fa/${user}`}
+            stepAuction="FA/PT"
+          />
+          <AuctionStepCard
+            header="Finalizadas"
+            identifier="OXXO_01213"
+            content="Aquí va el titulo de la subasta"
+            summary="Aqui va la super ultra larga hiper mega descripción"
+            view={`/auction/finalized/${user}`}
+            stepAuction="finalizadas"
+          />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
