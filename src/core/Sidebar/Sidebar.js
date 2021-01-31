@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { Grid, Button, Icon } from "semantic-ui-react";
 import {
   ProSidebar,
@@ -32,10 +32,15 @@ const Sidebar = () => {
 
   const fetchUser = async () => {
     const response = await getUserInfoById(token);
-    //if (response?.data) {
-    setUser(response.data.body);
-    setLogo(response.data.body.logoUrl);
-    // }
+
+    console.log('response', response)
+
+    if (response.error) {
+      return <Redirect to="/login" />
+    } else {
+      setUser(response.data.body);
+      setLogo(response.data.body.logoUrl);
+    }
   };
 
   const onChangeLogo = (e) => {

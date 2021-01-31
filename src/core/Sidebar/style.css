@@ -1,5 +1,6 @@
 .pro-sidebar {
-  color: #fff; }
+  color: #fff;
+  position: fixed !important; }
 
 .pro-sidebar > .pro-sidebar-inner {
   background: linear-gradient(to bottom, #00acee, #1366c4);
