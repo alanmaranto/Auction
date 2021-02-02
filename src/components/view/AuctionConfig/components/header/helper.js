@@ -1,15 +1,21 @@
 import { steps } from "../../helper";
 
 const getSteps = (auctionStep) => {
-  let completed = auctionStep ? true : false;
-  const formatedSteps = [...steps].map((currentStep) => {
-    currentStep.completed = completed;
+  let completed = true;
+  const formatedSteps = [];
+  [...steps].forEach((currentStep) => {
+    const newStep = {
+      ...currentStep,
+      completed,
+      subtitle: "",
+    };
     if (currentStep.value === auctionStep) {
-      currentStep.completed = false;
-      currentStep.active = true;
+      newStep.completed = false;
+      newStep.active = true;
+      newStep.subtitle = currentStep.subtitle;
       completed = false;
     }
-    return currentStep;
+    return formatedSteps.push(newStep);
   });
   return formatedSteps;
 };

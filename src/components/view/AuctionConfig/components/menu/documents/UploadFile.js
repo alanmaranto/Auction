@@ -22,8 +22,8 @@ function UploadFile({
     onAddFile,
     onCloseUploadFile,
     onSaveFiles,
-  } = useUploadFiles({ onClose });
-  const [isUploading, setIsUploading] = useState(false);
+    isUploading,
+  } = useUploadFiles({ onClose, fetchAuction });
 
   return (
     <div>

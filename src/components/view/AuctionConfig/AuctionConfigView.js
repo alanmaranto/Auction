@@ -63,17 +63,16 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
             }}
           />
         </Grid.Column>
-        {auctionStep === "rfi" && (
-          <Grid.Column width={5} style={{ background: "#fafafa" }}>
-            <Menu
-              auctionStep={auctionStep}
-              auctionId={auctionId}
-              fetchAuction={fetchAuction}
-              auctionFiles={auction?.files || []}
-              fetchMissingSuppliers={fetchMissingSuppliers}
-            />
-          </Grid.Column>
-        )}
+        <Grid.Column width={5} style={{ background: "#fafafa" }}>
+          <Menu
+            auctionStep={auctionStep}
+            auctionId={auctionId}
+            fetchAuction={fetchAuction}
+            auctionFiles={auction?.files || []}
+            fetchMissingSuppliers={fetchMissingSuppliers}
+            setChagedSuppliers={setChagedSuppliers}
+          />
+        </Grid.Column>
       </Grid>
     </>
   );

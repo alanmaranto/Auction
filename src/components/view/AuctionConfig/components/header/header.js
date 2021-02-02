@@ -1,12 +1,12 @@
-import React, { Fragment } from "react";
-import { Header, Grid, Button, Feed, Icon } from "semantic-ui-react";
+import React from "react";
+import { Header, Grid } from "semantic-ui-react";
 import { Stepper } from "../../../../../core/controllers";
 import { getSteps } from "./helper";
 
 import "./style.css";
 
 const AuctionHeader = ({ auctionStep, title, description }) => {
-  const formatedSteps = getSteps(auctionStep);
+  let formatedSteps = getSteps(auctionStep);
   return (
     <Grid className="auction-header">
       <Grid.Row>
