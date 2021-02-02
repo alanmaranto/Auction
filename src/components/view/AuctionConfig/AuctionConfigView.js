@@ -19,7 +19,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
 
   return (
     <>
-      <Grid>
+      <Grid textAlign="left" padded columns={16}>
         <Grid.Column width={16}>
           <AuctionHeader
             auctionStep={auctionStep}

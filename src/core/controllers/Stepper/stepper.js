@@ -1,8 +1,8 @@
 import React from "react";
 import { Step, Icon } from "semantic-ui-react";
 
-const Stepper = ({ steps }) => (
-  <Step.Group>
+const Stepper = ({ steps, size }) => (
+  <Step.Group size={size}>
     {steps
       ? steps.map((step) => {
           return (
@@ -25,5 +25,9 @@ const Stepper = ({ steps }) => (
       : []}
   </Step.Group>
 );
+
+Stepper.defaultProps = {
+  size: 'mini'
+}
 
 export default Stepper;
