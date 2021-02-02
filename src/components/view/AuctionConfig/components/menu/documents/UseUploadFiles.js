@@ -1,9 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { postFile } from "../../../../../../api/api";
 import { isAuthenticated } from "../../../../../../helpers/authenticate";
-import { Route } from "react-router";
 
-export const useUploadFiles = ({ onClose }) => {
+export const useUploadFiles = ({ onClose, fetchAuction }) => {
   const [fileList, setFileList] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -48,9 +47,9 @@ export const useUploadFiles = ({ onClose }) => {
       requestBody.append("files", file);
     });
     const response = await postFile(token, requestBody, auctionId);
-
     if (response && response.status === 201) {
       setIsUploading(false);
+      fetchAuction();
       onCloseUploadFile();
       return true;
     } else {
@@ -65,5 +64,6 @@ export const useUploadFiles = ({ onClose }) => {
     onRemoveFile,
     onCloseUploadFile,
     onSaveFiles,
+    isUploading,
   };
 };

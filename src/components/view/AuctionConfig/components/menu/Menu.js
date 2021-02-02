@@ -10,6 +10,8 @@ const MenuInvited = ({
   auctionStep,
   fetchAuction,
   auctionFiles,
+  fetchMissingSuppliers,
+  setChagedSuppliers,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   return (
@@ -40,33 +42,36 @@ const MenuInvited = ({
           />
         </Menu.Item>
       </Accordion>
-
-      <Accordion
-        as={Menu}
-        vertical
-        className="menu-items"
-        style={{ width: "100%" }}
-      >
-        <Menu.Item>
-          <Accordion.Title
-            active={activeIndex === 1}
-            content="Invitados"
-            index={1}
-            onClick={() => setActiveIndex(1)}
-          />
-          <Accordion.Content
-            active={activeIndex === 1}
-            content={
-              <MissingSuppliers
-                activeIndex={activeIndex}
-                setActiveIndex={setActiveIndex}
-                auctionId={auctionId}
-                fetchAuction={fetchAuction}
-              />
-            }
-          />
-        </Menu.Item>
-      </Accordion>
+      {auctionStep === "rfi" && (
+        <Accordion
+          as={Menu}
+          vertical
+          className="menu-items"
+          style={{ width: "100%" }}
+        >
+          <Menu.Item>
+            <Accordion.Title
+              active={activeIndex === 1}
+              content="Invitados"
+              index={1}
+              onClick={() => setActiveIndex(1)}
+            />
+            <Accordion.Content
+              active={activeIndex === 1}
+              content={
+                <MissingSuppliers
+                  activeIndex={activeIndex}
+                  setActiveIndex={setActiveIndex}
+                  auctionId={auctionId}
+                  fetchAuction={fetchAuction}
+                  fetchMissingSuppliers={fetchMissingSuppliers}
+                  setChagedSuppliers={setChagedSuppliers}
+                />
+              }
+            />
+          </Menu.Item>
+        </Accordion>
+      )}
     </>
   );
 };

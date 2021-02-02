@@ -4,7 +4,12 @@ import { useSuppliers } from "./UseInvitedSuppliers";
 
 import "./style.css";
 
-const MissingSuppliers = ({ fetchAuction, auctionId }) => {
+const MissingSuppliers = ({
+  fetchAuction,
+  auctionId,
+  fetchMissingSuppliers,
+  setChagedSuppliers,
+}) => {
   const {
     isLoading,
     supplliers,
@@ -15,8 +20,9 @@ const MissingSuppliers = ({ fetchAuction, auctionId }) => {
   useEffect(() => {
     try {
       fetchSuppliers({ auctionId });
+      setChagedSuppliers(false);
     } catch (error) {}
-  }, [fetchSuppliers, auctionId]);
+  }, [fetchSuppliers, auctionId, setChagedSuppliers, fetchMissingSuppliers]);
 
   const onInviteSupplier = async (supplier) => {
     try {
