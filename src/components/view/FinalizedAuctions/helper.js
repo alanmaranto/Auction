@@ -171,7 +171,6 @@ const filterData = (props) => {
 };
 
 const formatedProviderAuctionData = (dataSource) => {
-  console.log(dataSource)
   const auction = dataSource.map(({auctionId}) => {
     return {
       createdAt: auctionId.createdAt,
