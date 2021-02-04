@@ -6,6 +6,7 @@ import {
   Menu,
   MoveToStepModal,
 } from "./components";
+import Posts from "./components/faPosts/Posts";
 import { getNextStep, getAcceptedSuppliers } from "./helper";
 
 import "./style.css";
@@ -72,6 +73,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
             fetchMissingSuppliers={fetchMissingSuppliers}
             setChagedSuppliers={setChagedSuppliers}
           />
+          {auction?.auctionStep === "fa_hl" && <Posts auctionId={auctionId} />}
         </Grid.Column>
       </Grid>
     </>
