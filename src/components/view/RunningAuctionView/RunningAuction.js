@@ -120,21 +120,14 @@ const RunningAuction = ({
     return (
       <Row columns={2}>
         <Column>
-          <Message
-            warning
-            header="Condiciones de la subasta"
-            list={auctionConditions}
-          />
-        </Column>
-        <Column>
-          <Card fluid>
+          {/*           <Card fluid>
             <Card.Content className="card-container" textAlign="center">
               <Card.Header className="card-bid">Puja actual</Card.Header>
               <Card.Description className="card-bid-number">
                 $ {(lastMessage && lastMessage.bid) || minimumPrice} pesos
               </Card.Description>
             </Card.Content>
-          </Card>
+          </Card> */}
           {role === roles.PROVIDER && (
             <Form size="large" onSubmit={onSubmit}>
               <Input
@@ -165,12 +158,7 @@ const RunningAuction = ({
       </Row>
     );
   };
-
-  // make sure parent container have a defined height when using
-  // responsive component, otherwise height will be 0 and
-  // no chart will be rendered.
-  // website examples showcase many properties,
-  // you'll often use just a few of them.
+// calcular (minimumBid * totalItemsPrice) / 100 para mostrarlo en el message
 
   const data = [
     {
@@ -451,17 +439,24 @@ const RunningAuction = ({
     <Grid>
       {renderTitle()}
       {/* {renderCountdown()} */}
-      {/* {renderBid()} */}
       <Grid.Row>
         <Grid.Column>
           <RealTimeGraph data={data} />
         </Grid.Column>
       </Grid.Row>
-      <Grid.Row>
+      <Grid.Row columns={2}>
         <Grid.Column>
           <SummaryTableCard />
         </Grid.Column>
+        <Grid.Column>
+          <Message
+            warning
+            header="Condiciones de la subasta"
+            list={auctionConditions}
+          />
+        </Grid.Column>
       </Grid.Row>
+      {renderBid()}
     </Grid>
   );
 };

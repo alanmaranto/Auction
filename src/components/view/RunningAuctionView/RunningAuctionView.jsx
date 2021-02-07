@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import RunningAuction from "./RunningAuction";
 
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { getRunningAuctionById, posMessage, updateAuction } from "../../../api/api";
+import {
+  getRunningAuctionById,
+  posMessage,
+  updateAuction,
+} from "../../../api/api";
 import { socket, registerUserIOToken } from "../../../socket";
 
 class RunningAuctionView extends Component {
@@ -44,6 +48,7 @@ class RunningAuctionView extends Component {
     const { id: currentAuction } = this.props.match.params;
     const { token } = isAuthenticated();
     const response = await getRunningAuctionById(token, currentAuction);
+    console.log("response", response);
     if (response && response.data && response.data.body) {
       const { lastMessage, auctionResult } = response.data.body;
 
@@ -52,8 +57,7 @@ class RunningAuctionView extends Component {
   };
 
   listenMessages = () => {
-    socket.on("wellcome", (data) => {
-    });
+    socket.on("wellcome", (data) => {});
     socket.on("newMessage", (data) => {
       const { id: currentAuction } = this.props.match.params;
       if (data.auctionId === currentAuction) {
@@ -69,19 +73,19 @@ class RunningAuctionView extends Component {
   onSubmit = async () => {
     const { message, auction } = this.state;
     const { token, user } = isAuthenticated();
-    const result = await posMessage(token, { auction, message, user});
-    this.setState({ message: ''})
+    const result = await posMessage(token, { auction, message, user });
+    this.setState({ message: "" });
   };
 
   onFinalizedAuction = () => {
     const { id: currentAuction } = this.props.match.params;
     const { finalized } = this.state;
-    const { token } = isAuthenticated()
+    const { token } = isAuthenticated();
     const data = {
-      finalized: !finalized
-    }
+      finalized: !finalized,
+    };
     const result = updateAuction(currentAuction, token, data);
-  }
+  };
 
   render() {
     const { auction, message, lastMessage } = this.state;
@@ -91,7 +95,7 @@ class RunningAuctionView extends Component {
       <RunningAuction
         title={auction.title}
         minimumBid={auction.minimumBid}
-        minimumPrice={auction.minimumPrice}
+        minimumPrice={auction.totalItemsPrice}
         onChange={this.onChange}
         message={message}
         role={user.role}
