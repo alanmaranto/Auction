@@ -1,0 +1,19 @@
+.responsive-bump {
+  height: 350px;
+  width: 850px; }
+  @media (min-width: 1200px) and (max-width: 1300px) {
+    .responsive-bump {
+      height: 450px;
+      width: 900px; } }
+  @media (min-width: 1301px) and (max-width: 1400px) {
+    .responsive-bump {
+      height: 450px;
+      width: 1050px; } }
+  @media (min-width: 1401px) and (max-width: 1500px) {
+    .responsive-bump {
+      height: 450px;
+      width: 1150px; } }
+  @media (min-width: 1501px) {
+    .responsive-bump {
+      height: 450px;
+      width: 1250px; } }

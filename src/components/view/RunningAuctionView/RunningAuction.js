@@ -11,6 +11,8 @@ import {
 import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
 import { roles } from "../../../helpers/roles";
+import SummaryTableCard from "./components/SummaryTableCard";
+import RealTimeGraph from "./components/RealTimeGraph";
 import "./style.css";
 
 const Input = Form.Input;
@@ -164,11 +166,302 @@ const RunningAuction = ({
     );
   };
 
+  // make sure parent container have a defined height when using
+  // responsive component, otherwise height will be 0 and
+  // no chart will be rendered.
+  // website examples showcase many properties,
+  // you'll often use just a few of them.
+
+  const data = [
+    {
+      id: "japan",
+      color: "hsl(113, 70%, 50%)",
+      data: [
+        {
+          x: "plane",
+          y: 287,
+        },
+        {
+          x: "helicopter",
+          y: 293,
+        },
+        {
+          x: "boat",
+          y: 57,
+        },
+        {
+          x: "train",
+          y: 231,
+        },
+        {
+          x: "subway",
+          y: 64,
+        },
+        {
+          x: "bus",
+          y: 215,
+        },
+        {
+          x: "car",
+          y: 222,
+        },
+        {
+          x: "moto",
+          y: 31,
+        },
+        {
+          x: "bicycle",
+          y: 83,
+        },
+        {
+          x: "horse",
+          y: 226,
+        },
+        {
+          x: "skateboard",
+          y: 77,
+        },
+        {
+          x: "others",
+          y: 294,
+        },
+      ],
+    },
+    {
+      id: "france",
+      color: "hsl(170, 70%, 50%)",
+      data: [
+        {
+          x: "plane",
+          y: 145,
+        },
+        {
+          x: "helicopter",
+          y: 275,
+        },
+        {
+          x: "boat",
+          y: 42,
+        },
+        {
+          x: "train",
+          y: 48,
+        },
+        {
+          x: "subway",
+          y: 143,
+        },
+        {
+          x: "bus",
+          y: 69,
+        },
+        {
+          x: "car",
+          y: 70,
+        },
+        {
+          x: "moto",
+          y: 149,
+        },
+        {
+          x: "bicycle",
+          y: 58,
+        },
+        {
+          x: "horse",
+          y: 133,
+        },
+        {
+          x: "skateboard",
+          y: 66,
+        },
+        {
+          x: "others",
+          y: 45,
+        },
+      ],
+    },
+    {
+      id: "us",
+      color: "hsl(275, 70%, 50%)",
+      data: [
+        {
+          x: "plane",
+          y: 54,
+        },
+        {
+          x: "helicopter",
+          y: 75,
+        },
+        {
+          x: "boat",
+          y: 51,
+        },
+        {
+          x: "train",
+          y: 31,
+        },
+        {
+          x: "subway",
+          y: 158,
+        },
+        {
+          x: "bus",
+          y: 32,
+        },
+        {
+          x: "car",
+          y: 49,
+        },
+        {
+          x: "moto",
+          y: 291,
+        },
+        {
+          x: "bicycle",
+          y: 91,
+        },
+        {
+          x: "horse",
+          y: 104,
+        },
+        {
+          x: "skateboard",
+          y: 90,
+        },
+        {
+          x: "others",
+          y: 60,
+        },
+      ],
+    },
+    {
+      id: "germany",
+      color: "hsl(202, 70%, 50%)",
+      data: [
+        {
+          x: "plane",
+          y: 78,
+        },
+        {
+          x: "helicopter",
+          y: 60,
+        },
+        {
+          x: "boat",
+          y: 275,
+        },
+        {
+          x: "train",
+          y: 259,
+        },
+        {
+          x: "subway",
+          y: 291,
+        },
+        {
+          x: "bus",
+          y: 183,
+        },
+        {
+          x: "car",
+          y: 243,
+        },
+        {
+          x: "moto",
+          y: 109,
+        },
+        {
+          x: "bicycle",
+          y: 92,
+        },
+        {
+          x: "horse",
+          y: 113,
+        },
+        {
+          x: "skateboard",
+          y: 257,
+        },
+        {
+          x: "others",
+          y: 265,
+        },
+      ],
+    },
+    {
+      id: "norway",
+      color: "hsl(256, 70%, 50%)",
+      data: [
+        {
+          x: "plane",
+          y: 6,
+        },
+        {
+          x: "helicopter",
+          y: 243,
+        },
+        {
+          x: "boat",
+          y: 67,
+        },
+        {
+          x: "train",
+          y: 195,
+        },
+        {
+          x: "subway",
+          y: 124,
+        },
+        {
+          x: "bus",
+          y: 125,
+        },
+        {
+          x: "car",
+          y: 73,
+        },
+        {
+          x: "moto",
+          y: 119,
+        },
+        {
+          x: "bicycle",
+          y: 5,
+        },
+        {
+          x: "horse",
+          y: 165,
+        },
+        {
+          x: "skateboard",
+          y: 168,
+        },
+        {
+          x: "others",
+          y: 106,
+        },
+      ],
+    },
+  ];
+
+  console.log("data", data);
+
   return (
     <Grid>
       {renderTitle()}
-      {renderCountdown()}
-      {renderBid()}
+      {/* {renderCountdown()} */}
+      {/* {renderBid()} */}
+      <Grid.Row>
+        <Grid.Column>
+          <RealTimeGraph data={data} />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <SummaryTableCard />
+        </Grid.Column>
+      </Grid.Row>
     </Grid>
   );
 };
