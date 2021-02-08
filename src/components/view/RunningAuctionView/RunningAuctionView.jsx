@@ -7,7 +7,10 @@ import {
   posMessage,
   updateAuction,
 } from "../../../api/api";
+import { getRealTimeBidsByAuctionId } from "../../../api/realtime";
 import { socket, registerUserIOToken } from "../../../socket";
+import moment from "moment";
+import "moment/locale/es";
 
 class RunningAuctionView extends Component {
   constructor(props) {
@@ -19,6 +22,7 @@ class RunningAuctionView extends Component {
       token: undefined,
       lastMessage: {},
       finalized: false,
+      bids: [],
     };
   }
 
@@ -47,23 +51,38 @@ class RunningAuctionView extends Component {
   fetchAuction = async () => {
     const { id: currentAuction } = this.props.match.params;
     const { token } = isAuthenticated();
-    const response = await getRunningAuctionById(token, currentAuction);
+    const response = await getRealTimeBidsByAuctionId(token, currentAuction);
     console.log("response", response);
     if (response && response.data && response.data.body) {
-      const { lastMessage, auctionResult } = response.data.body;
+      const { bids, auctionResult } = response.data.body;
 
-      this.setState({ auction: auctionResult, lastMessage });
+      const formattedBids = this.formattedData(bids);
+
+      this.setState({ auction: auctionResult, bids: formattedBids });
     }
   };
 
   listenMessages = () => {
     socket.on("wellcome", (data) => {});
     socket.on("newMessage", (data) => {
+      console.log("jejejejejeje", data);
       const { id: currentAuction } = this.props.match.params;
-      if (data.auctionId === currentAuction) {
-        this.setState({ lastMessage: data });
-      }
+      // if (data.auctionId === currentAuction) {
+      const formattedBids = this.formattedData(data.bids);
+
+      this.setState({ bids: formattedBids });
+      // this.setState({ lastMessage: data });
+      // }
     });
+  };
+
+  getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   };
 
   onChange = (param, value) => {
@@ -71,9 +90,14 @@ class RunningAuctionView extends Component {
   };
 
   onSubmit = async () => {
-    const { message, auction } = this.state;
-    const { token, user } = isAuthenticated();
-    const result = await posMessage(token, { auction, message, user });
+    const { id: currentAuction } = this.props.match.params;
+    const { message } = this.state;
+    const { token } = isAuthenticated();
+    const data = {
+      auctionId: currentAuction,
+      message,
+    };
+    const result = await posMessage(token, data);
     this.setState({ message: "" });
   };
 
@@ -87,9 +111,29 @@ class RunningAuctionView extends Component {
     const result = updateAuction(currentAuction, token, data);
   };
 
+  formattedData = (dataSource) => {
+    let dataFormatted = [];
+    dataSource.forEach(({ userId, createdAt, _id, bid }) => {
+      dataFormatted.push({
+        id: userId.name,
+        color: this.getRandomColor(),
+        data: [
+          {
+            x: moment(createdAt).format("h:mm"),
+          },
+          {
+            y: Number(bid),
+          },
+        ],
+      });
+    });
+    return dataFormatted
+  };
+
   render() {
-    const { auction, message, lastMessage } = this.state;
+    const { auction, message, lastMessage, bids } = this.state;
     const { user } = isAuthenticated();
+    console.log("bids", bids);
 
     return (
       <RunningAuction
@@ -103,6 +147,7 @@ class RunningAuctionView extends Component {
         lastMessage={lastMessage}
         endingAuction={auction.endingRealTimeAuctionDate}
         onFinalizedAuction={this.onFinalizedAuction}
+        bids={bids}
       />
     );
   }

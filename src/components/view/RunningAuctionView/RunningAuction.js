@@ -13,6 +13,7 @@ import Countdown from "react-countdown";
 import { roles } from "../../../helpers/roles";
 import SummaryTableCard from "./components/SummaryTableCard";
 import RealTimeGraph from "./components/RealTimeGraph";
+
 import "./style.css";
 
 const Input = Form.Input;
@@ -62,6 +63,7 @@ const RunningAuction = ({
   minimumBid,
   minimumPrice,
   role,
+  bids,
 }) => {
   const operation = new Date(endingAuction).getTime();
 
@@ -115,8 +117,8 @@ const RunningAuction = ({
   };
 
   const renderBid = () => {
-    const submitBid = lastMessage && lastMessage.bid - minimumBid;
-    console.log("submitBid", submitBid);
+    /*     const submitBid = lastMessage && lastMessage.bid - minimumBid;
+    console.log("submitBid", submitBid); */
     return (
       <Row columns={2}>
         <Column>
@@ -138,7 +140,7 @@ const RunningAuction = ({
                 fluid
                 size="big"
                 inverted
-                max={submitBid === null ? minimumPrice : submitBid}
+                // max={submitBid === null ? minimumPrice : submitBid}
                 onChange={(e) => onChange("message", e.target.value)}
               />
               <Button
@@ -158,7 +160,10 @@ const RunningAuction = ({
       </Row>
     );
   };
-// calcular (minimumBid * totalItemsPrice) / 100 para mostrarlo en el message
+  // calcular (minimumBid * totalItemsPrice) / 100 para mostrarlo en el message
+
+
+
 
   const data = [
     {
@@ -433,7 +438,7 @@ const RunningAuction = ({
     },
   ];
 
-  console.log("data", data);
+  // console.log("data", data);
 
   return (
     <Grid>
@@ -441,7 +446,7 @@ const RunningAuction = ({
       {/* {renderCountdown()} */}
       <Grid.Row>
         <Grid.Column>
-          <RealTimeGraph data={data} />
+          <RealTimeGraph data={bids} />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row columns={2}>
