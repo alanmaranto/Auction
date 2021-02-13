@@ -55,7 +55,6 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
 const RunningAuction = ({
   title,
   onSubmit,
-  onChange,
   message,
   lastMessage,
   endingAuction,
@@ -64,6 +63,8 @@ const RunningAuction = ({
   minimumPrice,
   role,
   bids,
+  summaryBids,
+  setMessage
 }) => {
   const operation = new Date(endingAuction).getTime();
 
@@ -141,7 +142,8 @@ const RunningAuction = ({
                 size="big"
                 inverted
                 // max={submitBid === null ? minimumPrice : submitBid}
-                onChange={(e) => onChange("message", e.target.value)}
+                // onChange={(e) => onChange("message", e.target.value)}
+                onChange={(e) => setMessage(e.target.value)}
               />
               <Button
                 style={{ background: "#19750c", color: "white" }}
@@ -167,278 +169,80 @@ const RunningAuction = ({
 
   const data = [
     {
-      id: "japan",
+      id: "alexis proveedor",
       color: "hsl(113, 70%, 50%)",
       data: [
         {
-          x: "plane",
+          x: "14:27",
           y: 287,
         },
         {
-          x: "helicopter",
-          y: 293,
+          x: "14:33",
+          y: 285,
         },
         {
-          x: "boat",
-          y: 57,
-        },
-        {
-          x: "train",
-          y: 231,
-        },
-        {
-          x: "subway",
-          y: 64,
-        },
-        {
-          x: "bus",
-          y: 215,
-        },
-        {
-          x: "car",
-          y: 222,
-        },
-        {
-          x: "moto",
-          y: 31,
-        },
-        {
-          x: "bicycle",
-          y: 83,
-        },
-        {
-          x: "horse",
-          y: 226,
-        },
-        {
-          x: "skateboard",
-          y: 77,
-        },
-        {
-          x: "others",
-          y: 294,
+          x: "14:50",
+          y: 220,
         },
       ],
     },
     {
-      id: "france",
+      id: "nuevo proveedor",
       color: "hsl(170, 70%, 50%)",
       data: [
         {
-          x: "plane",
-          y: 145,
+          x: "14:33",
+          y: 287,
         },
         {
-          x: "helicopter",
-          y: 275,
+          x: "14:56",
+          y: 200,
         },
         {
-          x: "boat",
-          y: 42,
-        },
-        {
-          x: "train",
-          y: 48,
-        },
-        {
-          x: "subway",
-          y: 143,
-        },
-        {
-          x: "bus",
-          y: 69,
-        },
-        {
-          x: "car",
-          y: 70,
-        },
-        {
-          x: "moto",
-          y: 149,
-        },
-        {
-          x: "bicycle",
-          y: 58,
-        },
-        {
-          x: "horse",
-          y: 133,
-        },
-        {
-          x: "skateboard",
-          y: 66,
-        },
-        {
-          x: "others",
-          y: 45,
-        },
-      ],
-    },
-    {
-      id: "us",
-      color: "hsl(275, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 54,
-        },
-        {
-          x: "helicopter",
-          y: 75,
-        },
-        {
-          x: "boat",
-          y: 51,
-        },
-        {
-          x: "train",
-          y: 31,
-        },
-        {
-          x: "subway",
-          y: 158,
-        },
-        {
-          x: "bus",
-          y: 32,
-        },
-        {
-          x: "car",
-          y: 49,
-        },
-        {
-          x: "moto",
-          y: 291,
-        },
-        {
-          x: "bicycle",
-          y: 91,
-        },
-        {
-          x: "horse",
-          y: 104,
-        },
-        {
-          x: "skateboard",
-          y: 90,
-        },
-        {
-          x: "others",
-          y: 60,
-        },
-      ],
-    },
-    {
-      id: "germany",
-      color: "hsl(202, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 78,
-        },
-        {
-          x: "helicopter",
-          y: 60,
-        },
-        {
-          x: "boat",
-          y: 275,
-        },
-        {
-          x: "train",
-          y: 259,
-        },
-        {
-          x: "subway",
-          y: 291,
-        },
-        {
-          x: "bus",
-          y: 183,
-        },
-        {
-          x: "car",
-          y: 243,
-        },
-        {
-          x: "moto",
-          y: 109,
-        },
-        {
-          x: "bicycle",
-          y: 92,
-        },
-        {
-          x: "horse",
-          y: 113,
-        },
-        {
-          x: "skateboard",
-          y: 257,
-        },
-        {
-          x: "others",
-          y: 265,
-        },
-      ],
-    },
-    {
-      id: "norway",
-      color: "hsl(256, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 6,
-        },
-        {
-          x: "helicopter",
-          y: 243,
-        },
-        {
-          x: "boat",
-          y: 67,
-        },
-        {
-          x: "train",
-          y: 195,
-        },
-        {
-          x: "subway",
-          y: 124,
-        },
-        {
-          x: "bus",
-          y: 125,
-        },
-        {
-          x: "car",
-          y: 73,
-        },
-        {
-          x: "moto",
-          y: 119,
-        },
-        {
-          x: "bicycle",
-          y: 5,
-        },
-        {
-          x: "horse",
-          y: 165,
-        },
-        {
-          x: "skateboard",
-          y: 168,
-        },
-        {
-          x: "others",
-          y: 106,
-        },
+          x: "14:57",
+          y: 199,
+        }
       ],
     },
   ];
 
-  // console.log("data", data);
+const data2 = [
+  {
+    "id": "omi",
+    "data": [
+      {
+        "x": "7:02",
+        "y": 200
+      },
+      {
+        "x": "7:10",
+        "y": 199
+      },
+      {
+        "x": "7:25",
+        "y": 198
+      },
+    ]
+  },
+  {
+    "id": "alan",
+    "data": [
+      {
+        "x": "7:02",
+        "y": 200
+      },
+      {
+        "x": "7:10",
+        "y": 199
+      },
+      {
+        "x": "7:25",
+        "y": 198
+      },
+    ]
+  },
+
+]
 
   return (
     <Grid>
@@ -451,7 +255,7 @@ const RunningAuction = ({
       </Grid.Row>
       <Grid.Row columns={2}>
         <Grid.Column>
-          <SummaryTableCard />
+          <SummaryTableCard summaryBids={summaryBids} />
         </Grid.Column>
         <Grid.Column>
           <Message

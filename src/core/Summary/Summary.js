@@ -21,7 +21,7 @@ const SummaryComponent = ({ filter, columns, data }) => {
                   <span>{index + 1}</span>
                 </td>
                 {/* <td>{row.alias}</td> */}
-                <td>{row.userId.name}</td>
+                <td>{row.supplier[0].name}</td>
                 <td>{row.bid}</td>
               </tr>
             ))

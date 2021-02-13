@@ -16,3 +16,22 @@ export const getRealTimeBidsByAuctionId = async (token, id) => {
     return error;
   }
 };
+
+export const getBidsByAuctionInfo = async (token, auctionId) => {
+  try {
+    const response = await axios({
+      url: `${host}/bids/${auctionId}`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response) {
+      return response;
+    }
+    return response.data.error;
+  } catch (error) {
+    console.log(error);
+  }
+};
