@@ -16,11 +16,12 @@ export const TableRow = ({ dataRow, columns }) => {
   return (
     <Table.Row>
       {finalColumns &&
-        finalColumns.map(({ name, renderData }) => {
+        finalColumns.map(({ textAlign, name, renderData, width }) => {
           return (
             <Table.Cell
               negative={dataRow.negative || false}
               positive={dataRow.positive || false}
+              textAlign={textAlign}
             >
               {renderData ? renderData(dataRow) : dataRow[name]}
             </Table.Cell>

@@ -39,13 +39,14 @@ const CoreTable = (props) => {
       )}
       {title}
       <Table
-        size="small"
-        compact
-        fixed
+        size="small" 
         color={colorTable || "blue"}
         className="custom-table"
+        compact
+        fixed
         celled
         structured
+        unstackable
       >
         <TableHeader columns={columns} />
         <Table.Body colSpan="16">

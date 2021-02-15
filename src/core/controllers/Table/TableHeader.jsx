@@ -7,16 +7,19 @@ export function TableHeader(props) {
       {props?.columns && typeof props.columns[0] === "object" ? (
         props.columns.map((row, index) => (
           <Table.Row>
-            {row.map(({ name, title, sorted, rowSpan, colSpan }) => (
-              <Table.HeaderCell
-                sorted={sorted ? sorted : null}
-                key={`th-${name}-${title}-${index}`}
-                rowSpan={rowSpan}
-                colSpan={colSpan}
-              >
-                {title}
-              </Table.HeaderCell>
-            ))}
+            {row.map(
+              ({ width, textAlign, name, title, sorted, rowSpan, colSpan }) => (
+                <Table.HeaderCell
+                  sorted={sorted ? sorted : null}
+                  key={`th-${name}-${title}-${index}`}
+                  colSpan={colSpan}
+                  textAlign={textAlign}
+                  width={width}
+                >
+                  {title}
+                </Table.HeaderCell>
+              )
+            )}
           </Table.Row>
         ))
       ) : (

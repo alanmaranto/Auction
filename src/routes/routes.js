@@ -40,6 +40,9 @@ const FavoriteSuppliers = React.lazy(() =>
 const AuctonConfigView = React.lazy(() =>
   import("../components/view/AuctionConfig")
 );
+const AuctonConfigSupplierView = React.lazy(() =>
+  import("../components/view/AuctionConfigSupplier")
+);
 const InvitationsSuppliers = React.lazy(() =>
   import("../components/supplier/invitations/Invitations")
 );
@@ -84,6 +87,14 @@ export const generalRoutes = {
     showSidebar: true,
     showInNavbar: true,
     role: "buyer",
+  },
+  AUCTION_CONFIG_SUPPLIER: {
+    path: "/auction-config-supplier/:id",
+    component: AuctonConfigSupplierView,
+    term: "runningAuction",
+    showSidebar: true,
+    showInNavbar: true,
+    role: "supplier",
   },
   NOT_APPROVED: {
     path: "/not-approved",
