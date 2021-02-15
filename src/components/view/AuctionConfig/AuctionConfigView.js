@@ -6,7 +6,7 @@ import {
   Menu,
   MoveToStepModal,
 } from "./components";
-import Posts from "./components/faPosts/Posts";
+import Posts from './components/faPosts/Posts';
 import { getNextStep, getAcceptedSuppliers } from "./helper";
 
 import "./style.css";

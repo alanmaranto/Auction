@@ -245,6 +245,22 @@ export const getAuctionInfo = async (token, id) => {
   }
 };
 
+export const getAuctionInfoSupplier = async (token, id) => {
+  try {
+    const response = await axios({
+      url: `${host}/auction/${id}/info-supplier`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const putAuctionStep = async (token, data) => {
   try {
     const response = await axios({
@@ -347,6 +363,25 @@ export const postInvitationDocuments = async (token, options) => {
     const response = await axios({
       url: `${host}/auction/${auctionId}/invitation-files`,
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: options,
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const putInvitationDocuments = async (token, options) => {
+  try {
+    const { auctionId } = options;
+    const response = await axios({
+      // update step
+      url: `${host}/auction/${auctionId}/files-step`,
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
