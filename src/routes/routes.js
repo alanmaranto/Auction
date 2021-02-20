@@ -6,11 +6,9 @@ const BuyerDashboard = React.lazy(() =>
 );
 const Register = React.lazy(() => import("../components/auth/Register"));
 // import Settings = React.lazy(() => import('../components/')) "../components/user/Settings";
-// const NewProject = React.lazy(() => import("../components/view/newProject/NewProject"));
 const NewProject = React.lazy(() =>
-  import("../components/view/newProject/NewProject")
+  import("../components/view/NewProject/NewProject")
 );
-// const NewProject = React.lazy(() => import("../components/view/newProject"));
 
 const AuctionView = React.lazy(() =>
   import("../components/view/AuctionView/AuctionContainer")

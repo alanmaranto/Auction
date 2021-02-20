@@ -1,0 +1,13 @@
+.menu-items .document-item {
+  padding-top: 10px; }
+
+.menu-items .user-item {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px gray solid; }
+  .menu-items .user-item div {
+    text-align: center;
+    display: flex;
+    align-items: center; }

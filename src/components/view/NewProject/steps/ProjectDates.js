@@ -40,7 +40,7 @@ const ProjectDates = ({
           onChange={(date) => setOpeningRFIDate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={15}
+          timeIntervals={30}
           timeCaption="time"
           dateFormat="Pp"
           minDate={new Date()}
@@ -54,12 +54,12 @@ const ProjectDates = ({
           onChange={(date) => setEndingRFIDate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={15}
+          timeIntervals={30}
           timeCaption="time"
           dateFormat="Pp"
-          minDate={new Date()}
           locale="es"
-          placeholderText={new Date()}
+          minDate={openingRFIDate || new Date()}
+          placeholderText={openingRFIDate || new Date()}
           fixedHeight
         />
       </Form.Field>
@@ -85,9 +85,9 @@ const ProjectDates = ({
           timeIntervals={15}
           timeCaption="time"
           dateFormat="Pp"
-          minDate={new Date()}
           locale="es"
-          placeholderText={new Date()}
+          minDate={endingRFIDate || new Date()}
+          placeholderText={endingRFIDate || new Date()}
           fixedHeight
         />
         <label>Termina</label>
@@ -99,11 +99,10 @@ const ProjectDates = ({
           timeIntervals={15}
           timeCaption="time"
           dateFormat="Pp"
-          minDate={new Date()}
           locale="es"
-          placeholderText={new Date()}
+          minDate={openingFADate || new Date()}
+          placeholderText={openingFADate || new Date()}
           fixedHeight
-          withPortal
         />
       </Form.Field>
 
@@ -128,9 +127,9 @@ const ProjectDates = ({
           timeIntervals={15}
           timeCaption="time"
           dateFormat="Pp"
-          minDate={new Date()}
           locale="es"
-          placeholderText={new Date()}
+          minDate={endingFADate || new Date()}
+          placeholderText={endingFADate || new Date()}
           fixedHeight
         />
         <label>Termina</label>
@@ -142,9 +141,9 @@ const ProjectDates = ({
           timeIntervals={15}
           timeCaption="time"
           dateFormat="Pp"
-          minDate={new Date()}
           locale="es"
-          placeholderText={new Date()}
+          minDate={openingRealTimeAuctionDate || new Date()}
+          placeholderText={openingRealTimeAuctionDate || new Date()}
           fixedHeight
         />
       </Form.Field>
@@ -154,7 +153,7 @@ const ProjectDates = ({
           value={visibleDates}
           checked={visibleDates ? true : false}
           onChange={() => setVisibleDates(!visibleDates)}
-          style={{ paddingLeft: 10}}
+          style={{ paddingLeft: 10 }}
         />
       </Form.Group>
     </Form>

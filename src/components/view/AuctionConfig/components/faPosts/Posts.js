@@ -76,7 +76,7 @@ const Posts = ({ auctionId }) => {
   }
 
   return (
-    <Card>
+    <Card style={{ width: "100%" }}>
       <Header as="h3" style={{ padding: "10px 0px 0px 10px" }}>
         <Header.Content>Foro de aclaraciones</Header.Content>
       </Header>
