@@ -9,6 +9,7 @@ function MoveToStepModal({
   nexStep,
   auctionId,
   fetchAuction,
+  auctionStep,
 }) {
   const { moveToNextStep } = UseMoveToStep();
 
@@ -23,7 +24,7 @@ function MoveToStepModal({
       <Header icon="forward" content={`Ir a  ${nexStep}`} />
 
       <Modal.Content>
-        <p>Loss siguientes prveedores pasarán a etapa de {nexStep} </p>
+        <p>Loss siguientes proveedores pasarán a etapa de {nexStep} </p>
         <Grid verticalAlign="middle" columns={2} centered>
           <Grid.Row>
             <Grid.Column>
@@ -46,7 +47,18 @@ function MoveToStepModal({
           color="green"
           onClick={async () => {
             try {
-              const result = await moveToNextStep({ auctionId, suppliers });
+              let result;
+              if (auctionStep === "fa_hl") {
+                console.log('fa a sub')
+                result = await moveToNextStep({
+                  auctionId,
+                  suppliers,
+                  isFA: true,
+                });
+              } else {
+                console.log(' rfi a fa')
+                result = await moveToNextStep({ auctionId, suppliers });
+              }
               if (result) {
                 fetchAuction();
               }

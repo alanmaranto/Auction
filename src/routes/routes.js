@@ -9,10 +9,6 @@ const Register = React.lazy(() => import("../components/auth/Register"));
 const NewProject = React.lazy(() =>
   import("../components/view/NewProject/NewProject")
 );
-
-const AuctionView = React.lazy(() =>
-  import("../components/view/AuctionView/AuctionContainer")
-);
 const RunningAuctionView = React.lazy(() =>
   import("../components/view/RunningAuctionView")
 );
@@ -60,14 +56,6 @@ export const generalRoutes = {
     path: "/register",
     component: Register,
     term: "register",
-    role: "general",
-  },
-  AUCTION_VIEW: {
-    path: "/auction/:id",
-    component: AuctionView,
-    term: "newAuction",
-    showSidebar: true,
-    showInNavbar: false,
     role: "general",
   },
   RUNNING_AUCTION_VIEW: {

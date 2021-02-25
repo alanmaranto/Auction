@@ -49,7 +49,10 @@ const SuppliersTable = ({ fetch, suppliers, auctionId, auctionStep }) => {
       onHandleInvitation,
       onHandleInvitationDocuments,
     }),
-    fa_hl: faColumns({}),
+    fa_hl: faColumns({
+      onHandleInvitation,
+      onHandleInvitationDocuments
+    }),
   }[auctionStep];
 
   return (

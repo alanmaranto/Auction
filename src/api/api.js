@@ -270,9 +270,7 @@ export const putAuctionStep = async (token, data) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      data: {
-        suppliers: data.suppliers,
-      },
+      data,
     });
     return response;
   } catch (error) {

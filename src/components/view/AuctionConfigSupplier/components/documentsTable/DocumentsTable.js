@@ -44,7 +44,11 @@ const SuppliersTable = ({
       onHandleDeleteDocument,
       isSupplier,
     }),
-    fa_hl: faColumns({}),
+    fa_hl: faColumns({
+      onHandleReadDocument,
+      onHandleDeleteDocument,
+      isSupplier,
+    }),
   }[auctionStep];
 
   return <Table columns={tableColums} paginated={false} dataSource={files} />;

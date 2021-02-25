@@ -107,36 +107,6 @@ const Auction = ({
     );
   };
 
-  const renderAuctionHeader = () => {
-    return (
-      <Fragment>
-        <Row>
-          <Column>
-            <div className="auction-title">
-              <div className="auction-h">
-                <Header
-                  as="h1"
-                  className="auction-header"
-                  content={title}
-                  icon="gavel"
-                />
-              </div>
-            </div>
-          </Column>
-        </Row>
-        <Row>
-          <Column>
-            <div className="background-container">
-              <div>
-                <p className="auction-description">{description}</p>
-              </div>
-            </div>
-          </Column>
-        </Row>
-      </Fragment>
-    );
-  };
-
   const renderBuyerAuctionView = () => {
     return (
       isAuthenticated() &&
@@ -212,7 +182,6 @@ const Auction = ({
 
   return (
     <Grid>
-      {renderAuctionHeader()}
       {renderBuyerAuctionView()}
       {renderProvidersAuctionView()}
     </Grid>

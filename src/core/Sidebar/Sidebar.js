@@ -33,7 +33,7 @@ const Sidebar = () => {
   const fetchUser = async () => {
     const response = await getUserInfoById(token);
 
-    if (response.error) {
+    if (!response) {
       return <Redirect to="/login" />
     } else {
       setUser(response.data.body);
