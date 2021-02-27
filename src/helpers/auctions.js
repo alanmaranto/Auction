@@ -89,8 +89,38 @@ const FAAuctionsHeaderTable = [
     },
   ];
 
+  const SubAuctionsHeaderTable = [
+    {
+      name: "title",
+      title: "Titulo",
+      sorted: false,
+    },
+    {
+      name: "totalItemsPrice",
+      title: "Total",
+      sorted: false,
+    },
+    {
+      name: "minimumBid",
+      title: "Puja mínima",
+      sorted: false,
+    },
+    {
+      name: "openingRealTimeAuctionDate",
+      sorted: true,
+      title: "Fecha de inicio",
+    },
+    {
+      name: "winner",
+      sorted: true,
+      title: "",
+      buttonActions: true,
+    },
+  ];
+
 module.exports = {
   formatedData,
   RFIAuctionsHeaderTable,
-  FAAuctionsHeaderTable
+  FAAuctionsHeaderTable,
+  SubAuctionsHeaderTable
 };

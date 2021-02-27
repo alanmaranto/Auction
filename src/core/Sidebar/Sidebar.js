@@ -34,7 +34,7 @@ const Sidebar = () => {
     const response = await getUserInfoById(token);
 
     if (!response) {
-      return <Redirect to="/login" />
+      return <Redirect to="/login" />;
     } else {
       setUser(response.data.body);
       setLogo(response.data.body.logoUrl);
@@ -102,6 +102,10 @@ const Sidebar = () => {
                 <Link to={`/auction/fa/${user._id}`} />
               </MenuItem>
               <MenuItem icon={<Icon name="chart line" size={size} />}>
+                A punto
+                <Link to={`/auction/sub/${user._id}`} />
+              </MenuItem>
+              <MenuItem icon={<Icon name="chart line" size={size} />}>
                 Finalizadas
                 <Link to={`/auction/finalized/${user._id}`} />
               </MenuItem>
@@ -125,6 +129,27 @@ const Sidebar = () => {
               Dashboard
               <Link to="/provider-dashboard" />
             </MenuItem>
+            <SubMenu
+              title="Subastas"
+              icon={<Icon name="chart line" size={size} />}
+            >
+              <MenuItem icon={<Icon name="chart line" size={size} />}>
+                RFI
+                <Link to={`/auction/rfi-supplier/${user._id}`} />
+              </MenuItem>
+              <MenuItem icon={<Icon name="chart line" size={size} />}>
+                FA
+                <Link to={`/auction/fa-supplier/${user._id}`} />
+              </MenuItem>
+              <MenuItem icon={<Icon name="chart line" size={size} />}>
+                A punto
+                <Link to={`/auction/sub-supplier/${user._id}`} />
+              </MenuItem>
+              <MenuItem icon={<Icon name="chart line" size={size} />}>
+                Finalizadas
+                <Link to={`/auction/finalized/${user._id}`} />
+              </MenuItem>
+            </SubMenu>
             <MenuItem icon={<Icon name="chart line" size={size} />}>
               Invitaciones
               <Link to="/invitations" />

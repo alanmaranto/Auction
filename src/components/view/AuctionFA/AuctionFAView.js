@@ -6,7 +6,7 @@ import { AuctionFilter } from "../../../core/AuctionTable/AuctionFilter";
 
 import NoData from "../../../core/500/NoData";
 
-const AuctionRFI = ({
+const AuctionFA = ({
   faAuctions,
   user,
   totalCount,
@@ -58,4 +58,4 @@ const AuctionRFI = ({
   );
 };
 
-export default AuctionRFI;
+export default AuctionFA;

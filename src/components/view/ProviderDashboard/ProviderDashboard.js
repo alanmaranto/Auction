@@ -1,90 +1,57 @@
-import React, { Fragment } from "react";
-import { Grid, Segment, Divider, Header } from "semantic-ui-react";
-import { displayAuction } from "../BuyerDashboard/helpers";
-import NoData from "../../../core/500/NoData";
-import TotalAuctions from "../Reports/TotalAuctions";
-import { AuctionFilter } from '../../../core/AuctionTable/AuctionFilter'
-import { AuctionTable } from '../../../core/AuctionTable/AuctionTable'
-import NativeClock from "../../../core/Clock/NativeClock";
-import { getTableSettingsProviderActiveAuctions } from "../FinalizedAuctions/helper";
-import { Row, Column } from "../../../core/indexSemanticUi";
+import React from "react";
+import { Grid, Header } from "semantic-ui-react";
+import AuctionSupplierTotalCard from "./components/AuctionSupplierTotalCard";
+import AuctionStepSupplierCard from "./components/AuctionStepSupplierCard";
 
-import "./style.css";
-
-const ProvidersDashboard = ({
-  activeInvitedProviderAuctions,
+const SupplierDashboard = ({
   user,
-  totalCount,
-  totalPages,
-  currentPage,
-  onChangeLimit,
-  onChangePage,
-  onChangeValue,
-  limit,
-  buttonAction,
-  loading,
+  rfiAuctions,
+  faAuctions,
+  subAuctions,
+  history,
 }) => {
-  const { name } = user || {};
   return (
-    <Fragment>
-      <div className="dashboard-view">
-        <div className="card-graphics">
-          <Grid verticalAlign="middle" textAlign="left" padded columns={1}>
-            <Row className="dashboard-header">
-              <Column width={13}>
-                <Header className="dashboard-name" as="h1">
-                  Hola {(name || "").toUpperCase()}, Bienvenido
-                </Header>
-              </Column>
-              <Column width={3}>
-                <div>
-                  Hora del sistema
-                  <NativeClock />
-                </div>
-              </Column>
-            </Row>
-            <Row>
-              <Column width={13}>
-                {/*                 <Segment>
-                  <TotalAuctions />
-                </Segment>
- */}{" "}
-              </Column>
-            </Row>
-          </Grid>
-          <AuctionFilter
-            totalCount={totalCount}
-            onChangeValue={onChangeValue}
-            loading={loading}
+    <Grid textAlign="left" padded columns={16}>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <Header className="dashboard-name" as="h1">
+            Hola {user.name}, Bienvenido
+          </Header>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column computer={16} largeScreen={16} widescreen={16}>
+          <AuctionSupplierTotalCard
+            rfiAuctions={rfiAuctions}
+            faAuctions={faAuctions}
+            subAuctions={subAuctions}
           />
-          <Divider />
-          {activeInvitedProviderAuctions && activeInvitedProviderAuctions.length > 0 ? (
-            <AuctionTable
-              columns={getTableSettingsProviderActiveAuctions()}
-              dataSource={activeInvitedProviderAuctions}
-              totalCount={totalCount}
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onChangePage={onChangePage}
-              onChangeLimit={onChangeLimit}
-              limit={limit}
-              buttonAction={buttonAction}
-              buttonTitle="Ir a la subasta"
-              color="blue"
-              colorTable="blue"
-              // handleSort={this.handleSort}
-              // column={this.state._sort}
-            />
-          ) : (
-            <NoData
-              size="medium"
-              title="Aquí aparecerán tus subastas activas"
-            />
-          )}
-        </div>
-      </div>
-    </Fragment>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <AuctionStepSupplierCard
+            auctions={rfiAuctions.slice(0, 3)}
+            stepAuction="RFI"
+            view={`/auction/rfi-supplier/${user._id}`}
+            history={history}
+          />
+          <AuctionStepSupplierCard
+            auctions={faAuctions.slice(0, 3)}
+            stepAuction="FA"
+            view={`/auction/fa-supplier/${user._id}`}
+            history={history}
+          />
+          <AuctionStepSupplierCard
+            auctions={subAuctions.slice(0, 3)}
+            stepAuction="A Punto"
+            view={`/auction/sub-supplier/${user._id}`}
+            history={history}
+          />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
-export default ProvidersDashboard;
+export default SupplierDashboard;

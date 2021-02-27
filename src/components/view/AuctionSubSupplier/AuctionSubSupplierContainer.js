@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import { getRFIAuctionByUser } from "../../../api/auction";
+import { getAuctionsSuppliersInvitedByStep } from "../../../api/invitedSuppliers";
 import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { formatedData } from "../../../helpers/auctions";
 import {
   filterData,
+  formatedProviderAuctionData,
 } from "../FinalizedAuctions/helper";
-import AuctionRFI from "./AuctionRFIView";
+import AuctionSubSupplierView from "./AuctionSubSupplierView";
 import withToast from "../../../core/Toasts";
 
-class AuctionRFIContainer extends Component {
+class AuctionSubSupplierContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rfiAuctions: [],
+      subSupplierAuctions: [],
       currentPage: 1,
       elementsByPage: 5,
       totalCount: 0,
@@ -26,17 +26,17 @@ class AuctionRFIContainer extends Component {
   componentDidMount = () => {
     const { token } = isAuthenticated();
     if (token) {
-      this.fetchRfiAuctions(token);
+      this.fetchSubSuppliersAuctions(token);
     }
   };
 
-  fetchRfiAuctions = async (token) => {
+  fetchSubSuppliersAuctions = async (token) => {
     const { addToast } = this.props;
-    const response = await getRFIAuctionByUser(token);
-    if (response && response.data.body.length > 0) {
-      const formatedAuction = formatedData(response.data.body);
+    const response = await getAuctionsSuppliersInvitedByStep(token, "sub");
+    if (response && response.status === 200) {
+      const formatedAuction = formatedProviderAuctionData(response.data.body);
       this.setState({
-        rfiAuctions: formatedAuction || [],
+        subSupplierAuctions: formatedAuction,
       });
     } else {
       addToast("No hay subastas RFI", {
@@ -59,13 +59,13 @@ class AuctionRFIContainer extends Component {
   };
 
   sendToAuctionView = (id) => {
-    history.push(`/auction-config/${id}`);
+    history.push(`/auction-config-supplier/${id}`);
   };
 
   onSubmitFilter = (filter, currentPage) => {
-    const { elementsByPage, rfiAuctions, pageItems } = this.state;
+    const { elementsByPage, subSupplierAuctions, pageItems } = this.state;
     return filterData({
-      dataSource: rfiAuctions,
+      dataSource: subSupplierAuctions,
       elementsByPage,
       currentPage,
       pageItems,
@@ -76,14 +76,14 @@ class AuctionRFIContainer extends Component {
   render() {
     const { elementsByPage, currentPage, filter, loading } = this.state;
     const {
-      dataSource: rfiAuctions,
+      dataSource: subSupplierAuctions,
       dataSourceSize: totalCount,
     } = this.onSubmitFilter(filter, currentPage);
     const { user } = isAuthenticated();
 
     return (
-      <AuctionRFI
-        rfiAuctions={rfiAuctions}
+      <AuctionSubSupplierView
+        subSupplierAuctions={subSupplierAuctions}
         user={user}
         totalCount={totalCount}
         totalPages={Math.ceil(totalCount / elementsByPage)}
@@ -99,4 +99,4 @@ class AuctionRFIContainer extends Component {
   }
 }
 
-export default withToast(AuctionRFIContainer);
+export default withToast(AuctionSubSupplierContainer);

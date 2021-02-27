@@ -44,6 +44,10 @@ const AuctionRFIView = React.lazy(() =>
   import("../components/view/AuctionRFI")
 );
 const AuctionFAView = React.lazy(() => import("../components/view/AuctionFA"));
+const AuctionSubView = React.lazy(() => import("../components/view/AuctionSub"));
+const AuctionRFISupplierView = React.lazy(() => import("../components/view/AuctionRFISupplier"))
+const AuctionFASupplierView = React.lazy(() => import("../components/view/AuctionFASupplier"));
+const AuctionSubSupplierView = React.lazy(() => import("../components/view/AuctionSubSupplier"));
 
 export const generalRoutes = {
   LOGIN: {
@@ -161,6 +165,16 @@ export const generalRoutes = {
     showInNavbar: true,
     role: "buyer",
   },
+  AUCTION_RFI_SUPPLIER: {
+    path: "/auction/rfi-supplier/:userId",
+    component: AuctionRFISupplierView,
+    term: "auctionRFISupplier",
+    subMenu: true,
+    showSidebar: true,
+    subMenuTitle: "Subastas",
+    showInNavbar: true,
+    role: "buyer",
+  },
   AUCTION_FA: {
     path: "/auction/fa/:userId",
     component: AuctionFAView,
@@ -170,6 +184,36 @@ export const generalRoutes = {
     subMenuTitle: "Subastas",
     showInNavbar: true,
     role: "buyer",
+  },
+  AUCTION_FA_SUPPLIER: {
+    path: "/auction/fa-supplier/:userId",
+    component: AuctionFASupplierView,
+    term: "auctionFASupplier",
+    subMenu: true,
+    showSidebar: true,
+    subMenuTitle: "Subastas",
+    showInNavbar: true,
+    role: "supplier",
+  },
+  AUCTION_SUB: {
+    path: "/auction/sub/:userId",
+    component: AuctionSubView,
+    term: "auctionSub",
+    subMenu: true,
+    showSidebar: true,
+    subMenuTitle: "Subastas",
+    showInNavbar: true,
+    role: "supplier",
+  },
+  AUCTION_SUB_SUPPLIER: {
+    path: "/auction/sub-supplier/:userId",
+    component: AuctionSubSupplierView,
+    term: "auctionSubSupplier",
+    subMenu: true,
+    showSidebar: true,
+    subMenuTitle: "Subastas",
+    showInNavbar: true,
+    role: "supplier",
   },
   FINALIZED_AUCTION: {
     path: "/auction/finalized/:userId",

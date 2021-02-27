@@ -40,7 +40,9 @@
 .auction-step-card-container {
   overflow: auto;
   max-height: 140px;
-  cursor: pointer; }
+  cursor: pointer;
+  scrollbar-width: thin;
+  scrollbar-color: #1366c4 white; }
   .auction-step-card-container::-webkit-scrollbar {
     width: 4px;
     height: 4px; }

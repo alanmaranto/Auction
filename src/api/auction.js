@@ -67,6 +67,22 @@ export const getFAAuctionByUser = async (token) => {
   }
 };
 
+export const getSubAuctionByUser = async (token) => {
+  try {
+    const response = await axios({
+      url: `${host}/sub-auctions`,
+      method: "GET",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error
+  }
+};
+
 export const getFinalizedAuctionsByUser = async (token, user) => {
   try {
     const response = await axios({

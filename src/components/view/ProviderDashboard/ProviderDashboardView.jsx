@@ -1,97 +1,71 @@
 import React, { Component } from "react";
 import ProviderDashboard from "./ProviderDashboard";
-import history from "../../../modules/history/history";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import {
-  formatedProviderAuctionData,
-  filterData,
-} from "../FinalizedAuctions/helper";
-import { getInvitedAuctionsBySupplier } from "../../../api/invitedSuppliers";
+import { getAuctionsSuppliersInvitedByStep } from "../../../api/invitedSuppliers";
 class ProviderDashboardContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeInvitedProviderAuctions: [],
-      currentPage: 1,
-      elementsByPage: 5,
-      totalCount: 0,
-      loading: false,
-      _sort: "id",
-      _order: null,
+      rfiAuctions: [],
+      faAuctions: [],
+      subAuctions: [],
     };
   }
 
   componentDidMount() {
     const { token } = isAuthenticated();
     if (token) {
-      this.fetchAuctions();
+      this.fetchRFIAuctions();
+      this.fetchFAAuctions();
+      this.fetchSubAuctions()
     }
   }
 
-   fetchAuctions = async () => {
+  fetchRFIAuctions = async () => {
     const { token } = isAuthenticated();
-    const response = await getInvitedAuctionsBySupplier(token);
+    const response = await getAuctionsSuppliersInvitedByStep(token, "rfi");
 
     if (response && response.status === 200) {
-      const formatedAuction = formatedProviderAuctionData(response.data.body);
       this.setState({
-        activeInvitedProviderAuctions: formatedAuction,
+        rfiAuctions: response.data.body,
       });
     }
   };
 
-  onChangePage = (value) => {
-    this.setState({ currentPage: value });
+  fetchFAAuctions = async () => {
+    const { token } = isAuthenticated();
+    const response = await getAuctionsSuppliersInvitedByStep(token, "fa_hl");
+
+    if (response && response.status === 200) {
+      this.setState({
+        faAuctions: response.data.body,
+      });
+    }
   };
 
-  onChangeValue = (value) => {
-    this.setState({ filter: value });
-  };
+  fetchSubAuctions = async () => {
+    const { token } = isAuthenticated();
+    const response = await getAuctionsSuppliersInvitedByStep(token, "sub");
 
-  onChangeLimit = (value) => {
-    this.setState({ elementsByPage: value, currentPage: 1 });
-  };
-
-  onSubmitFilter = (filter, currentPage) => {
-    const {
-      elementsByPage,
-      activeInvitedProviderAuctions,
-      pageItems,
-    } = this.state;
-
-    return filterData({
-      dataSource: activeInvitedProviderAuctions,
-      elementsByPage,
-      currentPage,
-      pageItems,
-      filter,
-    });
-  };
-
-  sendToAuctionView = (id) => {
-    history.push(`/auction/${id}`);
+    if (response && response.status === 200) {
+      this.setState({
+        subAuctions: response.data.body,
+      });
+    }
   };
 
   render() {
-    const { elementsByPage, currentPage, filter, loading } = this.state;
-    const {
-      dataSource: activeInvitedProviderAuctions,
-      dataSourceSize: totalCount,
-    } = this.onSubmitFilter(filter, currentPage);
+    const { history } = this.props;
+    const { rfiAuctions, faAuctions, subAuctions } = this.state;
+
     const { user } = isAuthenticated();
     return (
       <ProviderDashboard
-        activeInvitedProviderAuctions={activeInvitedProviderAuctions}
+        rfiAuctions={rfiAuctions}
+        faAuctions={faAuctions}
+        subAuctions={subAuctions}
+        history={history}
         user={user}
-        totalCount={totalCount}
-        currentPage={currentPage}
-        totalPages={Math.ceil(totalCount / elementsByPage)}
-        onChangePage={this.onChangePage}
-        onChangeLimit={this.onChangeLimit}
-        limit={elementsByPage.toString()}
-        buttonAction={this.sendToAuctionView}
-        onChangeValue={this.onChangeValue}
-        loading={loading}
       />
     );
   }

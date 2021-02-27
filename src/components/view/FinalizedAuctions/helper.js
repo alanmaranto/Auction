@@ -65,47 +65,44 @@ const getTableSettingsActiveAuctions = () => {
   return header;
 };
 
-const getTableSettingsProviderActiveAuctions = () => {
-  const header = [
-    {
-      name: "user",
-      title: "Invitado por",
-      sorted: false,
-    },
-    {
-      name: "title",
-      title: "Titulo",
-      sorted: false,
-    },
-    {
-      name: "openingAuctionProjectDate",
-      sorted: true,
-      title: "Fecha de inicio",
-    },
-/*     {
+const getTableSettingsProviderActiveAuctions = [
+  {
+    name: "user",
+    title: "Invitado por",
+    sorted: false,
+  },
+  {
+    name: "title",
+    title: "Titulo",
+    sorted: false,
+  },
+  {
+    name: "openingAuctionProjectDate",
+    sorted: true,
+    title: "Fecha de inicio",
+  },
+  /*     {
       name: "minimumPrice",
       title: "Precio Base",
       sorted: false,
     }, */
-    {
-      name: "minimumBid",
-      title: "Puja mínima",
-      sorted: false,
-    },
-    {
-      name: "totalItemsPrice",
-      title: "Total",
-      sorted: false,
-    },
-    {
-      name: "winner",
-      sorted: true,
-      title: "",
-      buttonActions: true,
-    },
-  ];
-  return header;
-};
+  {
+    name: "minimumBid",
+    title: "Puja mínima",
+    sorted: false,
+  },
+  {
+    name: "totalItemsPrice",
+    title: "Total",
+    sorted: false,
+  },
+  {
+    name: "winner",
+    sorted: true,
+    title: "",
+    buttonActions: true,
+  },
+];
 
 const formatWithPagination = (dataSource, elementsByPage) => {
   const allPages = {};
@@ -171,7 +168,7 @@ const filterData = (props) => {
 };
 
 const formatedProviderAuctionData = (dataSource) => {
-  const auction = dataSource.map(({auctionId}) => {
+  const auction = dataSource.map(({ auctionId }) => {
     return {
       createdAt: auctionId.createdAt,
       description: auctionId.description,
