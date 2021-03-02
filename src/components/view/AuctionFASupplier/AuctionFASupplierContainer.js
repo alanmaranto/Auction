@@ -59,13 +59,13 @@ class AuctionFAContainer extends Component {
   };
 
   sendToAuctionView = (id) => {
-    history.push(`/auction-config/${id}`);
+    history.push(`/auction-config-supplier/${id}`);
   };
 
   onSubmitFilter = (filter, currentPage) => {
-    const { elementsByPage, faAuctions, pageItems } = this.state;
+    const { elementsByPage, faSuppliersAuctions, pageItems } = this.state;
     return filterData({
-      dataSource: faAuctions,
+      dataSource: faSuppliersAuctions,
       elementsByPage,
       currentPage,
       pageItems,

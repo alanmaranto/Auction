@@ -8,6 +8,7 @@ export const TableRow = ({
   buttonAction,
   buttonTitle,
   color,
+  role,
 }) => {
   return (
     <Table.Row>
@@ -16,7 +17,14 @@ export const TableRow = ({
           return (
             <Table.Cell>
               {buttonActions ? (
-                <Button onClick={() => buttonAction(dataRow._id)} color={color}>
+                <Button
+                  onClick={
+                    role === "buyer"
+                      ? () => buttonAction(dataRow._id)
+                      : () => buttonAction(dataRow.auctionId)
+                  }
+                  color={color}
+                >
                   {buttonTitle}
                 </Button>
               ) : (

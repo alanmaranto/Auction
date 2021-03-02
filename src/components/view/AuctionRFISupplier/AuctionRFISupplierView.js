@@ -17,6 +17,7 @@ const AuctionRFISupplier = ({
   buttonAction,
   onChangeValue,
   loading,
+  user
 }) => {
   return (
     <>
@@ -30,6 +31,7 @@ const AuctionRFISupplier = ({
           <Divider />
           {rfiSuppliersAuctions && rfiSuppliersAuctions.length > 0 ? (
             <AuctionTable
+              role={user.role}
               columns={getTableSettingsProviderActiveAuctions}
               dataSource={rfiSuppliersAuctions}
               totalCount={totalCount}

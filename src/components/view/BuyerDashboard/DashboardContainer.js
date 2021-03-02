@@ -35,7 +35,7 @@ const DashboardContainer = ({ history }) => {
     const response = await getSubAuctionByUser(token);
 
     if (response && response.data.body.length > 0) {
-      setFaAuctions(response.data.body);
+      setSubAuctions(response.data.body);
     }
   };
 

@@ -17,6 +17,7 @@ const AuctionSubSupplier = ({
   buttonAction,
   onChangeValue,
   loading,
+  user,
 }) => {
   return (
     <>
@@ -30,6 +31,7 @@ const AuctionSubSupplier = ({
           <Divider />
           {subSupplierAuctions && subSupplierAuctions.length > 0 ? (
             <AuctionTable
+              role={user.role}
               columns={getTableSettingsProviderActiveAuctions}
               dataSource={subSupplierAuctions}
               totalCount={totalCount}

@@ -77,7 +77,7 @@ const getTableSettingsProviderActiveAuctions = [
     sorted: false,
   },
   {
-    name: "openingAuctionProjectDate",
+    name: "openingRFIDate",
     sorted: true,
     title: "Fecha de inicio",
   },
@@ -168,26 +168,28 @@ const filterData = (props) => {
 };
 
 const formatedProviderAuctionData = (dataSource) => {
-  const auction = dataSource.map(({ auctionId }) => {
+  const auction = dataSource.map((auction) => {
     return {
-      createdAt: auctionId.createdAt,
-      description: auctionId.description,
+      createdAt: auction.createdAt,
+      description: auction.auctionId.description,
       /*     endingAuction: moment(auctionId.endingAuction).format(
       "MMMM Do YYYY, h:mm:ss a"
     ),
- */ finalized:
-        auctionId.finalized,
-      minimumBid: `$ ${formatNumber(auctionId.minimumBid)}`,
-      totalItemsPrice: `$ ${formatNumber(auctionId.totalItemsPrice)}`,
+ */ openingRFIDate: moment(
+        auction.auctionId.openingRFIDate
+      ).format("MMMM Do YYYY, h:mm:ss a"),
+      minimumBid: `$ ${formatNumber(auction.auctionId.minimumBid)}`,
+      totalItemsPrice: `$ ${formatNumber(auction.auctionId.totalItemsPrice)}`,
       /*      openingAuction: moment(auctionId.openingAuction).format(
       "MMMM Do YYYY, h:mm:ss a"
     ),
  */
-      title: auctionId.title,
-      updatedAt: auctionId.updatedAt,
-      user: auctionId.user_id.name,
-      __v: auctionId.__v,
-      _id: auctionId._id,
+      title: auction.auctionId.title,
+      updatedAt: auction.updatedAt,
+      user: auction.auctionId.user_id.name,
+      __v: auction.__v,
+      _id: auction._id,
+      auctionId: auction.auctionId._id,
     };
   });
   return auction;

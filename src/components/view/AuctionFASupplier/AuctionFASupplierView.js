@@ -32,6 +32,7 @@ const AuctionFASupplier = ({
           <Divider />
           {faSuppliersAuctions && faSuppliersAuctions.length > 0 ? (
             <AuctionTable
+              role={user.role}
               columns={getTableSettingsProviderActiveAuctions}
               dataSource={faSuppliersAuctions}
               totalCount={totalCount}

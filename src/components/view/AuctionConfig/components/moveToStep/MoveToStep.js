@@ -49,14 +49,12 @@ function MoveToStepModal({
             try {
               let result;
               if (auctionStep === "fa_hl") {
-                console.log('fa a sub')
                 result = await moveToNextStep({
                   auctionId,
                   suppliers,
                   isFA: true,
                 });
               } else {
-                console.log(' rfi a fa')
                 result = await moveToNextStep({ auctionId, suppliers });
               }
               if (result) {

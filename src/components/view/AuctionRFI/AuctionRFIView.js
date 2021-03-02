@@ -17,6 +17,7 @@ const AuctionRFI = ({
   buttonAction,
   onChangeValue,
   loading,
+  user
 }) => {
   return (
     <>
@@ -30,6 +31,7 @@ const AuctionRFI = ({
           <Divider />
           {rfiAuctions && rfiAuctions.length > 0 ? (
             <AuctionTable
+              role={user.role}
               columns={RFIAuctionsHeaderTable}
               dataSource={rfiAuctions}
               totalCount={totalCount}

@@ -1,4 +1,6 @@
-const formatedData = (dataSource) => {
+import moment from "moment";
+
+export const formatedData = (dataSource) => {
   const auction = dataSource.map((auction) => ({
     createdAt: auction.createdAt,
     description: auction.description,
@@ -8,9 +10,9 @@ const formatedData = (dataSource) => {
     finalized: auction.finalized,
     minimumBid: `$ ${formatNumber(auction.minimumBid)}`,
     totalItemsPrice: `$ ${formatNumber(auction.totalItemsPrice)}`,
-    /*     openingAuctionProjectDate: moment(auction.openingAuctionProjectDate).format(
-        "MMMM Do YYYY, h:mm:ss a"
-      ), */
+    openingRFIDate: moment(auction.openingRFIDate).format(
+      "MMMM Do YYYY, h:mm:ss a"
+    ),
     title: auction.title,
     updatedAt: auction.updatedAt,
     user: auction.user_id,
@@ -31,7 +33,7 @@ const formatNumber = (number, sep, decimals) => {
   );
 };
 
-const RFIAuctionsHeaderTable = [
+export const RFIAuctionsHeaderTable = [
   {
     name: "title",
     title: "Titulo",
@@ -48,7 +50,7 @@ const RFIAuctionsHeaderTable = [
     sorted: false,
   },
   {
-    name: "openingRealTimeAuctionDate",
+    name: "openingRFIDate",
     sorted: true,
     title: "Fecha de inicio",
   },
@@ -60,67 +62,60 @@ const RFIAuctionsHeaderTable = [
   },
 ];
 
-const FAAuctionsHeaderTable = [
-    {
-      name: "title",
-      title: "Titulo",
-      sorted: false,
-    },
-    {
-      name: "totalItemsPrice",
-      title: "Total",
-      sorted: false,
-    },
-    {
-      name: "minimumBid",
-      title: "Puja mínima",
-      sorted: false,
-    },
-    {
-      name: "openingRealTimeAuctionDate",
-      sorted: true,
-      title: "Fecha de inicio",
-    },
-    {
-      name: "winner",
-      sorted: true,
-      title: "",
-      buttonActions: true,
-    },
-  ];
+export const FAAuctionsHeaderTable = [
+  {
+    name: "title",
+    title: "Titulo",
+    sorted: false,
+  },
+  {
+    name: "totalItemsPrice",
+    title: "Total",
+    sorted: false,
+  },
+  {
+    name: "minimumBid",
+    title: "Puja mínima",
+    sorted: false,
+  },
+  {
+    name: "openingRFIDate",
+    sorted: true,
+    title: "Fecha de inicio",
+  },
+  {
+    name: "winner",
+    sorted: true,
+    title: "",
+    buttonActions: true,
+  },
+];
 
-  const SubAuctionsHeaderTable = [
-    {
-      name: "title",
-      title: "Titulo",
-      sorted: false,
-    },
-    {
-      name: "totalItemsPrice",
-      title: "Total",
-      sorted: false,
-    },
-    {
-      name: "minimumBid",
-      title: "Puja mínima",
-      sorted: false,
-    },
-    {
-      name: "openingRealTimeAuctionDate",
-      sorted: true,
-      title: "Fecha de inicio",
-    },
-    {
-      name: "winner",
-      sorted: true,
-      title: "",
-      buttonActions: true,
-    },
-  ];
-
-module.exports = {
-  formatedData,
-  RFIAuctionsHeaderTable,
-  FAAuctionsHeaderTable,
-  SubAuctionsHeaderTable
-};
+export const SubAuctionsHeaderTable = [
+  {
+    name: "title",
+    title: "Titulo",
+    sorted: false,
+  },
+  {
+    name: "totalItemsPrice",
+    title: "Total",
+    sorted: false,
+  },
+  {
+    name: "minimumBid",
+    title: "Puja mínima",
+    sorted: false,
+  },
+  {
+    name: "openingRFIDate",
+    sorted: true,
+    title: "Fecha de inicio",
+  },
+  {
+    name: "winner",
+    sorted: true,
+    title: "",
+    buttonActions: true,
+  },
+];
