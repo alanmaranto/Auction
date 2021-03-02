@@ -58,7 +58,7 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
       id: "B",
       name: "documents",
       title: "Documentos",
-      colSpan: 2,
+      colSpan: 3,
       isHeader: true,
     },
   ],
@@ -92,10 +92,13 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
         return userName;
       },
     },
+
+    // FECHA
+    // Status
     {
       id: "4",
       name: "documents2",
-      title: "RFI documentos",
+      title: "FA/PT",
       renderData: (dataRow) => {
         const {
           invitationStatus,
@@ -129,6 +132,7 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
           );
         return "-";
       },
+      width: 3,
     },
     {
       id: "6",

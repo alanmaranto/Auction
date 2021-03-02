@@ -1,12 +1,12 @@
 import React from "react";
 import { Grid, Segment, Divider, Header } from "semantic-ui-react";
-import { FAAuctionsHeaderTable } from '../../../helpers/auctions'
+import { FAAuctionsHeaderTable } from "../../../helpers/auctions";
 import { AuctionTable } from "../../../core/AuctionTable/AuctionTable";
 import { AuctionFilter } from "../../../core/AuctionTable/AuctionFilter";
 
 import NoData from "../../../core/500/NoData";
 
-const AuctionRFI = ({
+const AuctionFA = ({
   faAuctions,
   user,
   totalCount,
@@ -31,6 +31,7 @@ const AuctionRFI = ({
           <Divider />
           {faAuctions && faAuctions.length > 0 ? (
             <AuctionTable
+              role={user.role}
               columns={FAAuctionsHeaderTable}
               dataSource={faAuctions}
               totalCount={totalCount}
@@ -47,10 +48,7 @@ const AuctionRFI = ({
               // column={this.state._sort}
             />
           ) : (
-            <NoData
-              size="medium"
-              title="Aun no tienes subastas en FA"
-            />
+            <NoData size="medium" title="Aun no tienes subastas en FA" />
           )}
         </div>
       </div>
@@ -58,4 +56,4 @@ const AuctionRFI = ({
   );
 };
 
-export default AuctionRFI;
+export default AuctionFA;

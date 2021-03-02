@@ -1,13 +1,13 @@
 import React from "react";
 import { Divider } from "semantic-ui-react";
-import { RFIAuctionsHeaderTable } from "../../../helpers/auctions";
+import { getTableSettingsProviderActiveAuctions } from "../FinalizedAuctions/helper";
 import { AuctionTable } from "../../../core/AuctionTable/AuctionTable";
 import { AuctionFilter } from "../../../core/AuctionTable/AuctionFilter";
 
 import NoData from "../../../core/500/NoData";
 
-const AuctionRFI = ({
-  rfiAuctions,
+const AuctionRFISupplier = ({
+  rfiSuppliersAuctions,
   totalCount,
   totalPages,
   currentPage,
@@ -29,11 +29,11 @@ const AuctionRFI = ({
             loading={loading}
           />
           <Divider />
-          {rfiAuctions && rfiAuctions.length > 0 ? (
+          {rfiSuppliersAuctions && rfiSuppliersAuctions.length > 0 ? (
             <AuctionTable
               role={user.role}
-              columns={RFIAuctionsHeaderTable}
-              dataSource={rfiAuctions}
+              columns={getTableSettingsProviderActiveAuctions}
+              dataSource={rfiSuppliersAuctions}
               totalCount={totalCount}
               totalPages={totalPages}
               currentPage={currentPage}
@@ -56,4 +56,4 @@ const AuctionRFI = ({
   );
 };
 
-export default AuctionRFI;
+export default AuctionRFISupplier;

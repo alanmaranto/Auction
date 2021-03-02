@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Grid, Button } from "semantic-ui-react";
 import { AuctionHeader, DocumentsTable, AddDocument } from "./components";
+import AuctionSubContainer from "../../../components/view/AuctionView/AuctionContainer";
+import Posts from "../AuctionConfig/components/faPosts/Posts";
 
 import "./style.css";
 
@@ -14,6 +16,10 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
     supplierFilesId,
     supplierFilesStep,
   } = auction;
+
+  if (auctionStep === "sub") {
+    return <AuctionSubContainer auctionId={auctionId} />;
+  }
 
   return (
     <>
@@ -29,10 +35,10 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
         {!supplierFilesId ? (
           <Grid.Column width={16} style={{ background: "#fafafa" }}>
             Aún no se han enviado documentos.
-            <br /> 
             <br />
-            Su solicitud esta siendo revisada,
-            en un momento se te envíaran los docuementos
+            <br />
+            Su solicitud esta siendo revisada, en un momento se te envíaran los
+            documentos
           </Grid.Column>
         ) : (
           <>
@@ -46,7 +52,10 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                 supplierFilesStep={supplierFilesStep}
               />
             </Grid.Column>
-            <Grid.Column width={8} style={{ background: "#fafafa" }}>
+            <Grid.Column
+              width={auction?.auctionStep === "fa_hl" ? 5 : 8}
+              style={{ background: "#fafafa" }}
+            >
               <DocumentsTable
                 auctionStep={auctionStep}
                 files={auctionFiles || []}
@@ -57,7 +66,10 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                 }}
               />
             </Grid.Column>
-            <Grid.Column width={8} style={{ background: "#fafafa" }}>
+            <Grid.Column
+              width={auction?.auctionStep === "fa_hl" ? 5 : 8}
+              style={{ background: "#fafafa" }}
+            >
               <DocumentsTable
                 auctionStep={auctionStep}
                 files={supplierFiles || []}
@@ -68,6 +80,11 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                 }}
               />
             </Grid.Column>
+            {auction?.auctionStep === "fa_hl" && (
+              <Grid.Column width={6} style={{ background: "#fafafa" }}>
+                <Posts auctionId={auctionId} />
+              </Grid.Column>
+            )}
           </>
         )}
       </Grid>

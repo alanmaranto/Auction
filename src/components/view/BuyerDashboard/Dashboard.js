@@ -7,7 +7,7 @@ const Dashboard = ({
   user,
   rfiAuctions,
   faAuctions,
-  finalizedAuctions,
+  subAuctions,
   history,
 }) => {
   return (
@@ -15,7 +15,7 @@ const Dashboard = ({
       <Grid.Row>
         <Grid.Column width={16}>
           <Header className="dashboard-name" as="h1">
-            Hola Alan, Bienvenido
+            Hola {user.name}, Bienvenido
           </Header>
         </Grid.Column>
       </Grid.Row>
@@ -24,7 +24,7 @@ const Dashboard = ({
           <AuctionTotalCard
             rfiAuctions={rfiAuctions}
             faAuctions={faAuctions}
-            finalizedAuctions={finalizedAuctions}
+            subAuctions={subAuctions}
           />
         </Grid.Column>
       </Grid.Row>
@@ -32,23 +32,20 @@ const Dashboard = ({
         <Grid.Column width={16}>
           <AuctionStepCard
             auctions={rfiAuctions.slice(0, 3)}
-            user={user}
             stepAuction="RFI"
-            view={`/auction/rfi/${user}`}
+            view={`/auction/rfi/${user._id}`}
             history={history}
           />
           <AuctionStepCard
             auctions={faAuctions.slice(0, 3)}
-            user={user}
             stepAuction="FA"
-            view={`/auction/fa/${user}`}
+            view={`/auction/fa/${user._id}`}
             history={history}
           />
           <AuctionStepCard
-            auctions={finalizedAuctions.slice(0, 3)}
-            user={user}
-            stepAuction="Finalizadas"
-            view={`/auction/finalized/${user}`}
+            auctions={subAuctions.slice(0, 3)}
+            stepAuction="A Punto"
+            view={`/auction/sub/${user._id}`}
             history={history}
           />
         </Grid.Column>

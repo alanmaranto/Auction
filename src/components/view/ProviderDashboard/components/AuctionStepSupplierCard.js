@@ -1,10 +1,10 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import AuctionFeedEvent from "./AuctionFeedEvent";
+import AuctionFeedSupplierEvent from "./AuctionFeedSupplierEvent";
 import "./style.css";
 
-const AuctionStepCard = ({ auctions, stepAuction, view, history }) => {
+const AuctionStepSupplierCard = ({ auctions, stepAuction, view, history }) => {
   return (
     <Card fluid>
       <Card.Content>
@@ -13,11 +13,11 @@ const AuctionStepCard = ({ auctions, stepAuction, view, history }) => {
       <Card.Content className="auction-step-card-container">
         {auctions.map((auction) => {
           return (
-            <AuctionFeedEvent
-              auctionId={auction._id}
-              identifier={auction.identifier}
-              content={auction.title}
-              summary={auction.description}
+            <AuctionFeedSupplierEvent
+              auctionId={auction.auctionId._id}
+              identifier={auction.auctionId.identifier}
+              content={auction.auctionId.title}
+              summary={auction.auctionId.description}
               history={history}
             />
           );
@@ -30,4 +30,4 @@ const AuctionStepCard = ({ auctions, stepAuction, view, history }) => {
   );
 };
 
-export default AuctionStepCard;
+export default AuctionStepSupplierCard;

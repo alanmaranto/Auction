@@ -19,6 +19,7 @@ export const AuctionTable = (props) => {
         columns={props.columns}
         buttonTitle={props.buttonTitle}
         color={props.color}
+        role={props.role}
       />
     );
   });

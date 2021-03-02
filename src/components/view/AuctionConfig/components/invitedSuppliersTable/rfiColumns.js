@@ -58,7 +58,7 @@ const rfiColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
       id: "B",
       name: "documents",
       title: "Documentos",
-      colSpan: 2,
+      colSpan: 3,
       isHeader: true,
     },
   ],

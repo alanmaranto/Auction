@@ -24,7 +24,7 @@ const getNextStep = (currentStep) => {
     }
   });
 
-  if (currentStepIndex === steps.length) {
+  if (currentStepIndex === steps.length - 1) {
     return false;
   }
   return steps[currentStepIndex + 1].display;

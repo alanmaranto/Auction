@@ -54,6 +54,8 @@
   overflow: auto;
   max-height: 140px;
   cursor: pointer;
+  scrollbar-width: thin; // Firefox
+  scrollbar-color: #1366c4 white; // Firefox
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;

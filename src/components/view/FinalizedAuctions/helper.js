@@ -65,47 +65,44 @@ const getTableSettingsActiveAuctions = () => {
   return header;
 };
 
-const getTableSettingsProviderActiveAuctions = () => {
-  const header = [
-    {
-      name: "user",
-      title: "Invitado por",
-      sorted: false,
-    },
-    {
-      name: "title",
-      title: "Titulo",
-      sorted: false,
-    },
-    {
-      name: "openingAuctionProjectDate",
-      sorted: true,
-      title: "Fecha de inicio",
-    },
-/*     {
+const getTableSettingsProviderActiveAuctions = [
+  {
+    name: "user",
+    title: "Invitado por",
+    sorted: false,
+  },
+  {
+    name: "title",
+    title: "Titulo",
+    sorted: false,
+  },
+  {
+    name: "openingRFIDate",
+    sorted: true,
+    title: "Fecha de inicio",
+  },
+  /*     {
       name: "minimumPrice",
       title: "Precio Base",
       sorted: false,
     }, */
-    {
-      name: "minimumBid",
-      title: "Puja mínima",
-      sorted: false,
-    },
-    {
-      name: "totalItemsPrice",
-      title: "Total",
-      sorted: false,
-    },
-    {
-      name: "winner",
-      sorted: true,
-      title: "",
-      buttonActions: true,
-    },
-  ];
-  return header;
-};
+  {
+    name: "minimumBid",
+    title: "Puja mínima",
+    sorted: false,
+  },
+  {
+    name: "totalItemsPrice",
+    title: "Total",
+    sorted: false,
+  },
+  {
+    name: "winner",
+    sorted: true,
+    title: "",
+    buttonActions: true,
+  },
+];
 
 const formatWithPagination = (dataSource, elementsByPage) => {
   const allPages = {};
@@ -171,26 +168,28 @@ const filterData = (props) => {
 };
 
 const formatedProviderAuctionData = (dataSource) => {
-  const auction = dataSource.map(({auctionId}) => {
+  const auction = dataSource.map((auction) => {
     return {
-      createdAt: auctionId.createdAt,
-      description: auctionId.description,
+      createdAt: auction.createdAt,
+      description: auction.auctionId.description,
       /*     endingAuction: moment(auctionId.endingAuction).format(
       "MMMM Do YYYY, h:mm:ss a"
     ),
- */ finalized:
-        auctionId.finalized,
-      minimumBid: `$ ${formatNumber(auctionId.minimumBid)}`,
-      totalItemsPrice: `$ ${formatNumber(auctionId.totalItemsPrice)}`,
+ */ openingRFIDate: moment(
+        auction.auctionId.openingRFIDate
+      ).format("MMMM Do YYYY, h:mm:ss a"),
+      minimumBid: `$ ${formatNumber(auction.auctionId.minimumBid)}`,
+      totalItemsPrice: `$ ${formatNumber(auction.auctionId.totalItemsPrice)}`,
       /*      openingAuction: moment(auctionId.openingAuction).format(
       "MMMM Do YYYY, h:mm:ss a"
     ),
  */
-      title: auctionId.title,
-      updatedAt: auctionId.updatedAt,
-      user: auctionId.user_id.name,
-      __v: auctionId.__v,
-      _id: auctionId._id,
+      title: auction.auctionId.title,
+      updatedAt: auction.updatedAt,
+      user: auction.auctionId.user_id.name,
+      __v: auction.__v,
+      _id: auction._id,
+      auctionId: auction.auctionId._id,
     };
   });
   return auction;

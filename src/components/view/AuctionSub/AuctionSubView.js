@@ -1,13 +1,14 @@
 import React from "react";
-import { Divider } from "semantic-ui-react";
-import { RFIAuctionsHeaderTable } from "../../../helpers/auctions";
+import { Grid, Segment, Divider, Header } from "semantic-ui-react";
+import { SubAuctionsHeaderTable } from "../../../helpers/auctions";
 import { AuctionTable } from "../../../core/AuctionTable/AuctionTable";
 import { AuctionFilter } from "../../../core/AuctionTable/AuctionFilter";
 
 import NoData from "../../../core/500/NoData";
 
-const AuctionRFI = ({
-  rfiAuctions,
+const AuctionSub = ({
+  subAuctions,
+  user,
   totalCount,
   totalPages,
   currentPage,
@@ -17,7 +18,6 @@ const AuctionRFI = ({
   buttonAction,
   onChangeValue,
   loading,
-  user
 }) => {
   return (
     <>
@@ -29,11 +29,11 @@ const AuctionRFI = ({
             loading={loading}
           />
           <Divider />
-          {rfiAuctions && rfiAuctions.length > 0 ? (
+          {subAuctions && subAuctions.length > 0 ? (
             <AuctionTable
               role={user.role}
-              columns={RFIAuctionsHeaderTable}
-              dataSource={rfiAuctions}
+              columns={SubAuctionsHeaderTable}
+              dataSource={subAuctions}
               totalCount={totalCount}
               totalPages={totalPages}
               currentPage={currentPage}
@@ -42,13 +42,13 @@ const AuctionRFI = ({
               limit={limit}
               buttonAction={buttonAction}
               buttonTitle="Detalles"
-              color="green"
-              colorTable="green"
+              color="blue"
+              colorTable="blue"
               // handleSort={this.handleSort}
               // column={this.state._sort}
             />
           ) : (
-            <NoData size="medium" title="Aun no tienes subastas en RFI" />
+            <NoData size="medium" title="Aun no tienes subastas en espera" />
           )}
         </div>
       </div>
@@ -56,4 +56,4 @@ const AuctionRFI = ({
   );
 };
 
-export default AuctionRFI;
+export default AuctionSub;

@@ -61,3 +61,24 @@ export const updateInvitationStatus = async (token, body) => {
     return error;
   }
 };
+
+export const getAuctionsSuppliersInvitedByStep = async (token, auctionStep) => {
+  try {
+    const response = await axios({
+      url: `${host}/step-supplier-auctions`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ["x-auction-step"]: auctionStep,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response) {
+      return response;
+    }
+    return response.data.error;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

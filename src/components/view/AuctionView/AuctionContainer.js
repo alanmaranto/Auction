@@ -36,8 +36,8 @@ class AuctionContainer extends Component {
   fetchAuction = async () => {
     const { token } = isAuthenticated();
 
-    const { id } = this.props.match.params;
-    const response = await getAuctionById(token, id);
+    const { auctionId } = this.props
+    const response = await getAuctionById(token, auctionId);
 
     if (response && response.status && response.status === 200) {
       this.setState({ auction: response.data.body });
@@ -54,9 +54,9 @@ class AuctionContainer extends Component {
   };
 
   fetchChoosedProviders = async () => {
-    const { id } = this.props.match.params;
+    const { auctionId } = this.props
     const { token } = isAuthenticated();
-    const response = await getSelectedProvidersByAuctionId(token, id);
+    const response = await getSelectedProvidersByAuctionId(token, auctionId);
     let choosedProviders = response.data.body;
 
     if (response && response.status === 200) {
@@ -94,7 +94,7 @@ class AuctionContainer extends Component {
     if (e) {
       e.preventDefault();
     }
-    const { id } = this.props.match.params;
+    const { auctionId } = this.props
     const { providers, currentProviders } = this.state;
     const { token } = isAuthenticated();
     const sendProviders = [];
@@ -107,7 +107,7 @@ class AuctionContainer extends Component {
     }
 
     const data = {
-      auction: id,
+      auction: auctionId,
       invitedUsers: sendProviders,
     };
 

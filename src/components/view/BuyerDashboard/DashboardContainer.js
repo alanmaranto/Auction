@@ -4,13 +4,15 @@ import { isAuthenticated } from "../../../helpers/authenticate";
 import {
   getRFIAuctionByUser,
   getFAAuctionByUser,
-  getFinalizedAuctionsByUser,
+  getSubAuctionByUser,
+  // getFinalizedAuctionsByUser,
 } from "../../../api/auction";
 
 const DashboardContainer = ({ history }) => {
   const [rfiAuctions, setRfiAuctions] = useState([]);
   const [faAuctions, setFaAuctions] = useState([]);
-  const [finalizedAuctions, setFinalizedAuctions] = useState([]);
+  const [subAuctions, setSubAuctions] = useState([]);
+  // const [finalizedAuctions, setFinalizedAuctions] = useState([]);
   const { user, token } = isAuthenticated();
 
   const fetchRfiAuctions = async (token) => {
@@ -29,13 +31,21 @@ const DashboardContainer = ({ history }) => {
     }
   };
 
-  const fetchFinalizedAuctions = async (token, userId) => {
+  const fetchSubAuctions = async (token) => {
+    const response = await getSubAuctionByUser(token);
+
+    if (response && response.data.body.length > 0) {
+      setSubAuctions(response.data.body);
+    }
+  };
+
+/*   const fetchFinalizedAuctions = async (token, userId) => {
     const response = await getFinalizedAuctionsByUser(token, userId);
 
     if (response && response.data.body.length > 0) {
       setFinalizedAuctions(response.data.body);
     }
-  };
+  }; */
 
   useEffect(() => {
     if (token) {
@@ -51,16 +61,22 @@ const DashboardContainer = ({ history }) => {
 
   useEffect(() => {
     if (token) {
-      fetchFinalizedAuctions(token, user._id);
+      fetchSubAuctions(token, user._id);
     }
   }, []);
 
+/*   useEffect(() => {
+    if (token) {
+      fetchFinalizedAuctions(token, user._id);
+    }
+  }, []); */
+
   return (
     <Dashboard
-      user={user._id}
+      user={user}
       rfiAuctions={rfiAuctions}
       faAuctions={faAuctions}
-      finalizedAuctions={finalizedAuctions}
+      subAuctions={subAuctions}
       history={history}
     />
   );

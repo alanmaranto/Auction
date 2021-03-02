@@ -114,7 +114,6 @@ const RunningAuction = ({
 
   const renderBid = () => {
     const submitBid = lastMessage && lastMessage.bid - minimumBid;
-    console.log("submitBid", submitBid);
     return (
       <Row columns={2}>
         <Column>
