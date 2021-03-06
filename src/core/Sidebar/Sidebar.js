@@ -145,10 +145,6 @@ const Sidebar = () => {
                 A punto
                 <Link to={`/auction/sub-supplier/${user._id}`} />
               </MenuItem>
-              <MenuItem icon={<Icon name="chart line" size={size} />}>
-                Finalizadas
-                <Link to={`/auction/finalized/${user._id}`} />
-              </MenuItem>
             </SubMenu>
             <MenuItem icon={<Icon name="chart line" size={size} />}>
               Invitaciones
