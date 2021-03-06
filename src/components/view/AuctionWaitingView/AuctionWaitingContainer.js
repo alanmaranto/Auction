@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import Auction from "./Auction";
+import AuctionWaitingView from "./AuctionWaitingView";
 import { Message } from "semantic-ui-react";
 import {
   getAuctionById,
   postProviders,
   getSelectedProvidersByAuctionId,
 } from "../../../api/api";
-import { postInvitedSuppliers } from '../../../api/invitedSuppliers'
-import { getProviders} from "../../../api/suppliers";
+import { postInvitedSuppliers } from "../../../api/invitedSuppliers";
+import { getProviders } from "../../../api/suppliers";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import "moment/locale/es";
 
-class AuctionContainer extends Component {
+class AuctionWaitingContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +36,7 @@ class AuctionContainer extends Component {
   fetchAuction = async () => {
     const { token } = isAuthenticated();
 
-    const { auctionId } = this.props
+    const { auctionId } = this.props;
     const response = await getAuctionById(token, auctionId);
 
     if (response && response.status && response.status === 200) {
@@ -45,7 +45,7 @@ class AuctionContainer extends Component {
   };
 
   fetchProviders = async () => {
-    const { token } = isAuthenticated()
+    const { token } = isAuthenticated();
     const response = await getProviders(token);
 
     if (response && response.status === 200) {
@@ -54,7 +54,7 @@ class AuctionContainer extends Component {
   };
 
   fetchChoosedProviders = async () => {
-    const { auctionId } = this.props
+    const { auctionId } = this.props;
     const { token } = isAuthenticated();
     const response = await getSelectedProvidersByAuctionId(token, auctionId);
     let choosedProviders = response.data.body;
@@ -94,7 +94,7 @@ class AuctionContainer extends Component {
     if (e) {
       e.preventDefault();
     }
-    const { auctionId } = this.props
+    const { auctionId } = this.props;
     const { providers, currentProviders } = this.state;
     const { token } = isAuthenticated();
     const sendProviders = [];
@@ -160,7 +160,7 @@ class AuctionContainer extends Component {
     } = this.state;
 
     return (
-      <Auction
+      <AuctionWaitingView
         auction={auction}
         providers={providers}
         openProviders={openProviders}
@@ -178,4 +178,4 @@ class AuctionContainer extends Component {
   }
 }
 
-export default AuctionContainer;
+export default AuctionWaitingContainer;
