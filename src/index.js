@@ -5,8 +5,12 @@ import { ToastProvider } from "react-toast-notifications";
 import history from "./modules/history/history";
 import Routes from "./routes/index";
 import { SocketProvider } from "./context/socket/SocketContext";
+import moment from "moment";
+import "moment/locale/es";
 
 import "./App.scss";
+
+moment.locale("es");
 
 ReactDOM.render(
   <Router history={history}>

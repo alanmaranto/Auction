@@ -6,7 +6,7 @@ import PostsWrapper from "../../../../../core/Post";
 import Scrollable from "../../../../../core/Scrollable";
 import NoData from "../../../../../core/500/NoData";
 import Loader from "../../../../../core/Loader";
-import { formatDate } from "../../../../../helpers/dates";
+import { formatDate, formatTypes } from "../../../../../helpers/dates";
 import { useToasts } from "react-toast-notifications";
 
 const Posts = ({ auctionId }) => {
@@ -92,7 +92,10 @@ const Posts = ({ auctionId }) => {
                       key={`post-${post._id}`}
                       name={post.senderId.name}
                       message={post.post}
-                      createdAt={formatDate(post.created)}
+                      createdAt={formatDate(
+                        post.created,
+                        formatTypes.fullDateTime
+                      )}
                     />
                   );
                 }
@@ -101,7 +104,10 @@ const Posts = ({ auctionId }) => {
                     key={`post-${post._id}`}
                     name={post.senderId.name}
                     message={post.post}
-                    createdAt={formatDate(post.created)}
+                    createdAt={formatDate(
+                      post.created,
+                      formatTypes.fullDateTime
+                    )}
                     right
                   />
                 );

@@ -1,9 +1,9 @@
 import React from "react";
 import { Divider, List, Button, Image, Card } from "semantic-ui-react";
 import moment from "moment";
-import "moment/locale/es";
 import avatar from "../../../assets/steve.jpg";
 import fileIcon from "../../../assets/file-icon.png";
+import { formatDate, formatTypes } from "../../../helpers/dates";
 
 import "./style.css";
 
@@ -61,9 +61,7 @@ const InvitationCard = ({ data, key, id, updateInvitationStatus, loading }) => {
               <div style={{ paddingLeft: 20, maxWidth: 154 }}>
                 <List.Header as="a">Fecha de invitación</List.Header>
                 <List.Description as="a">
-                  {moment(data.createdAt).format(
-                    "dddd, MMMM Do YYYY, h:mm:ss a"
-                  )}
+                  {formatDate(data.createdAt, formatTypes.invitationDate)}
                 </List.Description>
               </div>
               <div style={{ paddingLeft: 20 }}>

@@ -1,8 +1,7 @@
 import React from "react";
-import { Card} from "semantic-ui-react";
-import moment from "moment";
+import { Card } from "semantic-ui-react";
+import { formatDate, formatTypes } from "../../../helpers/dates";
 import deleteIcon from "../../../assets/delete-x.svg";
-import "moment/locale/es";
 import "./style.css";
 
 const FavoriteSupplierCard = ({ supplier, deleteSupplier }) => {
@@ -31,7 +30,7 @@ const FavoriteSupplierCard = ({ supplier, deleteSupplier }) => {
         <Card.Header textAlign="center">{favoriteSuppliers.name}</Card.Header>
         <Card.Meta textAlign="center">
           <span className="date">
-            Agregado en {moment(supplier.createdAt).format("MMMM YYYY")}
+            Agregado en {formatDate(supplier.createdAt, formatTypes.monthYear)}
           </span>
         </Card.Meta>
       </Card.Content>
