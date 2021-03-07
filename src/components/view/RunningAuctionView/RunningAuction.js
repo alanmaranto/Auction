@@ -51,8 +51,7 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
 
 const RunningAuction = ({
   title,
-  onSubmit,
-  onChange,
+  sendBid,
   message,
   lastMessage,
   endingAuction,
@@ -60,6 +59,7 @@ const RunningAuction = ({
   minimumBid,
   minimumPrice,
   role,
+  handleChange,
 }) => {
   const operation = new Date(endingAuction).getTime();
 
@@ -113,7 +113,7 @@ const RunningAuction = ({
   };
 
   const renderBid = () => {
-    const submitBid = lastMessage && lastMessage.bid - minimumBid;
+    // const submitBid = lastMessage && lastMessage.bid - minimumBid;
     return (
       <Row columns={2}>
         <Column>
@@ -133,17 +133,17 @@ const RunningAuction = ({
             </Card.Content>
           </Card>
           {role === roles.PROVIDER && (
-            <Form size="large" onSubmit={onSubmit}>
+            <Form size="large" onSubmit={sendBid}>
               <Input
                 placeholder="Introduzca su puja"
                 type="number"
                 value={message}
-                name="title"
+                name="message"
                 fluid
                 size="big"
                 inverted
-                max={submitBid === null ? minimumPrice : submitBid}
-                onChange={(e) => onChange("message", e.target.value)}
+                // max={submitBid === null ? minimumPrice : submitBid}
+                onChange={(e) => handleChange(e)}
               />
               <Button
                 style={{ background: "#19750c", color: "white" }}
