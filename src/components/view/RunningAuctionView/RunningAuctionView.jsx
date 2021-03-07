@@ -30,7 +30,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
 
   // get current bid throught socket
   const listenBid = () => {
-    socket.on("get-current-bid", (data) => {
+    socket.on("supplier-bid", (data) => {
       console.log("data- listen bid", data);
       const { id: currentAuction } = params;
       if (data.auctionId === currentAuction) {
@@ -56,13 +56,9 @@ const RunningAuctionContainer = ({ match: { params } }) => {
     setMessage("");
   };
 
-  /*   useEffect(() => {
-    sendBid();
-  }, [socket, sendBid]); */
-
   useEffect(() => {
     listenBid();
-  }, [listenBid]);
+  }, [message]);
 
   const fetchAuction = async () => {
     const { id: currentAuction } = params;
