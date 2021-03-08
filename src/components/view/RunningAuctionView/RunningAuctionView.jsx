@@ -12,7 +12,7 @@ import { SocketContext } from "../../../context/socket/SocketContext";
 const RunningAuctionContainer = ({ match: { params } }) => {
   const { socket } = useContext(SocketContext);
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [auction, setAuction] = useState({});
   const [lastMessage, setLastMessage] = useState({});
@@ -31,7 +31,6 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   // get current bid throught socket
   const listenBid = () => {
     socket.on("supplier-bid", (data) => {
-      console.log("data- listen bid", data);
       const { id: currentAuction } = params;
       if (data.auctionId === currentAuction) {
         setLastMessage(data);
@@ -58,14 +57,13 @@ const RunningAuctionContainer = ({ match: { params } }) => {
 
   useEffect(() => {
     listenBid();
-  }, [message]);
+  }, [lastMessage]);
 
   const fetchAuction = async () => {
     const { id: currentAuction } = params;
     // const response = await getRealTimeBidsByAuctionId(token, currentAuction);
     const response = await getRunningAuctionById(token, currentAuction);
 
-    console.log("response", response);
     if (response && response.data && response.data.body) {
       const { /* bids, */ auctionResult, lastMessage } = response.data.body;
       setAuction(auctionResult);
@@ -84,11 +82,8 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   };
 
   const handleChange = (e) => {
-    console.log("target", e.target.value);
     setMessage(e.target.value);
   };
-
-  console.log("message", message);
 
   return (
     <RunningAuction
