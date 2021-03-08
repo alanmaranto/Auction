@@ -8,9 +8,6 @@ export const useSocket = (host) => {
         transports: ["websocket"],
         autoConnect: true,
         forceNew: true,
-        query: {
-            'x-token': ''
-        }
       }),
     [host]
   );
