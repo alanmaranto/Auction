@@ -10,6 +10,9 @@ import {
 } from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
+import SummaryTableCard from "./components/SummaryTableCard";
+import RealTimeGraph from "./components/RealTimeGraph";
+import { data } from "./helpers";
 import { roles } from "../../../helpers/roles";
 import "./style.css";
 
@@ -162,6 +165,21 @@ const RunningAuction = ({
       </Row>
     );
   };
+
+  const renderRealTimeGraph = () => (
+    <>
+      <Grid.Row>
+        <Grid.Column>
+          <RealTimeGraph data={data} />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <SummaryTableCard />
+        </Grid.Column>
+      </Grid.Row>
+    </>
+  );
 
   return (
     <Grid>
