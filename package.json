@@ -32,7 +32,7 @@
     "recharts": "^1.8.5",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^2.0.1",
-    "socket.io-client": "^2.3.0",
+    "socket.io-client": "^3.1.2",
     "uuid": "^3.3.2"
   },
   "scripts": {

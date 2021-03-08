@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Header, Grid, Button, Feed, Container } from "semantic-ui-react";
-import AuctionSubContainer from "../AuctionView/AuctionContainer";
+import AuctionSubContainer from "../AuctionWaitingView/AuctionWaitingContainer";
 import {
   AuctionHeader,
   SuppliersTable,

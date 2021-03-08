@@ -1,5 +1,4 @@
-import moment from "moment";
-import "moment/locale/es";
+import { formatDate, formatTypes } from "../../../helpers/dates";
 
 const getTableSettings = () => {
   const header = [
@@ -175,9 +174,10 @@ const formatedProviderAuctionData = (dataSource) => {
       /*     endingAuction: moment(auctionId.endingAuction).format(
       "MMMM Do YYYY, h:mm:ss a"
     ),
- */ openingRFIDate: moment(
-        auction.auctionId.openingRFIDate
-      ).format("MMMM Do YYYY, h:mm:ss a"),
+ */ openingRFIDate: formatDate(
+        auction.auctionId.openingRFIDate,
+        formatTypes.auctionDate
+      ),
       minimumBid: `$ ${formatNumber(auction.auctionId.minimumBid)}`,
       totalItemsPrice: `$ ${formatNumber(auction.auctionId.totalItemsPrice)}`,
       /*      openingAuction: moment(auctionId.openingAuction).format(

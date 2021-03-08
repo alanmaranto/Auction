@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Grid, Button } from "semantic-ui-react";
+import React from "react";
+import { Grid } from "semantic-ui-react";
 import { AuctionHeader, DocumentsTable, AddDocument } from "./components";
-import AuctionSubContainer from "../../../components/view/AuctionView/AuctionContainer";
+import AuctionSubContainer from "../AuctionWaitingView/AuctionWaitingContainer";
 import Posts from "../AuctionConfig/components/faPosts/Posts";
 
 import "./style.css";

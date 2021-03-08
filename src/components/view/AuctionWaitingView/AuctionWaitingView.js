@@ -153,15 +153,7 @@ const Auction = ({
       isAuthenticated() &&
       isAuthenticated().user.role === roles.PROVIDER && (
         <Fragment>
-          <Row columns={2}>
-            <Column>
-              <FileCard
-                id={_id}
-                openFiles={openFiles}
-                onOpenFileModal={onOpenFileModal}
-                onCloseFileModal={onCloseFileModal}
-              />
-            </Column>
+          <Row columns={1}>
             <Column>
               <div style={{ textAlign: "center" }}>
                 <h2>Tiempo para iniciar la subasta</h2>
