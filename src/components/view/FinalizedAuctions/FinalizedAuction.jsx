@@ -78,6 +78,7 @@ export default class FinalizedAuction extends React.Component {
       dataSource: finalizedAuctions,
       dataSourceSize: totalCount,
     } = this.onSubmitFilter(filter, currentPage);
+    const { user } = isAuthenticated();
 
     return (
       <Fragment>
@@ -113,6 +114,7 @@ export default class FinalizedAuction extends React.Component {
           buttonTitle="Ver pujas"
           handleSort={this.handleSort}
           column={this.state._sort}
+          role={user.role}
         />
       </Fragment>
     );
