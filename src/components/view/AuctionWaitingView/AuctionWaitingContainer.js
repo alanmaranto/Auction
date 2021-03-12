@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import AuctionWaitingView from "./AuctionWaitingView";
-import { Message } from "semantic-ui-react";
 import {
   getAuctionById,
-  postProviders,
-  getSelectedProvidersByAuctionId,
 } from "../../../api/api";
-import { postInvitedSuppliers } from "../../../api/invitedSuppliers";
-import { getProviders } from "../../../api/suppliers";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import "moment/locale/es";
 

@@ -1,14 +1,11 @@
 import React, { Fragment } from "react";
-import { Card, Grid, Button, Feed } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import history from "../../../modules/history/history";
-import { Row, Column, CContent } from "../../../core/indexSemanticUi";
+import { Row, Column } from "../../../core/indexSemanticUi";
 import { roles } from "../../../helpers/roles";
-import AddProviders from "../AddProviders/AddProviders";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import Countdown from "react-countdown";
 import "./style.css";
-
-import FileCard from "../../Files/FileCard";
 
 const Completionist = () => <span>Arrrancamos la subasta</span>;
 
