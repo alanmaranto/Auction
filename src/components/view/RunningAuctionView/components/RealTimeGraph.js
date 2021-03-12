@@ -1,23 +1,22 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
 import { ResponsiveLine } from "@nivo/line";
-import "./style.css";
 
 const RealTimeGraph = ({ data }) => {
   return (
     <Card fluid>
-      <div className="responsive-bump" style={{ height: 400 }}>
+      <div style={{ height: 400 }}>
         <ResponsiveLine
           data={data}
           margin={{ top: 20, right: 100, bottom: 50, left: 65 }}
-          yScale={{ type: "point" }}
+          yScale={{ type: "linear" }}
           xScale={{
             type: "time",
-            format: "%Y-%m-%d %H:%M",
+            format: "%Y-%m-%d %H:%M:%S",
             precision: "minute",
             useUTC: false,
           }}
-          xFormat="time:%Hh %Mm"
+          xFormat="time:%Hh %Mm %S [%d]"
           axisLeft={{
             legend: "Pujas",
             legendOffset: -50,
@@ -25,7 +24,7 @@ const RealTimeGraph = ({ data }) => {
           }}
           axisBottom={{
             orient: "bottom",
-            format: "%Hh%M [%d]",
+            format: "%Hh [%d]",
             legend: "Tiempo",
             legendOffset: 40,
             legendPosition: "middle",
