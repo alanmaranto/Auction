@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Card, Header, Grid, Button, Feed } from "semantic-ui-react";
+import { Card, Grid, Button, Feed } from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import { Row, Column, CContent } from "../../../core/indexSemanticUi";
 import { roles } from "../../../helpers/roles";
@@ -44,68 +44,9 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
 
 const Auction = ({
   auction,
-  providers,
-  openProviders,
-  openFiles,
-  onOpenProviderModal,
-  onCloseProviderModal,
-  onOpenFileModal,
-  onCloseFileModal,
-  submitProviders,
-  choosedProviders,
-  onSelectProviders,
 }) => {
   const { title, description, _id, openingRealTimeAuctionDate } = auction;
   const operation = new Date(openingRealTimeAuctionDate).getTime();
-
-  const showInvitedProviders = (
-    providers,
-    openProviders,
-    onOpenProviderModal,
-    onCloseProviderModal,
-    submitProviders,
-    choosedProviders,
-    onSelectProviders
-  ) => {
-    return (
-      <Column>
-        <Card color="blue" fluid>
-          <CContent>
-            <Button
-              circular
-              onClick={onOpenProviderModal}
-              icon="add circle"
-              floated="right"
-            />
-            <Card.Header>Proveedores Invitados</Card.Header>
-            <Card.Description></Card.Description>
-            <AddProviders
-              providers={providers}
-              openProviders={openProviders}
-              onCloseProviderModal={onCloseProviderModal}
-              submitProviders={submitProviders}
-              onSelectProviders={onSelectProviders}
-              choosedProviders={choosedProviders}
-            />
-          </CContent>
-          <CContent>
-            <Feed>
-              <Feed.Event>
-                <Feed.Content>
-                  <Feed.Summary>
-                    {choosedProviders &&
-                      choosedProviders.map((provider) => {
-                        return <div>{provider?.invitedProvider?.name}</div>;
-                      })}
-                  </Feed.Summary>
-                </Feed.Content>
-              </Feed.Event>
-            </Feed>
-          </CContent>
-        </Card>
-      </Column>
-    );
-  };
 
   const renderBuyerAuctionView = () => {
     return (
@@ -126,23 +67,6 @@ const Auction = ({
               />
             </Column>
           </Row>
-          <Row columns={2}>
-            {showInvitedProviders(
-              providers,
-              openProviders,
-              onOpenProviderModal,
-              onCloseProviderModal,
-              submitProviders,
-              choosedProviders,
-              onSelectProviders
-            )}
-            <FileCard
-              id={_id}
-              openFiles={openFiles}
-              onOpenFileModal={onOpenFileModal}
-              onCloseFileModal={onCloseFileModal}
-            />
-          </Row>
         </Fragment>
       )
     );
@@ -153,7 +77,7 @@ const Auction = ({
       isAuthenticated() &&
       isAuthenticated().user.role === roles.PROVIDER && (
         <Fragment>
-          <Row columns={1}>
+          <Row>
             <Column>
               <div style={{ textAlign: "center" }}>
                 <h2>Tiempo para iniciar la subasta</h2>
