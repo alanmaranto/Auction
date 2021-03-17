@@ -58,7 +58,6 @@ ul {
 
 .countdown {
   display: flex;
-  justify-content: center;
   align-items: center;
   margin: 20px 0;
 }
@@ -75,7 +74,7 @@ ul {
   font-weight: 700;
   padding: 25px 5px 15px;
   border-radius: 4px;
-  color: #ff0083;
+  color: #e03997;
 }
 
 .countdown .time span {
@@ -87,4 +86,10 @@ ul {
   font-size: 17px;
   font-weight: 600;
   color: #312747;
+}
+
+.auction-resume-label {
+  font-size: 15px;
+  color: #e03997;
+  font-weight: 600;
 }
