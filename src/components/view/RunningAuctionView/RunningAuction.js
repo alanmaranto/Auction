@@ -59,7 +59,7 @@ const RunningAuction = ({
   endingAuction,
   onFinalizedAuction,
   minimumBid,
-  minimumPrice,
+  totalItemsPrice,
   role,
   handleChange,
   bids,
@@ -67,10 +67,13 @@ const RunningAuction = ({
 }) => {
   const operation = new Date(endingAuction).getTime();
 
+  console.log(lastMessage, 'lastMessage')
+  console.log('minimumBid', minimumBid)
+
   const auctionConditions = [
     `Subasta: ${title}`,
-    `La subasta inversa comienza en ${minimumPrice}`,
-    `Las pujas mínimas son de ${minimumBid}`,
+    `La subasta inversa comienza en ${totalItemsPrice}`,
+    `Las pujas disminuyen de ${minimumBid} en ${minimumBid}`,
   ];
 
   const renderCountdown = () => {
@@ -122,7 +125,8 @@ const RunningAuction = ({
   };
 
   const renderBid = () => {
-    // const submitBid = lastMessage && lastMessage.bid - minimumBid;
+    const lastBid = lastMessage?.bid - minimumBid;
+    console.log('lastBid', lastBid)
     return (
       <Row>
         <Column
@@ -138,7 +142,7 @@ const RunningAuction = ({
                 Puja actual
               </Card.Header>
               <Card.Description className="card-bid-container__current-bid">
-                $ {(lastMessage && lastMessage.bid) || minimumPrice} pesos
+                $ {(lastMessage && lastMessage.bid) || totalItemsPrice} pesos
               </Card.Description>
             </Card.Content>
           </Card>
@@ -152,7 +156,7 @@ const RunningAuction = ({
                 fluid
                 size="big"
                 inverted
-                // max={submitBid === null ? minimumPrice : submitBid}
+                max={lastBid === undefined ? totalItemsPrice : lastBid}
                 onChange={(e) => handleChange(e)}
               />
               <Button
