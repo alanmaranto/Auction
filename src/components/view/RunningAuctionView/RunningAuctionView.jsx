@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import RunningAuction from "./RunningAuction";
 
 import { isAuthenticated } from "../../../helpers/authenticate";
@@ -131,7 +131,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
     <RunningAuction
       title={auction.title}
       minimumBid={auction.minimumBid}
-      minimumPrice={auction.totalItemsPrice}
+      totalItemsPrice={auction.totalItemsPrice}
       message={message}
       role={user.role}
       sendBid={sendBid}

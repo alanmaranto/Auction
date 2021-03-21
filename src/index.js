@@ -7,6 +7,7 @@ import Routes from "./routes/index";
 import { SocketProvider } from "./context/socket/SocketContext";
 import moment from "moment";
 import "moment/locale/es";
+import "react-datepicker/dist/react-datepicker.css";
 
 import "./App.scss";
 
