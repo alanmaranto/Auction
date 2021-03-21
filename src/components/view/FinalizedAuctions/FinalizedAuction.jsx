@@ -68,7 +68,7 @@ export default class FinalizedAuction extends React.Component {
   };
 
   sendToBids = (id) => {
-    history.push(`/winner/auction/${id}`);
+    history.push(`/real-time/finalized/${id}`);
   };
 
   render() {

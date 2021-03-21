@@ -48,6 +48,7 @@ const AuctionSubView = React.lazy(() => import("../components/view/AuctionSub"))
 const AuctionRFISupplierView = React.lazy(() => import("../components/view/AuctionRFISupplier"))
 const AuctionFASupplierView = React.lazy(() => import("../components/view/AuctionFASupplier"));
 const AuctionSubSupplierView = React.lazy(() => import("../components/view/AuctionSubSupplier"));
+const FinalizedRealTimeView = React.lazy(() => import("../components/view/FinalizedRealTimeAuctions"))
 
 export const generalRoutes = {
   LOGIN: {
@@ -222,6 +223,15 @@ export const generalRoutes = {
     subMenu: true,
     showSidebar: true,
     subMenuTitle: "Subastas",
+    showInNavbar: true,
+    role: "buyer",
+  },
+  FINALIZED_REAL_TIME_AUCTION: {
+    path: "/real-time/finalized/:auctionId",
+    component: FinalizedRealTimeView,
+    term: "Real Time Finalizadas",
+    subMenu: true,
+    showSidebar: true,
     showInNavbar: true,
     role: "buyer",
   },

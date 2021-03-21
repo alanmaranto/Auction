@@ -1,8 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Button } from "semantic-ui-react";
 import "./style.css";
 
-const SummaryComponent = ({ filter, columns, data }) => {
+const SummaryComponent = ({
+  filter,
+  columns,
+  data,
+  isFinalized,
+  chooseWinnerBid,
+}) => {
   return (
     <table className="summary-table">
       <thead>
@@ -22,6 +29,16 @@ const SummaryComponent = ({ filter, columns, data }) => {
                 </td>
                 <td>{row.provider[0].name}</td>
                 <td>{row.bid}</td>
+                {isFinalized ? (
+                  <td>
+                    <Button
+                      onClick={() => chooseWinnerBid(row.auctionId)}
+                      primary
+                    >
+                      Detalles
+                    </Button>
+                  </td>
+                ) : null}
               </tr>
             ))
         ) : (

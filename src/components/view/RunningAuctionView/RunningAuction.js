@@ -12,6 +12,7 @@ import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
 import SummaryTableCard from "./components/SummaryTableCard";
 import RealTimeGraph from "./components/RealTimeGraph";
+import { columns } from './helpers'
 import { roles } from "../../../helpers/roles";
 import "./style.css";
 
@@ -66,9 +67,6 @@ const RunningAuction = ({
   summaryBids,
 }) => {
   const operation = new Date(endingAuction).getTime();
-
-  console.log(lastMessage, 'lastMessage')
-  console.log('minimumBid', minimumBid)
 
   const auctionConditions = [
     `Subasta: ${title}`,
@@ -126,7 +124,6 @@ const RunningAuction = ({
 
   const renderBid = () => {
     const lastBid = lastMessage?.bid - minimumBid;
-    console.log('lastBid', lastBid)
     return (
       <Row>
         <Column
@@ -181,7 +178,7 @@ const RunningAuction = ({
           widescreen={8}
           className="summary-table-card-col"
         >
-          <SummaryTableCard data={summaryBids} />
+          <SummaryTableCard data={summaryBids} columns={columns} />
         </Column>
       </Row>
     );

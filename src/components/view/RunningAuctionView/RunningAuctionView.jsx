@@ -22,15 +22,21 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   const { token, user } = isAuthenticated();
 
   useEffect(() => {
-    fetchAuction();
+    if (token) {
+      fetchAuction();
+    }
   }, []);
 
   useEffect(() => {
-    fetchBids();
+    if (token) {
+      fetchBids();
+    }
   }, []);
 
   useEffect(() => {
-    fetchSummaryBids();
+    if (token) {
+      fetchSummaryBids();
+    }
   }, []);
 
   // get current bid throught socket
