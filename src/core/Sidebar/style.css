@@ -1,6 +1,8 @@
 .pro-sidebar {
   color: #fff;
-  position: fixed !important; }
+  position: fixed !important;
+  width: 230px;
+  min-width: 230px; }
 
 .pro-sidebar > .pro-sidebar-inner {
   background: linear-gradient(to bottom, #00acee, #1366c4);
