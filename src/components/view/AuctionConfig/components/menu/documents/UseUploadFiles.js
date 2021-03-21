@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useToasts } from "react-toast-notifications";
 import { postFile } from "../../../../../../api/api";
 import { isAuthenticated } from "../../../../../../helpers/authenticate";
 
 export const useUploadFiles = ({ onClose, fetchAuction }) => {
+  const { addToast } = useToasts()
   const [fileList, setFileList] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -51,9 +53,17 @@ export const useUploadFiles = ({ onClose, fetchAuction }) => {
       setIsUploading(false);
       fetchAuction();
       onCloseUploadFile();
+      addToast("Archivos guardados con éxito", {
+        appearance: "success",
+        autoDismiss: true,
+      });
       return true;
     } else {
       onCloseUploadFile();
+      addToast("Hubo un error al guardar los archivos", {
+        appearance: "error",
+        autoDismiss: true,
+      });
       return false;
     }
   };
