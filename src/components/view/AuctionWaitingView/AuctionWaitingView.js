@@ -1,14 +1,11 @@
 import React, { Fragment } from "react";
-import { Card, Header, Grid, Button, Feed } from "semantic-ui-react";
+import { Grid, Container, Card, Header, Icon } from "semantic-ui-react";
 import history from "../../../modules/history/history";
-import { Row, Column, CContent } from "../../../core/indexSemanticUi";
+import { Row, Column } from "../../../core/indexSemanticUi";
 import { roles } from "../../../helpers/roles";
-import AddProviders from "../AddProviders/AddProviders";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import Countdown from "react-countdown";
 import "./style.css";
-
-import FileCard from "../../Files/FileCard";
 
 const Completionist = () => <span>Arrrancamos la subasta</span>;
 
@@ -42,70 +39,20 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
   }
 };
 
-const Auction = ({
-  auction,
-  providers,
-  openProviders,
-  openFiles,
-  onOpenProviderModal,
-  onCloseProviderModal,
-  onOpenFileModal,
-  onCloseFileModal,
-  submitProviders,
-  choosedProviders,
-  onSelectProviders,
-}) => {
-  const { title, description, _id, openingRealTimeAuctionDate } = auction;
+const Auction = ({ auction }) => {
+  const {
+    title,
+    identifier,
+    _id,
+    openingRealTimeAuctionDate,
+    auctionStep,
+    currency,
+    minimumBid,
+    totalItemsPrice,
+    extensionTime,
+    items,
+  } = auction;
   const operation = new Date(openingRealTimeAuctionDate).getTime();
-
-  const showInvitedProviders = (
-    providers,
-    openProviders,
-    onOpenProviderModal,
-    onCloseProviderModal,
-    submitProviders,
-    choosedProviders,
-    onSelectProviders
-  ) => {
-    return (
-      <Column>
-        <Card color="blue" fluid>
-          <CContent>
-            <Button
-              circular
-              onClick={onOpenProviderModal}
-              icon="add circle"
-              floated="right"
-            />
-            <Card.Header>Proveedores Invitados</Card.Header>
-            <Card.Description></Card.Description>
-            <AddProviders
-              providers={providers}
-              openProviders={openProviders}
-              onCloseProviderModal={onCloseProviderModal}
-              submitProviders={submitProviders}
-              onSelectProviders={onSelectProviders}
-              choosedProviders={choosedProviders}
-            />
-          </CContent>
-          <CContent>
-            <Feed>
-              <Feed.Event>
-                <Feed.Content>
-                  <Feed.Summary>
-                    {choosedProviders &&
-                      choosedProviders.map((provider) => {
-                        return <div>{provider?.invitedProvider?.name}</div>;
-                      })}
-                  </Feed.Summary>
-                </Feed.Content>
-              </Feed.Event>
-            </Feed>
-          </CContent>
-        </Card>
-      </Column>
-    );
-  };
 
   const renderBuyerAuctionView = () => {
     return (
@@ -114,7 +61,7 @@ const Auction = ({
         <Fragment>
           <Row>
             <Column>
-              <div style={{ textAlign: "center" }}>
+              <div>
                 <h2>Tiempo para iniciar la subasta</h2>
               </div>
               <Countdown
@@ -126,22 +73,121 @@ const Auction = ({
               />
             </Column>
           </Row>
-          <Row columns={2}>
-            {showInvitedProviders(
-              providers,
-              openProviders,
-              onOpenProviderModal,
-              onCloseProviderModal,
-              submitProviders,
-              choosedProviders,
-              onSelectProviders
-            )}
-            <FileCard
-              id={_id}
-              openFiles={openFiles}
-              onOpenFileModal={onOpenFileModal}
-              onCloseFileModal={onCloseFileModal}
-            />
+          <Row>
+            <Card fluid>
+              <Container>
+                <Row style={{ padding: "15px 15px 10px" }}>
+                  <Header as="h3" color="pink">
+                    <Icon name="info" />
+                    <Header.Content>Información de la subasta</Header.Content>
+                  </Header>
+                </Row>
+                <Row
+                  style={{
+                    justifyContent: "space-between",
+                    padding: "10px 25px",
+                  }}
+                >
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      Nombre de la subasta:
+                    </label>
+                    <p>{title}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      Identificador de la subasta:
+                    </label>
+                    <p>{identifier}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      Estado de la subasta:
+                    </label>
+                    <p>{auctionStep}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">Moneda:</label>
+                    <p>{currency}</p>
+                  </Column>
+                </Row>
+                <Row
+                  style={{
+                    justifyContent: "space-between",
+                    padding: "10px 25px",
+                  }}
+                >
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">Puja mínima</label>
+                    <p>{minimumBid}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      La subasta arranca en:
+                    </label>
+                    <p>{totalItemsPrice}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      Extensión de:
+                    </label>
+                    <p>{extensionTime} minutos</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">Artículos:</label>
+                    <p>{items?.length}</p>
+                  </Column>
+                </Row>
+              </Container>
+            </Card>
           </Row>
         </Fragment>
       )
@@ -153,9 +199,9 @@ const Auction = ({
       isAuthenticated() &&
       isAuthenticated().user.role === roles.PROVIDER && (
         <Fragment>
-          <Row columns={1}>
+          <Row>
             <Column>
-              <div style={{ textAlign: "center" }}>
+              <div>
                 <h2>Tiempo para iniciar la subasta</h2>
               </div>
               <Countdown
@@ -166,6 +212,122 @@ const Auction = ({
                 }}
               />
             </Column>
+          </Row>
+          <Row>
+            <Card fluid>
+              <Container>
+                <Row style={{ padding: "15px 15px 10px" }}>
+                  <Header as="h3" color="pink">
+                    <Icon name="info" />
+                    <Header.Content>Información de la subasta</Header.Content>
+                  </Header>
+                </Row>
+                <Row
+                  style={{
+                    justifyContent: "space-between",
+                    padding: "10px 25px",
+                  }}
+                >
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      Nombre de la subasta:
+                    </label>
+                    <p>{title}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      Identificador de la subasta:
+                    </label>
+                    <p>{identifier}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      Estado de la subasta:
+                    </label>
+                    <p>{auctionStep}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">Moneda:</label>
+                    <p>{currency}</p>
+                  </Column>
+                </Row>
+                <Row
+                  style={{
+                    justifyContent: "space-between",
+                    padding: "10px 25px",
+                  }}
+                >
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">Puja mínima</label>
+                    <p>{minimumBid}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      La subasta arranca en:
+                    </label>
+                    <p>{totalItemsPrice}</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">
+                      Extensión de:
+                    </label>
+                    <p>{extensionTime} minutos</p>
+                  </Column>
+                  <Column
+                    mobile={16}
+                    tablet={16}
+                    computer={4}
+                    largeScreen={4}
+                    widescreen={4}
+                  >
+                    <label className="auction-resume-label">Artículos:</label>
+                    <p>{items?.length}</p>
+                  </Column>
+                </Row>
+              </Container>
+            </Card>
           </Row>
         </Fragment>
       )

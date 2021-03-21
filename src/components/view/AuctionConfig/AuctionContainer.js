@@ -16,7 +16,6 @@ class AuctionContainer extends Component {
     const { token } = isAuthenticated();
     if (token) {
       this.fetchAuction();
-      this.fetchFavoriteProviders();
     }
   }
 
@@ -29,8 +28,6 @@ class AuctionContainer extends Component {
       this.setState({ auctionInfo: response.data.body });
     }
   };
-
-  fetchFavoriteProviders = async () => {};
 
   render() {
     const { auctionInfo, auctionId } = this.state;

@@ -82,7 +82,7 @@ const ProjectDates = ({
           onChange={(date) => setOpeningFADate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={15}
+          timeIntervals={30}
           timeCaption="time"
           dateFormat="Pp"
           locale="es"
@@ -96,7 +96,7 @@ const ProjectDates = ({
           onChange={(date) => setEndingFADate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={15}
+          timeIntervals={30}
           timeCaption="time"
           dateFormat="Pp"
           locale="es"
@@ -124,7 +124,7 @@ const ProjectDates = ({
           onChange={(date) => setOpeningRealTimeAuctionDate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={15}
+          timeIntervals={30}
           timeCaption="time"
           dateFormat="Pp"
           locale="es"
@@ -138,7 +138,7 @@ const ProjectDates = ({
           onChange={(date) => setEndingRealTimeAuctionDate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={15}
+          timeIntervals={30}
           timeCaption="time"
           dateFormat="Pp"
           locale="es"

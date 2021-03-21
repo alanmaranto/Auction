@@ -12,7 +12,7 @@ import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
 import SummaryTableCard from "./components/SummaryTableCard";
 import RealTimeGraph from "./components/RealTimeGraph";
-import { data } from "./helpers";
+import { columns } from './helpers'
 import { roles } from "../../../helpers/roles";
 import "./style.css";
 
@@ -31,21 +31,21 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
     // Render a countdown
     return (
       <div className="countdown">
-        <div className="time">
+        <div className="countdown__time">
           <div>{days}</div>
-          <span>Días</span>
+          <span className="countdown__time--days">Días</span>
         </div>
-        <div className="time">
+        <div className="countdown__time">
           <div>{hours}</div>
-          <span>Horas</span>
+          <span className="countdown__time--days">Horas</span>
         </div>
-        <div className="time">
+        <div className="countdown__time">
           <div>{minutes}</div>
-          <span>Minutos</span>
+          <span className="countdown__time--days">Minutos</span>
         </div>
-        <div className="time">
+        <div className="countdown__time">
           <div>{seconds}</div>
-          <span>Segundos</span>
+          <span className="countdown__time--days">Segundos</span>
         </div>
       </div>
     );
@@ -60,38 +60,30 @@ const RunningAuction = ({
   endingAuction,
   onFinalizedAuction,
   minimumBid,
-  minimumPrice,
+  totalItemsPrice,
   role,
   handleChange,
+  bids,
+  summaryBids,
 }) => {
   const operation = new Date(endingAuction).getTime();
 
   const auctionConditions = [
-    `La subasta inversa comienza en ${minimumPrice}`,
-    `Las pujas mínimas son de ${minimumBid}`,
+    `Subasta: ${title}`,
+    `La subasta inversa comienza en ${totalItemsPrice}`,
+    `Las pujas disminuyen de ${minimumBid} en ${minimumBid}`,
   ];
-
-  const renderTitle = () => {
-    return (
-      <Row>
-        <Column>
-          <div className="auction-h">
-            <Header
-              as="h1"
-              className="auction-header"
-              content={title}
-              icon="gavel"
-            />
-          </div>
-        </Column>
-      </Row>
-    );
-  };
 
   const renderCountdown = () => {
     return (
       <Row>
-        <Column>
+        <Column
+          mobile={16}
+          tablet={16}
+          computer={8}
+          largeScreen={8}
+          widescreen={8}
+        >
           <div style={{ textAlign: "center" }}>
             <h2>La subasta finalizará en</h2>
           </div>
@@ -111,27 +103,43 @@ const RunningAuction = ({
             }
           />
         </Column>
+        <Column
+          mobile={16}
+          tablet={16}
+          computer={8}
+          largeScreen={8}
+          widescreen={8}
+          className="running-auction-details"
+        >
+          <Message
+            warning
+            header="Condiciones de la subasta"
+            list={auctionConditions}
+            color="blue"
+          />
+        </Column>
       </Row>
     );
   };
 
   const renderBid = () => {
-    // const submitBid = lastMessage && lastMessage.bid - minimumBid;
+    const lastBid = lastMessage?.bid - minimumBid;
     return (
-      <Row columns={2}>
-        <Column>
-          <Message
-            warning
-            header="Condiciones de la subasta"
-            list={auctionConditions}
-          />
-        </Column>
-        <Column>
+      <Row>
+        <Column
+          mobile={16}
+          tablet={16}
+          computer={8}
+          largeScreen={8}
+          widescreen={8}
+        >
           <Card fluid>
-            <Card.Content className="card-container" textAlign="center">
-              <Card.Header className="card-bid">Puja actual</Card.Header>
-              <Card.Description className="card-bid-number">
-                $ {(lastMessage && lastMessage.bid) || minimumPrice} pesos
+            <Card.Content className="card-bid-container" textAlign="center">
+              <Card.Header className="card-bid-container__header">
+                Puja actual
+              </Card.Header>
+              <Card.Description className="card-bid-container__current-bid">
+                $ {(lastMessage && lastMessage.bid) || totalItemsPrice} pesos
               </Card.Description>
             </Card.Content>
           </Card>
@@ -145,7 +153,7 @@ const RunningAuction = ({
                 fluid
                 size="big"
                 inverted
-                // max={submitBid === null ? minimumPrice : submitBid}
+                max={lastBid === undefined ? totalItemsPrice : lastBid}
                 onChange={(e) => handleChange(e)}
               />
               <Button
@@ -162,29 +170,32 @@ const RunningAuction = ({
             </Form>
           )}
         </Column>
+        <Column
+          mobile={16}
+          tablet={16}
+          computer={8}
+          largeScreen={8}
+          widescreen={8}
+          className="summary-table-card-col"
+        >
+          <SummaryTableCard data={summaryBids} columns={columns} />
+        </Column>
       </Row>
     );
   };
 
   const renderRealTimeGraph = () => (
-    <>
-      <Grid.Row>
-        <Grid.Column>
-          <RealTimeGraph data={data} />
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column>
-          <SummaryTableCard />
-        </Grid.Column>
-      </Grid.Row>
-    </>
+    <Grid.Row>
+      <Grid.Column>
+        <RealTimeGraph data={bids} />
+      </Grid.Column>
+    </Grid.Row>
   );
 
   return (
     <Grid>
-      {renderTitle()}
       {renderCountdown()}
+      {renderRealTimeGraph()}
       {renderBid()}
     </Grid>
   );

@@ -1,31 +1,42 @@
-import React, { Component, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import RunningAuction from "./RunningAuction";
 
 import { isAuthenticated } from "../../../helpers/authenticate";
 import {
   getRunningAuctionById,
-  posMessage,
   updateAuction,
+  getBidsByAuctionInfo,
 } from "../../../api/api";
+import { getRealTimeBidsByAuctionId } from "../../../api/realtime";
 import { SocketContext } from "../../../context/socket/SocketContext";
 
 const RunningAuctionContainer = ({ match: { params } }) => {
   const { socket } = useContext(SocketContext);
 
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
   const [auction, setAuction] = useState({});
   const [lastMessage, setLastMessage] = useState({});
-  const [finalized, setFinalized] = useState(false);
+  const [bids, setBids] = useState([]);
+  const [summaryBids, setSummaryBids] = useState([]);
 
   const { token, user } = isAuthenticated();
 
   useEffect(() => {
-    fetchAuction();
+    if (token) {
+      fetchAuction();
+    }
   }, []);
 
   useEffect(() => {
-    // fetchSummaryBids();
+    if (token) {
+      fetchBids();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      fetchSummaryBids();
+    }
   }, []);
 
   // get current bid throught socket
@@ -35,6 +46,19 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       if (data.auctionId === currentAuction) {
         setLastMessage(data);
       }
+    });
+  };
+
+  // get current bids throught socket
+  const listenBids = () => {
+    socket.on("get-bids", (data) => {
+      setBids(data);
+    });
+  };
+
+  const listenSummaryBids = () => {
+    socket.on("summary-bids", (data) => {
+      setSummaryBids(data);
     });
   };
 
@@ -56,29 +80,53 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   };
 
   useEffect(() => {
+    listenBids();
+  }, [bids]);
+
+  useEffect(() => {
+    listenSummaryBids();
+  }, [summaryBids]);
+
+  useEffect(() => {
     listenBid();
   }, [lastMessage]);
 
   const fetchAuction = async () => {
     const { id: currentAuction } = params;
-    // const response = await getRealTimeBidsByAuctionId(token, currentAuction);
     const response = await getRunningAuctionById(token, currentAuction);
 
     if (response && response.data && response.data.body) {
-      const { /* bids, */ auctionResult, lastMessage } = response.data.body;
+      const { auctionResult, lastMessage } = response.data.body;
       setAuction(auctionResult);
       setLastMessage(lastMessage);
-      // setBids(bids);
     }
   };
 
-  const onFinalizedAuction = () => {
+  const fetchBids = async () => {
+    const { id: currentAuction } = params;
+    const response = await getRealTimeBidsByAuctionId(token, currentAuction);
+
+    if (response && response.data.body) {
+      setBids(response.data.body);
+    }
+  };
+
+  const fetchSummaryBids = async () => {
+    const { id: currentAuction } = params;
+    const response = await getBidsByAuctionInfo(token, currentAuction);
+
+    if (response && response.data.body) {
+      setSummaryBids(response.data.body);
+    }
+  };
+
+  const onFinalizedAuction = async () => {
     const { id: currentAuction } = params;
     const data = {
       finalized: true,
+      auctionStep: "finalized",
     };
-    const result = updateAuction(currentAuction, token, data);
-    console.log("finalized", result);
+    await updateAuction(currentAuction, token, data);
   };
 
   const handleChange = (e) => {
@@ -89,7 +137,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
     <RunningAuction
       title={auction.title}
       minimumBid={auction.minimumBid}
-      minimumPrice={auction.totalItemsPrice}
+      totalItemsPrice={auction.totalItemsPrice}
       message={message}
       role={user.role}
       sendBid={sendBid}
@@ -97,8 +145,8 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       endingAuction={auction.endingRealTimeAuctionDate}
       onFinalizedAuction={onFinalizedAuction}
       handleChange={handleChange}
-      // bids={bids}
-      // summaryBids={summaryBids}
+      bids={bids}
+      summaryBids={summaryBids}
     />
   );
 };
