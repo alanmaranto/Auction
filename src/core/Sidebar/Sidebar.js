@@ -150,10 +150,10 @@ const Sidebar = () => {
               Invitaciones
               <Link to="/invitations" />
             </MenuItem>
-            <MenuItem icon={<Icon name="chart line" size={size} />}>
+{/*             <MenuItem icon={<Icon name="chart line" size={size} />}>
               Subastas Ganadas
               <Link to="/wons" />
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
         </SidebarContent>
       );

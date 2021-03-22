@@ -1,6 +1,5 @@
 import React from "react";
-import moment from "moment";
-import { Label, Button, Icon, Popup, Accordion, Form } from "semantic-ui-react";
+import { Label, Button, Icon, Popup } from "semantic-ui-react";
 
 const getStatusColor = (auctionStatus, status, type) => {
   if (auctionStatus === "rejected") {
@@ -83,7 +82,7 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
           return (
             <div>
               <Label color="teal" ribbon>
-                Acceptado
+                Aceptado
               </Label>
               <div>{userName}</div>
             </div>
