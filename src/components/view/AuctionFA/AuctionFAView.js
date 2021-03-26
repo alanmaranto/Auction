@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Segment, Divider, Header } from "semantic-ui-react";
+import { Divider } from "semantic-ui-react";
 import { FAAuctionsHeaderTable } from "../../../helpers/auctions";
 import { AuctionTable } from "../../../core/AuctionTable/AuctionTable";
 import { AuctionFilter } from "../../../core/AuctionTable/AuctionFilter";
