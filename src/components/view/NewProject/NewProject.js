@@ -3,8 +3,7 @@ import { Button, Header, Card, Step } from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import { useToasts } from "react-toast-notifications";
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { createAuction } from "../../../api/auction";
-import { getActiveAuctionsByUser } from "../../../api/auction";
+import { createAuction, getRFIAuctionByUser } from "../../../api/auction";
 import Overview from "./steps/Overview";
 import FileList from "./steps/FileListStep";
 import ItemsTable from "./steps/ItemsTable";
@@ -107,8 +106,8 @@ const NewAuction = () => {
     });
   };
 
-  const fetchActiveAuctions = async () => {
-    const response = await getActiveAuctionsByUser(token);
+  const fetchRFIAuctions = async () => {
+    const response = await getRFIAuctionByUser(token);
 
     if (response && response.status === 200) {
       setAuctions(response.data.body);
@@ -127,6 +126,7 @@ const NewAuction = () => {
     bodyData.append("items", JSON.stringify(items));
     bodyData.append("openingRealTimeAuctionDate", openingRealTimeAuctionDate);
     bodyData.append("endingRealTimeAuctionDate", endingRealTimeAuctionDate);
+    bodyData.append("extendedRealTimeAuctionDate", endingRealTimeAuctionDate);
     bodyData.append("openingRFIDate", openingRFIDate);
     bodyData.append("endingRFIDate", endingRFIDate);
     bodyData.append("openingFADate", openingFADate);
@@ -160,7 +160,7 @@ const NewAuction = () => {
 
       if (response.status === 201) {
         setLoading(false);
-        fetchActiveAuctions();
+        fetchRFIAuctions();
         addToast("Subasta creada exitósamente", {
           appearance: "success",
           autoDismiss: true,
