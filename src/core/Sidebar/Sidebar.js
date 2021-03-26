@@ -150,7 +150,7 @@ const Sidebar = () => {
               Invitaciones
               <Link to="/invitations" />
             </MenuItem>
-{/*             <MenuItem icon={<Icon name="chart line" size={size} />}>
+            {/*             <MenuItem icon={<Icon name="chart line" size={size} />}>
               Subastas Ganadas
               <Link to="/wons" />
             </MenuItem> */}
@@ -183,8 +183,7 @@ const Sidebar = () => {
     return (
       <Grid.Row
         style={{
-          justifyContent: "center",
-          alignItems: "center",
+          paddingLeft: 35,
         }}
       >
         {logo ? (
@@ -242,7 +241,6 @@ const Sidebar = () => {
           <span className="sidebar-user-information-container__name">
             {user?.name}
           </span>
-          <span style={{ fontSize: "14px" }}>{user?.email}</span>
         </div>
       </Grid.Row>
     );
