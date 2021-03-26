@@ -17,7 +17,7 @@ class ProviderDashboardContainer extends Component {
     if (token) {
       this.fetchRFIAuctions();
       this.fetchFAAuctions();
-      this.fetchSubAuctions()
+      this.fetchSubAuctions();
     }
   }
 
@@ -49,9 +49,19 @@ class ProviderDashboardContainer extends Component {
 
     if (response && response.status === 200) {
       this.setState({
-        subAuctions: response.data.body,
+        subAuctions: this.filterFinalizedAuctions(response.data.body),
       });
     }
+  };
+
+  filterFinalizedAuctions = (auctions) => {
+    const filtered =
+      auctions &&
+      auctions.filter((auction) => {
+        return auction.auctionId.finalized === false;
+      });
+
+    return filtered;
   };
 
   render() {
