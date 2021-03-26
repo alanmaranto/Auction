@@ -10,7 +10,7 @@ const Overview = ({
   currency,
   setCurrency,
   isOpenAuction,
-  setIsOpenAuction
+  setIsOpenAuction,
 }) => {
   return (
     <Form>
@@ -55,10 +55,10 @@ const Overview = ({
       </Form.Group>
       <Form.Group>
         <Form.Input
-          label="Mejora mínima (%)"
+          label={`Mejora mínima ${currency}`}
           placeholder=""
           width={4}
-          type="text"
+          type="number"
           value={values.minimumBid}
           name="minimumBid"
           required
@@ -102,7 +102,7 @@ const Overview = ({
           value={isOpenAuction}
           checked={isOpenAuction ? true : false}
           onChange={() => setIsOpenAuction(!isOpenAuction)}
-          style={{ paddingLeft: 10}}
+          style={{ paddingLeft: 10 }}
         />
       </Form.Group>
     </Form>
