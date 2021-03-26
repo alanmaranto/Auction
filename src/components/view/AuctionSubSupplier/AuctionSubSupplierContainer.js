@@ -20,6 +20,7 @@ class AuctionSubSupplierContainer extends Component {
       loading: false,
       _sort: "id",
       _order: null,
+      isFetching: false,
     };
   }
 
@@ -32,18 +33,33 @@ class AuctionSubSupplierContainer extends Component {
 
   fetchSubSuppliersAuctions = async (token) => {
     const { addToast } = this.props;
+    this.setState({ isFetching: true });
     const response = await getAuctionsSuppliersInvitedByStep(token, "sub");
     if (response && response.status === 200) {
-      const formatedAuction = formatedProviderAuctionData(response.data.body);
+      const formatedAuction = formatedProviderAuctionData(
+        this.filterFinalizedAuctions(response.data.body)
+      );
       this.setState({
         subSupplierAuctions: formatedAuction,
+        isFetching: false,
       });
     } else {
       addToast("No hay subastas RFI", {
         appearance: "error",
         autoDismiss: true,
       });
+      this.setState({ isFetching: false });
     }
+  };
+
+  filterFinalizedAuctions = (auctions) => {
+    const filtered =
+      auctions &&
+      auctions.filter((auction) => {
+        return auction.auctionId.finalized === false;
+      });
+
+    return filtered;
   };
 
   onChangePage = (value) => {
@@ -74,7 +90,13 @@ class AuctionSubSupplierContainer extends Component {
   };
 
   render() {
-    const { elementsByPage, currentPage, filter, loading } = this.state;
+    const {
+      elementsByPage,
+      currentPage,
+      filter,
+      loading,
+      isFetching,
+    } = this.state;
     const {
       dataSource: subSupplierAuctions,
       dataSourceSize: totalCount,
@@ -94,6 +116,7 @@ class AuctionSubSupplierContainer extends Component {
         buttonAction={this.sendToAuctionView}
         onChangeValue={this.onChangeValue}
         loading={loading}
+        isFetching={isFetching}
       />
     );
   }

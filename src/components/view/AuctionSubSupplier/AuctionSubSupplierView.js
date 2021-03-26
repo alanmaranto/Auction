@@ -18,6 +18,7 @@ const AuctionSubSupplier = ({
   onChangeValue,
   loading,
   user,
+  isFetching
 }) => {
   return (
     <>
@@ -48,7 +49,7 @@ const AuctionSubSupplier = ({
               // column={this.state._sort}
             />
           ) : (
-            <NoData size="medium" title="Aun no tienes subastas en RFI" />
+            <NoData size="medium" title="Aun no tienes subastas en RFI" isFetching={isFetching} />
           )}
         </div>
       </div>

@@ -18,6 +18,7 @@ const AuctionSub = ({
   buttonAction,
   onChangeValue,
   loading,
+  isFetching
 }) => {
   return (
     <>
@@ -48,7 +49,7 @@ const AuctionSub = ({
               // column={this.state._sort}
             />
           ) : (
-            <NoData size="medium" title="Aun no tienes subastas en espera" />
+            <NoData size="medium" title="Aun no tienes subastas en espera" isFetching={isFetching} />
           )}
         </div>
       </div>

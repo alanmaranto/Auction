@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Grid, Header, Image } from "semantic-ui-react";
+import { Grid, Header, Image, Dimmer, Loader } from "semantic-ui-react";
 import { Row, Column, HContent } from "../indexSemanticUi";
 import NoContent from "../../assets/no_content.svg";
 import "./style.css";
@@ -14,7 +14,16 @@ const NoData = ({
   classNameHeader,
   headerConfig,
   classNameImg,
+  isFetching,
 }) => {
+  if (isFetching) {
+    return (
+      <Dimmer active inverted>
+        <Loader inverted size="large" content="Cargando" inline="centered" />
+      </Dimmer>
+    );
+  }
+
   return (
     <Fragment>
       <Grid className={className ? className : "no-data"} container>

@@ -18,6 +18,7 @@ class AuctionSubContainer extends Component {
       loading: false,
       _sort: "id",
       _order: null,
+      isFetching: false,
     };
   }
 
@@ -31,6 +32,7 @@ class AuctionSubContainer extends Component {
   fetchFaAuctions = async (token) => {
     // const { token } = isAuthenticated();
     const { addToast } = this.props;
+    this.setState({ isFetching: true });
 
     const response = await getSubAuctionByUser(token);
 
@@ -38,12 +40,14 @@ class AuctionSubContainer extends Component {
       const formatedAuction = formatedData(response.data.body);
       this.setState({
         subAuctions: formatedAuction || [],
+        isFetching: false,
       });
     } else {
       addToast("No hay subastas", {
         appearance: "error",
         autoDismiss: true,
       });
+      this.setState({ isFetching: false });
     }
   };
 
@@ -75,7 +79,13 @@ class AuctionSubContainer extends Component {
   };
 
   render() {
-    const { elementsByPage, currentPage, filter, loading } = this.state;
+    const {
+      elementsByPage,
+      currentPage,
+      filter,
+      loading,
+      isFetching,
+    } = this.state;
     const {
       dataSource: subAuctions,
       dataSourceSize: totalCount,
@@ -95,6 +105,7 @@ class AuctionSubContainer extends Component {
         buttonAction={this.sendToAuctionView}
         onChangeValue={this.onChangeValue}
         loading={loading}
+        isFetching={isFetching}
       />
     );
   }
