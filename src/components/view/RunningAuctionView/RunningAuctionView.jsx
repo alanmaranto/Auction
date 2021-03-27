@@ -18,6 +18,10 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   const [lastMessage, setLastMessage] = useState({});
   const [bids, setBids] = useState([]);
   const [summaryBids, setSummaryBids] = useState([]);
+  const [
+    extendedRealTimeAuctionDate,
+    setExtendedRealTimeAuctionDate,
+  ] = useState("");
 
   const { token, user } = isAuthenticated();
 
@@ -45,6 +49,9 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       const { id: currentAuction } = params;
       if (data.auctionId === currentAuction) {
         setLastMessage(data);
+      }
+      if (data.extendedRealTimeAuctionDate) {
+        setExtendedRealTimeAuctionDate(data.extendedRealTimeAuctionDate);
       }
     });
   };
@@ -89,7 +96,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
 
   useEffect(() => {
     listenBid();
-  }, [lastMessage]);
+  }, [lastMessage, extendedRealTimeAuctionDate]);
 
   const fetchAuction = async () => {
     const { id: currentAuction } = params;
@@ -99,6 +106,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       const { auctionResult, lastMessage } = response.data.body;
       setAuction(auctionResult);
       setLastMessage(lastMessage);
+      setExtendedRealTimeAuctionDate(auctionResult.extendedRealTimeAuctionDate);
     }
   };
 
@@ -147,6 +155,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       handleChange={handleChange}
       bids={bids}
       summaryBids={summaryBids}
+      extendedRealTimeAuctionDate={extendedRealTimeAuctionDate}
     />
   );
 };

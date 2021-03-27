@@ -1,18 +1,10 @@
 import React from "react";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Card,
-  Icon,
-  Message,
-} from "semantic-ui-react";
+import { Button, Form, Grid, Card, Icon, Message } from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
 import SummaryTableCard from "./components/SummaryTableCard";
 import RealTimeGraph from "./components/RealTimeGraph";
-import { columns } from './helpers'
+import { columns } from "./helpers";
 import { roles } from "../../../helpers/roles";
 import "./style.css";
 
@@ -65,8 +57,10 @@ const RunningAuction = ({
   handleChange,
   bids,
   summaryBids,
+  extendedRealTimeAuctionDate,
 }) => {
   const operation = new Date(endingAuction).getTime();
+  const operationExtended = new Date(extendedRealTimeAuctionDate).getTime();
 
   const auctionConditions = [
     `Subasta: ${title}`,
@@ -88,7 +82,9 @@ const RunningAuction = ({
             <h2>La subasta finalizará en</h2>
           </div>
           <Countdown
-            date={new Date(operation)}
+            date={
+              !lastMessage ? new Date(operation) : new Date(operationExtended)
+            }
             renderer={renderer}
             onComplete={
               role === roles.BUYER
@@ -153,7 +149,7 @@ const RunningAuction = ({
                 fluid
                 size="big"
                 inverted
-                max={lastBid === undefined ? totalItemsPrice : lastBid}
+                max={isNaN(lastBid) ? totalItemsPrice : lastBid}
                 onChange={(e) => handleChange(e)}
               />
               <Button
@@ -184,13 +180,15 @@ const RunningAuction = ({
     );
   };
 
-  const renderRealTimeGraph = () => (
-    <Grid.Row>
-      <Grid.Column>
-        <RealTimeGraph data={bids} />
-      </Grid.Column>
-    </Grid.Row>
-  );
+  const renderRealTimeGraph = () => {
+    return (
+      <Grid.Row>
+        <Grid.Column>
+          <RealTimeGraph data={bids} />
+        </Grid.Column>
+      </Grid.Row>
+    );
+  };
 
   return (
     <Grid>
