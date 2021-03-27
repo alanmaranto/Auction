@@ -1,7 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Container, Header, Grid, Button, Feed, Icon } from "semantic-ui-react";
+import React from "react";
 import { Table } from "../../../../../core/controllers";
-// import { getSteps } from "./helper";
 import rfiColumns from "./rfiColumns";
 import faColumns from "./faColumns";
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Dropzone from "react-dropzone";
 import { Modal, Button, Dimmer, Loader } from "semantic-ui-react";
 

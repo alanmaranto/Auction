@@ -165,7 +165,7 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
       title: "Acciones",
       rowSpan: 2,
       renderData: (dataRow) => {
-        const { userId, invitationId, status, invitationStatus } =
+        const { userId, invitationId, status } =
           dataRow || {};
         if (["rejected", "accepted"].includes(status)) {
           return [];

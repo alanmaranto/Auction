@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import Dropzone from "react-dropzone";
-import { Button, Dimmer } from "semantic-ui-react";
-import { useToasts } from "react-toast-notifications";
+import { Dimmer } from "semantic-ui-react";
 import Loader from "../../../../core/Loader";
-import { isAuthenticated } from "../../../../helpers/authenticate";
 
 import fileIcon from "../../../../assets/file-icon.png";
 import deleteIcon from "../../../../assets/delete-icon.png";
@@ -15,9 +13,6 @@ const FileListStep = ({
   fileList,
   setFileList,
   isUploading,
-  setIsUploading,
-  onAddFile,
-  onRemoveFile,
 }) => {
   return (
     <div>
