@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-computed-key */
 import axios from "axios";
 import { host } from "./api";
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Header, Divider } from "semantic-ui-react";
 import { useToasts } from "react-toast-notifications";

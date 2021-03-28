@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import io from "socket.io-client";
 
 export const useSocket = (host) => {

@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
-import { Button, Loader } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import { useSuppliers } from "./UseInvitedSuppliers";
 
 import "./style.css";

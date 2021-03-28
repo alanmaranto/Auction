@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unreachable */
 import { useState } from "react";
 import { isAuthenticated } from "../../../../../helpers/authenticate";
 import { putInvitationDocuments } from "../../../../../api/api";

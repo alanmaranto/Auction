@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Table, Pagination, Menu, Icon } from "semantic-ui-react";
+import { Table, Menu, Icon } from "semantic-ui-react";
 
 import { PageSizeSelect } from "./PageSizeSelect.jsx";
 import { TableRow } from "./TableRow.jsx";
@@ -12,19 +12,13 @@ const CoreTable = (props) => {
   const {
     title,
     dataSource,
-    totalPages,
-    currentPage,
-    onChangePage,
     columns,
-
     colorTable,
-    header,
     pageSelector,
     paginated,
   } = props;
 
   const { limit, onChangeLimit } = pageSelector || {};
-  const { column, direction, handleSort } = header || {};
 
   if (!dataSource) {
     return <React.Fragment />;
@@ -39,7 +33,7 @@ const CoreTable = (props) => {
       )}
       {title}
       <Table
-        size="small" 
+        size="small"
         color={colorTable || "blue"}
         className="custom-table"
         compact

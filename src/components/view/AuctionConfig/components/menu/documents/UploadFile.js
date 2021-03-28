@@ -53,12 +53,17 @@ function UploadFile({
               <div className="upload-file-list">
                 {fileList.map(({ name }, index) => (
                   <div key={`img-${name}`} className="upload-file-item">
-                    <img className="file-icon" src={fileIcon} />
+                    <img
+                      className="file-icon"
+                      src={fileIcon}
+                      alt={`img-${index}-${name}`}
+                    />
                     {name}
                     <img
                       className="delete-icon"
                       src={deleteIcon}
                       onClick={() => onRemoveFile(index)}
+                      alt={`img-${index}-${name}`}
                     />
                   </div>
                 ))}

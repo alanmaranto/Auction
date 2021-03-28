@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { Label, Button, Icon, Popup, Accordion, Form } from "semantic-ui-react";
+import { Label, Button, Icon, Popup } from "semantic-ui-react";
 
 const getStatusColor = (auctionStatus, status, type) => {
   if (auctionStatus === "rejected") {
@@ -67,7 +67,6 @@ const rfiColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
       id: "1",
       name: "userName",
       title: "Proveedor",
-      rowSpan: 2,
       renderData: (dataRow) => {
         const { userName, status } = dataRow || {};
         if (status === "rejected") {
@@ -159,7 +158,7 @@ const rfiColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
         return "-";
       },
       width: 3,
-    }, 
+    },
     {
       id: "6",
       name: "documents",
@@ -174,7 +173,11 @@ const rfiColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
               <p>
                 {(files || []).map((file, index) => (
                   <div>
-                    <a href={file.url} target="_blank">
+                    <a
+                      href={file.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {file.title || ""}
                     </a>
                   </div>

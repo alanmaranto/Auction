@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import { Grid, Button, Icon } from "semantic-ui-react";

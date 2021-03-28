@@ -1,3 +1,5 @@
+
+/* eslint-disable no-useless-computed-key */
 import axios from "axios";
 export const host = process.env.REACT_APP_API_URL;
 
@@ -75,6 +77,7 @@ export const posMessage = async (token, body) => {
       },
       data: body,
     });
+    return response;
   } catch (error) {
     return error;
   }

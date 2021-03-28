@@ -146,7 +146,11 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
               <p>
                 {(files || []).map((file, index) => (
                   <div>
-                    <a href={file.url} target="_blank">
+                    <a
+                      href={file.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {file.title || ""}
                     </a>
                   </div>
@@ -165,8 +169,7 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
       title: "Acciones",
       rowSpan: 2,
       renderData: (dataRow) => {
-        const { userId, invitationId, status } =
-          dataRow || {};
+        const { userId, invitationId, status } = dataRow || {};
         if (["rejected", "accepted"].includes(status)) {
           return [];
         }

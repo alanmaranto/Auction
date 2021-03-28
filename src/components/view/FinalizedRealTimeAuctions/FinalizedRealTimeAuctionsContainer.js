@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { getBidsByAuctionInfo, getRunningAuctionById } from "../../../api/api";
 import { getRealTimeBidsByAuctionId } from "../../../api/realtime";

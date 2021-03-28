@@ -13,6 +13,7 @@ const FavoriteSupplierCard = ({ supplier, deleteSupplier }) => {
           className="favorite-suppliers-card-container__image--delete-icon"
           src={deleteIcon}
           onClick={() => deleteSupplier(_id)}
+          alt={`${favoriteSuppliers.name} - ${favoriteSuppliers._id}`}
         />
       </div>
       <div className="favorite-suppliers-card-container__content">

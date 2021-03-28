@@ -35,7 +35,7 @@ class ChooseWinnerView extends Component {
     const { addToast } = this.props;
 
     const { token } = isAuthenticated();
-    const { currentBid, bids } = this.state;
+    const { currentBid } = this.state;
     const { auctionId, bidId, providerName, providerEmail, auctionTitle } = currentBid;
 
     const data = {

@@ -1,6 +1,5 @@
 import React from "react";
 import { Divider, List, Button, Image, Card } from "semantic-ui-react";
-import moment from "moment";
 import avatar from "../../../assets/steve.jpg";
 import fileIcon from "../../../assets/file-icon.png";
 import { formatDate, formatTypes } from "../../../helpers/dates";
@@ -14,7 +13,7 @@ const InvitationCard = ({ data, key, id, updateInvitationStatus, loading }) => {
     return files.map((file) => {
       return (
         <List.Item style={{ display: "flex" }}>
-          <img className="file-icon" src={fileIcon} />
+          <img className="file-icon" src={fileIcon} alt={file.title} />
           <a className="file-url" href={file.url}>
             {file.title}
           </a>

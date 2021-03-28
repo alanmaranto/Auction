@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { isAuthenticated } from "../../../../../helpers/authenticate";
 import { putAuctionStep } from "../../../../../api/api";

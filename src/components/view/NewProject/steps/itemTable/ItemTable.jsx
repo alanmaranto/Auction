@@ -1,5 +1,7 @@
+/* eslint-disable array-callback-return */
+
 import React from "react";
-import { Table, Icon, Input, Grid } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import ItemRow from "./ItemRow";
 import { TableHeader } from "../../../../../core/AuctionTable/TableHeader";
 
@@ -11,7 +13,7 @@ const ItemsTable = ({ handleItemsTable, handleRowDel, items, filterText }) => {
     return (
       <ItemRow
         item={item}
-        handleItemsTable={handleItemsTable} 
+        handleItemsTable={handleItemsTable}
         handleRowDel={handleRowDel}
         id={item.id}
         index={index}

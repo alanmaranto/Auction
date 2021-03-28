@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Dropzone from "react-dropzone";
 import { Modal, Button, Dimmer, Loader } from "semantic-ui-react";
 
@@ -53,12 +53,17 @@ function UploadFile({
               <div className="upload-file-list">
                 {fileList.map(({ name }, index) => (
                   <div key={`img-${name}`} className="upload-file-item">
-                    <img className="file-icon" src={fileIcon} />
+                    <img
+                      className="file-icon"
+                      src={fileIcon}
+                      alt={`${fileIcon}-${name}`}
+                    />
                     {name}
                     <img
                       className="delete-icon"
                       src={deleteIcon}
                       onClick={() => onRemoveFile(index)}
+                      alt={`${deleteIcon}-${name}`}
                     />
                   </div>
                 ))}

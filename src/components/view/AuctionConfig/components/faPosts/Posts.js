@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Card, Button, Input, Header, Dimmer } from "semantic-ui-react";
 import { createFAPost, getFAPosts } from "../../../../../api/posts";

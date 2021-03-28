@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Button, Header, Card, Step } from "semantic-ui-react";
 import history from "../../../modules/history/history";

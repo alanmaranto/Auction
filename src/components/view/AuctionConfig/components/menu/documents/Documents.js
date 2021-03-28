@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
 import UploadFile from "./UploadFile";
 
-/**
- *     auctionStep={auctionStep}
-                auctionId={auctionId}
- */
 import "./style.css";
 const Documents = ({ fetchAuction, auctionStep, auctionId, auctionFiles }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -21,7 +17,7 @@ const Documents = ({ fetchAuction, auctionStep, auctionId, auctionFiles }) => {
       </Button>
       {auctionFiles.map((document) => (
         <div className="document-item">
-          <a href={document.url} target="_blank">
+          <a href={document.url} target="_blank" rel="noopener noreferrer">
             {document.title}
           </a>
         </div>

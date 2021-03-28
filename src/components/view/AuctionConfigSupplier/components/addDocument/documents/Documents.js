@@ -24,7 +24,7 @@ const Documents = ({
       </Button>
       {auctionFiles.map((document) => (
         <div className="document-item">
-          <a href={document.url} target="_blank">
+          <a href={document.url} target="_blank" rel="noopener noreferrer">
             {document.title}
           </a>
         </div>
