@@ -39,8 +39,6 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
     endingFADate,
   } = auction;
 
-  console.log("auctionStep", auctionStep);
-  console.log("endingRFIDate", endingRFIDate);
   const nexStep = getNextStep(auctionStep || "");
   const acceptedSuppliers = getAcceptedSuppliers(suppliers || []);
 
@@ -64,12 +62,14 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
         endingFADate: newEndingFADate,
         openingRealTimeAuctionDate: newOpeningRealTimeDate,
         endingRealTimeAuctionDate: newEndingRealTimeDate,
+        extendedRealTimeAuctionDate: newEndingRealTimeDate
       };
     } else if (auctionStep === "fa_hl") {
       data = {
         endingFADate: newEndingFADate,
         openingRealTimeAuctionDate: newOpeningRealTimeDate,
         endingRealTimeAuctionDate: newEndingRealTimeDate,
+        extendedRealTimeAuctionDate: newEndingRealTimeDate
       };
     }
 

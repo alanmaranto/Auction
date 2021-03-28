@@ -39,7 +39,9 @@
   "scripts": {
     "start-js": "react-scripts start",
     "start": "npm-run-all -p start-js watch-css",
-    "build": "react-scripts build",
+    "build:production": "env-cmd -f .env.production npm run-script build",
+    "build:test": "env-cmd -f .env.test npm run-script build",
+    "build:development": "env-cmd -f .env.development npm run-script build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
