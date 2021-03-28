@@ -1,28 +1,22 @@
 .file-list {
   padding-top: 30px;
-  text-align: left;
-}
+  text-align: left; }
 
 .file-item {
-  padding: 5px;
-}
+  padding: 5px; }
 
 .file-item a:hover {
   cursor: pointer;
-  color: green;
-}
+  color: green; }
 
 .file-item .file-icon {
   width: 20px;
-  height: 20px;
-}
+  height: 20px; }
 
 .file-item .delete-icon {
   width: 20px;
   height: 20px;
-  float: right;
-}
+  float: right; }
 
 .file-item .delete-icon:hover {
-  cursor: pointer;
-}
+  cursor: pointer; }

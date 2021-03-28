@@ -1,0 +1,31 @@
+.post-wrapper {
+  display: flex;
+  flex-direction: column;
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 6px 10px;
+    &--name {
+    }
+  }
+  &__content {
+    p {
+      margin: 0;
+    }
+    padding: 0px 28px 8px;
+    &--message {
+      padding: 0px 14px;
+      max-width: 100%;
+      border-radius: 20px;
+      font-size: 12px;
+      &__createdAt {
+        font-size: 8px;
+        font-weight: 500;
+      }
+    }
+  }
+}

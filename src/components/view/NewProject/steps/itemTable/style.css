@@ -1,0 +1,25 @@
+.item-table-search-bar {
+  margin: 0;
+  max-width: 20%;
+  flex: 1 0 auto;
+  outline: 0;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  text-align: left;
+  line-height: 1.21428571em;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  padding: .28em 1em;
+  background: #fff;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: .28571429rem;
+  transition: box-shadow .1s ease,border-color .1s ease;
+  box-shadow: none; }
+
+.items-table-container {
+  max-width: 800px;
+  overflow-x: scroll; }
+
+@media (min-width: 855px) {
+  .items-table-container {
+    max-width: 1300px;
+    overflow-x: scroll; } }

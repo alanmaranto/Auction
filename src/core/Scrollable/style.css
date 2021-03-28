@@ -1,0 +1,20 @@
+.scroll {
+  overflow-y: auto;
+  overflow-x: auto; }
+
+.scroll.vertical {
+  flex-direction: column-reverse; }
+
+.scroll::-webkit-scrollbar {
+  -webkit-appearance: none; }
+
+.scroll::-webkit-scrollbar:vertical {
+  width: 11px; }
+
+.scroll::-webkit-scrollbar:horizontal {
+  height: 11px; }
+
+.scroll::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 3px solid #fff;
+  background-color: rgba(224, 219, 219, 0.5); }

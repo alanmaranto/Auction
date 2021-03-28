@@ -1,18 +1,11 @@
-import React, { Fragment } from "react";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Card,
-  Icon,
-  Message,
-} from "semantic-ui-react";
-import Sidebar from "../../../core/Sidebar/Sidebar";
-import Navbar from "../../../core/Navbar/Navbar";
+import React from "react";
+import { Button, Form, Grid, Card, Icon, Message } from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
-import { roles } from '../../../helpers/roles'
+import SummaryTableCard from "./components/SummaryTableCard";
+import RealTimeGraph from "./components/RealTimeGraph";
+import { columns } from "./helpers";
+import { roles } from "../../../helpers/roles";
 import "./style.css";
 
 const Input = Form.Input;
@@ -30,21 +23,21 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
     // Render a countdown
     return (
       <div className="countdown">
-        <div className="time">
+        <div className="countdown__time">
           <div>{days}</div>
-          <span>Días</span>
+          <span className="countdown__time--days">Días</span>
         </div>
-        <div className="time">
+        <div className="countdown__time">
           <div>{hours}</div>
-          <span>Horas</span>
+          <span className="countdown__time--days">Horas</span>
         </div>
-        <div className="time">
+        <div className="countdown__time">
           <div>{minutes}</div>
-          <span>Minutos</span>
+          <span className="countdown__time--days">Minutos</span>
         </div>
-        <div className="time">
+        <div className="countdown__time">
           <div>{seconds}</div>
-          <span>Segundos</span>
+          <span className="countdown__time--days">Segundos</span>
         </div>
       </div>
     );
@@ -53,143 +46,156 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
 
 const RunningAuction = ({
   title,
-  onSubmit,
-  onChange,
+  sendBid,
   message,
   lastMessage,
   endingAuction,
   onFinalizedAuction,
   minimumBid,
-  minimumPrice,
+  totalItemsPrice,
   role,
+  handleChange,
+  bids,
+  summaryBids,
+  extendedRealTimeAuctionDate,
 }) => {
   const operation = new Date(endingAuction).getTime();
+  const operationExtended = new Date(extendedRealTimeAuctionDate).getTime();
 
   const auctionConditions = [
-    `La subasta inversa comienza en ${minimumPrice}`,
-    `Las pujas mínimas son de ${minimumBid}`,
+    `Subasta: ${title}`,
+    `La subasta inversa comienza en ${totalItemsPrice}`,
+    `Las pujas disminuyen de ${minimumBid} en ${minimumBid}`,
   ];
-
-  const renderTitle = () => {
-    return (
-      <Fragment>
-        <Row>
-          <Column>
-            <div className="auction-h">
-              <Header
-                as="h1"
-                className="auction-header"
-                content={title}
-                icon="gavel"
-              />
-            </div>
-          </Column>
-        </Row>
-      </Fragment>
-    );
-  };
 
   const renderCountdown = () => {
     return (
-      <Fragment>
-        <Row>
-          <Column>
-            <div style={{ textAlign: "center" }}>
-              <h2>La subasta finalizará en</h2>
-            </div>
-            <Countdown
-              date={new Date(operation)}
-              renderer={renderer}
-              onComplete={
-                role === roles.BUYER
-                  ? () => {
-                      onFinalizedAuction();
-                      history.push("/");
-                    }
-                  : () => {
-                      onFinalizedAuction();
-                      history.push("/provider-dashboard");
-                    }
-              }
-            />
-          </Column>
-        </Row>
-      </Fragment>
+      <Row>
+        <Column
+          mobile={16}
+          tablet={16}
+          computer={8}
+          largeScreen={8}
+          widescreen={8}
+        >
+          <div style={{ textAlign: "center" }}>
+            <h2>La subasta finalizará en</h2>
+          </div>
+          <Countdown
+            date={
+              !lastMessage ? new Date(operation) : new Date(operationExtended)
+            }
+            renderer={renderer}
+            onComplete={
+              role === roles.BUYER
+                ? () => {
+                    onFinalizedAuction();
+                    history.push("/");
+                  }
+                : () => {
+                    onFinalizedAuction();
+                    history.push("/provider-dashboard");
+                  }
+            }
+          />
+        </Column>
+        <Column
+          mobile={16}
+          tablet={16}
+          computer={8}
+          largeScreen={8}
+          widescreen={8}
+          className="running-auction-details"
+        >
+          <Message
+            warning
+            header="Condiciones de la subasta"
+            list={auctionConditions}
+            color="blue"
+          />
+        </Column>
+      </Row>
     );
   };
 
   const renderBid = () => {
-    const submitBid = (lastMessage && lastMessage.bid - minimumBid)
-    console.log('submitBid', submitBid)
+    const lastBid = lastMessage?.bid - minimumBid;
     return (
-      <Fragment>
-        <Row columns={2}>
-          <Column>
-            <Message
-              warning
-              header="Condiciones de la subasta"
-              list={auctionConditions}
-            />
-          </Column>
-          <Column>
-            <Card fluid>
-              <Card.Content className="card-container" textAlign="center">
-                <Card.Header className="card-bid">Puja actual</Card.Header>
-                <Card.Description className="card-bid-number">
-                  $ {(lastMessage && lastMessage.bid) || minimumPrice} pesos
-                </Card.Description>
-              </Card.Content>
-            </Card>
-            {role === roles.PROVIDER && (
-              <Form size="large" onSubmit={onSubmit}>
-                <Input
-                  placeholder="Introduzca su puja"
-                  type="number"
-                  value={message}
-                  name="title"
-                  fluid
-                  size="big"
-                  inverted
-                  max={submitBid === null ? minimumPrice : submitBid}
-                  onChange={(e) => onChange("message", e.target.value)}
-                />
-                <Button
-                  style={{ background: "#19750c", color: "white" }}
-                  icon
-                  labelPosition="right"
-                  compact
-                  fluid
-                  size="large"
-                >
-                  <Icon name="dollar sign" />
-                  ¡Pujar!
-                </Button>
-              </Form>
-            )}
-          </Column>
-        </Row>
-      </Fragment>
+      <Row>
+        <Column
+          mobile={16}
+          tablet={16}
+          computer={8}
+          largeScreen={8}
+          widescreen={8}
+        >
+          <Card fluid>
+            <Card.Content className="card-bid-container" textAlign="center">
+              <Card.Header className="card-bid-container__header">
+                Puja actual
+              </Card.Header>
+              <Card.Description className="card-bid-container__current-bid">
+                $ {(lastMessage && lastMessage.bid) || totalItemsPrice} pesos
+              </Card.Description>
+            </Card.Content>
+          </Card>
+          {role === roles.PROVIDER && (
+            <Form size="large" onSubmit={sendBid}>
+              <Input
+                placeholder="Introduzca su puja"
+                type="number"
+                value={message}
+                name="message"
+                fluid
+                size="big"
+                inverted
+                max={isNaN(lastBid) ? totalItemsPrice : lastBid}
+                onChange={(e) => handleChange(e)}
+              />
+              <Button
+                style={{ background: "#19750c", color: "white" }}
+                icon
+                labelPosition="right"
+                compact
+                fluid
+                size="large"
+              >
+                <Icon name="dollar sign" />
+                ¡Pujar!
+              </Button>
+            </Form>
+          )}
+        </Column>
+        <Column
+          mobile={16}
+          tablet={16}
+          computer={8}
+          largeScreen={8}
+          widescreen={8}
+          className="summary-table-card-col"
+        >
+          <SummaryTableCard data={summaryBids} columns={columns} />
+        </Column>
+      </Row>
+    );
+  };
+
+  const renderRealTimeGraph = () => {
+    return (
+      <Grid.Row>
+        <Grid.Column>
+          <RealTimeGraph data={bids} />
+        </Grid.Column>
+      </Grid.Row>
     );
   };
 
   return (
-    <Fragment>
-      <div className="app">
-        <div className="generalContainer">
-          <Sidebar />
-          <div className="content-components">
-            <Navbar />
-            <div className="content-dynamic">
-              <Grid>
-                {renderTitle()}
-                {renderCountdown()}
-                {renderBid()}
-              </Grid>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Fragment>
+    <Grid>
+      {renderCountdown()}
+      {renderRealTimeGraph()}
+      {renderBid()}
+    </Grid>
   );
 };
 

@@ -1,0 +1,77 @@
+.total-auction-container {
+  &__card {
+    background-color: #1366c4 !important;
+  }
+  .ui.card,
+  .ui.cards > .card {
+    width: 236px !important;
+  }
+}
+
+.statistic-total-auction-label {
+  color: #fff !important;
+}
+.statistic-total-auction-value {
+  color: #fff !important;
+}
+
+.auction-step-feed-event {
+  &:hover {
+    background-color: aliceblue !important;
+  }
+  &__label {
+    width: 8em !important;
+    &--text {
+      color: #fff;
+      background-color: #1366c4;
+      max-width: 100%;
+      border: none;
+      border-radius: 0.28571429rem;
+      box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+      transition: box-shadow 0.1s ease, transform 0.1s ease;
+      display: flex;
+      height: 80%;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.auction-step-card-footer {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 1200px) {
+  .total-auction-container {
+    justify-content: space-between;
+  }
+}
+
+.auction-step-card-container {
+  overflow: auto;
+  max-height: 140px;
+  cursor: pointer;
+  scrollbar-width: thin; // Firefox
+  scrollbar-color: #1366c4 white; // Firefox
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #1366c4 !important;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background-color: #a80505;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+}

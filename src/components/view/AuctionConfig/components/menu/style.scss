@@ -1,0 +1,17 @@
+.menu-items {
+  .document-item {
+    padding-top: 10px;
+  }
+  .user-item {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px gray solid;
+    div {
+      text-align: center;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

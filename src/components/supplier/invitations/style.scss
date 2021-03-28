@@ -1,0 +1,19 @@
+.invitation-suppliers-card:hover {
+  border: 2px solid #1366c4;
+  transition: 0.1s;
+  .file-url {
+    cursor: pointer;
+    color: #1366c4;
+  }
+}
+
+.invitation-suppliers-card {
+  .file-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+  }
+  .file-url {
+    color: black;
+  }
+}

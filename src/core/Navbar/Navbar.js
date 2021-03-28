@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, Dropdown } from "semantic-ui-react";
-import { signout } from "../../api";
+import { signout } from "../../api/auth";
 
 import { withRouter } from "react-router-dom";
 
