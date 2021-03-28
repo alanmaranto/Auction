@@ -7,7 +7,7 @@ import { isAuthenticated } from "../../helpers/authenticate";
 import "./style.css";
 
 const NotFound = ({ history }) => {
-  const { user } = isAuthenticated();
+  // const { user } = isAuthenticated();
   return (
     <div>
       <Image centered size="big" src={Error} />
@@ -19,13 +19,14 @@ const NotFound = ({ history }) => {
           size="large"
           primary
           onClick={
-            user.role === roles.BUYER
+            () => history.push("/")
+/*             user.role === roles.BUYER
               ? () => {
                   history.push("/");
                 }
               : () => {
                   history.push("/provider-dashboard");
-                }
+                } */
           }
         >
           Ir a Dashboard
