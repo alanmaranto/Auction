@@ -28,3 +28,4 @@ const Routes = ({ history }) => {
 };
 
 export default Routes;
+
