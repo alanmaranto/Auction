@@ -1,0 +1,15 @@
+.button-submit-new-auction {
+  background: #0a42b3 !important;
+  color: white !important; }
+
+.button-cancel-new-auction {
+  background: #aa1219e3 !important;
+  color: white !important; }
+
+.project-date-container__label-date-title {
+  font-weight: 700;
+  padding-bottom: 10;
+  color: #1366c4; }
+
+.new-project-card-content {
+  padding: 10px 0; }

@@ -1,107 +1,164 @@
-import React, { Component } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useContext } from "react";
 import RunningAuction from "./RunningAuction";
 
 import { isAuthenticated } from "../../../helpers/authenticate";
-import { getRunningAuctionById, posMessage, updateAuction } from "../../../api";
-import { socket, registerUserIOToken } from "../../../socket";
+import {
+  getRunningAuctionById,
+  updateAuction,
+  getBidsByAuctionInfo,
+} from "../../../api/api";
+import { getRealTimeBidsByAuctionId } from "../../../api/realtime";
+import { SocketContext } from "../../../context/socket/SocketContext";
 
-class RunningAuctionView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: "",
-      messages: [],
-      auction: {},
-      token: undefined,
-      lastMessage: {},
-      finalized: false,
-    };
-  }
+const RunningAuctionContainer = ({ match: { params } }) => {
+  const { socket } = useContext(SocketContext);
 
-  componentDidMount = () => {
-    this.fetchAuction();
-    this.listenMessages();
-    const { token, user } = isAuthenticated();
+  const [message, setMessage] = useState("");
+  const [auction, setAuction] = useState({});
+  const [lastMessage, setLastMessage] = useState({});
+  const [bids, setBids] = useState([]);
+  const [summaryBids, setSummaryBids] = useState([]);
+  const [
+    extendedRealTimeAuctionDate,
+    setExtendedRealTimeAuctionDate,
+  ] = useState("");
+
+  const { token, user } = isAuthenticated();
+
+  useEffect(() => {
     if (token) {
-      registerUserIOToken(user._id);
-      this.setState({ token });
+      fetchAuction();
     }
-  };
+  }, []);
 
-  componentDidUpdate(prevProps) {
-    const { lenghtData } = this.props;
-    if (prevProps.lenghtData !== lenghtData) {
-      this.getWindow();
+  useEffect(() => {
+    if (token) {
+      fetchBids();
     }
-    const { token } = isAuthenticated();
-    const { token: stateToken } = this.state;
-    if (token !== undefined && token !== stateToken) {
-      registerUserIOToken(token);
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      fetchSummaryBids();
     }
-  }
+  }, []);
 
-  fetchAuction = async () => {
-    const { id: currentAuction } = this.props.match.params;
-    const { token } = isAuthenticated();
-    const response = await getRunningAuctionById(token, currentAuction);
-    if (response && response.data && response.data.body) {
-      const { lastMessage, auctionResult } = response.data.body;
-
-      this.setState({ auction: auctionResult, lastMessage });
-    }
-  };
-
-  listenMessages = () => {
-    socket.on("wellcome", (data) => {
-      console.log("Welcome running auction", data);
-    });
-    socket.on("newMessage", (data) => {
-      const { id: currentAuction } = this.props.match.params;
+  // get current bid throught socket
+  const listenBid = () => {
+    socket.on("supplier-bid", (data) => {
+      const { id: currentAuction } = params;
       if (data.auctionId === currentAuction) {
-        this.setState({ lastMessage: data });
+        setLastMessage(data);
+      }
+      if (data.extendedRealTimeAuctionDate) {
+        setExtendedRealTimeAuctionDate(data.extendedRealTimeAuctionDate);
       }
     });
   };
 
-  onChange = (param, value) => {
-    this.setState({ [param]: value });
+  // get current bids throught socket
+  const listenBids = () => {
+    socket.on("get-bids", (data) => {
+      setBids(data);
+    });
   };
 
-  onSubmit = async () => {
-    const { message, auction } = this.state;
-    const { token, user } = isAuthenticated();
-    const result = await posMessage(token, { auction, message, user});
-    this.setState({ message: ''})
+  const listenSummaryBids = () => {
+    socket.on("summary-bids", (data) => {
+      setSummaryBids(data);
+    });
   };
 
-  onFinalizedAuction = () => {
-    const { id: currentAuction } = this.props.match.params;
-    const { finalized } = this.state;
-    const { token } = isAuthenticated()
+  // send bid throught socket
+  const sendBid = async () => {
+    const { id: currentAuction } = params;
     const data = {
-      finalized: !finalized
+      auctionId: currentAuction,
+      message,
+      userId: user._id,
+    };
+
+    if (message.length === 0) {
+      return;
     }
-    const result = updateAuction(currentAuction, token, data);
-  }
 
-  render() {
-    const { auction, message, lastMessage } = this.state;
-    const { user } = isAuthenticated();
-    return (
-      <RunningAuction
-        title={auction.title}
-        minimumBid={auction.minimumBid}
-        minimumPrice={auction.minimumPrice}
-        onChange={this.onChange}
-        message={message}
-        role={user.role}
-        onSubmit={this.onSubmit}
-        lastMessage={lastMessage}
-        endingAuction={auction.endingAuction}
-        onFinalizedAuction={this.onFinalizedAuction}
-      />
-    );
-  }
-}
+    socket.emit("supplier-bid", data);
+    setMessage("");
+  };
 
-export default RunningAuctionView;
+  useEffect(() => {
+    listenBids();
+  }, [bids]);
+
+  useEffect(() => {
+    listenSummaryBids();
+  }, [summaryBids]);
+
+  useEffect(() => {
+    listenBid();
+  }, [lastMessage, extendedRealTimeAuctionDate]);
+
+  const fetchAuction = async () => {
+    const { id: currentAuction } = params;
+    const response = await getRunningAuctionById(token, currentAuction);
+
+    if (response && response.data && response.data.body) {
+      const { auctionResult, lastMessage } = response.data.body;
+      setAuction(auctionResult);
+      setLastMessage(lastMessage);
+      setExtendedRealTimeAuctionDate(auctionResult.extendedRealTimeAuctionDate);
+    }
+  };
+
+  const fetchBids = async () => {
+    const { id: currentAuction } = params;
+    const response = await getRealTimeBidsByAuctionId(token, currentAuction);
+
+    if (response && response.data.body) {
+      setBids(response.data.body);
+    }
+  };
+
+  const fetchSummaryBids = async () => {
+    const { id: currentAuction } = params;
+    const response = await getBidsByAuctionInfo(token, currentAuction);
+
+    if (response && response.data.body) {
+      setSummaryBids(response.data.body);
+    }
+  };
+
+  const onFinalizedAuction = async () => {
+    const { id: currentAuction } = params;
+    const data = {
+      finalized: true,
+      auctionStep: "finalized",
+    };
+    await updateAuction(currentAuction, token, data);
+  };
+
+  const handleChange = (e) => {
+    setMessage(e.target.value);
+  };
+
+  return (
+    <RunningAuction
+      title={auction.title}
+      minimumBid={auction.minimumBid}
+      totalItemsPrice={auction.totalItemsPrice}
+      message={message}
+      role={user.role}
+      sendBid={sendBid}
+      lastMessage={lastMessage}
+      endingAuction={auction.endingRealTimeAuctionDate}
+      onFinalizedAuction={onFinalizedAuction}
+      handleChange={handleChange}
+      bids={bids}
+      summaryBids={summaryBids}
+      extendedRealTimeAuctionDate={extendedRealTimeAuctionDate}
+    />
+  );
+};
+
+export default RunningAuctionContainer;

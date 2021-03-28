@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ChooseWinner from "./ChooseWinner";
-import { getBidsByAuctionInfo, chooseWinner } from "../../../api";
+import { getBidsByAuctionInfo, chooseWinner } from "../../../api/api";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import withToast from "../../../core/Toasts";
 
@@ -35,7 +35,7 @@ class ChooseWinnerView extends Component {
     const { addToast } = this.props;
 
     const { token } = isAuthenticated();
-    const { currentBid, bids } = this.state;
+    const { currentBid } = this.state;
     const { auctionId, bidId, providerName, providerEmail, auctionTitle } = currentBid;
 
     const data = {

@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nivo/line": "^0.61.1",
-    "axios": "^0.19.2",
+    "@nivo/core": "^0.67.0",
+    "@nivo/line": "^0.67.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "emoji-mart": "^2.6.1",
     "history": "^4.10.1",
@@ -12,7 +13,10 @@
     "md5": "^2.2.1",
     "mime-types": "^2.1.20",
     "moment": "^2.24.0",
-    "react": "^16.12.0",
+    "node-sass": "^4.14.1",
+    "node-sass-chokidar": "^1.5.0",
+    "npm-run-all": "^4.1.5",
+    "react": "^16.13.1",
     "react-avatar-editor": "^11.0.4",
     "react-color": "^2.14.1",
     "react-countdown": "^2.2.1",
@@ -21,20 +25,28 @@
     "react-dropzone": "^11.0.1",
     "react-dropzone-uploader": "^2.11.0",
     "react-live-clock": "^4.0.3",
+    "react-pro-sidebar": "^0.5.0",
+    "react-router": "^4.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.1",
     "react-toast-notifications": "^2.4.0",
     "recharts": "^1.8.5",
     "semantic-ui-css": "^2.3.3",
-    "semantic-ui-react": "^0.82.1",
-    "socket.io-client": "^2.3.0",
+    "semantic-ui-react": "^2.0.1",
+    "socket.io-client": "^3.1.2",
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p start-js watch-css",
     "build": "react-scripts build",
+    "build:production": "env-cmd -f .env.production npm run-script build",
+    "build:test": "env-cmd -f .env.test npm run-script build",
+    "build:development": "env-cmd -f .env.development npm run-script build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive"
   },
   "browserslist": {
     "production": [
@@ -46,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.2.0"
   }
 }

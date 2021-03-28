@@ -1,0 +1,63 @@
+.countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  &__time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #fff;
+    font-size: 32px;
+    min-width: 83px;
+    font-weight: 700;
+    padding: 15px 5px 10px 5px;
+    border-radius: 4px;
+    color: #19750c;
+    margin-right: 10px;
+    &--days {
+      margin-top: 10px;
+      padding: 0 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 17px;
+      font-weight: 600;
+      color: #312747;
+    }
+  }
+}
+
+.running-auction-details {
+  @media (min-width: 992px) {
+    padding-top: 30px;
+  }
+}
+
+.card-bid-container {
+  background: #19750c !important;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__header {
+    font-size: 1.5em !important;
+    color: white !important;
+  }
+  &__current-bid {
+    font-size: 2.5em !important;
+    color: white !important;
+  }
+}
+
+.bid {
+  background-color: #19750c;
+}
+
+.summary-table-card-col {
+  @media (max-width: 992px) {
+    padding-top: 15px;
+  }
+}
