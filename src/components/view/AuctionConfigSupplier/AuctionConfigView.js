@@ -18,13 +18,11 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
   } = auction;
 
   const renderHeader = () => (
-    <Grid.Column width={16}>
       <AuctionHeader
         auctionStep={auctionStep}
         title={title}
         description={description}
       />
-    </Grid.Column>
   );
 
   if (auctionStep === "sub") {

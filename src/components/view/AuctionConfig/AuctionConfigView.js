@@ -260,17 +260,16 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
   );
 
   const renderHeader = () => (
-    <Grid.Column width={16}>
-      <AuctionHeader
-        auctionStep={auctionStep}
-        title={title}
-        description={description}
-      />
-    </Grid.Column>
+    <AuctionHeader
+      auctionStep={auctionStep}
+      title={title}
+      description={description}
+    />
   );
 
   return (
     <>
+      <Grid textAlign="left" padded columns={16}>
         {renderHeader()}
         {auctionStep === "rfi" && endingRFIDate > today && (
           <>
@@ -551,6 +550,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
           </>
         )}
         {auctionStep === "sub" && <AuctionSubContainer auctionId={auctionId} />}
+      </Grid>
     </>
   );
 };
