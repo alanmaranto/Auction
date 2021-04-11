@@ -17,6 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import "./style.css";
 import { isAuthenticated } from "../../../helpers/authenticate";
+import { formatDate, formatTypes } from "../../../helpers/dates";
 registerLocale("es", es);
 
 const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
@@ -37,16 +38,83 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
     suppliers,
     endingRFIDate,
     endingFADate,
+    openingFADate,
+    openingRealTimeAuctionDate,
+    endingRealTimeAuctionDate,
   } = auction;
+
 
   const nexStep = getNextStep(auctionStep || "");
   const acceptedSuppliers = getAcceptedSuppliers(suppliers || []);
 
   const today = new Date().toISOString();
 
+  const filterEnding = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+    const result = currentDate.getTime() < selectedDate.getTime();
+    return result;
+  };
+
+  const filterOpeningFA = (time) => {
+    const currentDate = new Date(time);
+    const result =
+      newEndingRFIDate && newEndingRFIDate.getTime() < currentDate.getTime();
+    return result;
+  };
+
+  const filterEndingFA = (time) => {
+    const currentDate = new Date(time);
+    const result =
+      newOpeningFADate && newOpeningFADate.getTime() < currentDate.getTime();
+    return result;
+  };
+
+  const filterOpeningRealTime = (time) => {
+    const currentDate = new Date(time);
+    const result =
+      newEndingFADate && newEndingFADate.getTime() < currentDate.getTime();
+    return result;
+  };
+
+  const filterEndingRealTime = (time) => {
+    const currentDate = new Date(time);
+    const result =
+      newOpeningRealTimeDate &&
+      newOpeningRealTimeDate.getTime() < currentDate.getTime();
+    return result;
+  };
+
   const datesValidation = [
     `La fecha para este paso ha finalizado`,
     "Para continuar deberás elegir nuevas fechas para los siguientes pasos",
+  ];
+
+  const olderDates = [
+    `Fecha de finalización RFI - ${formatDate(
+      endingRFIDate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de inicio FA - ${formatDate(
+      openingFADate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de finalización FA - ${formatDate(
+      endingFADate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de inicio subasta - ${formatDate(
+      openingRealTimeAuctionDate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de finalización subasta - ${formatDate(
+      endingRealTimeAuctionDate,
+      formatTypes.fullDateTime12H
+    )}`,
+  ];
+
+  const moveStepMessage = [
+    `Para mover a los proveedores al siguiente paso debes aceptarlos o rechazarlos`,
   ];
 
   const editDates = async () => {
@@ -62,20 +130,18 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
         endingFADate: newEndingFADate,
         openingRealTimeAuctionDate: newOpeningRealTimeDate,
         endingRealTimeAuctionDate: newEndingRealTimeDate,
-        extendedRealTimeAuctionDate: newEndingRealTimeDate
+        extendedRealTimeAuctionDate: newEndingRealTimeDate,
       };
     } else if (auctionStep === "fa_hl") {
       data = {
         endingFADate: newEndingFADate,
         openingRealTimeAuctionDate: newOpeningRealTimeDate,
         endingRealTimeAuctionDate: newEndingRealTimeDate,
-        extendedRealTimeAuctionDate: newEndingRealTimeDate
+        extendedRealTimeAuctionDate: newEndingRealTimeDate,
       };
     }
 
     const response = await updateAuction(auctionId, token, data);
-
-    console.log('response', response)
 
     if (response.status === 200) {
       addToast("Fechas actualizadas con éxito", {
@@ -106,6 +172,25 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
           warning
           header="Información importante"
           list={datesValidation}
+          color="red"
+        />
+      </Grid.Column>
+    </Grid.Row>
+  );
+
+  const renderOlderDates = () => (
+    <Grid.Row>
+      <Grid.Column
+        mobile={16}
+        tablet={16}
+        computer={16}
+        largeScreen={16}
+        widescreen={16}
+      >
+        <Message
+          warning
+          header="Fechas expiradas"
+          list={olderDates}
           color="blue"
         />
       </Grid.Column>
@@ -130,11 +215,12 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
           timeFormat="HH:mm"
           timeIntervals={30}
           timeCaption="time"
-          dateFormat="Pp"
+          dateFormat="MMMM d, yyyy h:mm aa"
           locale="es"
           minDate={newEndingFADate || new Date()}
           placeholderText={newEndingFADate || new Date()}
           fixedHeight
+          filterTime={filterOpeningRealTime}
         />
         <label>Termina</label>
         <DatePicker
@@ -144,14 +230,34 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
           timeFormat="HH:mm"
           timeIntervals={30}
           timeCaption="time"
-          dateFormat="Pp"
+          dateFormat="MMMM d, yyyy h:mm aa"
           locale="es"
           minDate={newOpeningRealTimeDate || new Date()}
           placeholderText={newOpeningRealTimeDate || new Date()}
           fixedHeight
+          filterTime={filterEndingRealTime}
         />
       </Form.Field>
     </>
+  );
+
+  const renderMoveStepMessage = () => (
+    <Grid.Row>
+      <Grid.Column
+        mobile={16}
+        tablet={16}
+        computer={16}
+        largeScreen={16}
+        widescreen={16}
+      >
+        <Message
+          warning
+          header="Información"
+          list={moveStepMessage}
+          color="blue"
+        />
+      </Grid.Column>
+    </Grid.Row>
   );
 
   return (
@@ -166,6 +272,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
         </Grid.Column>
         {auctionStep === "rfi" && endingRFIDate > today && (
           <>
+            {renderMoveStepMessage()}
             <Grid.Column
               width={16}
               textAlign="right"
@@ -180,7 +287,10 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                 fetchAuction={fetchAuction}
                 auctionStep={auctionStep}
               />
-              {acceptedSuppliers.length ? (
+              {acceptedSuppliers.length &&
+              suppliers.every(
+                (x) => x.status === "accepted" || x.status === "rejected"
+              ) ? (
                 <Button
                   color="primary"
                   labelPosition="right"
@@ -218,6 +328,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
         {auctionStep === "rfi" && endingRFIDate < today && (
           <>
             {renderWarningDate()}
+            {renderOlderDates()}
             <Grid.Row>
               <Grid.Column
                 mobile={16}
@@ -250,13 +361,14 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                           onChange={(date) => setNewEndingRFIDate(date)}
                           showTimeSelect
                           timeFormat="HH:mm"
-                          timeIntervals={30}
+                          timeIntervals={60}
                           timeCaption="time"
-                          dateFormat="Pp"
+                          dateFormat="MMMM d, yyyy h:mm aa"
                           locale="es"
                           minDate={new Date()}
                           placeholderText={new Date()}
                           fixedHeight
+                          filterTime={filterEnding}
                         />
                       </Form.Field>
                       <label className="auction-config-form__label">
@@ -275,13 +387,14 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                           onChange={(date) => setNewOpeningFADate(date)}
                           showTimeSelect
                           timeFormat="HH:mm"
-                          timeIntervals={30}
+                          timeIntervals={60}
                           timeCaption="time"
-                          dateFormat="Pp"
+                          dateFormat="MMMM d, yyyy h:mm aa"
                           locale="es"
                           minDate={newEndingRFIDate || new Date()}
                           placeholderText={newEndingRFIDate || new Date()}
                           fixedHeight
+                          filterTime={filterOpeningFA}
                         />
                         <label>Termina</label>
                         <DatePicker
@@ -289,13 +402,14 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                           onChange={(date) => setNewEndingFADate(date)}
                           showTimeSelect
                           timeFormat="HH:mm"
-                          timeIntervals={30}
+                          timeIntervals={60}
                           timeCaption="time"
-                          dateFormat="Pp"
+                          dateFormat="MMMM d, yyyy h:mm aa"
                           locale="es"
                           minDate={newOpeningFADate || new Date()}
                           placeholderText={newOpeningFADate || new Date()}
                           fixedHeight
+                          filterTime={filterEndingFA}
                         />
                       </Form.Field>
                       {renderRealTimeDates()}
@@ -311,6 +425,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
         )}
         {auctionStep === "fa_hl" && endingFADate > today && (
           <>
+            {renderMoveStepMessage()}
             <Grid.Column
               width={16}
               textAlign="right"
@@ -325,7 +440,10 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                 fetchAuction={fetchAuction}
                 auctionStep={auctionStep}
               />
-              {acceptedSuppliers.length ? (
+              {acceptedSuppliers.length &&
+              suppliers.every(
+                (x) => x.status === "accepted" || x.status === "rejected"
+              ) ? (
                 <Button
                   color="primary"
                   labelPosition="right"
@@ -374,6 +492,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
         {auctionStep === "fa_hl" && endingFADate < today && (
           <>
             {renderWarningDate()}
+            {renderOlderDates()}
             <Grid.Row>
               <Grid.Column
                 mobile={16}
@@ -386,7 +505,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                   <Card.Content>
                     <Form className="auction-config-form" onSubmit={editDates}>
                       <label className="auction-config-form__label">
-                        Foro de aclaraciones / propuesta técnica
+                        Foro de aclaraciones / Propuesta técnica
                       </label>
                       <Form.Field
                         width={16}
@@ -408,13 +527,14 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                           onChange={(date) => setNewEndingFADate(date)}
                           showTimeSelect
                           timeFormat="HH:mm"
-                          timeIntervals={30}
+                          timeIntervals={60}
                           timeCaption="time"
-                          dateFormat="Pp"
+                          dateFormat="MMMM d, yyyy h:mm aa"
                           locale="es"
                           minDate={new Date()}
                           placeholderText={new Date()}
                           fixedHeight
+                          filterTime={filterEnding}
                         />
                       </Form.Field>
                       {renderRealTimeDates()}

@@ -91,6 +91,7 @@ const ProjectDates = ({
           filterTime={filterOpeningRFI}
           dateFormat="MMMM d, yyyy h:mm aa"
         />
+        <label>Termina</label>
         <DatePicker
           selected={endingRFIDate}
           onChange={(date) => setEndingRFIDate(date)}

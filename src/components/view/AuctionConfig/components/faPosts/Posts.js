@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { Card, Button, Input, Header, Dimmer } from "semantic-ui-react";
+import { Card, Button, Input, Header, Dimmer, Popup } from "semantic-ui-react";
 import { createFAPost, getFAPosts } from "../../../../../api/posts";
 import { isAuthenticated } from "../../../../../helpers/authenticate";
 import PostsWrapper from "../../../../../core/Post";
@@ -79,7 +79,17 @@ const Posts = ({ auctionId }) => {
   return (
     <Card style={{ width: "100%" }}>
       <Header as="h3" style={{ padding: "10px 0px 0px 10px" }}>
-        <Header.Content>Foro de aclaraciones</Header.Content>
+        Foro de aclaraciones
+        {user.role === "provider" && (
+          <Popup
+            trigger={
+              <Header.Subheader style={{ cursor: "pointer" }}>
+                No debes revelar tu nombre en el chat
+              </Header.Subheader>
+            }
+            content="Los otros proveedores no verán tu nombre real"
+          />
+        )}
       </Header>
       {posts.length > 0 ? (
         <Scrollable maxHeight="320px">

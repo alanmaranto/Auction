@@ -32,12 +32,13 @@ const Invitations = () => {
     }
   };
 
-  const changeInvitationStatus = async (id, invitationStatus) => {
+  const changeInvitationStatus = async (id, invitationStatus, status) => {
     setLoading(true);
 
     const data = {
       _id: id,
       invitationStatus,
+      status
     };
 
     const response = await updateInvitationStatus(token, data);

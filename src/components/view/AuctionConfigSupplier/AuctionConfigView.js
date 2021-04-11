@@ -37,8 +37,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
             Aún no se han enviado documentos.
             <br />
             <br />
-            Su solicitud esta siendo revisada, en un momento se te envíaran los
-            documentos
+            En espera del comprador
           </Grid.Column>
         ) : (
           <>

@@ -126,7 +126,6 @@ const NewAuction = () => {
       bodyData.append("files", file);
     });
 
-    console.log(fileList);
     bodyData.append("items", JSON.stringify(items));
     bodyData.append("openingRealTimeAuctionDate", openingRealTimeAuctionDate);
     bodyData.append("endingRealTimeAuctionDate", endingRealTimeAuctionDate);
@@ -158,13 +157,13 @@ const NewAuction = () => {
       const response = await createAuction(token, bodyData);
 
       if (response.status === 201) {
+        history.push(`/`);
         setLoading(false);
         fetchRFIAuctions();
         addToast("Subasta creada exitósamente", {
           appearance: "success",
           autoDismiss: true,
         });
-        history.push(`/`);
       } else {
         addToast("Hubo un error al crear la subasta", {
           appearance: "error",
