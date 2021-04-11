@@ -59,7 +59,7 @@ const Auction = ({ auction }) => {
       isAuthenticated() &&
       isAuthenticated().user.role === roles.BUYER && (
         <Fragment>
-          <Row>
+          <Row style={{ paddingTop: 30 }}>
             <Column>
               <div>
                 <h2>Tiempo para iniciar la subasta</h2>
@@ -199,7 +199,7 @@ const Auction = ({ auction }) => {
       isAuthenticated() &&
       isAuthenticated().user.role === roles.PROVIDER && (
         <Fragment>
-          <Row>
+          <Row style={{ paddingTop: 30 }}>
             <Column>
               <div>
                 <h2>Tiempo para iniciar la subasta</h2>

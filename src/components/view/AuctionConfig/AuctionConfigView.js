@@ -43,7 +43,6 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
     endingRealTimeAuctionDate,
   } = auction;
 
-
   const nexStep = getNextStep(auctionStep || "");
   const acceptedSuppliers = getAcceptedSuppliers(suppliers || []);
 
@@ -260,16 +259,19 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
     </Grid.Row>
   );
 
+  const renderHeader = () => (
+    <Grid.Column width={16}>
+      <AuctionHeader
+        auctionStep={auctionStep}
+        title={title}
+        description={description}
+      />
+    </Grid.Column>
+  );
+
   return (
     <>
-      <Grid textAlign="left" padded columns={16}>
-        <Grid.Column width={16}>
-          <AuctionHeader
-            auctionStep={auctionStep}
-            title={title}
-            description={description}
-          />
-        </Grid.Column>
+        {renderHeader()}
         {auctionStep === "rfi" && endingRFIDate > today && (
           <>
             {renderMoveStepMessage()}
@@ -549,7 +551,6 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
           </>
         )}
         {auctionStep === "sub" && <AuctionSubContainer auctionId={auctionId} />}
-      </Grid>
     </>
   );
 };

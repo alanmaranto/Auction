@@ -17,21 +17,29 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
     supplierFilesStep,
   } = auction;
 
+  const renderHeader = () => (
+    <Grid.Column width={16}>
+      <AuctionHeader
+        auctionStep={auctionStep}
+        title={title}
+        description={description}
+      />
+    </Grid.Column>
+  );
+
   if (auctionStep === "sub") {
-    return <AuctionSubContainer auctionId={auctionId} />;
+    return (
+      <>
+        {renderHeader()}
+        <AuctionSubContainer auctionId={auctionId} />
+      </>
+    );
   }
 
   return (
     <>
       <Grid textAlign="left" padded columns={16}>
-        <Grid.Column width={16}>
-          <AuctionHeader
-            auctionStep={auctionStep}
-            title={title}
-            description={description}
-          />
-        </Grid.Column>
-
+        {renderHeader()}
         {!supplierFilesId ? (
           <Grid.Column width={16} style={{ background: "#fafafa" }}>
             Aún no se han enviado documentos.
