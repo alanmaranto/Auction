@@ -9,10 +9,11 @@ import Overview from "./steps/Overview";
 import FileList from "./steps/FileListStep";
 import ItemsTable from "./steps/ItemsTable";
 import ProjectDates from "./steps/ProjectDates";
-import { getSteps } from './steps'
+import { getSteps } from "./steps";
 
 import "./style.css";
 import "react-datepicker/dist/react-datepicker.css";
+import { isEmpty } from "./helpers";
 
 const NewAuction = () => {
   const { addToast } = useToasts();
@@ -20,8 +21,8 @@ const NewAuction = () => {
   // Step 1 - Overview
   const [loading, setLoading] = useState(false);
   const [auctions, setAuctions] = useState([]);
-  const [fileType, setFileType] = useState('buyer');
-  const [auctionStep, setAuctionStep] = useState('buyer');
+  const [fileType, setFileType] = useState("buyer");
+  const [auctionStep, setAuctionStep] = useState("buyer");
   const [currentStep, setCurrentStep] = useState(0);
   const [isOpenAuction, setIsOpenAuction] = useState(true);
   const [values, setValues] = useState({
@@ -123,7 +124,8 @@ const NewAuction = () => {
 
     fileList.forEach((file) => {
       bodyData.append("files", file);
-    })
+    });
+
     bodyData.append("items", JSON.stringify(items));
     bodyData.append("openingRealTimeAuctionDate", openingRealTimeAuctionDate);
     bodyData.append("endingRealTimeAuctionDate", endingRealTimeAuctionDate);
@@ -146,13 +148,8 @@ const NewAuction = () => {
     bodyData.append("fileType", fileType);
     bodyData.append("auctionStep", auctionStep);
 
-    if (
-      !title ||
-      !openingRealTimeAuctionDate ||
-      !endingRealTimeAuctionDate ||
-      !minimumBid
-    ) {
-      addToast("Debes llenar los campos obligatorios", {
+    if (fileList.length === 0) {
+      addToast("Debes agregar al menos un documento de invitación", {
         appearance: "error",
         autoDismiss: true,
       });
@@ -160,13 +157,13 @@ const NewAuction = () => {
       const response = await createAuction(token, bodyData);
 
       if (response.status === 201) {
+        history.push(`/`);
         setLoading(false);
         fetchRFIAuctions();
         addToast("Subasta creada exitósamente", {
           appearance: "success",
           autoDismiss: true,
         });
-        history.push(`/`);
       } else {
         addToast("Hubo un error al crear la subasta", {
           appearance: "error",
@@ -174,6 +171,48 @@ const NewAuction = () => {
         });
         setLoading(false);
       }
+    }
+  };
+
+  const validateCurrentStep = () => {
+    switch (currentStep) {
+      case 1:
+        if (
+          !openingRFIDate ||
+          !endingRFIDate ||
+          !openingFADate ||
+          !endingFADate ||
+          !openingRealTimeAuctionDate ||
+          !endingRealTimeAuctionDate
+        ) {
+          return addToast("Debes seleccionar todas las fechas", {
+            appearance: "error",
+            autoDismiss: true,
+          });
+        }
+        return nextStep();
+      case 2:
+        if (items.some((obj) => isEmpty(obj))) {
+          return addToast("Debes completar todos los campos", {
+            appearance: "error",
+            autoDismiss: true,
+          });
+        }
+        return nextStep();
+      default:
+        if (
+          !title ||
+          !identifier ||
+          !description ||
+          !minimumBid ||
+          !extensionTime
+        ) {
+          return addToast("Debes completar los campos requeridos", {
+            appearance: "error",
+            autoDismiss: true,
+          });
+        }
+        return nextStep();
     }
   };
 
@@ -242,14 +281,14 @@ const NewAuction = () => {
         return (
           <div>
             <Button onClick={prevStep}>Regresar </Button>
-            <Button onClick={nextStep}>Guardar y continuar </Button>
+            <Button onClick={validateCurrentStep}>Guardar y continuar </Button>
           </div>
         );
       case 2:
         return (
           <div>
             <Button onClick={prevStep}>Regresar </Button>
-            <Button onClick={nextStep}>Guardar y continuar </Button>
+            <Button onClick={validateCurrentStep}>Guardar y continuar </Button>
           </div>
         );
       case 3:
@@ -262,7 +301,7 @@ const NewAuction = () => {
       default:
         return (
           <div>
-            <Button onClick={nextStep}>Guardar y continuar </Button>
+            <Button onClick={validateCurrentStep}>Guardar y continuar </Button>
           </div>
         );
     }
@@ -285,7 +324,12 @@ const NewAuction = () => {
         <Header textAlign="left" style={{ color: "#142850", fontSize: "2em" }}>
           Información general del proyecto
         </Header>
-        <Step.Group size="mini" fluid stackable="tablet" items={getSteps(currentStep)} />
+        <Step.Group
+          size="mini"
+          fluid
+          stackable="tablet"
+          items={getSteps(currentStep)}
+        />
       </div>
       <Card fluid>
         <Card.Content>

@@ -1,8 +1,10 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Message } from "semantic-ui-react";
 import { AuctionHeader, DocumentsTable, AddDocument } from "./components";
 import AuctionSubContainer from "../AuctionWaitingView/AuctionWaitingContainer";
 import Posts from "../AuctionConfig/components/faPosts/Posts";
+import SupplierRejected from "./SupplierRejected";
+import { formatDate, formatTypes } from "../../../helpers/dates";
 
 import "./style.css";
 
@@ -15,34 +17,87 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
     description,
     supplierFilesId,
     supplierFilesStep,
+    supplier,
+    openingRFIDate,
+    openingFADate,
+    endingRFIDate,
+    endingFADate,
+    openingRealTimeAuctionDate,
+    endingRealTimeAuctionDate,
   } = auction;
 
-  if (auctionStep === "sub") {
-    return <AuctionSubContainer auctionId={auctionId} />;
+  const olderDates = [
+    `Fecha de inicio RFI - ${formatDate(
+      openingRFIDate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de finalización RFI - ${formatDate(
+      endingRFIDate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de inicio FA - ${formatDate(
+      openingFADate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de finalización FA - ${formatDate(
+      endingFADate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de inicio subasta - ${formatDate(
+      openingRealTimeAuctionDate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de finalización subasta - ${formatDate(
+      endingRealTimeAuctionDate,
+      formatTypes.fullDateTime12H
+    )}`,
+  ];
+
+  const renderHeader = () => (
+    <AuctionHeader
+      auctionStep={auctionStep}
+      title={title}
+      description={description}
+    />
+  );
+
+  if (auctionStep === "sub" && supplier && supplier[0].status === "active") {
+    return (
+      <>
+        {renderHeader()}
+        <AuctionSubContainer auctionId={auctionId} />
+      </>
+    );
   }
 
   return (
     <>
       <Grid textAlign="left" padded columns={16}>
-        <Grid.Column width={16}>
-          <AuctionHeader
-            auctionStep={auctionStep}
-            title={title}
-            description={description}
-          />
-        </Grid.Column>
-
-        {!supplierFilesId ? (
+        {!supplierFilesId && supplier && supplier[0].status === "active" && (
           <Grid.Column width={16} style={{ background: "#fafafa" }}>
+            {renderHeader()}
             Aún no se han enviado documentos.
             <br />
             <br />
-            Su solicitud esta siendo revisada, en un momento se te envíaran los
-            documentos
+            En espera del comprador
           </Grid.Column>
-        ) : (
+        )}
+        {supplierFilesId && supplier && supplier[0].status === "rejected" && (
           <>
-            <Grid.Column width={10} style={{ background: "#fafafa" }} />
+            {renderHeader()}
+            <SupplierRejected />
+          </>
+        )}
+        {supplierFilesId && supplier && supplier[0].status !== "rejected" && (
+          <>
+            {renderHeader()}
+            <Grid.Column width={10} style={{ background: "#fafafa" }}>
+              <Message
+                icon="calendar times"
+                header="Información de fechas"
+                list={olderDates}
+              />
+            </Grid.Column>
             <Grid.Column width={6} style={{ background: "#fafafa" }}>
               <AddDocument
                 auctionStep={auctionStep}
