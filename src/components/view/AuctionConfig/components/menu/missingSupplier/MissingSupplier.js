@@ -13,7 +13,7 @@ const MissingSuppliers = ({
 }) => {
   const {
     isLoading,
-    supplliers,
+    suppliers,
     fetchSuppliers,
     inviteSupplier,
   } = useSuppliers();
@@ -42,8 +42,8 @@ const MissingSuppliers = ({
 
   return (
     <div>
-      {supplliers?.length ? (
-        (supplliers || []).map((supplier) => (
+      {suppliers?.length ? (
+        (suppliers || []).map((supplier) => (
           <div className="user-item">
             <div>{supplier.userName}</div>
             <Button primary onClick={() => onInviteSupplier(supplier)}>

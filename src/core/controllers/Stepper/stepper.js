@@ -1,15 +1,15 @@
 import React from "react";
 import { Step, Icon } from "semantic-ui-react";
 
-const Stepper = ({ steps, size }) => (
-  <Step.Group size={size}>
+const Stepper = ({ steps, stackable, fluid, size }) => (
+  <Step.Group size={size} stackable={stackable} fluid={fluid}>
     {steps
       ? steps.map((step) => {
           return (
             <Step
               completed={step.completed}
               active={step.active}
-              disabled={(!step.completed && !step.active)}
+              disabled={!step.completed && !step.active}
             >
               {step.active ? <Icon name="settings" /> : <Icon name="payment" />}
               {!step.completed && !step.active ? [] : []}
@@ -27,7 +27,9 @@ const Stepper = ({ steps, size }) => (
 );
 
 Stepper.defaultProps = {
-  size: 'mini'
-}
+  stackable: "mobile",
+  fluid: true,
+  size: "small",
+};
 
 export default Stepper;

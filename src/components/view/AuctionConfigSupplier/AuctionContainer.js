@@ -9,6 +9,7 @@ class AuctionContainer extends Component {
     this.state = {
       auctionId: false,
       auctionInfo: {},
+      isFetching: false,
     };
   }
 
@@ -16,24 +17,22 @@ class AuctionContainer extends Component {
     const { token } = isAuthenticated();
     if (token) {
       this.fetchAuction();
-      this.fetchFavoriteProviders();
     }
   }
 
   fetchAuction = async () => {
     const { token } = isAuthenticated();
     const { id } = this.props.match.params;
-    this.setState({ auctionId: id });
+    this.setState({ auctionId: id, isFetching: true });
     const response = await getAuctionInfoSupplier(token, id);
     if (response && response.status && response.status === 200) {
-      this.setState({ auctionInfo: response.data.body });
+      this.setState({ auctionInfo: response.data.body, isFetching: false });
     }
+    this.setState({ isFetching: false})
   };
 
-  fetchFavoriteProviders = async () => {};
-
   render() {
-    const { auctionInfo, auctionId } = this.state;
+    const { auctionInfo, auctionId, isFetching } = this.state;
 
     return (
       <AuctionView
@@ -41,6 +40,7 @@ class AuctionContainer extends Component {
         auction={auctionInfo}
         auctionId={auctionId}
         fetchAuction={this.fetchAuction}
+        isFetching={isFetching}
       />
     );
   }

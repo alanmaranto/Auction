@@ -201,7 +201,7 @@ const rfiColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
         if (["rejected", "accepted"].includes(status)) {
           return [];
         }
-        if (["rejected"].includes(invitationStatus)) {
+        if (["rejected", "sent"].includes(invitationStatus)) {
           return [];
         }
 
@@ -213,7 +213,10 @@ const rfiColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
                 <Button
                   icon
                   onClick={() => {
-                    onHandleInvitation({ userId, invitationId }, true);
+                    onHandleInvitation(
+                      { userId, invitationId, invitationStatus },
+                      true
+                    );
                   }}
                 >
                   <Icon name="user times" color="red" />
@@ -226,7 +229,10 @@ const rfiColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
                 <Button
                   icon
                   onClick={() => {
-                    onHandleInvitation({ userId, invitationId }, false);
+                    onHandleInvitation(
+                      { userId, invitationId, invitationStatus },
+                      false
+                    );
                   }}
                 >
                   <Icon name="user plus" color="teal" />

@@ -22,6 +22,48 @@ const ProjectDates = ({
   endingRealTimeAuctionDate,
   setEndingRealTimeAuctionDate,
 }) => {
+  const filterOpeningRFI = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+    const result = currentDate.getTime() < selectedDate.getTime();
+    return result;
+  };
+
+  const filterEndingRFI = (time) => {
+    const currentDate = new Date(time);
+    const result =
+      openingRFIDate && openingRFIDate.getTime() < currentDate.getTime();
+    return result;
+  };
+
+  const filterOpeningFA = (time) => {
+    const currentDate = new Date(time);
+    const result =
+      endingRFIDate && endingRFIDate.getTime() < currentDate.getTime();
+    return result;
+  };
+
+  const filterEndingFA = (time) => {
+    const currentDate = new Date(time);
+    const result =
+      openingFADate && openingFADate.getTime() < currentDate.getTime();
+    return result;
+  };
+
+  const filterOpeningRealTime = (time) => {
+    const currentDate = new Date(time);
+    const result =
+      endingFADate && endingFADate.getTime() < currentDate.getTime();
+    return result;
+  };
+  const filterEndingRealTime = (time) => {
+    const currentDate = new Date(time);
+    const result =
+      openingRealTimeAuctionDate &&
+      openingRealTimeAuctionDate.getTime() < currentDate.getTime();
+    return result;
+  };
+
   return (
     <Form className="project-date-container">
       {/* // RFI */}
@@ -40,13 +82,14 @@ const ProjectDates = ({
           onChange={(date) => setOpeningRFIDate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={30}
+          timeIntervals={60}
           timeCaption="time"
-          dateFormat="Pp"
           minDate={new Date()}
           locale="es"
           placeholderText={new Date()}
           fixedHeight
+          filterTime={filterOpeningRFI}
+          dateFormat="MMMM d, yyyy h:mm aa"
         />
         <label>Termina</label>
         <DatePicker
@@ -54,13 +97,14 @@ const ProjectDates = ({
           onChange={(date) => setEndingRFIDate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={30}
+          timeIntervals={60}
           timeCaption="time"
-          dateFormat="Pp"
+          dateFormat="MMMM d, yyyy h:mm aa"
           locale="es"
           minDate={openingRFIDate || new Date()}
           placeholderText={openingRFIDate || new Date()}
           fixedHeight
+          filterTime={filterEndingRFI}
         />
       </Form.Field>
 
@@ -82,13 +126,14 @@ const ProjectDates = ({
           onChange={(date) => setOpeningFADate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={30}
+          timeIntervals={60}
           timeCaption="time"
-          dateFormat="Pp"
+          dateFormat="MMMM d, yyyy h:mm aa"
           locale="es"
           minDate={endingRFIDate || new Date()}
           placeholderText={endingRFIDate || new Date()}
           fixedHeight
+          filterTime={filterOpeningFA}
         />
         <label>Termina</label>
         <DatePicker
@@ -96,13 +141,14 @@ const ProjectDates = ({
           onChange={(date) => setEndingFADate(date)}
           showTimeSelect
           timeFormat="HH:mm"
-          timeIntervals={30}
+          timeIntervals={60}
           timeCaption="time"
-          dateFormat="Pp"
+          dateFormat="MMMM d, yyyy h:mm aa"
           locale="es"
           minDate={openingFADate || new Date()}
           placeholderText={openingFADate || new Date()}
           fixedHeight
+          filterTime={filterEndingFA}
         />
       </Form.Field>
 
@@ -126,11 +172,12 @@ const ProjectDates = ({
           timeFormat="HH:mm"
           timeIntervals={30}
           timeCaption="time"
-          dateFormat="Pp"
+          dateFormat="MMMM d, yyyy h:mm aa"
           locale="es"
           minDate={endingFADate || new Date()}
           placeholderText={endingFADate || new Date()}
           fixedHeight
+          filterTime={filterOpeningRealTime}
         />
         <label>Termina</label>
         <DatePicker
@@ -140,11 +187,12 @@ const ProjectDates = ({
           timeFormat="HH:mm"
           timeIntervals={30}
           timeCaption="time"
-          dateFormat="Pp"
+          dateFormat="MMMM d, yyyy h:mm aa"
           locale="es"
           minDate={openingRealTimeAuctionDate || new Date()}
           placeholderText={openingRealTimeAuctionDate || new Date()}
           fixedHeight
+          filterTime={filterEndingRealTime}
         />
       </Form.Field>
       <Form.Group>

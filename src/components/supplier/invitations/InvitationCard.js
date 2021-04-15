@@ -69,7 +69,9 @@ const InvitationCard = ({ data, key, id, updateInvitationStatus, loading }) => {
                     negative
                     compact
                     loading={loading}
-                    onClick={() => updateInvitationStatus(data._id, "rejected")}
+                    onClick={() =>
+                      updateInvitationStatus(data._id, "rejected", "rejected")
+                    }
                   >
                     Rechazar
                   </Button>
@@ -78,7 +80,9 @@ const InvitationCard = ({ data, key, id, updateInvitationStatus, loading }) => {
                     positive
                     compact
                     loading={loading}
-                    onClick={() => updateInvitationStatus(data._id, "accepted")}
+                    onClick={() =>
+                      updateInvitationStatus(data._id, "accepted", "active")
+                    }
                   >
                     Aceptar
                   </Button>
