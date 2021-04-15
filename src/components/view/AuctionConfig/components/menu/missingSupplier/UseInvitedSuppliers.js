@@ -38,17 +38,17 @@ export const putSupplier = async (options) => {
 export const useSuppliers = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [supplliers, setData] = useState([]);
+  const [suppliers, setData] = useState([]);
 
   const fetchFavoriteMissingSuppliers = async (options = {}) => {
     try {
       setIsLoading(true);
       const { auctionId } = options;
       if (auctionId) {
-        const supplliers = (await getFavoriteMissingSuppliers(options)) || {};
-        setData(supplliers);
+        const favoriteSuppliers = (await getFavoriteMissingSuppliers(options)) || {};
+        setData(favoriteSuppliers);
         setIsLoading(false);
-        return supplliers;
+        return suppliers;
       }
       setIsLoading(false);
       return [];
@@ -76,7 +76,7 @@ export const useSuppliers = () => {
   return {
     isLoading,
     error,
-    supplliers,
+    suppliers,
     fetchSuppliers: useCallback(fetchFavoriteMissingSuppliers, []),
     inviteSupplier: useCallback(inviteSupplier, []),
   };

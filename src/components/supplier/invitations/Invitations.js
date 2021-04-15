@@ -16,6 +16,7 @@ const Invitations = () => {
 
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const { token } = isAuthenticated();
 
@@ -26,18 +27,27 @@ const Invitations = () => {
   }, []);
 
   const fetchInvitations = async () => {
+    setIsFetching(true);
     const response = await getInvitedAuctionsBySupplier(token);
     if (response && response.status === 200) {
       setAuctions(response.data.body);
+      setIsFetching(false);
+    } else {
+      addToast("No tienes invitaciones", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
+    setIsFetching(false);
   };
 
-  const changeInvitationStatus = async (id, invitationStatus) => {
+  const changeInvitationStatus = async (id, invitationStatus, status) => {
     setLoading(true);
 
     const data = {
       _id: id,
       invitationStatus,
+      status,
     };
 
     const response = await updateInvitationStatus(token, data);
@@ -71,7 +81,13 @@ const Invitations = () => {
         );
       });
     }
-    return <NoData title="No tienes invitaciones a subastas" size="large" />;
+    return (
+      <NoData
+        title="No tienes invitaciones a subastas"
+        size="large"
+        isFetching={isFetching}
+      />
+    );
   };
 
   return (

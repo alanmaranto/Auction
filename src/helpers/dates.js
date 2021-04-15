@@ -12,5 +12,6 @@ export const formatTypes = {
   monthYear: 'MMMM YYYY',
   fullDateTime: "DD MMMM YYYY hh:mm",
   invitationDate: "dddd, MMMM Do YYYY, h:mm:ss a",
-  auctionDate: 'MMMM Do YYYY, h:mm:ss a'
+  auctionDate: 'MMMM Do YYYY, h:mm:ss a',
+  fullDateTime12H: "DD MMMM YYYY hh:mm:ss a",
 };

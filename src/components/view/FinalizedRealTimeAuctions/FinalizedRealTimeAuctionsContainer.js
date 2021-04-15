@@ -60,7 +60,6 @@ const FinalizedRealTimeAuctionsContainer = ({ match: { params } }) => {
   };
 
   const chooseWinnerBid = (id) => {
-    console.log("id", id);
     history.push(`/winner/auction/${id}`);
   };
 

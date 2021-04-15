@@ -34,7 +34,7 @@ const buyerColumns = ({ onHandleReadDocument }) => {
           return (
             <>
               <Popup
-                content="Al descargar este documento, el Buyer será informado que usted ah leido estos archivos"
+                content="Al descargar este documento, el comprador será informado que usted ha leído los documentos"
                 trigger={
                   <Button
                     icon

@@ -2,17 +2,17 @@ const steps = [
   {
     value: "rfi",
     display: "RFI",
-    subtitle: "Propuesta técnica y registro de inventarios",
+    subtitle: "Solicitud de información",
   },
   {
     value: "fa_hl",
-    display: "FA/HL",
+    display: "FA/PT",
     subtitle: "Foro Aclaraciones / Propuesta Técnica",
   },
   {
     value: "sub",
     display: "SUB",
-    subtitle: "Suministros y Ulala",
+    subtitle: "En espera de la subasta",
   },
 ];
 
