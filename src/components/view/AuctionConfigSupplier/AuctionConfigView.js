@@ -3,10 +3,15 @@ import { Grid } from "semantic-ui-react";
 import { AuctionHeader, DocumentsTable, AddDocument } from "./components";
 import AuctionSubContainer from "../AuctionWaitingView/AuctionWaitingContainer";
 import Posts from "../AuctionConfig/components/faPosts/Posts";
+import SupplierRejected from "./SupplierRejected";
 
 import "./style.css";
 
-const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
+const AuctionConfigView = ({
+  fetchAuction,
+  auction,
+  auctionId,
+}) => {
   const {
     auctionStep,
     auctionFiles,
@@ -15,17 +20,20 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
     description,
     supplierFilesId,
     supplierFilesStep,
+    supplier,
   } = auction;
 
+  console.log(auction)
+
   const renderHeader = () => (
-      <AuctionHeader
-        auctionStep={auctionStep}
-        title={title}
-        description={description}
-      />
+    <AuctionHeader
+      auctionStep={auctionStep}
+      title={title}
+      description={description}
+    />
   );
 
-  if (auctionStep === "sub") {
+  if (auctionStep === "sub" && supplier && supplier[0].status === "active") {
     return (
       <>
         {renderHeader()}
@@ -37,17 +45,27 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
   return (
     <>
       <Grid textAlign="left" padded columns={16}>
-        {renderHeader()}
-        {!supplierFilesId ? (
+        {!supplierFilesId && supplier && supplier[0].status === "active" && (
           <Grid.Column width={16} style={{ background: "#fafafa" }}>
+            {renderHeader()}
             Aún no se han enviado documentos.
             <br />
             <br />
             En espera del comprador
           </Grid.Column>
-        ) : (
+        )}
+        {supplierFilesId && supplier && supplier[0].status === "rejected" && (
           <>
-            <Grid.Column width={10} style={{ background: "#fafafa" }} />
+            {renderHeader()}
+            <SupplierRejected />
+          </>
+        )}
+        {supplierFilesId && supplier && supplier[0].status !== "rejected" && (
+          <>
+            {renderHeader()}
+            <Grid.Column width={10} style={{ background: "#fafafa" }}>
+
+            </Grid.Column>
             <Grid.Column width={6} style={{ background: "#fafafa" }}>
               <AddDocument
                 auctionStep={auctionStep}
