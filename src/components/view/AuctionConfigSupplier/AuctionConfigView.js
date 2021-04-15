@@ -1,17 +1,14 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Message } from "semantic-ui-react";
 import { AuctionHeader, DocumentsTable, AddDocument } from "./components";
 import AuctionSubContainer from "../AuctionWaitingView/AuctionWaitingContainer";
 import Posts from "../AuctionConfig/components/faPosts/Posts";
 import SupplierRejected from "./SupplierRejected";
+import { formatDate, formatTypes } from "../../../helpers/dates";
 
 import "./style.css";
 
-const AuctionConfigView = ({
-  fetchAuction,
-  auction,
-  auctionId,
-}) => {
+const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
   const {
     auctionStep,
     auctionFiles,
@@ -21,9 +18,40 @@ const AuctionConfigView = ({
     supplierFilesId,
     supplierFilesStep,
     supplier,
+    openingRFIDate,
+    openingFADate,
+    endingRFIDate,
+    endingFADate,
+    openingRealTimeAuctionDate,
+    endingRealTimeAuctionDate,
   } = auction;
 
-  console.log(auction)
+  const olderDates = [
+    `Fecha de inicio RFI - ${formatDate(
+      openingRFIDate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de finalización RFI - ${formatDate(
+      endingRFIDate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de inicio FA - ${formatDate(
+      openingFADate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de finalización FA - ${formatDate(
+      endingFADate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de inicio subasta - ${formatDate(
+      openingRealTimeAuctionDate,
+      formatTypes.fullDateTime12H
+    )}`,
+    `Fecha de finalización subasta - ${formatDate(
+      endingRealTimeAuctionDate,
+      formatTypes.fullDateTime12H
+    )}`,
+  ];
 
   const renderHeader = () => (
     <AuctionHeader
@@ -64,7 +92,11 @@ const AuctionConfigView = ({
           <>
             {renderHeader()}
             <Grid.Column width={10} style={{ background: "#fafafa" }}>
-
+              <Message
+                icon="calendar times"
+                header="Información de fechas"
+                list={olderDates}
+              />
             </Grid.Column>
             <Grid.Column width={6} style={{ background: "#fafafa" }}>
               <AddDocument
