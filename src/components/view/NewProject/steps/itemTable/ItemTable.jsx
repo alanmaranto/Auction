@@ -5,7 +5,13 @@ import { Table } from "semantic-ui-react";
 import ItemRow from "./ItemRow";
 import { TableHeader } from "../../../../../core/AuctionTable/TableHeader";
 
-const ItemsTable = ({ handleItemsTable, handleRowDel, items, filterText }) => {
+const ItemsTable = ({
+  handleItemsTable,
+  handleRowDel,
+  items,
+  filterText,
+  currency,
+}) => {
   const itemRow = items.map((item, index) => {
     if (item.name.indexOf(filterText) === -1) {
       return;
@@ -18,6 +24,7 @@ const ItemsTable = ({ handleItemsTable, handleRowDel, items, filterText }) => {
         id={item.id}
         index={index}
         items={items}
+        currency={currency}
       />
     );
   });

@@ -6,6 +6,7 @@ import { roles } from "../../../helpers/roles";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import Countdown from "react-countdown";
 import "./style.css";
+import { formatCurrency } from "../../../helpers/currency";
 
 const Completionist = () => <span>Arrrancamos la subasta</span>;
 
@@ -164,7 +165,7 @@ const Auction = ({ auction }) => {
                       <label className="auction-resume-label">
                         Puja mínima
                       </label>
-                      <p>{minimumBid}</p>
+                      <p>{currency && formatCurrency(minimumBid, currency)}</p>
                     </Column>
                     <Column
                       mobile={16}
@@ -176,7 +177,9 @@ const Auction = ({ auction }) => {
                       <label className="auction-resume-label">
                         La subasta arranca en:
                       </label>
-                      <p>{totalItemsPrice}</p>
+                      <p>
+                        {currency && formatCurrency(totalItemsPrice, currency)}
+                      </p>
                     </Column>
                     <Column
                       mobile={16}
@@ -314,7 +317,7 @@ const Auction = ({ auction }) => {
                       <label className="auction-resume-label">
                         Puja mínima
                       </label>
-                      <p>{minimumBid}</p>
+                      <p>{currency && formatCurrency(minimumBid, currency)}</p>
                     </Column>
                     <Column
                       mobile={16}
@@ -326,7 +329,9 @@ const Auction = ({ auction }) => {
                       <label className="auction-resume-label">
                         La subasta arranca en:
                       </label>
-                      <p>{totalItemsPrice}</p>
+                      <p>
+                        {currency && formatCurrency(totalItemsPrice, currency)}
+                      </p>
                     </Column>
                     <Column
                       mobile={16}
