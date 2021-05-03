@@ -5,6 +5,7 @@ import Countdown from "react-countdown";
 import SummaryTableCard from "./components/SummaryTableCard";
 import RealTimeGraph from "./components/RealTimeGraph";
 import { columns } from "./helpers";
+import { formatCurrency } from "../../../helpers/currency";
 import { roles } from "../../../helpers/roles";
 import "./style.css";
 
@@ -58,14 +59,19 @@ const RunningAuction = ({
   bids,
   summaryBids,
   extendedRealTimeAuctionDate,
+  currency,
 }) => {
   const operation = new Date(endingAuction).getTime();
   const operationExtended = new Date(extendedRealTimeAuctionDate).getTime();
 
   const auctionConditions = [
     `Subasta: ${title}`,
-    `La subasta inversa comienza en ${totalItemsPrice}`,
-    `Las pujas disminuyen de ${minimumBid} en ${minimumBid}`,
+    `La subasta inversa comienza en ${
+      currency && formatCurrency(totalItemsPrice, currency)
+    }`,
+    `Las pujas disminuyen de ${
+      currency && formatCurrency(minimumBid, currency)
+    } en ${currency && formatCurrency(minimumBid, currency)}`,
   ];
 
   const renderCountdown = () => {
@@ -107,12 +113,14 @@ const RunningAuction = ({
           widescreen={8}
           className="running-auction-details"
         >
-          <Message
-            warning
-            header="Condiciones de la subasta"
-            list={auctionConditions}
-            color="blue"
-          />
+          {currency && (
+            <Message
+              warning
+              header="Condiciones de la subasta"
+              list={auctionConditions}
+              color="blue"
+            />
+          )}
         </Column>
       </Row>
     );
@@ -135,7 +143,12 @@ const RunningAuction = ({
                 Puja actual
               </Card.Header>
               <Card.Description className="card-bid-container__current-bid">
-                $ {(lastMessage && lastMessage.bid) || totalItemsPrice} pesos
+                {currency &&
+                  formatCurrency(
+                    (lastMessage && lastMessage.bid) || totalItemsPrice,
+                    currency
+                  )}{" "}
+                {currency}
               </Card.Description>
             </Card.Content>
           </Card>
@@ -174,7 +187,11 @@ const RunningAuction = ({
           widescreen={8}
           className="summary-table-card-col"
         >
-          <SummaryTableCard data={summaryBids} columns={columns} />
+          <SummaryTableCard
+            data={summaryBids}
+            columns={columns}
+            currency={currency}
+          />
         </Column>
       </Row>
     );

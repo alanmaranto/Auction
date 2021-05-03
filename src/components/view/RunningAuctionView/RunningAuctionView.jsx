@@ -157,6 +157,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       bids={bids}
       summaryBids={summaryBids}
       extendedRealTimeAuctionDate={extendedRealTimeAuctionDate}
+      currency={auction.currency}
     />
   );
 };
