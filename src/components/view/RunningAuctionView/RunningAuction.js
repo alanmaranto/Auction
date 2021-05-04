@@ -50,7 +50,6 @@ const RunningAuction = ({
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
       // Render a completed state
-      console.log("jejeje");
       return <Completionist />;
     } else {
       // Render a countdown
