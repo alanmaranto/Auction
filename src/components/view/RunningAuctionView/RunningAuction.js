@@ -13,38 +13,6 @@ const Input = Form.Input;
 const Row = Grid.Row;
 const Column = Grid.Column;
 
-const Completionist = () => <span>Finalizamos la subasta</span>;
-
-// Renderer callback with condition
-const renderer = ({ days, hours, minutes, seconds, completed }) => {
-  if (completed) {
-    // Render a completed state
-    return <Completionist />;
-  } else {
-    // Render a countdown
-    return (
-      <div className="countdown">
-        <div className="countdown__time">
-          <div>{days}</div>
-          <span className="countdown__time--days">Días</span>
-        </div>
-        <div className="countdown__time">
-          <div>{hours}</div>
-          <span className="countdown__time--days">Horas</span>
-        </div>
-        <div className="countdown__time">
-          <div>{minutes}</div>
-          <span className="countdown__time--days">Minutos</span>
-        </div>
-        <div className="countdown__time">
-          <div>{seconds}</div>
-          <span className="countdown__time--days">Segundos</span>
-        </div>
-      </div>
-    );
-  }
-};
-
 const RunningAuction = ({
   title,
   sendBid,
@@ -63,6 +31,51 @@ const RunningAuction = ({
 }) => {
   const operation = new Date(endingAuction).getTime();
   const operationExtended = new Date(extendedRealTimeAuctionDate).getTime();
+
+  const Completionist = () => {
+    if (role === roles.BUYER) {
+      return () => {
+        onFinalizedAuction();
+        history.push("/");
+      };
+    } else {
+      return () => {
+        onFinalizedAuction();
+        history.push("/provider-dashboard");
+      };
+    }
+  };
+
+  // Renderer callback with condition
+  const renderer = ({ days, hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      console.log("jejeje");
+      return <Completionist />;
+    } else {
+      // Render a countdown
+      return (
+        <div className="countdown">
+          <div className="countdown__time">
+            <div>{days}</div>
+            <span className="countdown__time--days">Días</span>
+          </div>
+          <div className="countdown__time">
+            <div>{hours}</div>
+            <span className="countdown__time--days">Horas</span>
+          </div>
+          <div className="countdown__time">
+            <div>{minutes}</div>
+            <span className="countdown__time--days">Minutos</span>
+          </div>
+          <div className="countdown__time">
+            <div>{seconds}</div>
+            <span className="countdown__time--days">Segundos</span>
+          </div>
+        </div>
+      );
+    }
+  };
 
   const auctionConditions = [
     `Subasta: ${title}`,
