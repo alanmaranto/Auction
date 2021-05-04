@@ -38,6 +38,7 @@ const FinalizedRealTimeView = ({ bids, summaryBids, chooseWinnerBid, auction }) 
           isFinalized={true}
           columns={finalizedColumns}
           chooseWinnerBid={chooseWinnerBid}
+          currency={currency}
         />
       </Grid.Column>
     </Grid.Row>
