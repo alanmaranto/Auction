@@ -219,7 +219,13 @@ const Auction = ({ auction }) => {
       isAuthenticated().user.role === roles.PROVIDER && (
         <>
           <Row style={{ paddingTop: 30 }}>
-            <Column>
+            <Column
+              mobile={16}
+              tablet={16}
+              computer={16}
+              largeScreen={16}
+              widescreen={16}
+            >
               <div>
                 <h2>Tiempo para iniciar la subasta</h2>
               </div>
