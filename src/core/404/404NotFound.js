@@ -1,8 +1,6 @@
 import React from "react";
 import { Image, Header, Button } from "semantic-ui-react";
 import Error from "../../assets/404.jpg";
-import { roles } from "../../helpers/roles";
-import { isAuthenticated } from "../../helpers/authenticate";
 
 import "./style.css";
 

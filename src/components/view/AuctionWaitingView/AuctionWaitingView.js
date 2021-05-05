@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Grid, Container, Card, Header, Icon } from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import { Row, Column } from "../../../core/indexSemanticUi";
