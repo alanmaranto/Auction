@@ -466,6 +466,7 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                 auctionStep={auctionStep}
                 suppliers={suppliers}
                 auctionId={auctionId}
+                auctionFiles={auction?.files || []}
                 fetch={() => {
                   setChagedSuppliers(true);
                   fetchAuction();

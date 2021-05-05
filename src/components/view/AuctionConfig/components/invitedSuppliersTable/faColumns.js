@@ -44,7 +44,11 @@ const getStatusLabel = (itemStatus, type) => {
     }[itemStatus] || "-"
   );
 };
-const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
+const faColumns = ({
+  onHandleInvitation,
+  onHandleInvitationDocuments,
+  auctionFiles,
+}) => [
   [
     {
       id: "A",
@@ -105,6 +109,7 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
           userId: invitedUserId,
           invitationId,
           filesStep,
+          auctionStep,
         } = dataRow || {};
 
         if (filesStep) {
@@ -117,7 +122,28 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
             </Label>
           );
         }
-        if (status !== "rejected" && invitationStatus === "accepted")
+        if (
+          status !== "rejected" &&
+          invitationStatus === "accepted" &&
+          auctionStep === "rfi"
+        )
+          return (
+            <Button
+              color="blue"
+              style={{ width: "100%" }}
+              onClick={() => {
+                onHandleInvitationDocuments({ invitedUserId, invitationId });
+              }}
+            >
+              Enviar
+            </Button>
+          );
+        if (
+          status !== "rejected" &&
+          invitationStatus === "accepted" &&
+          auctionStep === "fa_hl" &&
+          auctionFiles.length > 0
+        )
           return (
             <Button
               color="blue"
@@ -145,14 +171,19 @@ const faColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
               <summary>Ver documentos</summary>
               <p>
                 {(files || []).map((file, index) => (
-                  <div>
-                    <a
-                      href={file.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {file.title || ""}
-                    </a>
+                  <div className="invited-suppliers-documents">
+                    <Popup
+                      content={file.title}
+                      trigger={
+                        <a
+                          href={file.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {file.title || ""}
+                        </a>
+                      }
+                    />
                   </div>
                 ))}
               </p>
