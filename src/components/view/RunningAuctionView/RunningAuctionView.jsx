@@ -22,6 +22,8 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   const [bids, setBids] = useState([]);
   const [summaryBids, setSummaryBids] = useState([]);
   const [suppliersItems, setSuppliersItems] = useState([]);
+  const [buyerItems, setBuyerItems] = useState([]);
+  const [baseSupplierItems, setBaseSupplierItems] = useState([]);
   const [percentage, setPercentage] = useState("");
   const [totalSupplier, setTotalSupplier] = useState(0);
   const [openConfirmation, setOpenConfirmation] = useState(false);
@@ -65,6 +67,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       setAuction(auctionResult);
       setLastMessage(lastMessage);
       setExtendedRealTimeAuctionDate(auctionResult.extendedRealTimeAuctionDate);
+      setBuyerItems(JSON.parse(JSON.stringify(auctionResult.items)));
     }
   };
 
@@ -93,6 +96,11 @@ const RunningAuctionContainer = ({ match: { params } }) => {
 
     setSuppliersItems(
       response.data.body.items ? response.data.body.items : auction.items
+    );
+    setBaseSupplierItems(
+      response.data.body.items
+        ? JSON.parse(JSON.stringify(response.data.body.items))
+        : []
     );
     sumTotalItems(response.data.body.items);
   };
@@ -208,7 +216,14 @@ const RunningAuctionContainer = ({ match: { params } }) => {
     setTotalSupplier(newTotal);
   };
 
-  const restoreItems = () => {};
+  const restoreItems = () => {
+    setSuppliersItems(
+      baseSupplierItems.length === 0 ? buyerItems : baseSupplierItems
+    );
+    sumTotalItems(
+      baseSupplierItems.length === 0 ? buyerItems : baseSupplierItems
+    );
+  };
 
   return (
     <RunningAuction
