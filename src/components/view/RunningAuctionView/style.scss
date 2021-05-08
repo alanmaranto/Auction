@@ -61,3 +61,16 @@
     padding-top: 15px;
   }
 }
+
+.percent-container {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 15px;
+}
+
+.totals-section-container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  align-items: baseline;
+}

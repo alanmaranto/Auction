@@ -61,11 +61,13 @@ SummaryComponent.defaultProps = {
 
 SummaryComponent.propTypes = {
   filter: PropTypes.string,
-  columns: PropTypes.arrayOf(),
-  data: PropTypes.arrayOf({
-    name: PropTypes.string.isRequired,
-    bid: PropTypes.number.isRequired,
-  }),
+  columns: PropTypes.array,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      bid: PropTypes.number,
+    })
+  ),
 };
 
 export default SummaryComponent;

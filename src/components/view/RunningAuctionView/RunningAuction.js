@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Grid, Card, Icon, Message } from "semantic-ui-react";
+import { Button, Grid, Card, Message, Input, Header } from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
 import SummaryTableCard from "./components/SummaryTableCard";
@@ -8,26 +8,33 @@ import { columns } from "./helpers";
 import { formatCurrency } from "../../../helpers/currency";
 import { roles } from "../../../helpers/roles";
 import "./style.css";
+import SupplierItemsContainer from "./components/SupplierItemsContainer";
 
-const Input = Form.Input;
 const Row = Grid.Row;
 const Column = Grid.Column;
 
 const RunningAuction = ({
   title,
   sendBid,
-  message,
   lastMessage,
   endingAuction,
   onFinalizedAuction,
   minimumBid,
   totalItemsPrice,
   role,
-  handleChange,
   bids,
   summaryBids,
   extendedRealTimeAuctionDate,
   currency,
+  suppliersItems,
+  totalSupplier,
+  handleSuppliersItemsTable,
+  percentage,
+  setPercentage,
+  updatePercentage,
+  restoreItems,
+  openConfirmation,
+  setOpenConfirmation,
 }) => {
   const operation = new Date(endingAuction).getTime();
   const operationExtended = new Date(extendedRealTimeAuctionDate).getTime();
@@ -139,7 +146,7 @@ const RunningAuction = ({
   };
 
   const renderBid = () => {
-    const lastBid = lastMessage?.bid - minimumBid;
+    // const lastBid = lastMessage?.bid - minimumBid; // modificar con minimo bid del comprador
     return (
       <Row>
         <Column
@@ -164,50 +171,28 @@ const RunningAuction = ({
               </Card.Description>
             </Card.Content>
           </Card>
-          {role === roles.PROVIDER && (
-            <Form size="large" onSubmit={sendBid}>
-              <Input
-                placeholder="Introduzca su puja"
-                type="number"
-                value={message}
-                name="message"
-                fluid
-                size="big"
-                inverted
-                max={isNaN(lastBid) ? totalItemsPrice : lastBid}
-                onChange={(e) => handleChange(e)}
-              />
-              <Button
-                style={{ background: "#19750c", color: "white" }}
-                icon
-                labelPosition="right"
-                compact
-                fluid
-                size="large"
-              >
-                <Icon name="dollar sign" />
-                ¡Pujar!
-              </Button>
-            </Form>
-          )}
         </Column>
-        <Column
-          mobile={16}
-          tablet={16}
-          computer={8}
-          largeScreen={8}
-          widescreen={8}
-          className="summary-table-card-col"
-        >
-          <SummaryTableCard
-            data={summaryBids}
-            columns={columns}
-            currency={currency}
-          />
-        </Column>
+        {renderSummaryTable()}
       </Row>
     );
   };
+
+  const renderSummaryTable = () => (
+    <Column
+      mobile={16}
+      tablet={16}
+      computer={role === roles.BUYER ? 8 : 16}
+      largeScreen={role === roles.BUYER ? 8 : 16}
+      widescreen={role === roles.BUYER ? 8 : 16}
+      className="summary-table-card-col"
+    >
+      <SummaryTableCard
+        data={summaryBids}
+        columns={columns}
+        currency={currency}
+      />
+    </Column>
+  );
 
   const renderRealTimeGraph = () => {
     return (
@@ -219,11 +204,75 @@ const RunningAuction = ({
     );
   };
 
+  const renderSupplierItems = () => {
+    return (
+      <Row>
+        <Column
+          mobile={16}
+          tablet={16}
+          computer={16}
+          largeScreen={16}
+          widescreen={16}
+        >
+          <Card fluid>
+            <Card.Content>
+              <Header
+                as="h2"
+                content="Artículos"
+                subheader="Actualiza los precios base de todos los artículos con base en
+              porcentaje o si lo deseas puedes hacerlo manualmente"
+              />
+              <div className="percent-container">
+                <Input
+                  max="99"
+                  min="1"
+                  icon="percent"
+                  iconPosition="left"
+                  size="mini"
+                  placeholder="Agrega un porcentaje"
+                  style={{ width: "32%" }}
+                  type="number"
+                  value={percentage}
+                  onChange={(e) => setPercentage(e.target.value)}
+                />
+                <Button
+                  primary
+                  content="Restablecer"
+                  style={{ width: "32%" }}
+                  onClick={restoreItems}
+                />
+                <Button
+                  primary
+                  content="Actualizar"
+                  style={{ width: "32%" }}
+                  onClick={updatePercentage}
+                />
+              </div>
+              <SupplierItemsContainer
+                suppliersItems={suppliersItems}
+                totalSupplier={totalSupplier}
+                currency={currency}
+                handleSuppliersItemsTable={handleSuppliersItemsTable}
+                sendBid={sendBid}
+                openConfirmation={openConfirmation}
+                setOpenConfirmation={setOpenConfirmation}
+                totalItemsPrice={totalItemsPrice}
+                lastMessage={lastMessage}
+              />
+            </Card.Content>
+          </Card>
+        </Column>
+      </Row>
+    );
+  };
+
   return (
     <Grid>
       {renderCountdown()}
       {renderRealTimeGraph()}
-      {renderBid()}
+      {role === roles.BUYER && renderBid()}
+      <Grid.Row>{role === roles.PROVIDER && renderSummaryTable()}</Grid.Row>
+      {role === roles.PROVIDER && renderSupplierItems()}
     </Grid>
   );
 };
