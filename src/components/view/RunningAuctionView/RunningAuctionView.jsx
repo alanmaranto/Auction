@@ -27,6 +27,8 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   const [percentage, setPercentage] = useState("");
   const [totalSupplier, setTotalSupplier] = useState(0);
   const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [showPopUpBid, setShowPopUpBid] = useState(false);
+  const [bidUser, setBidUser] = useState('');
   const [
     extendedRealTimeAuctionDate,
     setExtendedRealTimeAuctionDate,
@@ -131,6 +133,8 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       if (data.extendedRealTimeAuctionDate) {
         setExtendedRealTimeAuctionDate(data.extendedRealTimeAuctionDate);
       }
+      setBidUser(data.userId)
+      setShowPopUpBid(true);
     });
   };
 
@@ -249,6 +253,10 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       restoreItems={restoreItems}
       openConfirmation={openConfirmation}
       setOpenConfirmation={setOpenConfirmation}
+      showPopUpBid={showPopUpBid}
+      setShowPopUpBid={setShowPopUpBid}
+      bidUser={bidUser}
+      user={user._id}
     />
   );
 };

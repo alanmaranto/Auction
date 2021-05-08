@@ -1,5 +1,14 @@
 import React from "react";
-import { Button, Grid, Card, Message, Input, Header } from "semantic-ui-react";
+import {
+  Button,
+  Grid,
+  Card,
+  Message,
+  Input,
+  Header,
+  Segment,
+  TransitionablePortal,
+} from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import Countdown from "react-countdown";
 import SummaryTableCard from "./components/SummaryTableCard";
@@ -35,6 +44,10 @@ const RunningAuction = ({
   restoreItems,
   openConfirmation,
   setOpenConfirmation,
+  showPopUpBid,
+  setShowPopUpBid,
+  bidUser,
+  user,
 }) => {
   const operation = new Date(endingAuction).getTime();
   const operationExtended = new Date(extendedRealTimeAuctionDate).getTime();
@@ -273,6 +286,32 @@ const RunningAuction = ({
       {role === roles.BUYER && renderBid()}
       <Grid.Row>{role === roles.PROVIDER && renderSummaryTable()}</Grid.Row>
       {role === roles.PROVIDER && renderSupplierItems()}
+      {user !== bidUser && (
+        <TransitionablePortal
+          onOpen={() => setShowPopUpBid(true)}
+          onClose={() => setShowPopUpBid(false)}
+          open={showPopUpBid}
+        >
+          <Segment
+            style={{ left: "40%", position: "fixed", top: "38%", zIndex: 1000 }}
+            size="small"
+            inverted
+            color="blue"
+          >
+            <Header>¡Alguien ha pujado!</Header>
+            <p>Revisa la puja actual</p>
+            {role === roles.PROVIDER && (
+              <p>Asegúrate que tu próxima puja sea menor que la actual</p>
+            )}
+            <Button
+              content="Cerrar"
+              onClick={() => setShowPopUpBid(false)}
+              size="small"
+              fluid
+            />
+          </Segment>
+        </TransitionablePortal>
+      )}
     </Grid>
   );
 };
