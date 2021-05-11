@@ -28,11 +28,9 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   const [totalSupplier, setTotalSupplier] = useState(0);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [showPopUpBid, setShowPopUpBid] = useState(false);
-  const [bidUser, setBidUser] = useState('');
-  const [
-    extendedRealTimeAuctionDate,
-    setExtendedRealTimeAuctionDate,
-  ] = useState("");
+  const [bidUser, setBidUser] = useState("");
+  const [extendedRealTimeAuctionDate, setExtendedRealTimeAuctionDate] =
+    useState("");
 
   const { token, user } = isAuthenticated();
 
@@ -78,7 +76,13 @@ const RunningAuctionContainer = ({ match: { params } }) => {
     const response = await getRealTimeBidsByAuctionId(token, currentAuction);
 
     if (response && response.data.body) {
-      setBids(response.data.body);
+      if (user.role === "buyer") {
+        setBids(response.data.body);
+      } else {
+        if (user) {
+          setBids(formatRealTimeData(response.data.body));
+        }
+      }
     }
   };
 
@@ -87,7 +91,13 @@ const RunningAuctionContainer = ({ match: { params } }) => {
     const response = await getBidsByAuctionInfo(token, currentAuction);
 
     if (response && response.data.body) {
-      setSummaryBids(response.data.body);
+      if (user.role === "buyer") {
+        setSummaryBids(response.data.body);
+      } else {
+        if (user) {
+          setSummaryBids(formatSummaryData(response.data.body));
+        }
+      }
     }
   };
 
@@ -122,7 +132,6 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   // get current bid throught socket
   const listenBid = () => {
     socket.on("supplier-bid", (data) => {
-      console.log("listenbid", data);
       const { id: currentAuction } = params;
       if (data.auctionId === currentAuction) {
         setLastMessage(data);
@@ -133,7 +142,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       if (data.extendedRealTimeAuctionDate) {
         setExtendedRealTimeAuctionDate(data.extendedRealTimeAuctionDate);
       }
-      setBidUser(data.userId)
+      setBidUser(data.userId);
       setShowPopUpBid(true);
     });
   };
@@ -141,14 +150,17 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   // get current bids throught socket
   const listenBids = () => {
     socket.on("get-bids", (data) => {
-      setBids(data);
+      if (user) {
+        setBids(formatRealTimeData(data));
+      }
     });
   };
 
   const listenSummaryBids = () => {
     socket.on("summary-bids", (data) => {
-      console.log("summary-bids", data);
-      setSummaryBids(data);
+      if (user) {
+        setSummaryBids(formatSummaryData(data));
+      }
     });
   };
 
@@ -227,6 +239,47 @@ const RunningAuctionContainer = ({ match: { params } }) => {
     sumTotalItems(
       baseSupplierItems.length === 0 ? buyerItems : baseSupplierItems
     );
+  };
+
+  const formatSummaryData = (summaryData) => {
+    let lastSuppliersBids = [];
+    const newData = summaryData.map(
+      ({ auctionId, bid, createdAt, provider, updatedAt, _id }) => {
+        const providerInfo = provider.map((p) => {
+          return {
+            providerId: p.providerId,
+            name:
+              user.role === "provider"
+                ? user._id === p.providerId
+                  ? user.name
+                  : "Proveedor"
+                : p.name,
+          };
+        });
+        return {
+          _id,
+          auctionId,
+          bid,
+          createdAt,
+          updatedAt,
+          provider: providerInfo,
+        };
+      }
+    );
+    lastSuppliersBids = newData;
+    return lastSuppliersBids;
+  };
+
+  const formatRealTimeData = (realTimeData) => {
+    let realTimeBids = [];
+    const newData = realTimeData.map(({ data, userId, id }) => {
+      return {
+        data,
+        id: userId === user._id ? id : "Proveedor",
+      };
+    });
+    realTimeBids = newData;
+    return realTimeBids;
   };
 
   return (

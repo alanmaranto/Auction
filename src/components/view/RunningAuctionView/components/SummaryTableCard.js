@@ -8,7 +8,7 @@ const SummaryTableCard = ({
   columns,
   isFinalized = false,
   chooseWinnerBid,
-  currency
+  currency,
 }) => {
   return (
     <Card style={{ width: "auto" }}>
