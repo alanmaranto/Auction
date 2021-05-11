@@ -8,6 +8,7 @@ const SummaryTableCard = ({
   columns,
   isFinalized = false,
   chooseWinnerBid,
+  currency,
 }) => {
   return (
     <Card style={{ width: "auto" }}>
@@ -18,6 +19,7 @@ const SummaryTableCard = ({
           columns={columns}
           isFinalized={isFinalized}
           chooseWinnerBid={chooseWinnerBid}
+          currency={currency}
         />
       </Scrollable>
     </Card>

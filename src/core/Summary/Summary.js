@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "semantic-ui-react";
 import "./style.css";
+import { formatCurrency } from "../../helpers/currency";
 
 const SummaryComponent = ({
   filter,
@@ -9,6 +10,7 @@ const SummaryComponent = ({
   data,
   isFinalized,
   chooseWinnerBid,
+  currency,
 }) => {
   return (
     <table className="summary-table">
@@ -21,14 +23,14 @@ const SummaryComponent = ({
       <tbody>
         {data.length > 0 ? (
           data
-            .sort((a, b) => (filter ? b[filter] - a[filter] : a - b))
+            .sort((a, b) => (filter ? a[filter] - b[filter] : a - b))
             .map((row, index) => (
               <tr key={row._id}>
                 <td>
                   <span>{index + 1}</span>
                 </td>
                 <td>{row.provider[0].name}</td>
-                <td>{row.bid}</td>
+                <td>{currency && formatCurrency(row.bid, currency)}</td>
                 {isFinalized ? (
                   <td>
                     <Button
@@ -59,11 +61,13 @@ SummaryComponent.defaultProps = {
 
 SummaryComponent.propTypes = {
   filter: PropTypes.string,
-  columns: PropTypes.arrayOf(),
-  data: PropTypes.arrayOf({
-    name: PropTypes.string.isRequired,
-    bid: PropTypes.number.isRequired,
-  }),
+  columns: PropTypes.array,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      bid: PropTypes.number,
+    })
+  ),
 };
 
 export default SummaryComponent;

@@ -20,7 +20,12 @@ const buyerColumns = ({ onHandleReadDocument }) => {
         width: 2,
         renderData: (dataRow) => {
           const { title } = dataRow || {};
-          return <div>{title || ""}</div>;
+          return (
+            <Popup
+              content={title}
+              trigger={<div className="document-rfi-buyer">{title || ""}</div>}
+            />
+          );
         },
       },
       {
@@ -78,7 +83,14 @@ const faColumns = ({
           title: "Nombre del documento",
           renderData: (dataRow) => {
             const { title } = dataRow || {};
-            return <div>{title}</div>;
+            return (
+              <Popup
+                content={title}
+                trigger={
+                  <div className="document-rfi-buyer">{title || ""}</div>
+                }
+              />
+            );
           },
         },
         {

@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, Icon, Popup } from "semantic-ui-react";
 
+import "./style.css";
+
 const buyerColumns = ({ onHandleReadDocument }) => {
   return [
     [
@@ -20,7 +22,12 @@ const buyerColumns = ({ onHandleReadDocument }) => {
         width: "ten",
         renderData: (dataRow) => {
           const { title } = dataRow || {};
-          return <div>{title || ""}</div>;
+          return (
+            <Popup
+              content={title}
+              trigger={<div className="document-rfi-buyer">{title || ""}</div>}
+            />
+          );
         },
       },
       {
@@ -78,7 +85,12 @@ const rfiColumns = ({
           title: "Nombre del documento",
           renderData: (dataRow) => {
             const { title } = dataRow || {};
-            return <div>{title}</div>;
+            return (
+              <Popup
+                content={title}
+                trigger={<div className="document-rfi-buyer">{title || ""}</div>}
+              />
+            );
           },
         },
         {
