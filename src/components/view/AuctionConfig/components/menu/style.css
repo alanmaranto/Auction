@@ -1,5 +1,6 @@
 .menu-items .document-item {
-  padding-top: 10px; }
+  padding-top: 10px;
+  overflow: hidden; }
 
 .menu-items .user-item {
   display: flex;

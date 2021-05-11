@@ -5,7 +5,13 @@ import faColumns from "./faColumns";
 
 import { useInvitedSupplier } from "./UseInvitedSuppliers";
 
-const SuppliersTable = ({ fetch, suppliers, auctionId, auctionStep }) => {
+const SuppliersTable = ({
+  fetch,
+  suppliers,
+  auctionId,
+  auctionStep,
+  auctionFiles,
+}) => {
   const {
     rejectSupplier,
     acceptSupplier,
@@ -49,7 +55,8 @@ const SuppliersTable = ({ fetch, suppliers, auctionId, auctionStep }) => {
     }),
     fa_hl: faColumns({
       onHandleInvitation,
-      onHandleInvitationDocuments
+      onHandleInvitationDocuments,
+      auctionFiles
     }),
   }[auctionStep];
 

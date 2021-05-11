@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Grid, Container, Card, Header, Icon } from "semantic-ui-react";
 import history from "../../../modules/history/history";
 import { Row, Column } from "../../../core/indexSemanticUi";
@@ -6,6 +6,7 @@ import { roles } from "../../../helpers/roles";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import Countdown from "react-countdown";
 import "./style.css";
+import { formatCurrency } from "../../../helpers/currency";
 
 const Completionist = () => <span>Arrrancamos la subasta</span>;
 
@@ -164,7 +165,7 @@ const Auction = ({ auction }) => {
                       <label className="auction-resume-label">
                         Puja mínima
                       </label>
-                      <p>{minimumBid}</p>
+                      <p>{currency && formatCurrency(minimumBid, currency)}</p>
                     </Column>
                     <Column
                       mobile={16}
@@ -176,7 +177,9 @@ const Auction = ({ auction }) => {
                       <label className="auction-resume-label">
                         La subasta arranca en:
                       </label>
-                      <p>{totalItemsPrice}</p>
+                      <p>
+                        {currency && formatCurrency(totalItemsPrice, currency)}
+                      </p>
                     </Column>
                     <Column
                       mobile={16}
@@ -216,7 +219,13 @@ const Auction = ({ auction }) => {
       isAuthenticated().user.role === roles.PROVIDER && (
         <>
           <Row style={{ paddingTop: 30 }}>
-            <Column>
+            <Column
+              mobile={16}
+              tablet={16}
+              computer={16}
+              largeScreen={16}
+              widescreen={16}
+            >
               <div>
                 <h2>Tiempo para iniciar la subasta</h2>
               </div>
@@ -314,7 +323,7 @@ const Auction = ({ auction }) => {
                       <label className="auction-resume-label">
                         Puja mínima
                       </label>
-                      <p>{minimumBid}</p>
+                      <p>{currency && formatCurrency(minimumBid, currency)}</p>
                     </Column>
                     <Column
                       mobile={16}
@@ -326,7 +335,9 @@ const Auction = ({ auction }) => {
                       <label className="auction-resume-label">
                         La subasta arranca en:
                       </label>
-                      <p>{totalItemsPrice}</p>
+                      <p>
+                        {currency && formatCurrency(totalItemsPrice, currency)}
+                      </p>
                     </Column>
                     <Column
                       mobile={16}

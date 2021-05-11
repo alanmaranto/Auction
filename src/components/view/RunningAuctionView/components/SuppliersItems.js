@@ -1,33 +1,31 @@
-/* eslint-disable array-callback-return */
-
 import React from "react";
 import { Table } from "semantic-ui-react";
-import ItemRow from "./ItemRow";
-import { TableHeader } from "../../../../../core/AuctionTable/TableHeader";
+import { TableHeader } from "../../../../core/AuctionTable/TableHeader";
+import SupplierRow from "./SupplierItemsRow";
 
-const ItemsTable = ({
-  handleItemsTable,
-  handleRowDel,
-  items,
-  filterText,
+const SuppliersItems = ({
+  suppliersItems,
   currency,
+  handleSuppliersItemsTable,
 }) => {
-  const itemRow = items.map((item, index) => {
-    if (item.name.indexOf(filterText) === -1) {
+  const itemRow =
+    suppliersItems &&
+    suppliersItems.map((item, index) => {
+      /*     if (item.name.indexOf(filterText) === -1) {
       return;
-    }
-    return (
-      <ItemRow
-        item={item}
-        handleItemsTable={handleItemsTable}
-        handleRowDel={handleRowDel}
-        id={item.id}
-        index={index}
-        items={items}
-        currency={currency}
-      />
-    );
-  });
+    } */
+      return (
+        <SupplierRow
+          item={item}
+          id={item.id}
+          index={index}
+          currency={currency}
+          handleSuppliersItemsTable={handleSuppliersItemsTable}
+          suppliersItems={suppliersItems}
+          key={`${index}-${item.id}`}
+        />
+      );
+    });
 
   const itemsHeader = [
     {
@@ -78,10 +76,10 @@ const ItemsTable = ({
     <div className="items-table-container">
       <Table compact color="blue" size="small">
         <TableHeader columns={itemsHeader} />
-        <Table.Body>{itemRow}</Table.Body>
+        <Table.Body>{suppliersItems && itemRow}</Table.Body>
       </Table>
     </div>
   );
 };
 
-export default ItemsTable;
+export default SuppliersItems;
