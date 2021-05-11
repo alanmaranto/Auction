@@ -8,8 +8,8 @@ const getTableSettings = () => {
       sorted: false,
     },
     {
-      name: "minimumPrice",
-      title: "Precio Base",
+      name: "totalItemsPrice",
+      title: "Total",
       sorted: false,
     },
     {
@@ -199,6 +199,10 @@ const formatedData = (dataSource) => {
   const auction = dataSource.map((auction) => ({
     createdAt: auction.createdAt,
     description: auction.description,
+    endingAuction: formatDate(
+      auction.endingRealTimeAuctionDate,
+      formatTypes.auctionDate
+    ),
     /*     endingAuctionProjectDate: moment(auction.endingAuctionProjectDate).format(
       "MMMM Do YYYY, h:mm:ss a"
     ), */

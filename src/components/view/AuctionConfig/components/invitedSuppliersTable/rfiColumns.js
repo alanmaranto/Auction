@@ -2,6 +2,8 @@ import React from "react";
 import moment from "moment";
 import { Label, Button, Icon, Popup } from "semantic-ui-react";
 
+import "./style.css";
+
 const getStatusColor = (auctionStatus, status, type) => {
   if (auctionStatus === "rejected") {
     return "";
@@ -172,14 +174,19 @@ const rfiColumns = ({ onHandleInvitation, onHandleInvitationDocuments }) => [
               <summary>Ver documentos</summary>
               <p>
                 {(files || []).map((file, index) => (
-                  <div>
-                    <a
-                      href={file.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {file.title || ""}
-                    </a>
+                  <div className="invited-suppliers-documents">
+                    <Popup
+                      content={file.title}
+                      trigger={
+                        <a
+                          href={file.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {file.title || ""}
+                        </a>
+                      }
+                    />
                   </div>
                 ))}
               </p>

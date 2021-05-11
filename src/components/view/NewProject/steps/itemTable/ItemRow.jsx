@@ -2,6 +2,9 @@ import React from "react";
 import { Table } from "semantic-ui-react";
 import EditableCell from "./EditableCell";
 import TableCell from "./TableCell";
+import {
+  formatCurrency,
+} from "../../../../../helpers/currency";
 
 const ProductRow = ({
   items,
@@ -10,6 +13,7 @@ const ProductRow = ({
   handleRowDel,
   index,
   id,
+  currency,
 }) => {
   return (
     <Table.Row key={id}>
@@ -54,7 +58,9 @@ const ProductRow = ({
           id: item.id,
         }}
       />
-      <Table.Cell>{item.totalPrice || 0}</Table.Cell>
+      <Table.Cell>
+        {currency && formatCurrency(item.totalPrice || 0, currency)}
+      </Table.Cell>
       <TableCell
         buttonAction={() => {
           if (items) {

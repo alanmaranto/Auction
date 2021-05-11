@@ -64,8 +64,10 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
   if (auctionStep === "sub" && supplier && supplier[0].status === "active") {
     return (
       <>
-        {renderHeader()}
-        <AuctionSubContainer auctionId={auctionId} />
+        <Grid textAlign="left" padded columns={16}>
+          {renderHeader()}
+          <AuctionSubContainer auctionId={auctionId} />
+        </Grid>
       </>
     );
   }
@@ -73,24 +75,24 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
   return (
     <>
       <Grid textAlign="left" padded columns={16}>
+        {renderHeader()}
         {!supplierFilesId && supplier && supplier[0].status === "active" && (
-          <Grid.Column width={16} style={{ background: "#fafafa" }}>
-            {renderHeader()}
-            Aún no se han enviado documentos.
-            <br />
-            <br />
-            En espera del comprador
-          </Grid.Column>
+          <>
+            <Grid.Column width={16} style={{ background: "#fafafa" }}>
+              Aún no se han enviado documentos.
+              <br />
+              <br />
+              En espera del comprador
+            </Grid.Column>
+          </>
         )}
         {supplierFilesId && supplier && supplier[0].status === "rejected" && (
           <>
-            {renderHeader()}
             <SupplierRejected />
           </>
         )}
         {supplierFilesId && supplier && supplier[0].status !== "rejected" && (
           <>
-            {renderHeader()}
             <Grid.Column width={10} style={{ background: "#fafafa" }}>
               <Message
                 icon="calendar times"
