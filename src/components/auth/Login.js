@@ -73,6 +73,8 @@ const Login = () => {
         return <Redirect to="/" />;
       } else if (user.isApproved && user.role === roles.PROVIDER) {
         return <Redirect to="/provider-dashboard" />;
+      } else if (user.isApproved && user.role === roles.ADMIN) {
+        return <Redirect to="/admin-resources" />;
       } else {
         return <Redirect to="/not-approved" />;
       }
@@ -118,7 +120,9 @@ const Login = () => {
                 Iniciar Sesión
               </Button>
               <Message>
-                <Link to="/auth/forgot-password">¿Olvidaste tu contraseña?</Link>
+                <Link to="/auth/forgot-password">
+                  ¿Olvidaste tu contraseña?
+                </Link>
               </Message>
               <Message>
                 ¿Aún no tienes cuenta?

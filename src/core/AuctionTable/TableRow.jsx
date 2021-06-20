@@ -19,7 +19,7 @@ export const TableRow = ({
               {buttonActions ? (
                 <Button
                   onClick={
-                    role === "buyer"
+                    role === "buyer" || 'admin'
                       ? () => buttonAction(dataRow._id)
                       : () => buttonAction(dataRow.auctionId)
                   }

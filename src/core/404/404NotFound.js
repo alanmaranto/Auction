@@ -5,7 +5,6 @@ import Error from "../../assets/404.jpg";
 import "./style.css";
 
 const NotFound = ({ history }) => {
-  // const { user } = isAuthenticated();
   return (
     <div>
       <Image centered size="big" src={Error} />
@@ -13,21 +12,8 @@ const NotFound = ({ history }) => {
         <Header.Content>Pagina No Encontrada</Header.Content>
       </Header>
       <div className="button-send">
-        <Button
-          size="large"
-          primary
-          onClick={
-            () => history.push("/")
-/*             user.role === roles.BUYER
-              ? () => {
-                  history.push("/");
-                }
-              : () => {
-                  history.push("/provider-dashboard");
-                } */
-          }
-        >
-          Ir a Dashboard
+        <Button size="large" primary onClick={() => history.goBack()}>
+          Volver
         </Button>
       </div>
     </div>

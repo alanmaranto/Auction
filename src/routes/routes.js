@@ -49,6 +49,7 @@ const AuctionRFISupplierView = React.lazy(() => import("../components/view/Aucti
 const AuctionFASupplierView = React.lazy(() => import("../components/view/AuctionFASupplier"));
 const AuctionSubSupplierView = React.lazy(() => import("../components/view/AuctionSubSupplier"));
 const FinalizedRealTimeView = React.lazy(() => import("../components/view/FinalizedRealTimeAuctions"))
+const Admin = React.lazy(() => import("../components/view/Admin"))
 
 export const generalRoutes = {
   LOGIN: {
@@ -131,6 +132,14 @@ export const generalRoutes = {
     showSidebar: true,
     showInNavbar: true,
     role: "buyer",
+  },
+  ADMIN: {
+    path: "/admin-resources",
+    component: Admin,
+    term: "Admin",
+    showSidebar: true,
+    showInNavbar: true,
+    role: "admin",
   },
   SUPPLIER_DASHBOARD: {
     path: "/provider-dashboard",
