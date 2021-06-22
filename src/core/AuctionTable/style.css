@@ -1,0 +1,6 @@
+.auction:hover {
+  background-color: #00acee;
+  transition: 0.5s;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer; }

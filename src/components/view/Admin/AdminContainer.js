@@ -28,8 +28,8 @@ const AdminContainer = ({ history }) => {
     });
   };
 
-  const sendToAuctionInformation = (id) => {
-    history.push(`/auction-admin-information/${id}`);
+  const sendToAuctionInformation = (id, auction) => {
+    history.push(`/auction-admin-information/${id}`, auction);
   };
 
   useEffect(() => {
@@ -62,7 +62,6 @@ const AdminContainer = ({ history }) => {
       <AdminView
         auctions={auctions}
         onSubmitFilter={onSubmitFilter}
-        filter={filter}
         currentPage={currentPage}
         onFilterChangeValue={(value) => setFilter(value)}
         loading={loading}
