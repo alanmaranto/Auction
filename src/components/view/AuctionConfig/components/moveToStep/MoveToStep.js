@@ -39,7 +39,6 @@ function MoveToStepModal({
         result = await moveToNextStep({ auctionId, suppliers });
       }
       if (result) {
-        console.log("result", result);
         fetchAuction();
       }
       setOpen(false);

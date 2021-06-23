@@ -25,7 +25,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   const [buyerItems, setBuyerItems] = useState([]);
   const [baseSupplierItems, setBaseSupplierItems] = useState([]);
   const [percentage, setPercentage] = useState("");
-  const [totalSupplier, setTotalSupplier] = useState(0);
+  const [totalSupplier, setTotalSupplier] = useState(null);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [showPopUpBid, setShowPopUpBid] = useState(false);
   const [bidUser, setBidUser] = useState("");
@@ -79,9 +79,7 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       if (user.role === "buyer") {
         setBids(response.data.body);
       } else {
-        if (user) {
-          setBids(formatRealTimeData(response.data.body));
-        }
+        setBids(formatRealTimeData(response.data.body));
       }
     }
   };
@@ -150,7 +148,9 @@ const RunningAuctionContainer = ({ match: { params } }) => {
   // get current bids throught socket
   const listenBids = () => {
     socket.on("get-bids", (data) => {
-      if (user) {
+      if (user.role === "buyer") {
+        setBids(data);
+      } else {
         setBids(formatRealTimeData(data));
       }
     });
@@ -175,16 +175,59 @@ const RunningAuctionContainer = ({ match: { params } }) => {
       items: suppliersItems,
     };
 
-    if (totalSupplier.length === 0) {
-      return;
+    const submitBid = lastMessage && lastMessage.bid - auction.minimumBid;
+
+    if (totalSupplier === 0) {
+      setOpenConfirmation(false);
+      return addToast("La puja no puede ser 0", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
 
-    socket.emit("supplier-bid", data);
-    addToast("Puja enviada", {
-      appearance: "success",
-      autoDismiss: true,
-    });
-    setOpenConfirmation(false);
+    if (
+      totalSupplier ===
+      (lastMessage ? lastMessage.bid : auction.totalItemsPrice)
+    ) {
+      setOpenConfirmation(false);
+      return addToast("Tu puja no puede ser igual a la puja actual", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    }
+
+    if (
+      totalSupplier > (lastMessage ? lastMessage.bid : auction.totalItemsPrice)
+    ) {
+      setOpenConfirmation(false);
+      return addToast("Tu puja debe ser menor a la puja actual", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    }
+
+    if (
+      totalSupplier <=
+      (lastMessage
+        ? lastMessage.bid - auction.minimumBid
+        : auction.totalItemsPrice - auction.minimumBid)
+    ) {
+      socket.emit("supplier-bid", data);
+      addToast("Puja enviada", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      setOpenConfirmation(false);
+    } else {
+      addToast(
+        `Tu puja debe disminuirse igual o menor a ${auction.minimumBid}`,
+        {
+          appearance: "error",
+          autoDismiss: true,
+        }
+      );
+      setOpenConfirmation(false);
+    }
   };
 
   const onFinalizedAuction = async () => {
