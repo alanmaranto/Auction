@@ -40,7 +40,6 @@ class AuctionContainer extends Component {
         auction={auctionInfo}
         auctionId={auctionId}
         fetchAuction={this.fetchAuction}
-        isFetching={isFetching}
       />
     );
   }

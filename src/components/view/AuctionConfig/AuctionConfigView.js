@@ -288,10 +288,10 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                 fetchAuction={fetchAuction}
                 auctionStep={auctionStep}
               />
-              {acceptedSuppliers.length &&
-              suppliers.every(
-                (x) => x.status === "accepted" || x.status === "rejected"
-              ) ? (
+              {acceptedSuppliers.length ? (
+                // && suppliers.every(
+                //   (x) => x.status === "accepted" || x.status === "rejected"
+                // )
                 <Button
                   color="primary"
                   labelPosition="right"
@@ -441,10 +441,11 @@ const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
                 fetchAuction={fetchAuction}
                 auctionStep={auctionStep}
               />
-              {acceptedSuppliers.length &&
-              suppliers.every(
-                (x) => x.status === "accepted" || x.status === "rejected"
-              ) ? (
+              {acceptedSuppliers.length ? (
+                // &&
+                // suppliers.every(
+                //   (x) => x.status === "accepted" || x.status === "rejected"
+                // )
                 <Button
                   color="primary"
                   labelPosition="right"

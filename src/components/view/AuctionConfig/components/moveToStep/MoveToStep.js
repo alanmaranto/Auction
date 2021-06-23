@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Header, Icon, Modal, Grid } from "semantic-ui-react";
 import { UseMoveToStep } from "./UseMoveToStep";
+import { useToasts } from "react-toast-notifications";
 
 function MoveToStepModal({
   open,
@@ -12,6 +13,38 @@ function MoveToStepModal({
   auctionStep,
 }) {
   const { moveToNextStep } = UseMoveToStep();
+  const { addToast } = useToasts();
+
+  const validateMoveToNextStep = async () => {
+    try {
+      if (suppliers.length < 2) {
+        setOpen(false);
+        return addToast(
+          "Debes aceptar al menos 2 proveedores para avanzar al siguiente paso",
+          {
+            appearance: "error",
+            autoDismiss: true,
+          }
+        );
+      }
+
+      let result;
+      if (auctionStep === "fa_hl") {
+        result = await moveToNextStep({
+          auctionId,
+          suppliers,
+          isFA: true,
+        });
+      } else {
+        result = await moveToNextStep({ auctionId, suppliers });
+      }
+      if (result) {
+        console.log("result", result);
+        fetchAuction();
+      }
+      setOpen(false);
+    } catch (error) {}
+  };
 
   return (
     <Modal
@@ -45,24 +78,7 @@ function MoveToStepModal({
         </Button>
         <Button
           color="green"
-          onClick={async () => {
-            try {
-              let result;
-              if (auctionStep === "fa_hl") {
-                result = await moveToNextStep({
-                  auctionId,
-                  suppliers,
-                  isFA: true,
-                });
-              } else {
-                result = await moveToNextStep({ auctionId, suppliers });
-              }
-              if (result) {
-                fetchAuction();
-              }
-              setOpen(false);
-            } catch (error) {}
-          }}
+          onClick={validateMoveToNextStep}
         >
           <Icon name="checkmark" /> Aceptar
         </Button>
