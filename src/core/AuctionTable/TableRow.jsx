@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Table } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
+import "./style.css";
+
 export const TableRow = ({
   dataRow,
   columns,
@@ -11,7 +13,7 @@ export const TableRow = ({
   role,
 }) => {
   return (
-    <Table.Row>
+    <Table.Row className="auction">
       {columns &&
         columns.map(({ name, buttonActions }) => {
           return (
@@ -19,9 +21,9 @@ export const TableRow = ({
               {buttonActions ? (
                 <Button
                   onClick={
-                    role === "buyer"
-                      ? () => buttonAction(dataRow._id)
-                      : () => buttonAction(dataRow.auctionId)
+                    role === "buyer" || role === "admin"
+                      ? () => buttonAction(dataRow._id, dataRow)
+                      : () => buttonAction(dataRow.auctionId, dataRow)
                   }
                   color={color}
                 >

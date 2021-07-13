@@ -35,3 +35,20 @@ export const getFAPosts = async (token, auctionId) => {
     }
   };
   
+
+export const deleteComment = async (token, id) => {
+  try {
+    const response = await axios({
+      url: `${host}/comment/${id}`,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
