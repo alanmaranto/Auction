@@ -11,7 +11,6 @@ import {
 } from "semantic-ui-react";
 import { signin } from "../../api/auth";
 import { authenticate, isAuthenticated } from "../../helpers/authenticate";
-// import { registerUserIOToken } from "../../socket";
 import { roles } from "../../helpers/roles";
 import "./App.css";
 
@@ -47,7 +46,6 @@ const Login = () => {
           error: data.error,
         });
       } else {
-        // registerUserIOToken(data.token);
         authenticate(data, () => {
           setValues({
             ...values,
