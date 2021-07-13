@@ -29,7 +29,6 @@ class AuctionFAContainer extends Component {
   };
 
   fetchFaAuctions = async (token) => {
-    // const { token } = isAuthenticated();
     const { addToast } = this.props;
 
     const response = await getFAAuctionByUser(token);

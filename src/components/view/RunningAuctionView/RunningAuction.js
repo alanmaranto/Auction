@@ -237,8 +237,6 @@ const RunningAuction = ({
               />
               <div className="percent-container">
                 <Input
-                  max="99"
-                  min="1"
                   icon="percent"
                   iconPosition="left"
                   size="mini"

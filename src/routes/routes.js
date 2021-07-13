@@ -44,11 +44,25 @@ const AuctionRFIView = React.lazy(() =>
   import("../components/view/AuctionRFI")
 );
 const AuctionFAView = React.lazy(() => import("../components/view/AuctionFA"));
-const AuctionSubView = React.lazy(() => import("../components/view/AuctionSub"));
-const AuctionRFISupplierView = React.lazy(() => import("../components/view/AuctionRFISupplier"))
-const AuctionFASupplierView = React.lazy(() => import("../components/view/AuctionFASupplier"));
-const AuctionSubSupplierView = React.lazy(() => import("../components/view/AuctionSubSupplier"));
-const FinalizedRealTimeView = React.lazy(() => import("../components/view/FinalizedRealTimeAuctions"))
+const AuctionSubView = React.lazy(() =>
+  import("../components/view/AuctionSub")
+);
+const AuctionRFISupplierView = React.lazy(() =>
+  import("../components/view/AuctionRFISupplier")
+);
+const AuctionFASupplierView = React.lazy(() =>
+  import("../components/view/AuctionFASupplier")
+);
+const AuctionSubSupplierView = React.lazy(() =>
+  import("../components/view/AuctionSubSupplier")
+);
+const FinalizedRealTimeView = React.lazy(() =>
+  import("../components/view/FinalizedRealTimeAuctions")
+);
+const Admin = React.lazy(() => import("../components/view/Admin"));
+const AuctionAdminView = React.lazy(() =>
+  import("../components/view/AdminAuction")
+);
 
 export const generalRoutes = {
   LOGIN: {
@@ -131,6 +145,22 @@ export const generalRoutes = {
     showSidebar: true,
     showInNavbar: true,
     role: "buyer",
+  },
+  ADMIN: {
+    path: "/admin-resources",
+    component: Admin,
+    term: "Admin",
+    showSidebar: true,
+    showInNavbar: true,
+    role: "admin",
+  },
+  ADMIN_AUCTION: {
+    path: "/auction-admin-information/:id",
+    component: AuctionAdminView,
+    term: "Admin Auction",
+    showSidebar: true,
+    showInNavbar: true,
+    role: "admin",
   },
   SUPPLIER_DASHBOARD: {
     path: "/provider-dashboard",

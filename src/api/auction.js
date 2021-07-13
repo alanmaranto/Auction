@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { host } from './api';
+import axios from "axios";
+import { host } from "./api";
 
 export const getActiveAuctionsByUser = async (token) => {
   try {
@@ -13,7 +13,23 @@ export const getActiveAuctionsByUser = async (token) => {
     });
     return response;
   } catch (error) {
-    return error
+    return error;
+  }
+};
+
+export const getAuctions = async (token) => {
+  try {
+    const response = await axios({
+      url: `${host}/auctions-project`,
+      method: "GET",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
   }
 };
 
@@ -31,7 +47,7 @@ export const createAuction = async (token, auction) => {
     return response;
   } catch (error) {
     console.log(error);
-    return error
+    return error;
   }
 };
 
@@ -47,7 +63,7 @@ export const getRFIAuctionByUser = async (token) => {
     });
     return response;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
@@ -63,7 +79,7 @@ export const getFAAuctionByUser = async (token) => {
     });
     return response;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
@@ -79,7 +95,7 @@ export const getSubAuctionByUser = async (token) => {
     });
     return response;
   } catch (error) {
-    return error
+    return error;
   }
 };
 

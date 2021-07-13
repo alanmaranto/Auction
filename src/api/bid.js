@@ -16,3 +16,20 @@ export const getLastBidByUserIdAndAuction = async (token, auctionId) => {
     return error;
   }
 };
+
+export const deleteBid = async (token, id) => {
+  try {
+    const response = await axios({
+      url: `${host}/bid/${id}`,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};

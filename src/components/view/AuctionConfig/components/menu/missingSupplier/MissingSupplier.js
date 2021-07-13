@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Dimmer, Loader } from "semantic-ui-react";
 import { useSuppliers } from "./UseInvitedSuppliers";
+import { useToasts } from "react-toast-notifications";
 
 import "./style.css";
 
@@ -11,12 +12,10 @@ const MissingSuppliers = ({
   fetchMissingSuppliers,
   setChagedSuppliers,
 }) => {
-  const {
-    isLoading,
-    suppliers,
-    fetchSuppliers,
-    inviteSupplier,
-  } = useSuppliers();
+  const { addToast } = useToasts();
+
+  const { isLoading, suppliers, fetchSuppliers, inviteSupplier } =
+    useSuppliers();
 
   useEffect(() => {
     try {
@@ -34,6 +33,15 @@ const MissingSuppliers = ({
       if (result) {
         fetchAuction();
         fetchSuppliers({ auctionId });
+        addToast("Proveedor invitado", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+      } else {
+        addToast("Hubo un error al invitar al proveedor", {
+          appearance: "error",
+          autoDismiss: true,
+        });
       }
     } catch (error) {
       // manage alert or notification
@@ -42,6 +50,11 @@ const MissingSuppliers = ({
 
   return (
     <div>
+      {isLoading && (
+        <Dimmer active inverted>
+          <Loader inverted />
+        </Dimmer>
+      )}
       {suppliers?.length ? (
         (suppliers || []).map((supplier) => (
           <div className="user-item">
