@@ -161,6 +161,21 @@ const Sidebar = () => {
     }
   };
 
+  const renderAdminSidebar = (size) => {
+    if (isAuthenticated() && isAuthenticated().user.role === roles.ADMIN) {
+      return (
+        <SidebarContent>
+          <Menu iconShape="round">
+            <MenuItem icon={<Icon name="chart line" size={size} />}>
+              Panel
+              <Link to="/admin-resources" />
+            </MenuItem>
+          </Menu>
+        </SidebarContent>
+      );
+    }
+  };
+
   const renderHeaderLogo = () => {
     return (
       <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
@@ -255,6 +270,7 @@ const Sidebar = () => {
       </SidebarHeader>
       {renderBuyerSidebar("large")}
       {renderSupplierSidebar("large")}
+      {renderAdminSidebar("large")}
     </ProSidebar>
   );
 };

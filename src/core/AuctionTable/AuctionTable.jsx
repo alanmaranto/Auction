@@ -20,6 +20,7 @@ export const AuctionTable = (props) => {
         buttonTitle={props.buttonTitle}
         color={props.color}
         role={props.role}
+        modal={props.modal}
       />
     );
   });
@@ -28,7 +29,7 @@ export const AuctionTable = (props) => {
     <React.Fragment>
       <PageSizeSelect limit={props.limit} onChangeLimit={props.onChangeLimit} />
       Subastas Totales: {props.totalCount}.
-      <Table size="small" color={props.colorTable} padded /* selectable sortable */>
+      <Table size="small" color={props.colorTable} padded>
         <TableHeader
           column={props.column}
           direction={props.direction}
@@ -61,7 +62,6 @@ AuctionTable.propTypes = {
   totalPages: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   onChangePage: PropTypes.func.isRequired,
-  addFavorite: PropTypes.func.isRequired,
   onChangeLimit: PropTypes.func.isRequired,
   limit: PropTypes.string.isRequired,
 };

@@ -32,7 +32,7 @@ const sendDocuments = async (options) => {
 };
 
 export const useInvitedSupplier = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [status, setData] = useState(false);
 
@@ -67,9 +67,12 @@ export const useInvitedSupplier = () => {
 
   const sendInvitationDocuments = async (options = {}) => {
     try {
+      setIsLoading(true);
       const supplierResult = (await sendDocuments(options)) || {};
+      setIsLoading(false);
       return supplierResult;
     } catch (e) {
+      setIsLoading(false);
       setError(e);
       throw e;
     }

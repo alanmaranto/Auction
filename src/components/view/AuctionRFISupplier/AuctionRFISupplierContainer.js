@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getAuctionsSuppliersInvitedByStep } from "../../../api/invitedSuppliers";
 import history from "../../../modules/history/history";
+import { Redirect } from "react-router-dom";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import {
   filterData,
@@ -8,7 +9,7 @@ import {
 } from "../FinalizedAuctions/helper";
 import AuctionRFISupplier from "./AuctionRFISupplierView";
 import withToast from "../../../core/Toasts";
-
+import { roles } from "../../../helpers/roles";
 class AuctionRFIContainer extends Component {
   constructor(props) {
     super(props);
@@ -63,11 +64,7 @@ class AuctionRFIContainer extends Component {
   };
 
   onSubmitFilter = (filter, currentPage) => {
-    const {
-      elementsByPage,
-      rfiSuppliersAuctions,
-      pageItems,
-    } = this.state;
+    const { elementsByPage, rfiSuppliersAuctions, pageItems } = this.state;
     return filterData({
       dataSource: rfiSuppliersAuctions,
       elementsByPage,
@@ -79,12 +76,15 @@ class AuctionRFIContainer extends Component {
 
   render() {
     const { elementsByPage, currentPage, filter, loading } = this.state;
-    const {
-      dataSource: rfiSuppliersAuctions,
-      dataSourceSize: totalCount,
-    } = this.onSubmitFilter(filter, currentPage);
+    const { dataSource: rfiSuppliersAuctions, dataSourceSize: totalCount } =
+      this.onSubmitFilter(filter, currentPage);
     const { user } = isAuthenticated();
 
+    if (user.role === roles.BUYER) {
+      return <Redirect to="/" />;
+    } else if (user.role === roles.ADMIN) {
+      return <Redirect to="/admin-resources" />;
+    }
     return (
       <AuctionRFISupplier
         rfiSuppliersAuctions={rfiSuppliersAuctions}

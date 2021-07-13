@@ -8,7 +8,11 @@ import { formatDate, formatTypes } from "../../../helpers/dates";
 
 import "./style.css";
 
-const AuctionConfigView = ({ fetchAuction, auction, auctionId }) => {
+const AuctionConfigView = ({
+  fetchAuction,
+  auction,
+  auctionId,
+}) => {
   const {
     auctionStep,
     auctionFiles,

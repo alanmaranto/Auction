@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getAuctionsSuppliersInvitedByStep } from "../../../api/invitedSuppliers";
 import history from "../../../modules/history/history";
+import { Redirect } from "react-router-dom";
 import { isAuthenticated } from "../../../helpers/authenticate";
 import {
   filterData,
@@ -8,6 +9,7 @@ import {
 } from "../FinalizedAuctions/helper";
 import AuctionSubSupplierView from "./AuctionSubSupplierView";
 import withToast from "../../../core/Toasts";
+import { roles } from "../../../helpers/roles";
 
 class AuctionSubSupplierContainer extends Component {
   constructor(props) {
@@ -90,35 +92,34 @@ class AuctionSubSupplierContainer extends Component {
   };
 
   render() {
-    const {
-      elementsByPage,
-      currentPage,
-      filter,
-      loading,
-      isFetching,
-    } = this.state;
-    const {
-      dataSource: subSupplierAuctions,
-      dataSourceSize: totalCount,
-    } = this.onSubmitFilter(filter, currentPage);
+    const { elementsByPage, currentPage, filter, loading, isFetching } =
+      this.state;
+    const { dataSource: subSupplierAuctions, dataSourceSize: totalCount } =
+      this.onSubmitFilter(filter, currentPage);
     const { user } = isAuthenticated();
 
-    return (
-      <AuctionSubSupplierView
-        subSupplierAuctions={subSupplierAuctions}
-        user={user}
-        totalCount={totalCount}
-        totalPages={Math.ceil(totalCount / elementsByPage)}
-        currentPage={currentPage}
-        onChangePage={this.onChangePage}
-        onChangeLimit={this.onChangeLimit}
-        limit={elementsByPage.toString()}
-        buttonAction={this.sendToAuctionView}
-        onChangeValue={this.onChangeValue}
-        loading={loading}
-        isFetching={isFetching}
-      />
-    );
+    if (user.role === roles.BUYER) {
+      return <Redirect to="/" />;
+    } else if (user.role === roles.ADMIN) {
+      return <Redirect to="/admin-resources" />;
+    } else {
+      return (
+        <AuctionSubSupplierView
+          subSupplierAuctions={subSupplierAuctions}
+          user={user}
+          totalCount={totalCount}
+          totalPages={Math.ceil(totalCount / elementsByPage)}
+          currentPage={currentPage}
+          onChangePage={this.onChangePage}
+          onChangeLimit={this.onChangeLimit}
+          limit={elementsByPage.toString()}
+          buttonAction={this.sendToAuctionView}
+          onChangeValue={this.onChangeValue}
+          loading={loading}
+          isFetching={isFetching}
+        />
+      );
+    }
   }
 }
 
